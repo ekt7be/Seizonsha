@@ -1,0 +1,35 @@
+c:\users\stk4zn.cslab\documents\visual studio 2012\Projects\GameName1\GameName1\bin\WindowsGL\Debug\SDL.dll
+c:\users\stk4zn.cslab\documents\visual studio 2012\Projects\GameName1\GameName1\bin\WindowsGL\Debug\GameName1.exe
+c:\users\stk4zn.cslab\documents\visual studio 2012\Projects\GameName1\GameName1\bin\WindowsGL\Debug\GameName1.pdb
+c:\users\stk4zn.cslab\documents\visual studio 2012\Projects\GameName1\GameName1\bin\WindowsGL\Debug\Lidgren.Network.dll
+c:\users\stk4zn.cslab\documents\visual studio 2012\Projects\GameName1\GameName1\bin\WindowsGL\Debug\MonoGame.Framework.dll
+c:\users\stk4zn.cslab\documents\visual studio 2012\Projects\GameName1\GameName1\bin\WindowsGL\Debug\OpenTK.dll
+c:\users\stk4zn.cslab\documents\visual studio 2012\Projects\GameName1\GameName1\bin\WindowsGL\Debug\Tao.Sdl.dll
+c:\users\stk4zn.cslab\documents\visual studio 2012\Projects\GameName1\GameName1\obj\x86\Debug\GameName1.exe
+c:\users\stk4zn.cslab\documents\visual studio 2012\Projects\GameName1\GameName1\obj\x86\Debug\GameName1.pdb
+c:\users\stk4zn.cslab\documents\visual studio 2012\Projects\GameName1\GameName1\obj\x86\Debug\GameName1.csprojResolveAssemblyReference.cache
+c:\users\stk4zn.cslab\documents\visual studio 2012\Projects\GameName1\GameName1\bin\WindowsGL\Debug\Content\snail.png
+c:\users\stk4zn.cslab\documents\visual studio 2012\Projects\GameName1\GameName1\bin\WindowsGL\Debug\Content\background.png
+c:\users\stk4zn.cslab\documents\visual studio 2012\Projects\GameName1\GameName1\bin\WindowsGL\Debug\Content\creature_sprites_1.png
+c:\users\stk4zn.cslab\documents\visual studio 2012\Projects\GameName1\GameName1\bin\WindowsGL\Debug\Content\rockybeachtile.png
+C:\Users\stk4zn\Documents\game\GameName1\GameName1\obj\x86\Debug\GameName1.exe
+C:\Users\stk4zn\Documents\game\GameName1\GameName1\obj\x86\Debug\GameName1.pdb
+C:\Users\stk4zn\Documents\game\GameName1\GameName1\bin\WindowsGL\Debug\SDL.dll
+C:\Users\stk4zn\Documents\game\GameName1\GameName1\bin\WindowsGL\Debug\GameName1.exe
+C:\Users\stk4zn\Documents\game\GameName1\GameName1\bin\WindowsGL\Debug\GameName1.pdb
+C:\Users\stk4zn\Documents\game\GameName1\GameName1\bin\WindowsGL\Debug\Lidgren.Network.dll
+C:\Users\stk4zn\Documents\game\GameName1\GameName1\bin\WindowsGL\Debug\MonoGame.Framework.dll
+C:\Users\stk4zn\Documents\game\GameName1\GameName1\bin\WindowsGL\Debug\OpenTK.dll
+C:\Users\stk4zn\Documents\game\GameName1\GameName1\bin\WindowsGL\Debug\Tao.Sdl.dll
+C:\Users\stk4zn.CSLAB\Documents\game\GameName1\GameName1\bin\WindowsGL\Debug\Content\lizardatlas.png
+C:\Users\stk4zn.CSLAB\Documents\game\GameName1\GameName1\bin\WindowsGL\Debug\Content\Font.xnb
+C:\Users\stk4zn.CSLAB\Documents\game\GameName1\GameName1\bin\WindowsGL\Debug\SDL.dll
+C:\Users\stk4zn.CSLAB\Documents\game\GameName1\GameName1\bin\WindowsGL\Debug\GameName1.exe
+C:\Users\stk4zn.CSLAB\Documents\game\GameName1\GameName1\bin\WindowsGL\Debug\GameName1.pdb
+C:\Users\stk4zn.CSLAB\Documents\game\GameName1\GameName1\bin\WindowsGL\Debug\Lidgren.Network.dll
+C:\Users\stk4zn.CSLAB\Documents\game\GameName1\GameName1\bin\WindowsGL\Debug\MonoGame.Framework.dll
+C:\Users\stk4zn.CSLAB\Documents\game\GameName1\GameName1\bin\WindowsGL\Debug\OpenTK.dll
+C:\Users\stk4zn.CSLAB\Documents\game\GameName1\GameName1\bin\WindowsGL\Debug\Tao.Sdl.dll
+C:\Users\stk4zn.CSLAB\Documents\game\GameName1\GameName1\obj\x86\Debug\GameName1.exe
+C:\Users\stk4zn.CSLAB\Documents\game\GameName1\GameName1\obj\x86\Debug\GameName1.pdb
+C:\Users\stk4zn\Documents\game\GameName1\GameName1\bin\WindowsGL\Debug\Content\Font.xnb
