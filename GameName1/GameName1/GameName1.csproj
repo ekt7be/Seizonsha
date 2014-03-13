@@ -35,14 +35,10 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Animal.cs" />
-    <Compile Include="AnimatedSprite.cs" />
-    <Compile Include="GameObject.cs" />
+    <Compile Include="Static.cs" />
     <Compile Include="Level.cs" />
-    <Compile Include="Mate.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="GameEntity.cs" />
-    <Compile Include="SpirteAtlas.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -66,7 +62,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\..\..\..\..\..\Program Files %28x86%29\MonoGame\v3.0\Assemblies\WindowsGL\SDL.dll">
+    <Content Include="..\..\..\..\..\..\..\..\Program Files %28x86%29\MonoGame\v3.0\Assemblies\WindowsGL\SDL.dll">
       <Link>SDL.dll</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -7,44 +7,67 @@ using System.Text;
 
 namespace GameName1
 {
-    public abstract class GameEntity : GameObject
+    public abstract class GameEntity
     {
 
+        public int x;
+        public int y;
+        public int width;
+        public int height;
+        protected Rectangle hitbox;
+        public bool remove;
         public int velocityX;
         public int velocityY;
         public int accelX;
         public int accelY;
         public Game1 game;
         public Texture2D sprite;
-        public bool falling;
 
 
-        public override void Draw(SpriteBatch spriteBatch)
+        virtual public void Draw(SpriteBatch spriteBatch)
         {
 
-            //spriteBatch.Draw(sprite, new Rectangle(x - game.cameraX, y, this.width, this.height), Color.Aquamarine);
-            spriteBatch.Draw(sprite, hitbox, Color.Aquamarine);
+              spriteBatch.Draw(sprite, hitbox, Color.Aquamarine);
 
         }
 
-        public override void Update()
+        virtual public void Update()
         {
             incVelocityX(accelX);
             incVelocityY(accelY);
-            move(velocityX, velocityY);
+            if (velocityX != 0 || velocityY != 0)
+            {
+                move(velocityX, velocityY);
+            }
 
         }
 
-
-        public GameEntity(Game1 game, Texture2D sprite, int x, int y, int width, int height) : base(x, y, width, height)
+        virtual public void onSpawn()
         {
+            //When this entity is spawned into the game
+        }
+
+
+        public GameEntity(Game1 game, Texture2D sprite, int x, int y, int width, int height)
+        {
+
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height = height;
+            this.remove = false;
+            this.hitbox = new Rectangle(x, y, width, height);
             this.velocityX = 0;
             this.velocityY = 0;
             this.game = game;
             this.sprite = sprite;
-            this.accelY = Game1.gravity;
-            this.falling = false;
 
+        }
+
+
+        public void setRemove(bool remove)
+        {
+            this.remove = remove;
         }
 
         public void setVelocityX(int vX)
@@ -89,30 +112,32 @@ namespace GameName1
 
         protected void move(int dx, int dy){
 
-            int tilesX = (int)(Math.Floor((float)Math.Abs(dx) / (float)Game1.TileWidth)+1);
-            int tilesY = (int)(Math.Floor((float)Math.Abs(dy) / (float)Game1.TileHeight)+1);
+            int tilesX = (int)Math.Floor((float)Math.Abs(dx) / Static.TILE_WIDTH)+1;
+            int tilesY = (int)Math.Floor((float)Math.Abs(dy) / Static.TILE_HEIGHT)+1;
 
-            int leftEdgeX = this.x;
-            int leftEdgeTile = (int)(Math.Floor((float)(leftEdgeX) / (float)(Game1.TileWidth)));
-
-            int rightEdgeX = this.x + this.width;
-            int rightEdgeTile = (int)(Math.Ceiling((float)(rightEdgeX )/(Game1.TileWidth))-1);
-
-            int topEdgeY = this.y;
-            int topEdgeTile = (int)(Math.Floor((float)(topEdgeY) / (float)(Game1.TileHeight))); 
-
-            int bottomEdgeY = this.y + height;
-            int bottomEdgeTile = (int)(Math.Ceiling((float)(bottomEdgeY) / (float)(Game1.TileHeight))-1);
-
+            int leftEdgeTile = getLeftEdgeTileIndex();
+            int rightEdgeTile = getRightEdgeTileIndex();
+            int topEdgeTile = getTopEdgeTileIndex();
+            int bottomEdgeTile = getBottomEdgeTileIndex();
 
             int distanceToTravelX = dx;
             int distanceToTravelY = dy;
+
+            //find distance to level boundary in movement direction and see if it is less move amount
+            //figure out how many tiles your movement translates to in each direction
+            //scan tiles in front of you to find closest obstacle in that direction
+            //final movement is min of original movement and distance to obstacle
 
 
             if (dx > 0)
             {
                 //right
 
+                int distanceToBoundary = game.currLevel.GetTilesHorizontal() * Static.TILE_WIDTH - getRightEdgeX();
+                if (distanceToBoundary < distanceToTravelX)
+                {
+                    distanceToTravelX = distanceToBoundary;
+                }
 
                 int tilesToScanX = tilesX;
 
@@ -121,14 +146,6 @@ namespace GameName1
                     tilesToScanX = game.currLevel.GetTilesHorizontal() - 1 - rightEdgeTile;
                 }
 
-                if (tilesToScanX == 0) //right boundary?
-                {
-                    int distanceToBoundary = game.currLevel.GetTilesHorizontal() * Game1.TileWidth - rightEdgeX;
-                    if (distanceToBoundary < distanceToTravelX)
-                    {
-                        distanceToTravelX = distanceToBoundary;
-                    }
-                }
 
                 for (int i = 1; i <= tilesToScanX; i++)
                 {
@@ -137,7 +154,7 @@ namespace GameName1
                         Tile currTile = game.currLevel.getTile(rightEdgeTile + i, j);
                         if (currTile.isObstacle())
                         {
-                            int distanceToTile = currTile.x - rightEdgeX;
+                            int distanceToTile = currTile.x - getRightEdgeX();
                             if (distanceToTile < distanceToTravelX)
                             {
                                 distanceToTravelX = distanceToTile;
@@ -151,6 +168,13 @@ namespace GameName1
             {
                 //left
 
+
+                int distanceToBoundary = -1 * getLeftEdgeX();
+                if (distanceToBoundary > distanceToTravelX)
+                {
+                    distanceToTravelX = distanceToBoundary;
+                }
+
                 int tilesToScanX = tilesX;
 
                 if (leftEdgeTile - tilesToScanX < 0)
@@ -158,15 +182,6 @@ namespace GameName1
                     tilesToScanX = leftEdgeTile;
                 }
 
-                if (tilesToScanX == 0) //near boundary 
-                {
-
-                    int distanceToBoundary = -1*leftEdgeX;
-                    if (distanceToBoundary > distanceToTravelX)
-                    {
-                        distanceToTravelX = distanceToBoundary;
-                    }
-                }
 
                 for (int i = 1; i <= tilesToScanX; i++)
                 {
@@ -174,7 +189,7 @@ namespace GameName1
                         Tile currTile = game.currLevel.getTile(leftEdgeTile - i, j);
                         if (currTile.isObstacle())
                         {
-                            int distanceToTile = (currTile.x + Game1.TileWidth) - leftEdgeX;
+                            int distanceToTile = (currTile.x + Static.TILE_WIDTH) - getLeftEdgeX();
                             if (distanceToTile > distanceToTravelX)
                             {
                                 distanceToTravelX = distanceToTile;
@@ -185,26 +200,28 @@ namespace GameName1
                 }
             }
 
+            this.x = this.x + distanceToTravelX;
+            hitbox.Offset(distanceToTravelX, 0);
+            leftEdgeTile = getLeftEdgeTileIndex();
+            rightEdgeTile = getRightEdgeTileIndex();
+
+
             if (dy > 0)
             { //down
+
+                int distanceToBoundary = game.currLevel.GetTilesVertical() * Static.TILE_HEIGHT - getBottomEdgeY();
+                if (distanceToBoundary < distanceToTravelY)
+                {
+                    distanceToTravelY = distanceToBoundary;
+                }
+              
+
                 int tilesToScanY = tilesY;
+
                 if (bottomEdgeTile + tilesToScanY > game.currLevel.GetTilesVertical() - 1)
                 {
                     tilesToScanY = game.currLevel.GetTilesVertical() - 1 - bottomEdgeTile;
                 }
-
-                if (tilesToScanY == 0)
-                { //bottom boundary
-                    int distanceToBoundary = game.currLevel.GetTilesVertical() * Game1.TileHeight - bottomEdgeY;
-                    if (distanceToBoundary < distanceToTravelX)
-                    {
-                        distanceToTravelY = distanceToBoundary;
-                        if (distanceToBoundary == 0){
-                            LandOnGround();
-                        }
-                    }
-                }
-
 
                 for (int i = 1; i <= tilesToScanY; i++)
                 {
@@ -213,14 +230,10 @@ namespace GameName1
                         Tile currTile = game.currLevel.getTile(j, bottomEdgeTile + i);
                         if (currTile.isObstacle())
                         {
-                            int distanceToTile = currTile.y - bottomEdgeY;
+                            int distanceToTile = currTile.y - getBottomEdgeY();
                             if (distanceToTile < distanceToTravelY)
                             {
                                 distanceToTravelY = distanceToTile;
-                                if (distanceToTile == 0)
-                                {
-                                    LandOnGround();
-                                }
                             }
                         }
                     }
@@ -229,20 +242,21 @@ namespace GameName1
             }
             else if (dy < 0)
             { //up
+
+
+                int distanceToBoundary = -1 * getTopEdgeY();
+                if (distanceToBoundary > distanceToTravelY)
+                {
+                    distanceToTravelY = distanceToBoundary;
+                }
+
                 int tilesToScanY = tilesY;
+
                 if (topEdgeTile - tilesToScanY < 0)
                 {
                     tilesToScanY = topEdgeTile;
                 }
-
-                if (tilesToScanY == 0)
-                { //top boundary
-                    int distanceToBoundary = -1 * topEdgeY;
-                    if (distanceToBoundary > distanceToTravelY)
-                    {
-                        distanceToTravelY = distanceToBoundary;
-                    }
-                }
+                
 
                 for (int i = 1; i <= tilesToScanY; i++)
                 {
@@ -251,7 +265,7 @@ namespace GameName1
                         Tile currTile = game.currLevel.getTile(j, topEdgeTile - i);
                         if (currTile.isObstacle())
                         {
-                            int distanceToTile = (currTile.y + Game1.TileHeight) - topEdgeY;
+                            int distanceToTile = (currTile.y + Static.TILE_HEIGHT) - getTopEdgeY();
                             if (distanceToTile > distanceToTravelY)
                             {
                                 distanceToTravelY = distanceToTile;
@@ -263,17 +277,13 @@ namespace GameName1
 
             }
 
-            if (distanceToTravelY != 0)
-            {
-                falling = true;
-            }
+            this.y = this.y + distanceToTravelY; 
+            hitbox.Offset(0, distanceToTravelY);
 
-            this.x = this.x+distanceToTravelX;
-            this.y = this.y + distanceToTravelY ;
-            hitbox.Offset(distanceToTravelX,distanceToTravelY);
         }
 
-        
+
+
         protected void moveTo(int x, int y)
         {
             this.x = x;
@@ -283,37 +293,44 @@ namespace GameName1
 
         }
 
-        private void LandOnGround()
-        {
-            this.velocityY = 0;
-            this.falling = false;
-
-        }
 
         public int getLeftEdgeTileIndex()
         {
-            int leftEdgeX = this.x;
-            return (int)(Math.Floor((float)(leftEdgeX) / (float)(Game1.TileWidth)));
+            return (int)Math.Floor((float)getLeftEdgeX() / Static.TILE_WIDTH);
         }
+
+        public int getLeftEdgeX()
+        {
+            return hitbox.Left;
+        }
+
 
         public int getRightEdgeTileIndex()
         {
-            int rightEdgeX = this.x + this.width;
-            return (int)(Math.Ceiling((float)(rightEdgeX) / (Game1.TileWidth)) - 1);
+
+            return (int)Math.Ceiling(((float)getRightEdgeX() / Static.TILE_WIDTH)) - 1;
+        }
+        public int getRightEdgeX()
+        {
+            return hitbox.Right;
         }
 
         public int getTopEdgeTileIndex()
         {
-            int topEdgeY = this.y;
-            return (int)(Math.Floor((float)(topEdgeY) / (float)(Game1.TileHeight)));
-
-            
+            return (int)Math.Floor((float)getTopEdgeY() / Static.TILE_HEIGHT);
+        }
+        public int getTopEdgeY()
+        {
+            return hitbox.Top;
         }
 
         public int getBottomEdgeTileIndex()
         {
-            int bottomEdgeY = this.y + height;
-            return (int)(Math.Ceiling((float)(bottomEdgeY) / (float)(Game1.TileHeight)) - 1);
+            return (int)Math.Ceiling(((float)getBottomEdgeY() / Static.TILE_HEIGHT)) - 1;
+        }
+        public int getBottomEdgeY()
+        {
+            return hitbox.Bottom;
         }
 
         public Rectangle getHitbox()

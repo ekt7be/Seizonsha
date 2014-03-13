@@ -7,23 +7,14 @@ using System.Text;
 
 namespace GameName1
 {
-    public class Player : Animal
+    public class Player : GameEntity
     {
 
-        private Mate closestMate;
-
-        private static readonly int MATE_REFRESH_FRAMES = 10;
-        private static readonly int MATE_RADIUS = 4; //tiles to search
-
-        private int mateRefresh;
+        public Rectangle screen;
 
         public override void Update()
         {
-            closestMate = searchForMates();
 
-            if (mateRefresh>0){
-                mateRefresh--;
-            }
             base.Update();
         }
 
@@ -31,74 +22,35 @@ namespace GameName1
         {
             base.Draw(spriteBatch);
 
-            if (closestMate != null)
-            {
-                spriteBatch.DrawString(game.GetSpriteFont(), "<3", new Vector2(x, y), Color.White);
-            }
         }
 
-        public Player(Game1 game, Texture2D sprite, int x, int y, Color skinColor) : base(game, sprite, x, y, skinColor)
+        public Player(Game1 game, Texture2D sprite, int x, int y) : base(game, sprite, x, y, Static.PLAYER_WIDTH, Static.PLAYER_HEIGHT)
         {
-            this.mateRefresh = 0;
-        
+            this.screen = new Rectangle(0, 0, Static.SCREEN_WIDTH, Static.SCREEN_HEIGHT); // this will change depending on number of players
         }
 
-        public void Mate()
+        public void DrawScreen(SpriteBatch spriteBatch)
         {
-            if (closestMate != null && mateRefresh ==0 )
-            {
-                SkinColor = Game1.CombineColors(SkinColor, closestMate.SkinColor);
-                mateRefresh = MATE_REFRESH_FRAMES;
-                closestMate.setRemove(true);
-                game.GenerateMate();
-            }
+            //TODO:  Everything will be drawn through this so we can have split screen
+            //We need to use the spritebatch.draw method with scaling, and we will probably need to implement that 
+            //for every drawable class we have so that drawing can adjust for different screen sizes from splitscreen
         }
 
-        public Mate searchForMates(){
-
-            Mate returnMate = null;
-
-            int leftRange = getLeftEdgeTileIndex() - MATE_RADIUS;
-            if (leftRange < 0)
-            {
-                leftRange = 0;
-            }
-
-            int rightRange = getRightEdgeTileIndex() + MATE_RADIUS;
-            if (rightRange > game.currLevel.GetTilesHorizontal() - 1)
-            {
-                rightRange = game.currLevel.GetTilesHorizontal() - 1;
-            }
-
-            Rectangle rangeRect = new Rectangle(leftRange * Game1.TileWidth, y, (rightRange - leftRange) * Game1.TileWidth, height);
-
-            foreach (GameEntity entity in game.getEntities())
-            {
-                if (entity.GetType() == typeof(Mate)) //animal
-                {
-                    if (rangeRect.Intersects(entity.getHitbox()))
-                    {
-                        //within radius
-                        if (returnMate == null)
-                        {
-                            returnMate = (Mate)entity;
-                        }
-                        else
-                        {
-                            int distanceToCurrent = Math.Abs(x - returnMate.x) + Math.Abs(x + width - (returnMate.x + returnMate.width));
-                            int distanceToNew = Math.Abs(x - entity.x) + Math.Abs(x + width - (entity.x + entity.width));
-
-                            if (distanceToNew < distanceToCurrent)
-                            {
-                                returnMate = (Mate)entity;
-                            }
-                        }
-                    }
-                }
-            }
-
-            return returnMate;
-
+        public void MoveUp()
+        {
+            this.move(0, -10);
+        }
+        public void MoveDown()
+        {
+            this.move(0, 10);
+        }
+        public void MoveLeft()
+        {
+            this.move(-10, 0);
+        }
+        public void MoveRight()
+        {
+            this.move(10, 0);
         }
     }
 }

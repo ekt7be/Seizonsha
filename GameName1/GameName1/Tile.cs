@@ -11,26 +11,24 @@ namespace GameName1
     public class Tile
     {
 
-        private Game1 game;
-        private Texture2D sprite;
         private bool obstacle;
-        private Color color;
+        private int type;
         public int x;
         public int y;
+        public Rectangle bounds;
 
-        public Tile (Game1 game, Texture2D sprite, Color color, int x, int y, bool obstacle){
+        public Tile (int type, int x, int y, bool obstacle){
             this.x = x;
             this.y = y;
+            this.type = type;
             this.obstacle = obstacle;
-            this.game = game;
-            this.sprite = sprite;
-            this.color = color;
+            this.bounds = new Rectangle(x, y, Static.TILE_WIDTH, Static.TILE_HEIGHT);
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch, Texture2D sprite, int cameraX, int cameraY)
         {
 
-               spriteBatch.Draw(sprite, new Rectangle(x - game.cameraX, y, Game1.TileWidth, Game1.TileHeight), color);
+               spriteBatch.Draw(sprite, new Rectangle(x - cameraX, y - cameraY, Static.TILE_WIDTH, Static.TILE_HEIGHT), Color.White);
 
         }
 
@@ -44,9 +42,13 @@ namespace GameName1
             this.obstacle = obstacle;
         }
 
-        public Color getColor()
+        public int getType()
         {
-            return color;
+            return type;
+        }
+        public Rectangle getBounds()
+        {
+            return bounds;
         }
 
     }

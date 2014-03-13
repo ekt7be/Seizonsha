@@ -11,42 +11,30 @@ namespace GameName1
     {
 
         public Tile[,] tiles;
+        public Level level;
         private int tilesHorz;
         private int tilesVert;
 
-        public TileMap(Game1 game, int tilesHorz, int tilesVert){
+        public TileMap(Level level, int tilesHorz, int tilesVert){
             this.tilesHorz = tilesHorz;
             this.tilesVert = tilesVert;
+            this.level = level;
 
             tiles = new Tile[tilesHorz,tilesVert];
-
-            Texture2D rect = new Texture2D(game.GraphicsDevice, Game1.TileWidth, Game1.TileHeight);
-
-            Color[] data = new Color[Game1.TileHeight*Game1.TileWidth];
-            for (int i = 0; i < data.Length; ++i)
-            {
-
-                data[i] = Color.White;
-                
-            }
-            rect.SetData(data);
-
 
             for (int i = 0; i < tilesHorz; i++)
             {
                 for (int j = 0; j < tilesVert; j++)
                 {
-                    if (j > tilesVert/2 && i < tilesHorz / 4)
+                    if (j > tilesVert * 3 / 4 || (i < tilesHorz / 2 && j > tilesVert / 2))
                     {
-                        tiles[i, j] = new Tile(game, rect, Color.BurlyWood, i * Game1.TileWidth, j * Game1.TileHeight, true);
-                    }
-                    else if (j > tilesVert * 3 / 4 || (i < tilesHorz / 2 && j > tilesVert / 2))
-                    {
-                        tiles[i, j] = new Tile(game, rect, Color.Green, i * Game1.TileWidth, j * Game1.TileHeight, true);
+                        //tiles[i, j] = new Tile(Static.TILE_NOT_OBSTACLE, i * Static.TILE_WIDTH, j * Static.TILE_HEIGHT, false);
+
+                        tiles[i, j] = new Tile(Static.TILE_OBSTACLE, i * Static.TILE_WIDTH, j * Static.TILE_HEIGHT, true);
                     }
                     else
                     {
-                        tiles[i, j] = new Tile(game, rect, Color.Blue, i * Game1.TileWidth, j * Game1.TileHeight, false);
+                        tiles[i, j] = new Tile(Static.TILE_NOT_OBSTACLE, i * Static.TILE_WIDTH, j * Static.TILE_HEIGHT, false);
 
                     }
 
@@ -56,13 +44,13 @@ namespace GameName1
             }
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch, int cameraX, int cameraY)
         {
             for (int i = 0; i < tilesHorz; i++)
             {
                 for (int j = 0; j < tilesVert; j++)
                 {
-                    tiles[i, j].Draw(spriteBatch);
+                    tiles[i, j].Draw(spriteBatch, level.getTileSprite(tiles[i,j].getType()), cameraX, cameraY);
                 }
             }
         }
