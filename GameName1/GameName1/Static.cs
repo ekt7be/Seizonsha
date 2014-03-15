@@ -11,6 +11,12 @@ namespace GameName1
         //player stuff
         public static readonly int PLAYER_HEIGHT = 100;
         public static readonly int PLAYER_WIDTH = 100;
+        public static readonly int PLAYER_MAX_HEALTH = 100;
+        public static readonly int PLAYER_MAX_MANA = 100;
+        public static readonly int PLAYER_L1_SKILL_INDEX = 0;
+        public static readonly int PLAYER_L2_SKILL_INDEX = 1;
+        public static readonly int PLAYER_R1_SKILL_INDEX = 2;
+        public static readonly int PLAYER_R2_SKILL_INDEX = 3;
 
         //dimensions
         public static readonly int SCREEN_WIDTH = 640;

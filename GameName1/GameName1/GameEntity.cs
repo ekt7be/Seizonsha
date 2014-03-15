@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GameName1.Interfaces;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -7,27 +8,32 @@ using System.Text;
 
 namespace GameName1
 {
-    public abstract class GameEntity
+    public abstract class GameEntity : Spawnable
     {
 
-        public int x;
-        public int y;
-        public int width;
-        public int height;
+        public int x { get; set; }
+        public int y { get; set; }
+        public float direction { get; set; }
+        public int width { get; set; }
+        public int height { get; set; }
         protected Rectangle hitbox;
-        public bool remove;
-        public int velocityX;
-        public int velocityY;
-        public int accelX;
-        public int accelY;
-        public Game1 game;
-        public Texture2D sprite;
+        private bool remove;
+        public bool collidable { get; set; }
+        public int velocityX { get; set; }
+        public int velocityY { get; set; }
+        public int accelX { get; set; }
+        public int accelY { get; set; }
+        private Seizonsha game;
+        public Texture2D sprite { get; set; }
+        public Color color { get; set; } //delete when we have actual sprites
+
+        //TODO: create depth variable that Game object can sort entities by to determine which to draw first (so effects can go on top etc)
 
 
         virtual public void Draw(SpriteBatch spriteBatch)
         {
 
-              spriteBatch.Draw(sprite, hitbox, Color.Aquamarine);
+              spriteBatch.Draw(sprite, hitbox, color);
 
         }
 
@@ -42,13 +48,8 @@ namespace GameName1
 
         }
 
-        virtual public void onSpawn()
-        {
-            //When this entity is spawned into the game
-        }
 
-
-        public GameEntity(Game1 game, Texture2D sprite, int x, int y, int width, int height)
+        public GameEntity(Seizonsha game, Texture2D sprite, int x, int y, int width, int height)
         {
 
             this.x = x;
@@ -61,18 +62,24 @@ namespace GameName1
             this.velocityY = 0;
             this.game = game;
             this.sprite = sprite;
+            this.direction = 0;
+            this.collidable = true;
+            this.color = Color.White;
 
         }
+
+        public abstract void OnSpawn();
+        public abstract void collideWithWall();
+        public abstract void collide(GameEntity entity);
 
 
         public void setRemove(bool remove)
         {
             this.remove = remove;
         }
-
-        public void setVelocityX(int vX)
+        public bool shouldRemove()
         {
-            velocityX = vX;
+            return remove;
         }
 
         public void incVelocityX(int dVX)
@@ -80,29 +87,14 @@ namespace GameName1
             velocityX += dVX;
         }
 
-        public void setVelocityY(int vY)
-        {
-            velocityY = vY;
-        }
-
         public void incVelocityY(int dVY)
         {
             velocityY += dVY;
         }
 
-        public void setAccelX(int aX)
-        {
-            this.accelX = aX;
-        }
-
         public void incAccelX(int dAX)
         {
             this.accelX += dAX;
-        }
-
-        public void setAccelY(int aY)
-        {
-            this.accelY = aY;
         }
 
         public void incAccelY(int dAY)
@@ -111,6 +103,14 @@ namespace GameName1
         }
 
         protected void move(int dx, int dy){
+
+            if (!collidable) //skip collision detection
+            {
+                moveTo(this.x + dx, this.y + dy);
+                return;
+            }
+
+            bool collision = false;
 
             int tilesX = (int)Math.Floor((float)Math.Abs(dx) / Static.TILE_WIDTH)+1;
             int tilesY = (int)Math.Floor((float)Math.Abs(dy) / Static.TILE_HEIGHT)+1;
@@ -137,6 +137,7 @@ namespace GameName1
                 if (distanceToBoundary < distanceToTravelX)
                 {
                     distanceToTravelX = distanceToBoundary;
+                    collision = true;
                 }
 
                 int tilesToScanX = tilesX;
@@ -158,6 +159,7 @@ namespace GameName1
                             if (distanceToTile < distanceToTravelX)
                             {
                                 distanceToTravelX = distanceToTile;
+                                collision = true;
                             }
                         }
                     }
@@ -173,6 +175,7 @@ namespace GameName1
                 if (distanceToBoundary > distanceToTravelX)
                 {
                     distanceToTravelX = distanceToBoundary;
+                    collision = true;
                 }
 
                 int tilesToScanX = tilesX;
@@ -193,6 +196,7 @@ namespace GameName1
                             if (distanceToTile > distanceToTravelX)
                             {
                                 distanceToTravelX = distanceToTile;
+                                collision = true;
                             }
                         }
                     }
@@ -213,6 +217,7 @@ namespace GameName1
                 if (distanceToBoundary < distanceToTravelY)
                 {
                     distanceToTravelY = distanceToBoundary;
+                    collision = true;
                 }
               
 
@@ -234,6 +239,7 @@ namespace GameName1
                             if (distanceToTile < distanceToTravelY)
                             {
                                 distanceToTravelY = distanceToTile;
+                                collision = true;
                             }
                         }
                     }
@@ -248,6 +254,7 @@ namespace GameName1
                 if (distanceToBoundary > distanceToTravelY)
                 {
                     distanceToTravelY = distanceToBoundary;
+                    collision = true;
                 }
 
                 int tilesToScanY = tilesY;
@@ -269,6 +276,7 @@ namespace GameName1
                             if (distanceToTile > distanceToTravelY)
                             {
                                 distanceToTravelY = distanceToTile;
+                                collision = true;
                             }
                         }
                     }
@@ -279,6 +287,11 @@ namespace GameName1
 
             this.y = this.y + distanceToTravelY; 
             hitbox.Offset(0, distanceToTravelY);
+
+            if (collision)
+            {
+                collideWithWall();
+            }
 
         }
 

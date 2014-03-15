@@ -11,9 +11,9 @@ namespace GameName1
     {
         private TileMap map;
         private Dictionary<int, Texture2D> tileSprites;
-        private Game1 game;
+        private Seizonsha game;
 
-        public Level(Game1 game)
+        public Level(Seizonsha game)
         {
             this.game = game;
             this.map = new TileMap(this, Static.TILES_ON_SCREEN_X, Static.TILES_ON_SCREEN_Y);
