@@ -15,6 +15,7 @@ namespace GameName1
         private int type;
         public int x;
         public int y;
+        public List<GameEntity> touching;
         public Rectangle bounds;
 
         public Tile (int type, int x, int y, bool obstacle){
@@ -22,14 +23,25 @@ namespace GameName1
             this.y = y;
             this.type = type;
             this.obstacle = obstacle;
+            this.touching = new List<GameEntity>();
             this.bounds = new Rectangle(x, y, Static.TILE_WIDTH, Static.TILE_HEIGHT);
         }
 
         public void Draw(SpriteBatch spriteBatch, Texture2D sprite, int cameraX, int cameraY)
         {
+                spriteBatch.Draw(sprite, new Rectangle(x - cameraX, y - cameraY, Static.TILE_WIDTH, Static.TILE_HEIGHT), Color.White);
+        }
 
-               spriteBatch.Draw(sprite, new Rectangle(x - cameraX, y - cameraY, Static.TILE_WIDTH, Static.TILE_HEIGHT), Color.White);
-
+        public void BindEntity(GameEntity entity, bool bind)
+        {
+            if (bind)
+            {
+                touching.Add(entity);
+            }
+            else
+            {
+                touching.Remove(entity);
+            }
         }
 
         public bool isObstacle()

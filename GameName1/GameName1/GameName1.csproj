@@ -35,10 +35,13 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Collision.cs" />
+    <Compile Include="Effects\TextEffect.cs" />
     <Compile Include="Interfaces\AI.cs" />
     <Compile Include="Interfaces\Equipable.cs" />
     <Compile Include="Interfaces\Spawnable.cs" />
     <Compile Include="Interfaces\Unlockable.cs" />
+    <Compile Include="NPCs\BasicNPC.cs" />
     <Compile Include="Skills\ChangeColor.cs" />
     <Compile Include="Static.cs" />
     <Compile Include="Level.cs" />
@@ -78,7 +81,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="SkillTree\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

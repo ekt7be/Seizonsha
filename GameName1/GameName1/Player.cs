@@ -1,4 +1,5 @@
-﻿using GameName1.Interfaces;
+﻿using GameName1.Effects;
+using GameName1.Interfaces;
 using GameName1.Skills;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -25,7 +26,7 @@ namespace GameName1
 
         public override void Update()
         {
-            base.Update();
+            
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -42,7 +43,8 @@ namespace GameName1
 
         public override void collide(GameEntity entity)
         {
-            //nothing happens
+            //Static.Debug("Player collision with entity");
+            game.Spawn(new TextEffect(game, "collision", 30, x, y));
         }
 
         public override void collideWithWall()
@@ -156,19 +158,19 @@ namespace GameName1
 
         public void MoveUp()
         {
-            this.move(0, -10);
+            this.move(0, -Static.PLAYER_MOVE_SPEED);
         }
         public void MoveDown()
         {
-            this.move(0, 10);
+            this.move(0, Static.PLAYER_MOVE_SPEED);
         }
         public void MoveLeft()
         {
-            this.move(-10, 0);
+            this.move(-Static.PLAYER_MOVE_SPEED, 0);
         }
         public void MoveRight()
         {
-            this.move(10, 0);
+            this.move(Static.PLAYER_MOVE_SPEED, 0);
         }
     }
 }
