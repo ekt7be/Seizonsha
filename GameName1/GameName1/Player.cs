@@ -26,7 +26,12 @@ namespace GameName1
 
         public override void Update()
         {
-            
+            foreach (Equipable skill in skillSlots){
+                if (skill != null)
+                {
+                    skill.Update(game, this);
+                }
+            }
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -43,8 +48,9 @@ namespace GameName1
 
         public override void collide(GameEntity entity)
         {
-            //Static.Debug("Player collision with entity");
-            game.Spawn(new TextEffect(game, "collision", 30, x, y));
+            //game.Spawn(new TextEffect(game, "collision", 30, x, y));
+           // game.damageArea(game.getLevelBounds(), 300, Static.DAMAGE_TYPE_ALL);
+            //setCollidable(false);
         }
 
         public override void collideWithWall()
@@ -52,7 +58,7 @@ namespace GameName1
             //nothing happens
         }
 
-        public Player(Seizonsha game, PlayerIndex playerIndex, Texture2D sprite, int x, int y) : base(game, sprite, x, y, Static.PLAYER_WIDTH, Static.PLAYER_HEIGHT)
+        public Player(Seizonsha game, PlayerIndex playerIndex, Texture2D sprite, int x, int y) : base(game, sprite, x, y, Static.PLAYER_WIDTH, Static.PLAYER_HEIGHT, Static.TARGET_TYPE_FRIENDLY, Static.PLAYER_MAX_HEALTH)
         {
             this.cameraX = 0;
             this.cameraY = 0;
@@ -69,7 +75,7 @@ namespace GameName1
             Equip(new ChangeColor(Color.Red), Static.PLAYER_L1_SKILL_INDEX);
             Equip(new ChangeColor(Color.Purple), Static.PLAYER_L2_SKILL_INDEX);
             Equip(new ChangeColor(Color.Green), Static.PLAYER_R1_SKILL_INDEX);
-            Equip(new ChangeColor(Color.Black), Static.PLAYER_R2_SKILL_INDEX);
+            Equip(new Sword(30, 10), Static.PLAYER_R2_SKILL_INDEX);
 
 
 
@@ -99,12 +105,12 @@ namespace GameName1
                 return;
             }
             //make sure skill can be used
-            else if (!skillSlots[skillIndex].Available(this))
+            else if (!skillSlots[skillIndex].Available(game, this))
             {
                 return;
             }
             //use skill
-            skillSlots[skillIndex].Use(this);
+            skillSlots[skillIndex].Use(game, this);
         }
 
         public void addEquipable(Equipable equip)
@@ -120,11 +126,11 @@ namespace GameName1
             //unequip previous skill if there was one
             if (skillSlots[skillIndex] != null)
             {
-                skillSlots[skillIndex].OnUnequip(this);
+                skillSlots[skillIndex].OnUnequip(game, this);
             }
             //equip new skill
             skillSlots[skillIndex] = equip;
-            equip.OnEquip(this);
+            equip.OnEquip(game, this);
 
 
         }
@@ -171,6 +177,11 @@ namespace GameName1
         public void MoveRight()
         {
             this.move(Static.PLAYER_MOVE_SPEED, 0);
+        }
+
+        protected override void OnDie()
+        {
+            dead = true;
         }
     }
 }

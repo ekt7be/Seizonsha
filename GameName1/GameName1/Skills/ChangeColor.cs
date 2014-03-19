@@ -22,17 +22,17 @@ namespace GameName1.Skills
         {
             return "Changes user's color.";
         }
-        public bool Available(GameEntity user){
+        public bool Available(Seizonsha game, GameEntity user){
             return true;  //always true
         }
-        public void Use(GameEntity user)
+        public void Use(Seizonsha game, GameEntity user)
         {
             user.color = color;
         }
-        public void OnEquip(GameEntity user)
+        public void OnEquip(Seizonsha game, GameEntity user)
         {
         }
-        public void OnUnequip(GameEntity user)
+        public void OnUnequip(Seizonsha game, GameEntity user)
         {
         }
         public void OnUnlock(Player player)
@@ -40,6 +40,8 @@ namespace GameName1.Skills
             player.addEquipable(this);
         }
 
-
+        public void Update(Seizonsha game, GameEntity entity)
+        {
+        }
     }
 }

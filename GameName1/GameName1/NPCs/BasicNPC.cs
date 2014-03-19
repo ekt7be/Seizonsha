@@ -9,9 +9,10 @@ namespace GameName1.NPCs
 {
     class BasicNPC : GameEntity, AI
     {
+        private int count = 0;
 
         public BasicNPC(Seizonsha game, Texture2D sprite, int x, int y, int width, int height)
-            : base(game, sprite, x, y, width, height)
+            : base(game, sprite, x, y, width, height, Static.DAMAGE_TYPE_ENEMY, 20)
         {
 
         }
@@ -38,6 +39,11 @@ namespace GameName1.NPCs
         public override void Update()
         {
             
+        }
+
+        protected override void OnDie()
+        {
+            count++;
         }
     }
 }

@@ -19,6 +19,9 @@ namespace GameName1
         public Rectangle hitbox;
         private bool remove;
         private bool collidable;
+        private int targetType;
+        private int maxHealth;
+        private int health;
         public int velocityX { get; set; }
         public int velocityY { get; set; }
         public int accelX { get; set; }
@@ -26,6 +29,7 @@ namespace GameName1
         protected Seizonsha game;
         public Texture2D sprite { get; set; }
         public Color color { get; set; } //delete when we have actual sprites
+        private int frozen; // stop entity from moving for a period of time
 
         //TODO: create depth variable that Game object can sort entities by to determine which to draw first (so effects can go on top etc)
 
@@ -33,6 +37,10 @@ namespace GameName1
         virtual public void Draw(SpriteBatch spriteBatch)
         {
 
+            if (sprite == null)
+            {
+                return;
+            }
               spriteBatch.Draw(sprite, hitbox, color);
 
         }
@@ -48,16 +56,23 @@ namespace GameName1
             {
                 move(velocityX, velocityY);
             }
+            if (frozen > 0)
+            {
+                frozen--;
+            }
         }
 
 
-        public GameEntity(Seizonsha game, Texture2D sprite, int x, int y, int width, int height)
+        public GameEntity(Seizonsha game, Texture2D sprite, int x, int y, int width, int height, int targetType, int maxHealth)
         {
 
             this.x = x;
             this.y = y;
             this.width = width;
             this.height = height;
+            this.targetType = targetType;
+            this.maxHealth = maxHealth;
+            this.health = maxHealth;
             this.remove = false;
             this.hitbox = new Rectangle(x, y, width, height);
             this.velocityX = 0;
@@ -67,16 +82,17 @@ namespace GameName1
             this.direction = 0;
             this.collidable = true;
             this.color = Color.White;
+            this.frozen = 0;
 
         }
 
+        protected abstract void OnDie();
         public abstract void OnSpawn();
         public abstract void collideWithWall();
         public abstract void collide(GameEntity entity);
 
         public void setCollidable(bool collidable)
         {
-            game.BindEntityToTiles(this, collidable);
             this.collidable = collidable;
         }
 
@@ -102,6 +118,14 @@ namespace GameName1
 
         }
 
+        public void Freeze(int time)
+        {
+            frozen = time;
+        }
+        public bool isFrozen()
+        {
+            return frozen > 0;
+        }
         public void setRemove(bool remove)
         {
             this.remove = remove;
@@ -131,46 +155,53 @@ namespace GameName1
             this.accelY += dAY;
         }
 
+        public void rotateToAngle(float angle){
+            this.direction = angle;
+        }
+
+        public void rotate(float angle)
+        {
+            this.direction += angle;
+        }
+
+        public float getDirectionAngle()
+        {
+            return direction;
+        }
         public void move(int dx, int dy)
         {
+            if (isFrozen())
+            {
+                return;
+            }
             game.moveGameEntity(this, dx, dy);
         }
 
-
-        public int getLeftEdgeTileIndex()
+        public int getCenterX()
         {
-            return (int)Math.Floor((float)getLeftEdgeX() / Static.TILE_WIDTH);
+            return x + width / 2;
         }
 
+        public int getCenterY()
+        {
+            return y + height / 2;
+        }
         public int getLeftEdgeX()
         {
             return hitbox.Left;
         }
 
 
-        public int getRightEdgeTileIndex()
-        {
-
-            return (int)Math.Ceiling(((float)getRightEdgeX() / Static.TILE_WIDTH)) - 1;
-        }
         public int getRightEdgeX()
         {
             return hitbox.Right;
         }
 
-        public int getTopEdgeTileIndex()
-        {
-            return (int)Math.Floor((float)getTopEdgeY() / Static.TILE_HEIGHT);
-        }
         public int getTopEdgeY()
         {
             return hitbox.Top;
         }
 
-        public int getBottomEdgeTileIndex()
-        {
-            return (int)Math.Ceiling(((float)getBottomEdgeY() / Static.TILE_HEIGHT)) - 1;
-        }
         public int getBottomEdgeY()
         {
             return hitbox.Bottom;
@@ -180,5 +211,52 @@ namespace GameName1
         {
             return hitbox;
         }
+
+        public int getHealth()
+        {
+            return health;
+        }
+
+        public int getTargetType()
+        {
+            return targetType;
+        }
+        public void damage(int amount, int damageType)
+        {
+            if ((targetType == Static.TARGET_TYPE_ENEMY && damageType == Static.TARGET_TYPE_FRIENDLY) 
+                || (targetType == Static.TARGET_TYPE_FRIENDLY && damageType == Static.TARGET_TYPE_ENEMY)
+                || (targetType != Static.TARGET_TYPE_NOT_DAMAGEABLE && damageType == Static.DAMAGE_TYPE_ALL)
+                || (targetType == Static.TARGET_TYPE_ALL))
+            {
+                incHealth(-1 * amount);
+            }
+        }
+
+        public void heal(int amount)
+        {
+            incHealth(amount);
+        }
+
+
+        public void incHealth(int amount){
+            health += amount;
+            if (health > maxHealth){
+                health = maxHealth;
+            }
+            if (health < 0)
+            {
+                health = 0;
+                die();
+            }
+        }
+
+        public void die()
+        {
+            OnDie();
+            setRemove(true);
+        }
+
+
+
     }
 }

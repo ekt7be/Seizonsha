@@ -27,6 +27,7 @@ namespace GameName1
         private Queue<GameEntity> removalQueue;
         private Queue<Spawnable> spawnQueue;
         private HashSet<Collision> collisions;
+        private List<AI> AIs;
 
         private Level currLevel;
 
@@ -45,6 +46,7 @@ namespace GameName1
         protected override void Initialize()
         {
             entities = new List<GameEntity>();
+            AIs = new List<AI>();
             removalQueue = new Queue<GameEntity>();
             spawnQueue = new Queue<Spawnable>();
             collisions = new HashSet<Collision>();
@@ -67,6 +69,7 @@ namespace GameName1
 
             players[0] = new Player(this,PlayerIndex.One,playerRect,0,0);
 
+            Spawn(players[0]);
             Spawn(new BasicNPC(this, playerRect, 300, 100, 10, 10));
 
             base.Initialize();
@@ -110,36 +113,43 @@ namespace GameName1
                     {
                         BindEntityToTiles((GameEntity)spawn, true);
                     }
+
+                    if (spawn is AI)
+                    {
+                        AIs.Add((AI)spawn);
+                    }
                 }
+
+
+
                 spawn.OnSpawn();
 
             }
 
-            //update all entities
+            //update all entities including players
             foreach (GameEntity entity in entities)
             {
                 entity.UpdateAll();
                 if (entity.shouldRemove())
                 {
+                    if (entity is GameEntity){
+                        BindEntityToTiles((GameEntity)entity, false);
+                    }
                     removalQueue.Enqueue(entity);
                 }
 
-            }
-            //update all players
-            foreach (Player player in players)
-            {
-                if (player == null)
-                {
-                    continue;
-                }
-                player.UpdateAll();
             }
 
 
             //remove entities flagged for removal
             while (removalQueue.Count > 0)
             {
-                entities.Remove(removalQueue.Dequeue());
+                GameEntity remEntity = removalQueue.Dequeue();
+                entities.Remove(remEntity);
+                if (remEntity is AI)
+                {
+                    AIs.Remove((AI)remEntity);
+                }
             }
 
 
@@ -153,7 +163,11 @@ namespace GameName1
                 handlePlayerInput(player);
             }
 
-            //TODO: run AI
+            //run AI
+            foreach (AI ai in AIs)
+            {
+                ai.AI();
+            }
 
 
             //execute all collisions
@@ -168,6 +182,45 @@ namespace GameName1
         }
 
 
+        /// <summary>
+        /// This is called when the game should draw itself.
+        /// </summary>
+        /// <param name="gameTime">Provides a snapshot of timing values.</param>
+        protected override void Draw(GameTime gameTime)
+        {
+            GraphicsDevice.Clear(Color.CornflowerBlue);
+
+            spriteBatch.Begin();
+
+
+            currLevel.Draw(spriteBatch, 0, 0);
+            foreach (GameEntity entity in entities)
+            {
+                entity.Draw(spriteBatch);
+            }
+
+            foreach (Player player in players)
+            {
+                if (player == null)
+                {
+                    continue;
+                }
+
+                string displaySkills = "L1: " + player.getSkill(Static.PLAYER_L1_SKILL_INDEX).getName() + "\n" +
+                    "L2: " + player.getSkill(Static.PLAYER_L2_SKILL_INDEX).getName() + "\n" +
+                    "R1: " + player.getSkill(Static.PLAYER_R1_SKILL_INDEX).getName() + "\n" +
+                    "R2: " + player.getSkill(Static.PLAYER_R2_SKILL_INDEX).getName() + "\n";
+                spriteBatch.DrawString(spriteFont, displaySkills, new Vector2(50, 50), Color.White);
+            }
+
+            //print text
+            //spriteBatch.DrawString(spriteFont, "TEXT", new Vector2(50, 50), Color.White);
+
+            spriteBatch.End();
+            base.Draw(gameTime);
+        }
+
+
 
         protected void handlePlayerInput(Player player)
         {
@@ -178,18 +231,25 @@ namespace GameName1
             if (GamePad.GetState(player.playerIndex).ThumbSticks.Left.Y > .5 || Keyboard.GetState().IsKeyDown(Keys.Up))
             {
                 player.MoveUp();
+                player.rotateToAngle((float)Math.PI / 2);
             }
             if (GamePad.GetState(player.playerIndex).ThumbSticks.Left.X < -.5 || Keyboard.GetState().IsKeyDown(Keys.Left))
             {
                 player.MoveLeft();
+                player.rotateToAngle((float)Math.PI);
+
             }
             if (GamePad.GetState(player.playerIndex).ThumbSticks.Left.X > .5 || Keyboard.GetState().IsKeyDown(Keys.Right))
             {
                 player.MoveRight();
+                player.rotateToAngle((float)0);
+
             }
             if (GamePad.GetState(player.playerIndex).ThumbSticks.Left.Y < -.5 || Keyboard.GetState().IsKeyDown(Keys.Down))
             {
                 player.MoveDown();
+                player.rotateToAngle((float)(3 * Math.PI / 2));
+
             }
 
 
@@ -214,15 +274,39 @@ namespace GameName1
 
         public void BindEntityToTiles(GameEntity entity, bool bind)
         {
-            for (int i = entity.getLeftEdgeTileIndex(); i <= entity.getRightEdgeTileIndex(); i++)
+            for (int i = getTileIndexFromLeftEdgeX(entity.getLeftEdgeX()); i <= getTileIndexFromRightEdgeX(entity.getRightEdgeX()); i++)
             {
-                for (int j = entity.getTopEdgeTileIndex(); j <= entity.getBottomEdgeTileIndex(); j++)
+                for (int j = getTileIndexFromTopEdgeY(entity.getTopEdgeY()); j <= getTileIndexFromBottomEdgeY(entity.getBottomEdgeY()); j++)
                 {
-                    currLevel.getTile(i, j).BindEntity(entity, bind);
+                    Tile currTile = currLevel.getTile(i, j);
+                    if (currTile != null) //if within bounds of level
+                    {
+                        currLevel.getTile(i, j).BindEntity(entity, bind);
+                    }
                 }
             }
         }
 
+        public Texture2D getTestSprite(Rectangle bounds, Color color)
+        {
+            Texture2D testRect = new Texture2D(GraphicsDevice, bounds.Height, bounds.Width);
+
+            Color[] data = new Color[bounds.Height * bounds.Width];
+            for (int i = 0; i < data.Length; ++i)
+            {
+                data[i] = color;
+            }
+
+            testRect.SetData(data);
+            return testRect;
+        }
+
+
+        public void damageArea(Rectangle bounds, int amount, int damageType){
+            foreach (GameEntity entity in getEntitiesInBounds(bounds)){
+                entity.damage(amount, damageType);
+            }
+        }
 
         private void moveGameEntityWithoutCollision(GameEntity entity, int x, int y)
         {
@@ -235,13 +319,15 @@ namespace GameName1
         public void moveGameEntity(GameEntity entity, int dx, int dy)
         {
 
+            BindEntityToTiles(entity, false);
+
             if (!entity.isCollidable()) //skip collision detection
             {
                 moveGameEntityWithoutCollision(entity, entity.x + dx, entity.y + dy);
+                BindEntityToTiles(entity, true);
                 return;
             }
 
-            BindEntityToTiles(entity, false);
 
             bool wallCollision = false;
 
@@ -250,10 +336,10 @@ namespace GameName1
             int tilesY = (int)Math.Floor((float)Math.Abs(dy) / Static.TILE_HEIGHT) + 1;
 
             //get entity bounds
-            int leftEdgeTile = entity.getLeftEdgeTileIndex();
-            int rightEdgeTile = entity.getRightEdgeTileIndex();
-            int topEdgeTile = entity.getTopEdgeTileIndex();
-            int bottomEdgeTile = entity.getBottomEdgeTileIndex();
+            int leftEdgeTile = getTileIndexFromLeftEdgeX(entity.getLeftEdgeX());
+            int rightEdgeTile = getTileIndexFromRightEdgeX(entity.getRightEdgeX());
+            int topEdgeTile = getTileIndexFromTopEdgeY(entity.getTopEdgeY());
+            int bottomEdgeTile = getTileIndexFromBottomEdgeY(entity.getBottomEdgeY());
 
             int distanceToTravelX = dx;
             int distanceToTravelY = dy;
@@ -300,7 +386,7 @@ namespace GameName1
                         }
 
                         GameEntity closest = null;
-                        foreach (GameEntity tileEntity in currTile.touching)
+                        foreach (GameEntity tileEntity in currTile.getEntities()) 
                         {
                             if (tileEntity.getLeftEdgeX() - entity.getRightEdgeX() < distanceToTravelX)
                             {
@@ -357,7 +443,7 @@ namespace GameName1
                         }
 
                         GameEntity closest = null;
-                        foreach (GameEntity tileEntity in currTile.touching)
+                        foreach (GameEntity tileEntity in currTile.getEntities())
                         {
                             if (tileEntity.getRightEdgeX() - entity.getLeftEdgeX() > distanceToTravelX)
                             {
@@ -380,8 +466,8 @@ namespace GameName1
 
             entity.x = entity.x + distanceToTravelX;
             entity.hitbox.Offset(distanceToTravelX, 0);
-            leftEdgeTile = entity.getLeftEdgeTileIndex();
-            rightEdgeTile = entity.getRightEdgeTileIndex();
+            leftEdgeTile = getTileIndexFromLeftEdgeX(entity.getLeftEdgeX());
+            rightEdgeTile = getTileIndexFromRightEdgeX(entity.getRightEdgeX());
 
 
             if (dy > 0)
@@ -419,7 +505,7 @@ namespace GameName1
                         }
 
                         GameEntity closest = null;
-                        foreach (GameEntity tileEntity in currTile.touching)
+                        foreach (GameEntity tileEntity in currTile.getEntities())
                         {
                             if (tileEntity.getTopEdgeY() - entity.getBottomEdgeY() < distanceToTravelY)
                             {
@@ -475,7 +561,7 @@ namespace GameName1
                         }
 
                         GameEntity closest = null;
-                        foreach (GameEntity tileEntity in currTile.touching)
+                        foreach (GameEntity tileEntity in currTile.getEntities())
                         {
                             if (tileEntity.getBottomEdgeY() - entity.getTopEdgeY() > distanceToTravelY)
                             {
@@ -509,43 +595,55 @@ namespace GameName1
         }
 
 
-        /// <summary>
-        /// This is called when the game should draw itself.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
-        protected override void Draw(GameTime gameTime)
+
+
+        public List<GameEntity> getEntitiesInBounds(Rectangle bounds)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            spriteBatch.Begin();
-
-
-            currLevel.Draw(spriteBatch,0,0);
-            foreach (GameEntity entity in entities)
+            //hash set so there will be no duplicates
+            HashSet<GameEntity> returnSet = new HashSet<GameEntity>();
+            for (int i = getTileIndexFromLeftEdgeX(bounds.Left); i <= getTileIndexFromRightEdgeX(bounds.Right); i++)
             {
-                entity.Draw(spriteBatch);
-            }
-
-            foreach (Player player in players)
-            {
-                if (player == null)
+                for (int j = getTileIndexFromTopEdgeY(bounds.Top); j <= getTileIndexFromBottomEdgeY(bounds.Bottom); j++)
                 {
-                    continue;
+                    Tile currTile = currLevel.getTile(i, j);
+                    if (currTile != null)
+                    {
+                        foreach (GameEntity entity in currTile.getEntities())
+                        {
+                            returnSet.Add(entity);
+                        }
+                    }
                 }
-                player.Draw(spriteBatch);
-            
-                string displaySkills = "L1: " + player.getSkill(Static.PLAYER_L1_SKILL_INDEX).getName() + "\n" +
-                    "L2: " + player.getSkill(Static.PLAYER_L2_SKILL_INDEX).getName() + "\n" +
-                    "R1: " + player.getSkill(Static.PLAYER_R1_SKILL_INDEX).getName() + "\n" +
-                    "R2: " + player.getSkill(Static.PLAYER_R2_SKILL_INDEX).getName() + "\n";
-                spriteBatch.DrawString(spriteFont, displaySkills, new Vector2(50, 50), Color.White);
             }
 
-            //print text
-            //spriteBatch.DrawString(spriteFont, "TEXT", new Vector2(50, 50), Color.White);
+            List<GameEntity> returnList = new List<GameEntity>();
+            foreach (GameEntity entity in returnSet)
+            {
+                returnList.Add(entity);
+            }
 
-            spriteBatch.End();
-            base.Draw(gameTime);
+            return returnList;
+        }
+
+        public int getTileIndexFromLeftEdgeX(int x)
+        {
+            return (int)Math.Floor((float)x / Static.TILE_WIDTH);
+        }
+
+        public int getTileIndexFromRightEdgeX(int x)
+        {
+            return (int)Math.Ceiling(((float)x / Static.TILE_WIDTH)) - 1;
+        }
+
+        public int getTileIndexFromTopEdgeY(int y)
+        {
+            return (int)Math.Floor((float)y / Static.TILE_HEIGHT);
+        }
+
+        public int getTileIndexFromBottomEdgeY(int y)
+        {
+            return (int)Math.Ceiling(((float)y / Static.TILE_HEIGHT)) - 1;
         }
 
         public void Spawn(Spawnable spawn)
@@ -557,6 +655,12 @@ namespace GameName1
         {
             return spriteFont;
         }
+
+        public Rectangle getLevelBounds()
+        {
+            return currLevel.getBounds();
+        }
+
 
 
     }

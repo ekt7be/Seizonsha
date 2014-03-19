@@ -66,6 +66,9 @@ namespace GameName1
 
         public Tile getTile(int horz, int vert)
         {
+            if (horz < 0 || horz > map.GetTilesHorizontal() - 1 || vert < 0 || vert > map.GetTilesVertical() - 1){
+                return null;
+            }
             return map.tiles[horz, vert];
         }
 
@@ -77,6 +80,11 @@ namespace GameName1
         public int GetTilesVertical()
         {
             return map.GetTilesVertical();
+        }
+
+        public Rectangle getBounds()
+        {
+            return new Rectangle(0, 0, map.GetTilesHorizontal() * Static.TILE_WIDTH, map.GetTilesVertical() * Static.TILE_HEIGHT);
         }
     }
 }

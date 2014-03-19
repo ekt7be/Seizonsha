@@ -31,6 +31,19 @@ namespace GameName1
         public static readonly int TILE_OBSTACLE = 1;
         public static readonly int TILE_NOT_OBSTACLE = 0;
 
+        //Damage
+        public static readonly int DAMAGE_TYPE_FRIENDLY = 1;
+        public static readonly int DAMAGE_TYPE_ENEMY = 2;
+        public static readonly int DAMAGE_TYPE_ALL = 3;
+        public static readonly int DAMAGE_TYPE_NO_DAMAGE = 0;
+
+        //Target
+        public static readonly int TARGET_TYPE_FRIENDLY = 1;
+        public static readonly int TARGET_TYPE_ENEMY = 2;
+        public static readonly int TARGET_TYPE_NOT_DAMAGEABLE = 0;
+        public static readonly int TARGET_TYPE_ALL = 3;
+
+
 
         public static void Debug(string line)
         {

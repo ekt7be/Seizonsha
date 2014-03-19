@@ -44,3 +44,13 @@ C:\Users\Core 2 Duo\Desktop\Sean\Git\Seizonsha\GameName1\GameName1\bin\WindowsGL
 C:\Users\Core 2 Duo\Desktop\Sean\Git\Seizonsha\GameName1\GameName1\obj\x86\Debug\GameName1.exe
 C:\Users\Core 2 Duo\Desktop\Sean\Git\Seizonsha\GameName1\GameName1\obj\x86\Debug\GameName1.pdb
 C:\Users\Core 2 Duo\Desktop\Sean\Git\Seizonsha\GameName1\GameName1\obj\x86\Debug\GameName1.csprojResolveAssemblyReference.cache
+C:\Users\stk4zn\Documents\Seizonsha-master\Seizonsha-master\GameName1\GameName1\obj\x86\Debug\GameName1.exe
+C:\Users\stk4zn\Documents\Seizonsha-master\Seizonsha-master\GameName1\GameName1\obj\x86\Debug\GameName1.pdb
+C:\Users\stk4zn\Documents\Seizonsha-master\Seizonsha-master\GameName1\GameName1\bin\WindowsGL\Debug\Content\Font.xnb
+C:\Users\stk4zn\Documents\Seizonsha-master\Seizonsha-master\GameName1\GameName1\bin\WindowsGL\Debug\SDL.dll
+C:\Users\stk4zn\Documents\Seizonsha-master\Seizonsha-master\GameName1\GameName1\bin\WindowsGL\Debug\GameName1.exe
+C:\Users\stk4zn\Documents\Seizonsha-master\Seizonsha-master\GameName1\GameName1\bin\WindowsGL\Debug\GameName1.pdb
+C:\Users\stk4zn\Documents\Seizonsha-master\Seizonsha-master\GameName1\GameName1\bin\WindowsGL\Debug\Lidgren.Network.dll
+C:\Users\stk4zn\Documents\Seizonsha-master\Seizonsha-master\GameName1\GameName1\bin\WindowsGL\Debug\MonoGame.Framework.dll
+C:\Users\stk4zn\Documents\Seizonsha-master\Seizonsha-master\GameName1\GameName1\bin\WindowsGL\Debug\OpenTK.dll
+C:\Users\stk4zn\Documents\Seizonsha-master\Seizonsha-master\GameName1\GameName1\bin\WindowsGL\Debug\Tao.Sdl.dll

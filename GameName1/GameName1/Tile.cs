@@ -15,7 +15,7 @@ namespace GameName1
         private int type;
         public int x;
         public int y;
-        public List<GameEntity> touching;
+        private List<GameEntity> touching;
         public Rectangle bounds;
 
         public Tile (int type, int x, int y, bool obstacle){
@@ -61,6 +61,11 @@ namespace GameName1
         public Rectangle getBounds()
         {
             return bounds;
+        }
+
+        public List<GameEntity> getEntities()
+        {
+            return touching;
         }
 
     }

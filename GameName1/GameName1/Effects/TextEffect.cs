@@ -7,16 +7,13 @@ using System.Text;
 
 namespace GameName1.Effects
 {
-    class TextEffect : GameEntity
+    class TextEffect : Effect
     {
-        int duration = 30;
         string text;
-        public TextEffect(Seizonsha game, string text, int duration, int x, int y) : base(game, null, x, y, 0, 0)
+        public TextEffect(Seizonsha game, string text, int duration, int x, int y) : base(game, null, x, y, 0, 0, duration)
         {
-            setCollidable(false);
             incVelocityY(-3);
             this.text = text;
-            this.duration = duration;
 
         }
         public override void OnSpawn()
@@ -36,13 +33,8 @@ namespace GameName1.Effects
             spriteBatch.DrawString(game.getSpriteFont(), text, new Vector2(x, y), Color.White);
         }
 
-        public override void Update()
+        protected override void OnDie()
         {
-            duration--;
-            if (duration <= 0)
-            {
-                setRemove(true);
-            }
         }
     }
 }
