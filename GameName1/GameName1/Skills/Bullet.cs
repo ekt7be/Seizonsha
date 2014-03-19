@@ -8,7 +8,7 @@ using System.Text;
 
 namespace GameName1.Skills
 {
-	class Bullet : GameName1.Effects.Effect
+	class Bullet : GameEntity
 	{
 
 		private int damageType;
@@ -17,7 +17,7 @@ namespace GameName1.Skills
 		private Vector2 direction; 
 
 		public Bullet(Seizonsha game, Texture2D sprite, Rectangle bounds, int amount, int damageType, int duration, Vector2 bulletSpeed, Vector2 alexDirection)
-			: base(game, sprite, bounds.Left, bounds.Top, bounds.Width, bounds.Height, duration)
+			: base(game, sprite, bounds.Left, bounds.Top, bounds.Width, bounds.Height, Static.TARGET_TYPE_NOT_DAMAGEABLE, 30)
 		{
 			this.amount = amount;
 			this.damageType = damageType;
@@ -30,16 +30,25 @@ namespace GameName1.Skills
 		{	
 			this.velocityX = (int)(bulletSpeed.X * direction.X); 
 			this.velocityY = (int)(bulletSpeed.Y * direction.Y);
-
-			// this.velocityX = this.velocityY = bulletSpeed; 
 		}
 
 		public override void Update()
 		{
 			this.hitbox = new Rectangle(this.x, this.y, this.width, this.height); 
-			game.damageArea(this.getHitbox(), amount, damageType);
-
 		}
+
+        public override void collide(GameEntity entity)
+        {
+            entity.damage(amount, damageType);
+            setRemove(true);
+           // game.damageArea(this.getHitbox(), amount, damageType);
+
+        }
+
+        public override void collideWithWall()
+        {
+            setRemove(true);
+        }
 
 
 		protected override void OnDie()

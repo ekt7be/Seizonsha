@@ -51,12 +51,12 @@ namespace GameName1.Skills
 			if (entity.getTargetType() == Static.TARGET_TYPE_ENEMY){
 				damageType = Static.DAMAGE_TYPE_ENEMY;
 			}
-			Rectangle slashBounds = new Rectangle(	entity.getCenterX(), 
-													entity.getCenterY(), 
-													Static.PLAYER_WIDTH/2, 
-													Static.PLAYER_HEIGHT/2);
+			//Rectangle slashBounds = new Rectangle(	entity.getCenterX(), 
+				//									entity.getCenterY(), 
+					//								Static.PLAYER_WIDTH/2, 
+						//							Static.PLAYER_HEIGHT/2);
 
-			//Rectangle bulletBounds = new Rectangle(
+            Rectangle slashBounds = new Rectangle((int)(entity.getCenterX() + entity.alexDirection.X * entity.width / 2 - Static.PLAYER_WIDTH / 4), (int)(entity.getCenterY() + entity.alexDirection.Y * entity.height / 2 - Static.PLAYER_WIDTH / 4), Static.PLAYER_WIDTH / 2, Static.PLAYER_HEIGHT / 2);
 
 			game.Spawn(new Bullet(game, game.getTestSprite(slashBounds, Color.Red), slashBounds, damage, damageType, 1, bulletSpeed, entity.alexDirection));
 

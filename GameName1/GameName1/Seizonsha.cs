@@ -71,7 +71,7 @@ namespace GameName1
                 data[i] = Color.Aquamarine;
             }
 
-			//playerRect.SetData(data);
+//		     playerRect.SetData(data);
             //will use real sprites eventually..
 
             players[0] = new Player(this,PlayerIndex.One,playerRect,0,0);
@@ -180,9 +180,6 @@ namespace GameName1
 				handlePlayerInput(player);
 
 				// ALEX
-				player.alexAngle = (float)Math.Atan2(playerMouseDistance.Y, playerMouseDistance.X); // angle to point
-					
-				player.alexDirection = new Vector2( (float)Math.Cos(player.alexAngle), (float) Math.Sin(player.alexAngle));
 				//-ALEX
 
        
@@ -237,13 +234,8 @@ namespace GameName1
                 string displaySkills = "L1: " + player.getSkill(Static.PLAYER_L1_SKILL_INDEX).getName() + "\n" +
                     "L2: " + player.getSkill(Static.PLAYER_L2_SKILL_INDEX).getName() + "\n" +
                     "R1: " + player.getSkill(Static.PLAYER_R1_SKILL_INDEX).getName() + "\n" +
-					"R2: " + player.getSkill(Static.PLAYER_R2_SKILL_INDEX).getName() + "\n" +
+                    "R2: " + player.getSkill(Static.PLAYER_R2_SKILL_INDEX).getName() + "\n";
 
-
-					// ALEX
-					"LEFT CLICK: " + player.getSkill(Static.PLAYER_LEFTCLICK_SKILL_INDEX).getName() + "\n" +
-
-					"direction: " + player.alexDirection + "\n";
 
 
                 spriteBatch.DrawString(spriteFont, displaySkills, new Vector2(50, 50), Color.White);
@@ -259,65 +251,138 @@ namespace GameName1
 
 
         protected void handlePlayerInput(Player player)
+        
         {
-            if (GamePad.GetState(player.playerIndex).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+
+            if (player.playerIndex == PlayerIndex.One)
             {
-                Exit();
+
+                if (GamePad.GetState(player.playerIndex).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+                {
+                    Exit();
+                }
+                if (GamePad.GetState(player.playerIndex).ThumbSticks.Left.Y > .5 || Keyboard.GetState().IsKeyDown(Keys.Up))
+                {
+                    player.MoveUp();
+                    //player.rotateToAngle((float)(3 * Math.PI / 2));
+
+                }
+                if (GamePad.GetState(player.playerIndex).ThumbSticks.Left.X < -.5 || Keyboard.GetState().IsKeyDown(Keys.Left))
+                {
+                    player.MoveLeft();
+                    //player.rotateToAngle((float)Math.PI);
+
+                }
+                if (GamePad.GetState(player.playerIndex).ThumbSticks.Left.X > .5 || Keyboard.GetState().IsKeyDown(Keys.Right))
+                {
+                    player.MoveRight();
+                    // player.rotateToAngle((float)0);
+
+                }
+                if (GamePad.GetState(player.playerIndex).ThumbSticks.Left.Y < -.5 || Keyboard.GetState().IsKeyDown(Keys.Down))
+                {
+                    player.MoveDown();
+                    // player.rotateToAngle((float)Math.PI / 2);
+                }
+
+
+                if (GamePad.GetState(player.playerIndex).Buttons.LeftShoulder == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.D1))
+                {
+                    player.L1Button();
+                }
+                if (GamePad.GetState(player.playerIndex).Triggers.Left > .5f || Keyboard.GetState().IsKeyDown(Keys.D2))
+                {
+                    player.L2Button();
+                }
+                if (GamePad.GetState(player.playerIndex).Buttons.RightShoulder == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.D3))
+                {
+                    player.R1Button();
+                }
+                if (GamePad.GetState(player.playerIndex).Triggers.Right > .5f || Keyboard.GetState().IsKeyDown(Keys.D4))
+                {
+                    player.R2Button();
+                }
+
+                if (Math.Abs(GamePad.GetState(player.playerIndex).ThumbSticks.Right.Y) > .1 || Math.Abs(GamePad.GetState(player.playerIndex).ThumbSticks.Right.X) > .1)
+                {
+                    player.rotateToAngle((float)Math.Atan2(GamePad.GetState(player.playerIndex).ThumbSticks.Right.Y * -1, GamePad.GetState(player.playerIndex).ThumbSticks.Right.X)); // angle to point		
+                }
+
+
+                // ALEX
+                MouseState mouse = Mouse.GetState();
+
+                //player.rotateToAngle((float)Math.Atan2(playerMouseDistance.Y, playerMouseDistance.X)); // angle to point					
+
+
+                playerMouseDistance.X = mouse.X - player.x;	// distance between player and mouse
+                playerMouseDistance.Y = mouse.Y - player.y;
+
+                if (mouse.LeftButton == ButtonState.Pressed)
+                {
+                    player.LeftClick();
+                }
             }
-            if (GamePad.GetState(player.playerIndex).ThumbSticks.Left.Y > .5 || Keyboard.GetState().IsKeyDown(Keys.Up))
+            else
             {
-                player.MoveUp();
-                player.rotateToAngle((float)Math.PI / 2);
-            }
-            if (GamePad.GetState(player.playerIndex).ThumbSticks.Left.X < -.5 || Keyboard.GetState().IsKeyDown(Keys.Left))
-            {
-                player.MoveLeft();
-                player.rotateToAngle((float)Math.PI);
+
+                if (GamePad.GetState(player.playerIndex).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+                {
+                    Exit();
+                }
+                if (GamePad.GetState(player.playerIndex).ThumbSticks.Left.Y > .5 || Keyboard.GetState().IsKeyDown(Keys.Up))
+                {
+                    player.MoveUp();
+                    //player.rotateToAngle((float)(3 * Math.PI / 2));
+
+                }
+                if (GamePad.GetState(player.playerIndex).ThumbSticks.Left.X < -.5 || Keyboard.GetState().IsKeyDown(Keys.Left))
+                {
+                    player.MoveLeft();
+                    //player.rotateToAngle((float)Math.PI);
+
+                }
+                if (GamePad.GetState(player.playerIndex).ThumbSticks.Left.X > .5 || Keyboard.GetState().IsKeyDown(Keys.Right))
+                {
+                    player.MoveRight();
+                    // player.rotateToAngle((float)0);
+
+                }
+                if (GamePad.GetState(player.playerIndex).ThumbSticks.Left.Y < -.5 || Keyboard.GetState().IsKeyDown(Keys.Down))
+                {
+                    player.MoveDown();
+                    // player.rotateToAngle((float)Math.PI / 2);
+
+
+                }
+
+
+                if (GamePad.GetState(player.playerIndex).Buttons.LeftShoulder == ButtonState.Pressed)
+                {
+                    player.L1Button();
+                }
+                if (GamePad.GetState(player.playerIndex).Triggers.Left > .5f)
+                {
+                    player.L2Button();
+                }
+                if (GamePad.GetState(player.playerIndex).Buttons.RightShoulder == ButtonState.Pressed)
+                {
+                    player.R1Button();
+                }
+                if (GamePad.GetState(player.playerIndex).Triggers.Right > .5f)
+                {
+                    player.R2Button();
+                }
+
+
+                if (Math.Abs(GamePad.GetState(player.playerIndex).ThumbSticks.Right.Y) > .1 || Math.Abs(GamePad.GetState(player.playerIndex).ThumbSticks.Right.X) > .1)
+                {
+                    player.rotateToAngle((float)Math.Atan2(GamePad.GetState(player.playerIndex).ThumbSticks.Right.Y * -1, GamePad.GetState(player.playerIndex).ThumbSticks.Right.X)); // angle to point		
+                }
+
 
             }
-            if (GamePad.GetState(player.playerIndex).ThumbSticks.Left.X > .5 || Keyboard.GetState().IsKeyDown(Keys.Right))
-            {
-                player.MoveRight();
-                player.rotateToAngle((float)0);
 
-            }
-            if (GamePad.GetState(player.playerIndex).ThumbSticks.Left.Y < -.5 || Keyboard.GetState().IsKeyDown(Keys.Down))
-            {
-                player.MoveDown();
-                player.rotateToAngle((float)(3 * Math.PI / 2));
-
-            }
-
-
-            if (GamePad.GetState(player.playerIndex).Buttons.LeftShoulder == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.D1))
-            {
-                player.L1Button();
-            }
-            if (GamePad.GetState(player.playerIndex).Triggers.Left > .5f || Keyboard.GetState().IsKeyDown(Keys.D2))
-            {
-                player.L2Button();
-            }
-            if (GamePad.GetState(player.playerIndex).Buttons.RightShoulder == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.D3))
-            {
-                player.R1Button();
-            }
-            if (GamePad.GetState(player.playerIndex).Triggers.Right > .5f || Keyboard.GetState().IsKeyDown(Keys.D4))
-            {
-                player.R2Button();
-            }
-
-			// ALEX
-			MouseState mouse = Mouse.GetState(); 
-
-			playerMouseDistance.X = mouse.X - player.x;	// distance between player and mouse
-			playerMouseDistance.Y = mouse.Y - player.y;
-
-			if (mouse.LeftButton == ButtonState.Pressed) {
-				player.LeftClick();
-			}
-
-
-			//-ALEX
         }
 
 

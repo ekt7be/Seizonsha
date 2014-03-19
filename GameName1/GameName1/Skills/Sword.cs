@@ -47,8 +47,8 @@ namespace GameName1.Skills
             if (entity.getTargetType() == Static.TARGET_TYPE_ENEMY){
                 damageType = Static.DAMAGE_TYPE_ENEMY;
             }
-            Rectangle slashBounds = new Rectangle(entity.getCenterX()+(int)(entity.width/2 * Math.Cos(entity.getDirectionAngle())), entity.getCenterY() - (int)(entity.height/2 * Math.Sin(entity.getDirectionAngle())), Static.PLAYER_WIDTH/2, Static.PLAYER_HEIGHT/2);
-            game.Spawn(new SwordSlash(game, game.getTestSprite(slashBounds, Color.Green), slashBounds, damage, damageType, 10));
+            Rectangle slashBounds = new Rectangle((int)(entity.getCenterX() + entity.alexDirection.X * entity.width / 2 - Static.PLAYER_WIDTH / 4), (int)(entity.getCenterY() + entity.alexDirection.Y * entity.height / 2 - Static.PLAYER_WIDTH / 4), Static.PLAYER_WIDTH / 2, Static.PLAYER_HEIGHT / 2);
+            game.Spawn(new SwordSlash(game, game.getTestSprite(slashBounds, Color.Green), slashBounds, damage, damageType, 10, entity.alexDirection));
         }
 
         public bool Available(Seizonsha game, GameEntity entity)

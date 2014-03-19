@@ -69,15 +69,14 @@ namespace GameName1
             this.dead = false;
             this.playerIndex = playerIndex;
 
-			this.skillSlots = new Equipable[5]; //each slot is different skill, weapon, or item
+			this.skillSlots = new Equipable[4]; //each slot is different skill, weapon, or item
             this.inventory = new List<Equipable>();
 
-            Equip(new ChangeColor(Color.Red), Static.PLAYER_L1_SKILL_INDEX);
+            Equip(new Gun(30, 10, new Vector2(10, 10)), Static.PLAYER_L1_SKILL_INDEX);
             Equip(new ChangeColor(Color.Purple), Static.PLAYER_L2_SKILL_INDEX);
             Equip(new ChangeColor(Color.Green), Static.PLAYER_R1_SKILL_INDEX);
             Equip(new Sword(30, 10), Static.PLAYER_R2_SKILL_INDEX);
 
-			Equip(new Gun(30, 10, new Vector2(10,10)), Static.PLAYER_LEFTCLICK_SKILL_INDEX);
 
 
 
