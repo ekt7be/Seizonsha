@@ -54,3 +54,15 @@ C:\Users\stk4zn\Documents\Seizonsha-master\Seizonsha-master\GameName1\GameName1\
 C:\Users\stk4zn\Documents\Seizonsha-master\Seizonsha-master\GameName1\GameName1\bin\WindowsGL\Debug\MonoGame.Framework.dll
 C:\Users\stk4zn\Documents\Seizonsha-master\Seizonsha-master\GameName1\GameName1\bin\WindowsGL\Debug\OpenTK.dll
 C:\Users\stk4zn\Documents\Seizonsha-master\Seizonsha-master\GameName1\GameName1\bin\WindowsGL\Debug\Tao.Sdl.dll
+C:\Users\Alex\Documents\GitHub\Seizonsha\GameName1\GameName1\obj\x86\Debug\GameName1.csprojResolveAssemblyReference.cache
+C:\Users\Alex\Documents\GitHub\Seizonsha\GameName1\GameName1\obj\x86\Debug\GameName1.exe
+C:\Users\Alex\Documents\GitHub\Seizonsha\GameName1\GameName1\bin\WindowsGL\Debug\Content\Font.xnb
+C:\Users\Alex\Documents\GitHub\Seizonsha\GameName1\GameName1\bin\WindowsGL\Debug\SDL.dll
+C:\Users\Alex\Documents\GitHub\Seizonsha\GameName1\GameName1\bin\WindowsGL\Debug\GameName1.exe
+C:\Users\Alex\Documents\GitHub\Seizonsha\GameName1\GameName1\bin\WindowsGL\Debug\GameName1.pdb
+C:\Users\Alex\Documents\GitHub\Seizonsha\GameName1\GameName1\bin\WindowsGL\Debug\Lidgren.Network.dll
+C:\Users\Alex\Documents\GitHub\Seizonsha\GameName1\GameName1\bin\WindowsGL\Debug\MonoGame.Framework.dll
+C:\Users\Alex\Documents\GitHub\Seizonsha\GameName1\GameName1\bin\WindowsGL\Debug\OpenTK.dll
+C:\Users\Alex\Documents\GitHub\Seizonsha\GameName1\GameName1\bin\WindowsGL\Debug\Tao.Sdl.dll
+C:\Users\Alex\Documents\GitHub\Seizonsha\GameName1\GameName1\obj\x86\Debug\GameName1.pdb
+C:\Users\Alex\Documents\GitHub\Seizonsha\GameName1\GameName1\bin\WindowsGL\Debug\Content\Sprites\player.jpg

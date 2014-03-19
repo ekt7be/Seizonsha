@@ -16,7 +16,7 @@ namespace GameName1
         public Level(Seizonsha game)
         {
             this.game = game;
-            this.map = new TileMap(this, Static.TILES_ON_SCREEN_X, Static.TILES_ON_SCREEN_Y);
+			this.map = new TileMap(this, Static.TILES_ON_SCREEN_X*2, Static.TILES_ON_SCREEN_Y);
             this.tileSprites = new Dictionary<int, Texture2D>();
             initialize();
         }

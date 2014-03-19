@@ -31,6 +31,11 @@ namespace GameName1
 
         private Level currLevel;
 
+
+		// ALEX
+		Vector2 playerMouseDistance; // distance between player and mouse
+		//-ALEX
+
         public Seizonsha()
             : base()
         {
@@ -56,7 +61,9 @@ namespace GameName1
             this.players = new Player[4];
 
             //just for testing -- makes a rectangle
-            Texture2D playerRect = new Texture2D(GraphicsDevice, Static.PLAYER_HEIGHT, Static.PLAYER_WIDTH);
+			//Texture2D playerRect = new Texture2D(GraphicsDevice, Static.PLAYER_HEIGHT, Static.PLAYER_WIDTH);
+			Texture2D playerRect = Content.Load<Texture2D>("Sprites/player"); 
+
            
             Color[] data = new Color[Static.PLAYER_HEIGHT * Static.PLAYER_WIDTH];
             for (int i = 0; i < data.Length; ++i)
@@ -64,7 +71,7 @@ namespace GameName1
                 data[i] = Color.Aquamarine;
             }
 
-            playerRect.SetData(data);
+			//playerRect.SetData(data);
             //will use real sprites eventually..
 
             players[0] = new Player(this,PlayerIndex.One,playerRect,0,0);
@@ -100,6 +107,15 @@ namespace GameName1
         protected override void Update(GameTime gameTime)
         {
             
+			// ALEX
+			IsMouseVisible = true; 
+			//-ALEX
+
+
+
+
+
+
 
             //spawn Spawnables
             while (spawnQueue.Count > 0)
@@ -160,7 +176,18 @@ namespace GameName1
                 {
                     continue;
                 }
-                handlePlayerInput(player);
+
+				handlePlayerInput(player);
+
+				// ALEX
+				player.alexAngle = (float)Math.Atan2(playerMouseDistance.Y, playerMouseDistance.X); // angle to point
+					
+				player.alexDirection = new Vector2( (float)Math.Cos(player.alexAngle), (float) Math.Sin(player.alexAngle));
+				//-ALEX
+
+       
+
+
             }
 
             //run AI
@@ -206,10 +233,19 @@ namespace GameName1
                     continue;
                 }
 
+				// DISPLAY TEXT FOR LIST OF SKILLS 
                 string displaySkills = "L1: " + player.getSkill(Static.PLAYER_L1_SKILL_INDEX).getName() + "\n" +
                     "L2: " + player.getSkill(Static.PLAYER_L2_SKILL_INDEX).getName() + "\n" +
                     "R1: " + player.getSkill(Static.PLAYER_R1_SKILL_INDEX).getName() + "\n" +
-                    "R2: " + player.getSkill(Static.PLAYER_R2_SKILL_INDEX).getName() + "\n";
+					"R2: " + player.getSkill(Static.PLAYER_R2_SKILL_INDEX).getName() + "\n" +
+
+
+					// ALEX
+					"LEFT CLICK: " + player.getSkill(Static.PLAYER_LEFTCLICK_SKILL_INDEX).getName() + "\n" +
+
+					"direction: " + player.alexDirection + "\n";
+
+
                 spriteBatch.DrawString(spriteFont, displaySkills, new Vector2(50, 50), Color.White);
             }
 
@@ -269,6 +305,19 @@ namespace GameName1
             {
                 player.R2Button();
             }
+
+			// ALEX
+			MouseState mouse = Mouse.GetState(); 
+
+			playerMouseDistance.X = mouse.X - player.x;	// distance between player and mouse
+			playerMouseDistance.Y = mouse.Y - player.y;
+
+			if (mouse.LeftButton == ButtonState.Pressed) {
+				player.LeftClick();
+			}
+
+
+			//-ALEX
         }
 
 

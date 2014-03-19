@@ -18,6 +18,8 @@ namespace GameName1
         public static readonly int PLAYER_L2_SKILL_INDEX = 1;
         public static readonly int PLAYER_R1_SKILL_INDEX = 2;
         public static readonly int PLAYER_R2_SKILL_INDEX = 3;
+		public static readonly int PLAYER_LEFTCLICK_SKILL_INDEX = 4; 
+
 
         //dimensions
         public static readonly int SCREEN_WIDTH = 640;

@@ -33,6 +33,11 @@ namespace GameName1
 
         //TODO: create depth variable that Game object can sort entities by to determine which to draw first (so effects can go on top etc)
 
+		// ALEX: new variables for mouse aim bullets and sprite rotation
+		public Vector2 alexDirection {get ; set; }
+		public float alexAngle { get; set; }
+		//-ALEX
+
 
         virtual public void Draw(SpriteBatch spriteBatch)
         {
@@ -41,7 +46,13 @@ namespace GameName1
             {
                 return;
             }
-              spriteBatch.Draw(sprite, hitbox, color);
+
+			// spriteBatch.Draw(sprite, hitbox, color);
+
+			// ALEX: draw sprite with rotation now
+			spriteBatch.Draw(sprite, new Vector2(this.x, this.y) , null, color, this.alexAngle, new Vector2(this.width/2, this.height/2), 1.0f, SpriteEffects.None, 1);
+			//-ALEX 
+
 
         }
 
