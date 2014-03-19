@@ -63,6 +63,8 @@ namespace GameName1
             //just for testing -- makes a rectangle
 			//Texture2D playerRect = new Texture2D(GraphicsDevice, Static.PLAYER_HEIGHT, Static.PLAYER_WIDTH);
 			Texture2D playerRect = Content.Load<Texture2D>("Sprites/player"); 
+			Texture2D basicEnemyRect = Content.Load<Texture2D>("Sprites/basicEnemy");
+
 
            
             Color[] data = new Color[Static.PLAYER_HEIGHT * Static.PLAYER_WIDTH];
@@ -78,6 +80,9 @@ namespace GameName1
 
             Spawn(players[0]);
             Spawn(new BasicNPC(this, playerRect, 300, 100, 10, 10));
+			Spawn(new BasicEnemy(this, basicEnemyRect, 200, 200, 25, 25));
+
+
 
             base.Initialize();
         }
