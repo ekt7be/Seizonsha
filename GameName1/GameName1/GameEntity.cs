@@ -1,6 +1,7 @@
 ﻿using GameName1.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Diagnostics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,7 @@ namespace GameName1
         private int targetType;
         private int maxHealth;
         private int health;
+        private bool hasHealth;
         public int velocityX { get; set; }
         public int velocityY { get; set; }
         public int accelX { get; set; }
@@ -47,7 +49,18 @@ namespace GameName1
                 return;
             }
 
-			// spriteBatch.Draw(sprite, hitbox, color);
+            if(this.hasHealth){
+                int barWidth = 60;
+                //Debug.WriteLine(this.health);
+                double green = ((double)this.health/(double)this.maxHealth) * barWidth;
+                Rectangle greenCoordinates = new Rectangle(this.getCenterX() - (barWidth/2), this.getCenterY() - 30, (int)green, 5);
+                Rectangle redCoordinates = new Rectangle(this.getCenterX() - (barWidth/2), this.getCenterY() - 30, barWidth, 5);
+			    // spriteBatch.Draw(sprite, hitbox, color);
+                Texture2D whiteRectangle = new Texture2D(game.GraphicsDevice, 1, 1);
+                whiteRectangle.SetData(new[] { Color.White });
+                spriteBatch.Draw(whiteRectangle, redCoordinates, Color.Red);
+                spriteBatch.Draw(whiteRectangle, greenCoordinates, Color.Green);
+            }
 
 			// ALEX: draw sprite with rotation now
 			spriteBatch.Draw(sprite, new Vector2(this.getCenterX(), this.getCenterY()) , null, color, this.direction, new Vector2(this.width/2, this.height/2), 1.0f, SpriteEffects.None, 1);
@@ -84,6 +97,10 @@ namespace GameName1
             this.targetType = targetType;
             this.maxHealth = maxHealth;
             this.health = maxHealth;
+            if(targetType!=Static.TARGET_TYPE_NOT_DAMAGEABLE)
+            {
+                this.hasHealth = true;
+            }
             this.remove = false;
             this.hitbox = new Rectangle(x, y, width, height);
             this.velocityX = 0;

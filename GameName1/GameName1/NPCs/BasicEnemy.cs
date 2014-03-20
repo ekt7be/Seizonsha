@@ -14,7 +14,7 @@ namespace GameName1.NPCs
         int count = 0;
 
         public BasicEnemy(Seizonsha game, Texture2D sprite, int x, int y, int width, int height)
-            : base(game, sprite, x, y, width, height, Static.DAMAGE_TYPE_ENEMY, 20)
+            : base(game, sprite, x, y, width, height, Static.DAMAGE_TYPE_ENEMY, 200)
         {
      
         }
@@ -26,7 +26,7 @@ namespace GameName1.NPCs
 
         public override void collide(GameEntity entity)
         {
-            //Static.Debug("NPC collision with entity");
+          //  Static.Debug("NPC collision with entity");
         }
 
         public override void collideWithWall()

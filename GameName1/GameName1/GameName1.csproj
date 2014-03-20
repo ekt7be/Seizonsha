@@ -59,6 +59,7 @@
     <Compile Include="Interfaces\Unlockable.cs" />
     <Compile Include="NPCs\BasicEnemy.cs" />
     <Compile Include="NPCs\BasicNPC.cs" />
+    <Compile Include="NPCs\BossEnemy.cs" />
     <Compile Include="Skills\ChangeColor.cs" />
     <Compile Include="Skills\SwordSlash.cs" />
     <Compile Include="Skills\Sword.cs" />

@@ -10,6 +10,7 @@ namespace GameName1
 
         public GameEntity e1;
         public GameEntity e2;
+
         public Collision(GameEntity e1, GameEntity e2)
         {
             this.e1 = e1;
@@ -31,13 +32,13 @@ namespace GameName1
 
             Collision c2 = (Collision)obj;
 
-            return (this.e1.Equals(c2.e1) && this.e2.Equals(c2.e2)) || (this.e1.Equals(c2.e2) && this.e2.Equals(c2.e1));
+            return (this.e1 == c2.e1 && this.e2 == c2.e2) || (this.e1 == c2.e2 && this.e2 == c2.e1);
 
         }
 
         public override int GetHashCode()
         {
-            return base.GetHashCode();
+            return e1.GetHashCode()*e2.GetHashCode();
         }
     }
 }

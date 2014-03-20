@@ -117,8 +117,31 @@ namespace GameName1
 			//-ALEX
 
 
+            //update all entities including players
+            foreach (GameEntity entity in entities)
+            {
+                if (entity.shouldRemove())
+                {
+                    if (entity is GameEntity)
+                    {
+                        BindEntityToTiles((GameEntity)entity, false);
+                    }
+                    removalQueue.Enqueue(entity);
+                }
+
+            }
 
 
+            //remove entities flagged for removal
+            while (removalQueue.Count > 0)
+            {
+                GameEntity remEntity = removalQueue.Dequeue();
+                entities.Remove(remEntity);
+                if (remEntity is AI)
+                {
+                    AIs.Remove((AI)remEntity);
+                }
+            }
 
 
 
@@ -147,32 +170,14 @@ namespace GameName1
 
             }
 
+
+
             //update all entities including players
             foreach (GameEntity entity in entities)
             {
                 entity.UpdateAll();
-                if (entity.shouldRemove())
-                {
-                    if (entity is GameEntity){
-                        BindEntityToTiles((GameEntity)entity, false);
-                    }
-                    removalQueue.Enqueue(entity);
-                }
 
             }
-
-
-            //remove entities flagged for removal
-            while (removalQueue.Count > 0)
-            {
-                GameEntity remEntity = removalQueue.Dequeue();
-                entities.Remove(remEntity);
-                if (remEntity is AI)
-                {
-                    AIs.Remove((AI)remEntity);
-                }
-            }
-
 
             //handle all player input
             foreach (Player player in players)
@@ -200,7 +205,6 @@ namespace GameName1
 
 
             //execute all collisions
-
             foreach (Collision collision in collisions)
             {
                 collision.execute();
