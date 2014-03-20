@@ -266,25 +266,25 @@ namespace GameName1
                 {
                     Exit();
                 }
-                if (GamePad.GetState(player.playerIndex).ThumbSticks.Left.Y > .5 || Keyboard.GetState().IsKeyDown(Keys.Up))
+                if (GamePad.GetState(player.playerIndex).ThumbSticks.Left.Y > .5 || Keyboard.GetState().IsKeyDown(Keys.W))
                 {
                     player.MoveUp();
                     //player.rotateToAngle((float)(3 * Math.PI / 2));
 
                 }
-                if (GamePad.GetState(player.playerIndex).ThumbSticks.Left.X < -.5 || Keyboard.GetState().IsKeyDown(Keys.Left))
+                if (GamePad.GetState(player.playerIndex).ThumbSticks.Left.X < -.5 || Keyboard.GetState().IsKeyDown(Keys.A))
                 {
                     player.MoveLeft();
                     //player.rotateToAngle((float)Math.PI);
 
                 }
-                if (GamePad.GetState(player.playerIndex).ThumbSticks.Left.X > .5 || Keyboard.GetState().IsKeyDown(Keys.Right))
+                if (GamePad.GetState(player.playerIndex).ThumbSticks.Left.X > .5 || Keyboard.GetState().IsKeyDown(Keys.D))
                 {
                     player.MoveRight();
                     // player.rotateToAngle((float)0);
 
                 }
-                if (GamePad.GetState(player.playerIndex).ThumbSticks.Left.Y < -.5 || Keyboard.GetState().IsKeyDown(Keys.Down))
+                if (GamePad.GetState(player.playerIndex).ThumbSticks.Left.Y < -.5 || Keyboard.GetState().IsKeyDown(Keys.S))
                 {
                     player.MoveDown();
                     // player.rotateToAngle((float)Math.PI / 2);
@@ -317,7 +317,7 @@ namespace GameName1
                 // ALEX
                 MouseState mouse = Mouse.GetState();
 
-                //player.rotateToAngle((float)Math.Atan2(playerMouseDistance.Y, playerMouseDistance.X)); // angle to point					
+                player.rotateToAngle((float)Math.Atan2(playerMouseDistance.Y, playerMouseDistance.X)); // angle to point					
 
 
                 playerMouseDistance.X = mouse.X - player.x;	// distance between player and mouse
@@ -778,6 +778,21 @@ namespace GameName1
         public Rectangle getLevelBounds()
         {
             return currLevel.getBounds();
+        }
+
+        public List<Player> getPlayers()
+        {
+            List<Player> list = new List<Player>();
+            foreach (Player p in players)
+            {
+                if (p == null)
+                {
+                    continue;
+                }
+                list.Add(p);
+            }
+
+            return list;
         }
 
 

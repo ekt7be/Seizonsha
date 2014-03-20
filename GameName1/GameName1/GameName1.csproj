@@ -57,6 +57,7 @@
     <Compile Include="Interfaces\Equipable.cs" />
     <Compile Include="Interfaces\Spawnable.cs" />
     <Compile Include="Interfaces\Unlockable.cs" />
+    <Compile Include="NPCs\BasicEnemy.cs" />
     <Compile Include="NPCs\BasicNPC.cs" />
     <Compile Include="Skills\ChangeColor.cs" />
     <Compile Include="Skills\SwordSlash.cs" />
@@ -90,6 +91,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Sprites\basicEnemy.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Icon.ico" />
     <Content Include="..\..\..\..\..\..\..\Program Files %28x86%29\MonoGame\v3.0\Assemblies\WindowsGL\SDL.dll">
       <Link>SDL.dll</Link>
@@ -106,7 +110,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SkillTree\" />
-    <Folder Include="Content\Sprites\" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">

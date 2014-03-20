@@ -90,7 +90,7 @@ namespace GameName1
             this.velocityY = 0;
             this.game = game;
             this.sprite = sprite;
-            this.direction = 0;
+            this.rotateToAngle(0);
             this.collidable = true;
             this.color = Color.White;
             this.frozen = 0;
