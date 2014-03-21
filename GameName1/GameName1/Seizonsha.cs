@@ -32,6 +32,18 @@ namespace GameName1
 
         private Dictionary<int, Texture2D> spriteMappings;
 
+		// AlexAlpha
+
+		Viewport defaultView, leftView, rightView, bottomLeftView, bottomRightView; 
+		Camera camera1, camera2, camera3, camera4; 
+		List<Camera> cameras; 
+
+		int numberOfPlayers = 1;
+
+		Dictionary<int, PlayerIndex> playerDict;
+
+		//-
+
         public Seizonsha()
             : base()
         {
@@ -74,12 +86,77 @@ namespace GameName1
 
 //		     playerRect.SetData(data);
             //will use real sprites eventually..
+			// AlexAlpha
+			switch (numberOfPlayers) {
+			case 1: 
+				defaultView = GraphicsDevice.Viewport;
+				leftView = defaultView; 
+				break;
+			case 2: 
+				defaultView = GraphicsDevice.Viewport;
+				leftView = rightView = defaultView;
 
-            players[0] = new Player(this,PlayerIndex.One,playerRect,0,0);
-            players[1] = new Player(this, PlayerIndex.Two, playerRect, 0, 0);
+				leftView.Width = leftView.Width/2; 
+				rightView.Width = rightView.Width/2;
 
-            Spawn(players[0]);
-            Spawn(players[1]);
+				rightView.X = leftView.Width;
+				break;
+			case 3: 
+				defaultView = GraphicsDevice.Viewport;
+				leftView = rightView = bottomLeftView = defaultView;
+
+				leftView.Width = leftView.Width/2;
+				rightView.Width = rightView.Width/2;
+				bottomLeftView.Width = bottomLeftView.Width/2; 
+
+				leftView.Height = leftView.Height/2; 
+				rightView.Height = rightView.Height/2;
+				bottomLeftView.Height = bottomLeftView.Height/2;
+
+				rightView.X = leftView.Width;
+				bottomLeftView.Y = leftView.Height; 
+				break;
+			case 4: 
+				defaultView = GraphicsDevice.Viewport;
+				leftView = rightView = bottomLeftView = bottomRightView = defaultView;
+
+				leftView.Width = leftView.Width/2;
+				rightView.Width = rightView.Width/2;
+				bottomLeftView.Width = bottomLeftView.Width/2; 
+				bottomRightView.Width = bottomRightView.Width/2; 
+
+				leftView.Height = leftView.Height/2; 
+				rightView.Height = rightView.Height/2;
+				bottomLeftView.Height = bottomLeftView.Height/2;
+				bottomRightView.Height = bottomRightView.Height/2; 
+
+				rightView.X = leftView.Width;
+				bottomLeftView.Y = leftView.Height;
+				bottomRightView.X = leftView.Width; bottomRightView.Y = leftView.Height; 
+				break;
+			default:
+				break;
+			}
+
+			cameras = new List<Camera>();
+			cameras.Add(camera1);
+			cameras.Add(camera2); 
+			cameras.Add(camera3); 
+			cameras.Add(camera4); 
+
+			playerDict = new Dictionary<int, PlayerIndex>(); 
+			playerDict.Add(1, PlayerIndex.One); 
+			playerDict.Add(2, PlayerIndex.Two); 
+			playerDict.Add(3, PlayerIndex.Three);
+			playerDict.Add(4, PlayerIndex.Four); 
+
+			for (int i = 0; i < numberOfPlayers; i++) {
+				cameras[i] = new Camera(); 
+
+				players[i] = new Player(this, playerDict[i+1], playerRect, 0, 0+(i*20), cameras[i]);
+				Spawn(players[i]);
+			}
+			//-
             Spawn(new BasicNPC(this, playerRect, 300, 100, 10, 10));
 			Spawn(new BasicEnemy(this, basicEnemyRect, 200, 200, 64, 64));
             Spawn(new SpawnEntity(this, 2, 0, 0));
@@ -189,6 +266,10 @@ namespace GameName1
 
 				handlePlayerInput(player);
 
+				// AlexAlpha
+				player.camera.Update(this.getPlayers().Count, gameTime, player, this.getLevelBounds()); 
+				//-
+
             }
 
             //run AI
@@ -216,14 +297,10 @@ namespace GameName1
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            spriteBatch.Begin();
+			// spriteBatch.Begin();
 
 
-            currLevel.Draw(spriteBatch, 0, 0);
-            foreach (GameEntity entity in entities)
-            {
-                entity.Draw(spriteBatch);
-            }
+
 
             foreach (Player player in players)
             {
@@ -231,6 +308,32 @@ namespace GameName1
                 {
                     continue;
                 }
+
+				// AlexAlpha
+				switch (Array.IndexOf(players, player) + 1) {
+				case 1: 
+					GraphicsDevice.Viewport = leftView; 
+					break;
+				case 2: 
+					GraphicsDevice.Viewport = rightView; 
+					break;
+				case 3: 
+					GraphicsDevice.Viewport = bottomLeftView; 
+					break;
+				case 4: 
+					GraphicsDevice.Viewport = bottomRightView; 
+					break;
+				default:
+					break;
+				}
+
+				spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, player.camera.transform);
+
+				currLevel.Draw(spriteBatch, 0, 0);
+				foreach (GameEntity entity in entities)
+				{
+					entity.Draw(spriteBatch);
+				}
 
 				// DISPLAY TEXT FOR LIST OF SKILLS 
                 string displaySkills = "L1: " + player.getSkill(Static.PLAYER_L1_SKILL_INDEX).getName() + "\n" +
@@ -241,12 +344,14 @@ namespace GameName1
 
 
                 spriteBatch.DrawString(spriteFont, displaySkills, new Vector2(50, 50), Color.White);
+
+				spriteBatch.End();
             }
 
             //print text
             //spriteBatch.DrawString(spriteFont, "TEXT", new Vector2(50, 50), Color.White);
 
-            spriteBatch.End();
+ 
             base.Draw(gameTime);
         }
 
@@ -320,13 +425,10 @@ namespace GameName1
 
                 Vector2 playerMouseDistance; // distance between player and mouse
 
-                playerMouseDistance.X = mouse.X - player.x;	// distance between player and mouse
-                playerMouseDistance.Y = mouse.Y - player.y;
+				playerMouseDistance.X = player.camera.getWorldPositionX(mouse.X) - player.x;	// distance between player and mouse
+				playerMouseDistance.Y = player.camera.getWorldPositionY(mouse.Y) - player.y;
 
                 player.rotateToAngle((float)Math.Atan2(playerMouseDistance.Y, playerMouseDistance.X)); // angle to point					
-
-
-
 
                 if (mouse.LeftButton == ButtonState.Pressed)
                 {

@@ -62,7 +62,7 @@ namespace GameName1
                 spriteBatch.Draw(whiteRectangle, greenCoordinates, Color.Green);
             }
 
-			spriteBatch.Draw(sprite, new Vector2(this.getCenterX(), this.getCenterY()) , null, color, this.direction, new Vector2(this.width/2, this.height/2), 1.0f, SpriteEffects.None, 1);
+			spriteBatch.Draw(sprite, new Vector2(this.x, this.y) , null, color, this.direction, new Vector2(this.width/2, this.height/2), 1.0f, SpriteEffects.None, 1);
 
 
         }

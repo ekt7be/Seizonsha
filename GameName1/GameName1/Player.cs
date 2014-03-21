@@ -26,6 +26,9 @@ namespace GameName1
         private SkillTree.SkillTree skilltree;
         private bool skilltreescreen;
 
+		public Camera camera; 
+
+
 
         public override void Update()
         {
@@ -61,7 +64,7 @@ namespace GameName1
             //nothing happens
         }
 
-        public Player(Seizonsha game, PlayerIndex playerIndex, Texture2D sprite, int x, int y) : base(game, sprite, x, y, Static.PLAYER_WIDTH, Static.PLAYER_HEIGHT, Static.TARGET_TYPE_FRIENDLY, Static.PLAYER_MAX_HEALTH)
+		public Player(Seizonsha game, PlayerIndex playerIndex, Texture2D sprite, int x, int y, Camera camera) : base(game, sprite, x, y, Static.PLAYER_WIDTH, Static.PLAYER_HEIGHT, Static.TARGET_TYPE_FRIENDLY, Static.PLAYER_MAX_HEALTH)
         {
             this.cameraX = 0;
             this.cameraY = 0;
@@ -80,7 +83,11 @@ namespace GameName1
             Equip(new HealingTouch(-50, 100), Static.PLAYER_R1_SKILL_INDEX);
             Equip(new Sword(30, 10), Static.PLAYER_R2_SKILL_INDEX);
 
+
             this.skilltreescreen = false;
+
+			this.camera = camera; 
+
 
 
 

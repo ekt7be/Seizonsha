@@ -82,6 +82,7 @@
     <Compile Include="TileMap.cs" />
     <Compile Include="Skills\Bullet.cs" />
     <Compile Include="Skills\Gun.cs" />
+    <Compile Include="Camera.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="OpenTK">

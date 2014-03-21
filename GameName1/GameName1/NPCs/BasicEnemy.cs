@@ -27,6 +27,9 @@ namespace GameName1.NPCs
         public override void collide(GameEntity entity)
         {
           //  Static.Debug("NPC collision with entity");
+			if(entity.getTargetType() == Static.TARGET_TYPE_FRIENDLY){
+				entity.damage(2, Static.DAMAGE_TYPE_ENEMY);
+			}
         }
 
         public override void collideWithWall()
