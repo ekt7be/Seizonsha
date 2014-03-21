@@ -81,7 +81,7 @@ namespace GameName1
             Spawn(players[0]);
             Spawn(players[1]);
             Spawn(new BasicNPC(this, playerRect, 300, 100, 10, 10));
-			Spawn(new BasicEnemy(this, basicEnemyRect, 200, 200, 25, 25));
+			Spawn(new BasicEnemy(this, basicEnemyRect, 200, 200, 64, 64));
             Spawn(new SpawnEntity(this, 2, 0, 0));
 
 
