@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -21,9 +22,9 @@ namespace GameName1
             this.tilesVert = tilesVert;
             this.level = level;
 
-            tiles = new Tile[tilesHorz,tilesVert];
+            tiles = new Tile[tilesHorz, tilesVert];
 
-            for (int i = 0; i < tilesHorz; i++)
+/*            for (int i = 0; i < tilesHorz; i++)
             {
                 for (int j = 0; j < tilesVert; j++)
                 {
@@ -37,32 +38,37 @@ namespace GameName1
                     {
                         tiles[i, j] = new Tile(Static.TILE_NOT_OBSTACLE, i * Static.TILE_WIDTH, j * Static.TILE_HEIGHT, false);
 
-                    }                    
+                    }
                 }
             }
-             
+*/
+            string filename = "map1.txt";
+            using (StreamReader reader = new StreamReader(@"Content/map1.txt"))
+            {
+                int count = 0;
 
-           // readMap();
+                for (int j = 0; j < tilesVert; j++)
+                {
+                    string mapText = reader.ReadLine();
+                    for (int i = 0; i < tilesHorz; i++)
+                    {
+                        char c = mapText[i]; 
+
+                        //System.Diagnostics.Debug.Write("TilesHorz = \n" + tilesHorz); //80
+                        count++;
+                        if(c.Equals('0'))
+                            tiles[i, j] = new Tile(Static.TILE_NOT_OBSTACLE, i * Static.TILE_WIDTH, j * Static.TILE_HEIGHT, false);
+                        else
+                            tiles[i, j] = new Tile(Static.TILE_OBSTACLE, i * Static.TILE_WIDTH, j * Static.TILE_HEIGHT, true);
+                    }
+                }
+                readMap();
+            }
         }
 
         private void readMap()
         {
-            int j = 0;
-            int i = 0;
-            string[] lines = System.IO.File.ReadAllLines(@"c:\windows\desktop\WriteLines2.txt");
-            foreach (string line in lines)
-            {
-                foreach (char c in line)
-                {
-                    if(c.Equals("0"))
-                        tiles[i, j] = new Tile(Static.TILE_NOT_OBSTACLE, i * Static.TILE_WIDTH, j * Static.TILE_HEIGHT, true);
-                    else
-                        tiles[i, j] = new Tile(Static.TILE_OBSTACLE, i * Static.TILE_WIDTH, j * Static.TILE_HEIGHT, true);
-                    j++;
-                }
-                i++;
-            }
-
+            
         }
 
         public void Draw(SpriteBatch spriteBatch, int cameraX, int cameraY)

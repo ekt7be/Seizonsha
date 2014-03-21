@@ -117,3 +117,4 @@ C:\Users\Eric\Documents\workspace\Seizonsha\GameName1\GameName1\bin\WindowsGL\De
 C:\Users\Eric\Documents\workspace\Seizonsha\GameName1\GameName1\bin\WindowsGL\Debug\OpenTK.dll
 C:\Users\Eric\Documents\workspace\Seizonsha\GameName1\GameName1\bin\WindowsGL\Debug\Tao.Sdl.dll
 C:\Users\Eric\Documents\workspace\Seizonsha\GameName1\GameName1\obj\x86\Debug\GameName1.csprojResolveAssemblyReference.cache
+C:\Users\Eric\Documents\workspace\Seizonsha\GameName1\GameName1\bin\WindowsGL\Debug\Content\map1.txt
