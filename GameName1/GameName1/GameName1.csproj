@@ -63,6 +63,7 @@
     <Compile Include="Skills\ChangeColor.cs" />
     <Compile Include="Skills\SwordSlash.cs" />
     <Compile Include="Skills\Sword.cs" />
+    <Compile Include="SpawnEntity.cs" />
     <Compile Include="Static.cs" />
     <Compile Include="Level.cs" />
     <Compile Include="Player.cs" />
