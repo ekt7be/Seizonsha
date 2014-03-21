@@ -38,7 +38,7 @@ namespace GameName1
 		Camera camera1, camera2, camera3, camera4; 
 		List<Camera> cameras; 
 
-		int numberOfPlayers = 1;
+		int numberOfPlayers = 2;
 
 		Dictionary<int, PlayerIndex> playerDict;
 
@@ -259,7 +259,7 @@ namespace GameName1
             //handle all player input
             foreach (Player player in players)
             {
-                if (player == null)
+                if (player == null || player.isDead())
                 {
                     continue;
                 }

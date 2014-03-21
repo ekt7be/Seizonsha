@@ -60,10 +60,13 @@ namespace GameName1.NPCs
 
             foreach (Player p in players)
             {
-                if (p == null)
+                if (p == null || p.isDead())
                     continue;
                 if (Math.Sqrt(Math.Pow(p.x - this.x, 2) + Math.Pow(p.y - this.y, 2)) < closestDistance)
+                {
                     closest = p;
+                    closestDistance = Math.Sqrt(Math.Pow(p.x - this.x, 2) + Math.Pow(p.y - this.y, 2));
+                }
             }
 
             if (closest == null)

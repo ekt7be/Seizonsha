@@ -212,5 +212,10 @@ namespace GameName1
         {
             dead = true;
         }
+
+        public bool isDead()
+        {
+            return dead;
+        }
     }
 }
