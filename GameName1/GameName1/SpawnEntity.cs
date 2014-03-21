@@ -25,7 +25,7 @@ namespace GameName1
         
                 if (!spawned)
                 {
-                    spawnXEnemies(2);
+                    spawnXEnemies(spawnChance);
                 }
                 if (game.getEnemyCount() == 0)
                     spawned = false;
@@ -35,7 +35,7 @@ namespace GameName1
         private void spawn()
         {
             Texture2D basicEnemyRect = game.getSpriteTexture(Static.BASIC_ENEMY_INT);
-            game.Spawn(new BasicEnemy(game, basicEnemyRect, 200, 200));
+            game.Spawn(new BasicEnemy(game, basicEnemyRect, this.x, this.y));
         }
 
         private void randomSpawn()

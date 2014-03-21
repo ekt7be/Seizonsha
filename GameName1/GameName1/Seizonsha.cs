@@ -38,7 +38,7 @@ namespace GameName1
 		Camera camera1, camera2, camera3, camera4; 
 		List<Camera> cameras; 
 
-		int numberOfPlayers = 2;
+		int numberOfPlayers = 1;
 
 		Dictionary<int, PlayerIndex> playerDict;
 
@@ -166,7 +166,8 @@ namespace GameName1
 			//-
            // Spawn(new BasicNPC(this, npcRect, 300, 100, 10, 10));
 			Spawn(new BasicEnemy(this, basicEnemyRect, 200, 200));
-            Spawn(new SpawnEntity(this, 2, 0, 0));
+            Spawn(new SpawnEntity(this, 2, 250, 250));
+            Spawn(new SpawnEntity(this, 2, 0, 250));
 
 
             base.Initialize();
