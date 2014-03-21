@@ -427,6 +427,14 @@ namespace GameName1
             }
         }
 
+        public void healArea(Rectangle bounds, int amount, int damageType)
+        {
+            foreach (GameEntity entity in getEntitiesInBounds(bounds))
+            {
+                entity.heal(amount);
+            }
+        }
+
         private void moveGameEntityWithoutCollision(GameEntity entity, int x, int y)
         {
             entity.x = x;

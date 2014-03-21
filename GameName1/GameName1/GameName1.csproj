@@ -60,7 +60,12 @@
     <Compile Include="NPCs\BasicEnemy.cs" />
     <Compile Include="NPCs\BasicNPC.cs" />
     <Compile Include="NPCs\BossEnemy.cs" />
+    <Compile Include="Skills\AOECircle.cs" />
+    <Compile Include="Skills\AOECone.cs" />
     <Compile Include="Skills\ChangeColor.cs" />
+    <Compile Include="Skills\ExplodingBullet.cs" />
+    <Compile Include="Skills\Fireball.cs" />
+    <Compile Include="Skills\HealingTouch.cs" />
     <Compile Include="Skills\SwordSlash.cs" />
     <Compile Include="Skills\Sword.cs" />
     <Compile Include="SpawnEntity.cs" />
