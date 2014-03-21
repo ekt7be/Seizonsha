@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using GameName1.Effects;
 
 namespace GameName1
 {
@@ -253,6 +254,7 @@ namespace GameName1
         {
             return targetType;
         }
+
         public void damage(int amount, int damageType)
         {
             if ((targetType == Static.TARGET_TYPE_ENEMY && damageType == Static.TARGET_TYPE_FRIENDLY) 
@@ -261,14 +263,18 @@ namespace GameName1
                 || (targetType == Static.TARGET_TYPE_ALL))
             {
                 incHealth(-1 * amount);
+                TextEffect text = new TextEffect(this.game, amount +"", 10, this.getCenterX(), this.getCenterY()-60, Color.Red );
+                game.Spawn(text);
             }
         }
 
         public void heal(int amount)
         {
+            
             incHealth(amount);
+            TextEffect text = new TextEffect(this.game, amount + "", 10, this.getCenterX(), this.getCenterY() - 60, Color.Green);
+            game.Spawn(text);
         }
-
 
         public void incHealth(int amount){
             health += amount;

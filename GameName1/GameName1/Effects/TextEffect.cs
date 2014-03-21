@@ -10,11 +10,12 @@ namespace GameName1.Effects
     class TextEffect : Effect
     {
         string text;
-        public TextEffect(Seizonsha game, string text, int duration, int x, int y) : base(game, null, x, y, 0, 0, duration)
+        Color textColor;
+        public TextEffect(Seizonsha game, string text, int duration, int x, int y, Color textColor) : base(game, null, x, y, 0, 0, duration)
         {
-            incVelocityY(-3);
+            incVelocityY(-2);
             this.text = text;
-
+            this.textColor = textColor;
         }
         public override void OnSpawn()
         {
@@ -30,7 +31,7 @@ namespace GameName1.Effects
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.DrawString(game.getSpriteFont(), text, new Vector2(x, y), Color.White);
+            spriteBatch.DrawString(game.getSpriteFont(), text, new Vector2(x, y), this.textColor);
         }
 
         protected override void OnDie()

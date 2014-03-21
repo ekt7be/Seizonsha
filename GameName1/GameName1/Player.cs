@@ -73,8 +73,8 @@ namespace GameName1
             this.inventory = new List<Equipable>();
 
             Equip(new Gun(30, 10, new Vector2(10, 10)), Static.PLAYER_L1_SKILL_INDEX);
-            Equip(new ChangeColor(Color.Purple), Static.PLAYER_L2_SKILL_INDEX);
-            Equip(new ChangeColor(Color.Green), Static.PLAYER_R1_SKILL_INDEX);
+            Equip(new Fireball(30, 100, new Vector2(5, 5)), Static.PLAYER_L2_SKILL_INDEX);
+            Equip(new HealingTouch(-50, 100), Static.PLAYER_R1_SKILL_INDEX);
             Equip(new Sword(30, 10), Static.PLAYER_R2_SKILL_INDEX);
 
 
