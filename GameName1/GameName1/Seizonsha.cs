@@ -31,11 +31,6 @@ namespace GameName1
 
         private Level currLevel;
 
-
-		// ALEX
-		Vector2 playerMouseDistance; // distance between player and mouse
-		//-ALEX
-
         public Seizonsha()
             : base()
         {
@@ -64,6 +59,7 @@ namespace GameName1
 			//Texture2D playerRect = new Texture2D(GraphicsDevice, Static.PLAYER_HEIGHT, Static.PLAYER_WIDTH);
 			Texture2D playerRect = Content.Load<Texture2D>("Sprites/player"); 
 			Texture2D basicEnemyRect = Content.Load<Texture2D>("Sprites/basicEnemy");
+            SkillTree.SkillTree.nodeTextures.Add(Static.SKILL_TREE_NODE_ANY, basicEnemyRect);
 
 
            
@@ -77,8 +73,10 @@ namespace GameName1
             //will use real sprites eventually..
 
             players[0] = new Player(this,PlayerIndex.One,playerRect,0,0);
+            players[1] = new Player(this, PlayerIndex.Two, playerRect, 0, 0);
 
             Spawn(players[0]);
+            Spawn(players[1]);
             Spawn(new BasicNPC(this, playerRect, 300, 100, 10, 10));
 			Spawn(new BasicEnemy(this, basicEnemyRect, 200, 200, 25, 25));
 
@@ -262,6 +260,11 @@ namespace GameName1
             if (player.playerIndex == PlayerIndex.One)
             {
 
+                if (GamePad.GetState(player.playerIndex).Buttons.Start == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Space))
+                {
+                    player.OpenSkillTree(!player.SkillTreeOpen());
+                }
+
                 if (GamePad.GetState(player.playerIndex).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 {
                     Exit();
@@ -314,14 +317,17 @@ namespace GameName1
                 }
 
 
-                // ALEX
                 MouseState mouse = Mouse.GetState();
+
+                Vector2 playerMouseDistance; // distance between player and mouse
+
+                playerMouseDistance.X = mouse.X - player.x;	// distance between player and mouse
+                playerMouseDistance.Y = mouse.Y - player.y;
 
                 player.rotateToAngle((float)Math.Atan2(playerMouseDistance.Y, playerMouseDistance.X)); // angle to point					
 
 
-                playerMouseDistance.X = mouse.X - player.x;	// distance between player and mouse
-                playerMouseDistance.Y = mouse.Y - player.y;
+
 
                 if (mouse.LeftButton == ButtonState.Pressed)
                 {
@@ -331,29 +337,33 @@ namespace GameName1
             else
             {
 
-                if (GamePad.GetState(player.playerIndex).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+                if (GamePad.GetState(player.playerIndex).Buttons.Start == ButtonState.Pressed)
+                {
+                    player.OpenSkillTree(!player.SkillTreeOpen());
+                }
+                if (GamePad.GetState(player.playerIndex).Buttons.Back == ButtonState.Pressed)
                 {
                     Exit();
                 }
-                if (GamePad.GetState(player.playerIndex).ThumbSticks.Left.Y > .5 || Keyboard.GetState().IsKeyDown(Keys.Up))
+                if (GamePad.GetState(player.playerIndex).ThumbSticks.Left.Y > .5)
                 {
                     player.MoveUp();
                     //player.rotateToAngle((float)(3 * Math.PI / 2));
 
                 }
-                if (GamePad.GetState(player.playerIndex).ThumbSticks.Left.X < -.5 || Keyboard.GetState().IsKeyDown(Keys.Left))
+                if (GamePad.GetState(player.playerIndex).ThumbSticks.Left.X < -.5)
                 {
                     player.MoveLeft();
                     //player.rotateToAngle((float)Math.PI);
 
                 }
-                if (GamePad.GetState(player.playerIndex).ThumbSticks.Left.X > .5 || Keyboard.GetState().IsKeyDown(Keys.Right))
+                if (GamePad.GetState(player.playerIndex).ThumbSticks.Left.X > .5)
                 {
                     player.MoveRight();
                     // player.rotateToAngle((float)0);
 
                 }
-                if (GamePad.GetState(player.playerIndex).ThumbSticks.Left.Y < -.5 || Keyboard.GetState().IsKeyDown(Keys.Down))
+                if (GamePad.GetState(player.playerIndex).ThumbSticks.Left.Y < -.5)
                 {
                     player.MoveDown();
                     // player.rotateToAngle((float)Math.PI / 2);
@@ -477,7 +487,7 @@ namespace GameName1
                 if (distanceToBoundary < distanceToTravelX)
                 {
                     distanceToTravelX = distanceToBoundary;
-                    //wallCollision = true;
+                    wallCollision = true;
                 }
 
                 int tilesToScanX = tilesX;
@@ -493,6 +503,10 @@ namespace GameName1
                     for (int j = topEdgeTile; j <= bottomEdgeTile; j++)
                     {
                         Tile currTile = currLevel.getTile(rightEdgeTile + i, j);
+                        if (currTile == null)
+                        {
+                            continue;
+                        }
                         if (currTile.isObstacle())
                         {
                             int distanceToTile = currTile.x - entity.getRightEdgeX();
@@ -534,7 +548,7 @@ namespace GameName1
                 if (distanceToBoundary > distanceToTravelX)
                 {
                     distanceToTravelX = distanceToBoundary;
-                    //wallCollision = true;
+                    wallCollision = true;
                 }
 
                 int tilesToScanX = tilesX;
@@ -550,6 +564,10 @@ namespace GameName1
                     for (int j = topEdgeTile; j <= bottomEdgeTile; j++)
                     {
                         Tile currTile = currLevel.getTile(leftEdgeTile - i, j);
+                        if (currTile == null)
+                        {
+                            continue;
+                        }
                         if (currTile.isObstacle())
                         {
                             int distanceToTile = (currTile.x + Static.TILE_WIDTH) - entity.getLeftEdgeX();
@@ -596,7 +614,7 @@ namespace GameName1
                 if (distanceToBoundary < distanceToTravelY)
                 {
                     distanceToTravelY = distanceToBoundary;
-                    //wallCollision = true;
+                    wallCollision = true;
                 }
 
 
@@ -612,6 +630,10 @@ namespace GameName1
                     for (int j = leftEdgeTile; j <= rightEdgeTile; j++)
                     {
                         Tile currTile = currLevel.getTile(j, bottomEdgeTile + i);
+                        if (currTile == null)
+                        {
+                            continue;
+                        }
                         if (currTile.isObstacle())
                         {
                             int distanceToTile = currTile.y - entity.getBottomEdgeY();
@@ -652,7 +674,7 @@ namespace GameName1
                 if (distanceToBoundary > distanceToTravelY)
                 {
                     distanceToTravelY = distanceToBoundary;
-                    //wallCollision = true;
+                    wallCollision = true;
                 }
 
                 int tilesToScanY = tilesY;
@@ -668,6 +690,10 @@ namespace GameName1
                     for (int j = leftEdgeTile; j <= rightEdgeTile; j++)
                     {
                         Tile currTile = currLevel.getTile(j, topEdgeTile - i);
+                        if (currTile == null)
+                        {
+                            continue;
+                        }
                         if (currTile.isObstacle())
                         {
                             int distanceToTile = (currTile.y + Static.TILE_HEIGHT) - entity.getTopEdgeY();

@@ -1,6 +1,7 @@
 ﻿using GameName1.Effects;
 using GameName1.Interfaces;
 using GameName1.Skills;
+using GameName1.SkillTree;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -22,6 +23,8 @@ namespace GameName1
         private bool dead;
         private Equipable[] skillSlots;
         private List<Equipable> inventory;
+        private SkillTree.SkillTree skilltree;
+        private bool skilltreescreen;
 
 
         public override void Update()
@@ -71,11 +74,13 @@ namespace GameName1
 
 			this.skillSlots = new Equipable[4]; //each slot is different skill, weapon, or item
             this.inventory = new List<Equipable>();
-
+            this.skilltree = new SkillTree.SkillTree(this, game.getTestSprite(new Rectangle(0, 0, Static.SCREEN_WIDTH, Static.SCREEN_HEIGHT), Color.Black));
             Equip(new Gun(30, 10, new Vector2(10, 10)), Static.PLAYER_L1_SKILL_INDEX);
             Equip(new ChangeColor(Color.Purple), Static.PLAYER_L2_SKILL_INDEX);
             Equip(new ChangeColor(Color.Green), Static.PLAYER_R1_SKILL_INDEX);
             Equip(new Sword(30, 10), Static.PLAYER_R2_SKILL_INDEX);
+
+            this.skilltreescreen = false;
 
 
 
@@ -135,6 +140,16 @@ namespace GameName1
             equip.OnEquip(game, this);
 
 
+        }
+
+        public bool SkillTreeOpen()
+        {
+            return skilltreescreen;
+        }
+
+        public void OpenSkillTree(bool open)
+        {
+            skilltreescreen = open;
         }
 
 		public void LeftClick()

@@ -35,7 +35,6 @@ namespace GameName1
 
 		// ALEX: new variables for mouse aim bullets and sprite rotation
 		public Vector2 alexDirection {get ; set; }
-		//public float alexAngle { get; set; }
 		//-ALEX
 
 
@@ -49,9 +48,7 @@ namespace GameName1
 
 			// spriteBatch.Draw(sprite, hitbox, color);
 
-			// ALEX: draw sprite with rotation now
 			spriteBatch.Draw(sprite, new Vector2(this.getCenterX(), this.getCenterY()) , null, color, this.direction, new Vector2(this.width/2, this.height/2), 1.0f, SpriteEffects.None, 1);
-			//-ALEX 
 
 
         }

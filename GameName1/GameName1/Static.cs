@@ -45,6 +45,12 @@ namespace GameName1
         public static readonly int TARGET_TYPE_NOT_DAMAGEABLE = 0;
         public static readonly int TARGET_TYPE_ALL = 3;
 
+        //Skilltree
+        public static readonly int SKILL_TREE_WEIGHT_UNLOCKED = 1;
+        public static readonly int SKILL_TREE_WEIGHT_LOCKED = 0;
+        public static readonly int SKILL_TREE_NODE_WIDTH = 100;
+        public static readonly int SKILL_TREE_NODE_HEIGHT = 100;
+        public static readonly int SKILL_TREE_NODE_ANY = 4;
 
 
         public static void Debug(string line)

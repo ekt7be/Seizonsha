@@ -62,6 +62,8 @@
     <Compile Include="Skills\ChangeColor.cs" />
     <Compile Include="Skills\SwordSlash.cs" />
     <Compile Include="Skills\Sword.cs" />
+    <Compile Include="SkillTree\SkillTree.cs" />
+    <Compile Include="SkillTree\SkillTreeNode.cs" />
     <Compile Include="Static.cs" />
     <Compile Include="Level.cs" />
     <Compile Include="Player.cs" />
@@ -108,9 +110,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="SkillTree\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">
       <Visible>False</Visible>
