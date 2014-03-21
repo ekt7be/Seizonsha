@@ -10,7 +10,6 @@ namespace GameName1.Skills
 {
 	class Bullet : GameEntity
 	{
-
 		private int damageType;
 		private int amount;
 		private Vector2 bulletSpeed; 
