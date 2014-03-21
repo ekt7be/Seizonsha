@@ -56,8 +56,8 @@ namespace GameName1
                 int barWidth = 60;
                 //Debug.WriteLine(this.health);
                 double green = ((double)this.health/(double)this.maxHealth) * barWidth;
-                Rectangle greenCoordinates = new Rectangle(this.getCenterX() - (barWidth/2), this.y - 30, (int)green, 5);
-                Rectangle redCoordinates = new Rectangle(this.getCenterX() - (barWidth/2), this.y - 30, barWidth, 5);
+                Rectangle greenCoordinates = new Rectangle(this.getCenterX() - (barWidth/2), this.y - 20, (int)green, 5);
+                Rectangle redCoordinates = new Rectangle(this.getCenterX() - (barWidth/2), this.y - 20, barWidth, 5);
 			    // spriteBatch.Draw(sprite, hitbox, color);
                 Texture2D whiteRectangle = new Texture2D(game.GraphicsDevice, 1, 1);
                 whiteRectangle.SetData(new[] { Color.White });

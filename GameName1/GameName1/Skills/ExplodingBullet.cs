@@ -42,20 +42,32 @@ namespace GameName1.Skills
         public override void collide(GameEntity entity)
         {
 
-            
-            int explosionWidth = 80;
-            int explosionHeight = 80;
-            Rectangle slashBounds = new Rectangle((int)(entity.getCenterX() -explosionWidth/2), (int)(entity.getCenterY() -explosionWidth/2), explosionWidth, explosionHeight);
-            game.Spawn(new AOECone(game, game.getTestSprite(slashBounds, Color.Green), slashBounds, amount, this.damageType, 10, entity.alexDirection));
+            if (damageType == Static.TARGET_TYPE_FRIENDLY && entity.getTargetType() == Static.TARGET_TYPE_FRIENDLY) ;
+            else
+            {
 
-            setRemove(true);
-            // game.damageArea(this.getHitbox(), amount, damageType);
+
+
+                int explosionWidth = 80;
+                int explosionHeight = 80;
+                Rectangle slashBounds = new Rectangle((int)(entity.getCenterX() - explosionWidth / 2), (int)(entity.getCenterY() - explosionWidth / 2), explosionWidth, explosionHeight);
+                game.Spawn(new AOECone(game, game.getTestSprite(slashBounds, Color.Green), slashBounds, amount, this.damageType, 10, entity.alexDirection));
+
+                setRemove(true);
+                // game.damageArea(this.getHitbox(), amount, damageType);
+            }
 
         }
 
         public override void collideWithWall()
         {
+            int explosionWidth = 80;
+            int explosionHeight = 80;
+            Rectangle slashBounds = new Rectangle((int)(getCenterX() - explosionWidth / 2), (int)(getCenterY() - explosionWidth / 2), explosionWidth, explosionHeight);
+            game.Spawn(new AOECone(game, game.getTestSprite(slashBounds, Color.Green), slashBounds, amount, this.damageType, 10, alexDirection));
+
             setRemove(true);
+            // game.damageArea(this.getHitbox(), amount, damageType);
         }
 
 

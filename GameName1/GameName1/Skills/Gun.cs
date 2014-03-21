@@ -55,8 +55,9 @@ namespace GameName1.Skills
 				//									entity.getCenterY(), 
 					//								Static.PLAYER_WIDTH/2, 
 						//							Static.PLAYER_HEIGHT/2);
-
-            Rectangle slashBounds = new Rectangle((int)(entity.getCenterX() + entity.alexDirection.X * entity.width / 2 - Static.PLAYER_WIDTH / 4), (int)(entity.getCenterY() + entity.alexDirection.Y * entity.height / 2 - Static.PLAYER_WIDTH / 4), Static.PLAYER_WIDTH / 2, Static.PLAYER_HEIGHT / 2);
+            int bulletWidth = 10;
+            int bulletHeight = 10;
+            Rectangle slashBounds = new Rectangle((int)(entity.getCenterX() + entity.alexDirection.X * entity.width / 2 - bulletWidth/2), (int)(entity.getCenterY() + entity.alexDirection.Y * entity.height / 2 - bulletHeight/2), bulletWidth, bulletHeight);
 
 			game.Spawn(new Bullet(game, game.getTestSprite(slashBounds, Color.Red), slashBounds, damage, damageType, 1, bulletSpeed, entity.alexDirection));
 
