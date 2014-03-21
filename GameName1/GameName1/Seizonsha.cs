@@ -31,6 +31,8 @@ namespace GameName1
 
         private Level currLevel;
 
+        private Dictionary<int, Texture2D> spriteTextures;
+
 
 		// ALEX
 		Vector2 playerMouseDistance; // distance between player and mouse
@@ -176,7 +178,6 @@ namespace GameName1
             foreach (GameEntity entity in entities)
             {
                 entity.UpdateAll();
-
             }
 
             //handle all player input
@@ -191,10 +192,6 @@ namespace GameName1
 
 				// ALEX
 				//-ALEX
-
-       
-
-
             }
 
             //run AI
@@ -202,7 +199,6 @@ namespace GameName1
             {
                 ai.AI();
             }
-
 
             //execute all collisions
             foreach (Collision collision in collisions)
@@ -799,6 +795,18 @@ namespace GameName1
             return list;
         }
 
+        public int getEnemyCount()
+        {
+            int count = 0;
+            foreach (GameEntity entity in entities)
+            {
+                if (entity is BasicEnemy)
+                {
+                    count++;
+                }
+            }
+            return count;
+        }
 
 
     }

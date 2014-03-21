@@ -14,7 +14,7 @@ namespace GameName1
     {
         Random random = new Random();
         int spawnChance;
-
+        bool spawned = false;
         public SpawnEntity(Seizonsha game, int spawnChance, int x, int y)
             : base(game, null, x, y, 0, 0, Static.TARGET_TYPE_NOT_DAMAGEABLE, 0)
         {
@@ -22,13 +22,39 @@ namespace GameName1
         }
         public override void Update()
         {
+        
+                if (!spawned)
+                {
+                    spawnXEnemies(2);
+                }
+                if (game.getEnemyCount() == 0)
+                    spawned = false;
+            
+        }
+
+        private void spawn()
+        {
+            Texture2D basicEnemyRect = game.Content.Load<Texture2D>("Sprites/basicEnemy");
+            game.Spawn(new BasicEnemy(game, basicEnemyRect, 200, 200, 25, 25));
+        }
+        private void randomSpawn()
+        {
             int rand = random.Next(1, 1000);
 
             //10% chance to spawn an enemy every game-second    
             if (rand < spawnChance)
             {
-                Texture2D basicEnemyRect = game.Content.Load<Texture2D>("Sprites/basicEnemy");
-                game.Spawn(new BasicEnemy(game, basicEnemyRect, 200, 200, 25, 25));
+                spawn();
+            }
+        }
+
+        private void spawnXEnemies(int totalEnemies)
+        {
+            spawned = true;
+        
+            for (int x = 0; x < totalEnemies; x++)
+            {
+                spawn();
             }
         }
         public override void collide(GameEntity entity)

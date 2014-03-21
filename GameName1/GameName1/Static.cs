@@ -45,7 +45,8 @@ namespace GameName1
         public static readonly int TARGET_TYPE_NOT_DAMAGEABLE = 0;
         public static readonly int TARGET_TYPE_ALL = 3;
 
-
+        //
+        public static readonly int SPRITE_INT_MAPPING = 0;
 
         public static void Debug(string line)
         {

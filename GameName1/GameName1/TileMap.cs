@@ -15,7 +15,8 @@ namespace GameName1
         private int tilesHorz;
         private int tilesVert;
 
-        public TileMap(Level level, int tilesHorz, int tilesVert){
+        public TileMap(Level level, int tilesHorz, int tilesVert)
+        {
             this.tilesHorz = tilesHorz;
             this.tilesVert = tilesVert;
             this.level = level;
@@ -36,12 +37,32 @@ namespace GameName1
                     {
                         tiles[i, j] = new Tile(Static.TILE_NOT_OBSTACLE, i * Static.TILE_WIDTH, j * Static.TILE_HEIGHT, false);
 
-                    }
-
-
-                    
+                    }                    
                 }
             }
+             
+
+           // readMap();
+        }
+
+        private void readMap()
+        {
+            int j = 0;
+            int i = 0;
+            string[] lines = System.IO.File.ReadAllLines(@"c:\windows\desktop\WriteLines2.txt");
+            foreach (string line in lines)
+            {
+                foreach (char c in line)
+                {
+                    if(c.Equals("0"))
+                        tiles[i, j] = new Tile(Static.TILE_NOT_OBSTACLE, i * Static.TILE_WIDTH, j * Static.TILE_HEIGHT, true);
+                    else
+                        tiles[i, j] = new Tile(Static.TILE_OBSTACLE, i * Static.TILE_WIDTH, j * Static.TILE_HEIGHT, true);
+                    j++;
+                }
+                i++;
+            }
+
         }
 
         public void Draw(SpriteBatch spriteBatch, int cameraX, int cameraY)

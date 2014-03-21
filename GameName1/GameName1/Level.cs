@@ -49,6 +49,9 @@ namespace GameName1
 
         }
 
+       
+
+
         public void Draw(SpriteBatch spriteBatch, int cameraX, int cameraY)
         {
             map.Draw(spriteBatch, cameraX, cameraY);
