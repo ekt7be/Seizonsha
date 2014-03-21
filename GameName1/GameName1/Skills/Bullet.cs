@@ -10,11 +10,10 @@ namespace GameName1.Skills
 {
 	class Bullet : GameEntity
 	{
-
 		private int damageType;
 		private int amount;
 		private Vector2 bulletSpeed; 
-		private Vector2 direction; 
+		private Vector2 direction;
 
 		public Bullet(Seizonsha game, Texture2D sprite, Rectangle bounds, int amount, int damageType, int duration, Vector2 bulletSpeed, Vector2 alexDirection)
 			: base(game, sprite, bounds.Left, bounds.Top, bounds.Width, bounds.Height, Static.TARGET_TYPE_NOT_DAMAGEABLE, 30)
@@ -40,7 +39,11 @@ namespace GameName1.Skills
         public override void collide(GameEntity entity)
         {
             entity.damage(amount, damageType);
-            setRemove(true);
+            if (damageType == Static.TARGET_TYPE_FRIENDLY && entity.getTargetType() == Static.TARGET_TYPE_FRIENDLY) ;
+            else
+            {
+                setRemove(true);
+            }
            // game.damageArea(this.getHitbox(), amount, damageType);
 
         }
