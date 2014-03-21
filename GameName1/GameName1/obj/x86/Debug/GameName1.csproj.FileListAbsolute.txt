@@ -90,7 +90,6 @@ C:\Users\stk4zn.CSLAB\Desktop\Seizonsha-master\GameName1\GameName1\bin\WindowsGL
 C:\Users\stk4zn.CSLAB\Desktop\Seizonsha-master\GameName1\GameName1\bin\WindowsGL\Debug\OpenTK.dll
 C:\Users\stk4zn.CSLAB\Desktop\Seizonsha-master\GameName1\GameName1\bin\WindowsGL\Debug\Tao.Sdl.dll
 C:\Users\stk4zn.CSLAB\Desktop\Seizonsha-master\GameName1\GameName1\bin\WindowsGL\Debug\Content\Sprites\basicEnemy.jpg
-<<<<<<< HEAD
 C:\Users\Steven\Documents\GitHub\Seizonsha\GameName1\GameName1\obj\x86\Debug\GameName1.exe
 C:\Users\Steven\Documents\GitHub\Seizonsha\GameName1\GameName1\obj\x86\Debug\GameName1.pdb
 C:\Users\Steven\Documents\GitHub\Seizonsha\GameName1\GameName1\obj\x86\Debug\GameName1.csprojResolveAssemblyReference.cache
@@ -117,6 +116,4 @@ C:\Users\Eric\Documents\workspace\Seizonsha\GameName1\GameName1\bin\WindowsGL\De
 C:\Users\Eric\Documents\workspace\Seizonsha\GameName1\GameName1\bin\WindowsGL\Debug\OpenTK.dll
 C:\Users\Eric\Documents\workspace\Seizonsha\GameName1\GameName1\bin\WindowsGL\Debug\Tao.Sdl.dll
 C:\Users\Eric\Documents\workspace\Seizonsha\GameName1\GameName1\obj\x86\Debug\GameName1.csprojResolveAssemblyReference.cache
-=======
 C:\Users\stk4zn.CSLAB\Desktop\Seizonsha-master\GameName1\GameName1\obj\x86\Debug\GameName1.csprojResolveAssemblyReference.cache
->>>>>>> test
