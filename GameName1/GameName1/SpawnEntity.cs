@@ -34,9 +34,10 @@ namespace GameName1
 
         private void spawn()
         {
-            Texture2D basicEnemyRect = game.Content.Load<Texture2D>("Sprites/basicEnemy");
+            Texture2D basicEnemyRect = game.getSpriteTexture(Static.BASIC_ENEMY_INT);
             game.Spawn(new BasicEnemy(game, basicEnemyRect, 200, 200, 25, 25));
         }
+
         private void randomSpawn()
         {
             int rand = random.Next(1, 1000);

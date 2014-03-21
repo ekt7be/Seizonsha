@@ -21,7 +21,6 @@ namespace GameName1
         SpriteBatch spriteBatch;
         private SpriteFont spriteFont;
         private static readonly Random randomGen = new Random();
-
         private Player[] players;
         private List<GameEntity> entities;
         private Queue<GameEntity> removalQueue;
@@ -31,8 +30,7 @@ namespace GameName1
 
         private Level currLevel;
 
-        private Dictionary<int, Texture2D> spriteTextures;
-
+        private Dictionary<int, Texture2D> spriteMappings;
 
 		// ALEX
 		Vector2 playerMouseDistance; // distance between player and mouse
@@ -61,13 +59,15 @@ namespace GameName1
             graphics.PreferredBackBufferHeight = Static.SCREEN_HEIGHT;
             graphics.PreferredBackBufferWidth = Static.SCREEN_WIDTH;
             this.players = new Player[4];
+            this.spriteMappings = new Dictionary<int, Texture2D>();
 
             //just for testing -- makes a rectangle
 			//Texture2D playerRect = new Texture2D(GraphicsDevice, Static.PLAYER_HEIGHT, Static.PLAYER_WIDTH);
 			Texture2D playerRect = Content.Load<Texture2D>("Sprites/player"); 
 			Texture2D basicEnemyRect = Content.Load<Texture2D>("Sprites/basicEnemy");
 
-
+            spriteMappings.Add(Static.BASIC_ENEMY_INT, basicEnemyRect);
+            spriteMappings.Add(Static.PLAYER_INT, playerRect);
            
             Color[] data = new Color[Static.PLAYER_HEIGHT * Static.PLAYER_WIDTH];
             for (int i = 0; i < data.Length; ++i)
@@ -808,6 +808,10 @@ namespace GameName1
             return count;
         }
 
+        public Texture2D getSpriteTexture(int x)
+        {
+            return spriteMappings[x];
+        }
 
     }
 }
