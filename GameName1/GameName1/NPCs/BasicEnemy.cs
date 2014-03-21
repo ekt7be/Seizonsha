@@ -13,10 +13,13 @@ namespace GameName1.NPCs
 
         int count = 0;
 
-        public BasicEnemy(Seizonsha game, Texture2D sprite, int x, int y, int width, int height)
-            : base(game, sprite, x, y, width, height, Static.DAMAGE_TYPE_ENEMY, 200)
+        int currentFrame = 0;
+
+        public BasicEnemy(Seizonsha game, Texture2D sprite, int x, int y)
+            : base(game, sprite, x, y, Static.BASIC_ENEMY_WIDTH, Static.BASIC_ENEMY_HEIGHT, Static.DAMAGE_TYPE_ENEMY, 200)
         {
-     
+            base.source = new Rectangle(sprite.Width / 4 * currentFrame, 0, sprite.Width / 4, sprite.Height);
+            base.scale = 1.0f;
         }
 
         public void AI()
@@ -81,8 +84,25 @@ namespace GameName1.NPCs
                 this.velocityY = -1;
             if (closest.y > this.y)
                 this.velocityY = 1;
-          
 
+            float playerDirection = (float)Math.Atan2(this.y - closest.y, closest.x - this.x);
+            if (playerDirection < 0)
+                playerDirection += (2.0f * (float)Math.PI);
+
+            //up
+            if (playerDirection >= .79 && playerDirection < 2.3)
+                currentFrame = 0;
+            //right
+            else if (playerDirection >= 2.3 && playerDirection < 3.9)
+                currentFrame = 1;
+            //down
+            else if (playerDirection >= 3.9 && playerDirection < 5.5)
+                currentFrame = 2;
+            //left
+            else
+                currentFrame = 3;
+
+            base.source = new Rectangle(sprite.Width / 4 * currentFrame, 0, sprite.Width / 4, sprite.Height);
         }
 
         protected override void OnDie()

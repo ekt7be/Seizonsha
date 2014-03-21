@@ -9,8 +9,8 @@ namespace GameName1
     {
 
         //player stuff
-        public static readonly int PLAYER_HEIGHT = 20;
-        public static readonly int PLAYER_WIDTH = 20;
+        public static readonly int PLAYER_HEIGHT = 48;
+        public static readonly int PLAYER_WIDTH = 48;
         public static readonly int PLAYER_MOVE_SPEED = 3;
         public static readonly int PLAYER_MAX_HEALTH = 100;
         public static readonly int PLAYER_MAX_MANA = 100;
@@ -20,11 +20,15 @@ namespace GameName1
         public static readonly int PLAYER_R2_SKILL_INDEX = 3;
 		public static readonly int PLAYER_LEFTCLICK_SKILL_INDEX = 0; 
 
+        //enemy
+        public static readonly int BASIC_ENEMY_HEIGHT = 48;
+        public static readonly int BASIC_ENEMY_WIDTH = 48;
+
 
         //dimensions
         public static readonly int SCREEN_WIDTH = 640;
         public static readonly int SCREEN_HEIGHT = 480;
-        public static readonly int TILES_ON_SCREEN_X = 80;
+        public static readonly int TILES_ON_SCREEN_X = 40;
         public static readonly int TILES_ON_SCREEN_Y = (int)((float)SCREEN_HEIGHT / (float)SCREEN_WIDTH * TILES_ON_SCREEN_X);
         public static readonly int TILE_WIDTH = SCREEN_WIDTH / TILES_ON_SCREEN_X;
         public static readonly int TILE_HEIGHT = TILE_WIDTH;

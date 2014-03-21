@@ -25,6 +25,7 @@ namespace GameName1
         private List<Equipable> inventory;
         private SkillTree.SkillTree skilltree;
         private bool skilltreescreen;
+        int currentFrame = 0;
 
 		public Camera camera; 
 
@@ -38,6 +39,7 @@ namespace GameName1
                     skill.Update(game, this);
                 }
             }
+            base.source = new Rectangle(sprite.Width / 4 * currentFrame, 0, sprite.Width / 4, sprite.Height);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -86,10 +88,11 @@ namespace GameName1
 
             this.skilltreescreen = false;
 
-			this.camera = camera; 
+			this.camera = camera;
 
 
-
+            base.source = new Rectangle(sprite.Width / 4 * currentFrame, 0, sprite.Width / 4, sprite.Height);
+            base.scale = 1.0f;
 
 
 
@@ -194,18 +197,22 @@ namespace GameName1
         public void MoveUp()
         {
             this.move(0, -Static.PLAYER_MOVE_SPEED);
+            currentFrame = 0;
         }
         public void MoveDown()
         {
             this.move(0, Static.PLAYER_MOVE_SPEED);
+            currentFrame = 2;
         }
         public void MoveLeft()
         {
             this.move(-Static.PLAYER_MOVE_SPEED, 0);
+            currentFrame = 1;
         }
         public void MoveRight()
         {
             this.move(Static.PLAYER_MOVE_SPEED, 0);
+            currentFrame = 3;
         }
 
         protected override void OnDie()

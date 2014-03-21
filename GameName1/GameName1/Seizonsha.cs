@@ -71,9 +71,16 @@ namespace GameName1
 
             //just for testing -- makes a rectangle
 			//Texture2D playerRect = new Texture2D(GraphicsDevice, Static.PLAYER_HEIGHT, Static.PLAYER_WIDTH);
-			Texture2D playerRect = Content.Load<Texture2D>("Sprites/player"); 
-			Texture2D basicEnemyRect = Content.Load<Texture2D>("Sprites/basicEnemy");
+            Texture2D backgroundTexture = Content.Load<Texture2D>("Sprites/tile");
+            Texture2D wallTexture = Content.Load<Texture2D>("Sprites/wallTexture");
+			Texture2D playerRect = Content.Load<Texture2D>("Sprites/BasicPlayerSpriteSheet");
+            Texture2D npcRect = Content.Load<Texture2D>("Sprites/player");
+			Texture2D basicEnemyRect = Content.Load<Texture2D>("Sprites/BasicEnemySprite");
             SkillTree.SkillTree.nodeTextures.Add(Static.SKILL_TREE_NODE_ANY, basicEnemyRect);
+
+
+            Level.tileSprites.Add(Static.TILE_OBSTACLE, wallTexture);
+            Level.tileSprites.Add(Static.TILE_NOT_OBSTACLE, backgroundTexture);
 
             spriteMappings.Add(Static.BASIC_ENEMY_INT, basicEnemyRect);
             spriteMappings.Add(Static.PLAYER_INT, playerRect);
@@ -157,8 +164,8 @@ namespace GameName1
 				Spawn(players[i]);
 			}
 			//-
-            Spawn(new BasicNPC(this, playerRect, 300, 100, 10, 10));
-			Spawn(new BasicEnemy(this, basicEnemyRect, 200, 200, 64, 64));
+           // Spawn(new BasicNPC(this, npcRect, 300, 100, 10, 10));
+			Spawn(new BasicEnemy(this, basicEnemyRect, 200, 200));
             Spawn(new SpawnEntity(this, 2, 0, 0));
 
 

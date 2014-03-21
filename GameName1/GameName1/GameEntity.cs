@@ -34,6 +34,9 @@ namespace GameName1
         public Color color { get; set; } //delete when we have actual sprites
         private int frozen; // stop entity from moving for a period of time
 
+        protected Rectangle? source = null;
+        protected float scale = 1.0f;
+
         //TODO: create depth variable that Game object can sort entities by to determine which to draw first (so effects can go on top etc)
 
 		// ALEX: new variables for mouse aim bullets and sprite rotation
@@ -53,8 +56,8 @@ namespace GameName1
                 int barWidth = 60;
                 //Debug.WriteLine(this.health);
                 double green = ((double)this.health/(double)this.maxHealth) * barWidth;
-                Rectangle greenCoordinates = new Rectangle(this.getCenterX() - (barWidth/2), this.getCenterY() - 30, (int)green, 5);
-                Rectangle redCoordinates = new Rectangle(this.getCenterX() - (barWidth/2), this.getCenterY() - 30, barWidth, 5);
+                Rectangle greenCoordinates = new Rectangle(this.getCenterX() - (barWidth/2), this.y - 30, (int)green, 5);
+                Rectangle redCoordinates = new Rectangle(this.getCenterX() - (barWidth/2), this.y - 30, barWidth, 5);
 			    // spriteBatch.Draw(sprite, hitbox, color);
                 Texture2D whiteRectangle = new Texture2D(game.GraphicsDevice, 1, 1);
                 whiteRectangle.SetData(new[] { Color.White });
@@ -62,8 +65,14 @@ namespace GameName1
                 spriteBatch.Draw(whiteRectangle, greenCoordinates, Color.Green);
             }
 
-			spriteBatch.Draw(sprite, new Vector2(this.x, this.y) , null, color, this.direction, new Vector2(this.width/2, this.height/2), 1.0f, SpriteEffects.None, 1);
-
+            if (source == null)
+            {
+                spriteBatch.Draw(sprite, this.hitbox, source, color, this.direction, new Vector2(0, 0), SpriteEffects.None, 1);
+            }
+            else
+            {
+                spriteBatch.Draw(sprite, this.hitbox, source, color, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+            }
 
         }
 
