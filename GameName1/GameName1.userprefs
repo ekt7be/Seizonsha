@@ -1,11 +1,23 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="GameName1\GameEntity.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release|x86" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="GameName1\Seizonsha.cs">
     <Files>
-      <File FileName="GameName1\Seizonsha.cs" Line="41" Column="26" />
-      <File FileName="GameName1\Player.cs" Line="71" Column="34" />
-      <File FileName="GameName1\GameEntity.cs" Line="63" Column="14" />
-      <File FileName="GameName1\NPCs\BasicEnemy.cs" Line="25" Column="10" />
+      <File FileName="GameName1\Seizonsha.cs" Line="391" Column="26" />
+      <File FileName="GameName1\Player.cs" Line="1" Column="1" />
+      <File FileName="GameName1\GameEntity.cs" Line="1" Column="1" />
+      <File FileName="GameName1\NPCs\BasicEnemy.cs" Line="1" Column="1" />
+      <File FileName="GameName1\NPCs\BasicNPC.cs" Line="1" Column="1" />
+      <File FileName="GameName1\NPCs\BossEnemy.cs" Line="1" Column="1" />
+      <File FileName="GameName1\Skills\Gun.cs" Line="1" Column="1" />
+      <File FileName="GameName1\Skills\Fireball.cs" Line="1" Column="1" />
+      <File FileName="GameName1\Skills\ExplodingBullet.cs" Line="1" Column="1" />
+      <File FileName="GameName1\Skills\ChangeColor.cs" Line="1" Column="1" />
+      <File FileName="GameName1\Skills\Bullet.cs" Line="1" Column="1" />
+      <File FileName="GameName1\Skills\AOECone.cs" Line="1" Column="1" />
+      <File FileName="GameName1\Skills\HealingTouch.cs" Line="1" Column="1" />
+      <File FileName="GameName1\Skills\Sword.cs" Line="1" Column="1" />
+      <File FileName="GameName1\Skills\SwordSlash.cs" Line="1" Column="1" />
+      <File FileName="GameName1\Static.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

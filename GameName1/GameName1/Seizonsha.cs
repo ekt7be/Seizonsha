@@ -17,6 +17,8 @@ namespace GameName1
 
     public class Seizonsha : Game
     {
+		int numberOfPlayers = 2;
+
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         private SpriteFont spriteFont;
@@ -37,8 +39,9 @@ namespace GameName1
 		Viewport defaultView, leftView, rightView, bottomLeftView, bottomRightView; 
 		Camera camera1, camera2, camera3, camera4; 
 		List<Camera> cameras; 
+		Rectangle vertDivider, horDivider; 
+		List<Rectangle> dividers; 
 
-		int numberOfPlayers = 1;
 
 		Dictionary<int, PlayerIndex> playerDict;
 
@@ -94,55 +97,72 @@ namespace GameName1
 //		     playerRect.SetData(data);
             //will use real sprites eventually..
 			// AlexAlpha
+
+			dividers = new List<Rectangle>();
+			int divWidth = 3; 
+			vertDivider = new Rectangle(Static.SCREEN_WIDTH/2+80-divWidth, 0, divWidth, Static.SCREEN_HEIGHT*2);
+			horDivider = new Rectangle(0, Static.SCREEN_HEIGHT/2-divWidth, Static.SCREEN_WIDTH*2, divWidth);
+
+			dividers.Add(vertDivider); 
+			dividers.Add(horDivider); 
+
 			switch (numberOfPlayers) {
-			case 1: 
-				defaultView = GraphicsDevice.Viewport;
-				leftView = defaultView; 
-				break;
-			case 2: 
-				defaultView = GraphicsDevice.Viewport;
-				leftView = rightView = defaultView;
+				case 1: 
+					defaultView = GraphicsDevice.Viewport;
+					leftView = defaultView; 
+					break;
+				case 2: 
+					defaultView = GraphicsDevice.Viewport;
+					leftView = rightView = defaultView;
 
-				leftView.Width = leftView.Width/2; 
-				rightView.Width = rightView.Width/2;
+					leftView.Width = leftView.Width/2; 
+					rightView.Width = rightView.Width/2;
 
-				rightView.X = leftView.Width;
-				break;
-			case 3: 
-				defaultView = GraphicsDevice.Viewport;
-				leftView = rightView = bottomLeftView = defaultView;
+					rightView.X = leftView.Width;
 
-				leftView.Width = leftView.Width/2;
-				rightView.Width = rightView.Width/2;
-				bottomLeftView.Width = bottomLeftView.Width/2; 
+					break;
+				case 3: 
 
-				leftView.Height = leftView.Height/2; 
-				rightView.Height = rightView.Height/2;
-				bottomLeftView.Height = bottomLeftView.Height/2;
 
-				rightView.X = leftView.Width;
-				bottomLeftView.Y = leftView.Height; 
-				break;
-			case 4: 
-				defaultView = GraphicsDevice.Viewport;
-				leftView = rightView = bottomLeftView = bottomRightView = defaultView;
+					defaultView = GraphicsDevice.Viewport;
+					leftView = rightView = bottomLeftView = defaultView;
 
-				leftView.Width = leftView.Width/2;
-				rightView.Width = rightView.Width/2;
-				bottomLeftView.Width = bottomLeftView.Width/2; 
-				bottomRightView.Width = bottomRightView.Width/2; 
+					leftView.Width = leftView.Width/2;
+					rightView.Width = rightView.Width/2;
+					bottomLeftView.Width = bottomLeftView.Width/2; 
 
-				leftView.Height = leftView.Height/2; 
-				rightView.Height = rightView.Height/2;
-				bottomLeftView.Height = bottomLeftView.Height/2;
-				bottomRightView.Height = bottomRightView.Height/2; 
+					leftView.Height = leftView.Height/2; 
+					rightView.Height = rightView.Height/2;
+					bottomLeftView.Height = bottomLeftView.Height/2;
 
-				rightView.X = leftView.Width;
-				bottomLeftView.Y = leftView.Height;
-				bottomRightView.X = leftView.Width; bottomRightView.Y = leftView.Height; 
-				break;
-			default:
-				break;
+					rightView.X = leftView.Width;
+					bottomLeftView.Y = leftView.Height; 
+							
+
+
+					break;
+				case 4: 
+					defaultView = GraphicsDevice.Viewport;
+					leftView = rightView = bottomLeftView = bottomRightView = defaultView;
+
+					leftView.Width = leftView.Width/2;
+					rightView.Width = rightView.Width/2;
+					bottomLeftView.Width = bottomLeftView.Width/2; 
+					bottomRightView.Width = bottomRightView.Width/2; 
+
+					leftView.Height = leftView.Height/2; 
+					rightView.Height = rightView.Height/2;
+					bottomLeftView.Height = bottomLeftView.Height/2;
+					bottomRightView.Height = bottomRightView.Height/2; 
+
+					rightView.X = leftView.Width;
+					bottomLeftView.Y = leftView.Height;
+					bottomRightView.X = leftView.Width; bottomRightView.Y = leftView.Height; 
+
+
+					break;
+				default:
+					break;
 			}
 
 			cameras = new List<Camera>();
@@ -305,11 +325,6 @@ namespace GameName1
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-			// spriteBatch.Begin();
-
-
-
-
             foreach (Player player in players)
             {
                 if (player == null)
@@ -319,25 +334,33 @@ namespace GameName1
 
 				// AlexAlpha
 				switch (Array.IndexOf(players, player) + 1) {
-				case 1: 
-					GraphicsDevice.Viewport = leftView; 
-					break;
-				case 2: 
-					GraphicsDevice.Viewport = rightView; 
-					break;
-				case 3: 
-					GraphicsDevice.Viewport = bottomLeftView; 
-					break;
-				case 4: 
-					GraphicsDevice.Viewport = bottomRightView; 
-					break;
-				default:
-					break;
+					case 1: 
+						GraphicsDevice.Viewport = leftView; 
+						break;
+					case 2: 
+						GraphicsDevice.Viewport = rightView; 
+						break;
+					case 3: 
+						GraphicsDevice.Viewport = bottomLeftView; 
+						break;
+					case 4: 
+						GraphicsDevice.Viewport = bottomRightView; 
+						break;
+					default:
+						break;
 				}
 
-				spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, player.camera.transform);
+				spriteBatch.Begin(
+					SpriteSortMode.Deferred, 
+					BlendState.AlphaBlend, 
+					null, 
+					null, 
+					null, 
+					null, 
+					player.camera.transform);
 
 				currLevel.Draw(spriteBatch, 0, 0);
+
 				foreach (GameEntity entity in entities)
 				{
 					entity.Draw(spriteBatch);
@@ -348,10 +371,8 @@ namespace GameName1
                     "L2: " + player.getSkill(Static.PLAYER_L2_SKILL_INDEX).getName() + "\n" +
                     "R1: " + player.getSkill(Static.PLAYER_R1_SKILL_INDEX).getName() + "\n" +
                     "R2: " + player.getSkill(Static.PLAYER_R2_SKILL_INDEX).getName() + "\n";
-
-
-
-                spriteBatch.DrawString(spriteFont, displaySkills, new Vector2(50, 50), Color.White);
+					
+				spriteBatch.DrawString(spriteFont, displaySkills, new Vector2(50, 50), Color.White);
 
 				spriteBatch.End();
             }
@@ -359,7 +380,21 @@ namespace GameName1
             //print text
             //spriteBatch.DrawString(spriteFont, "TEXT", new Vector2(50, 50), Color.White);
 
- 
+			// draw splitscreen dividers
+			spriteBatch.Begin();
+				GraphicsDevice.Viewport = defaultView; 
+				Texture2D rect = new Texture2D(GraphicsDevice, 1, 1);
+				rect.SetData(new[] { Color.White });
+
+				if (numberOfPlayers == 2) {
+					spriteBatch.Draw(rect, vertDivider, Color.White); 
+				}
+				else if (numberOfPlayers > 2) {
+					spriteBatch.Draw(rect, vertDivider, Color.White); 
+					spriteBatch.Draw(rect, horDivider, Color.White); 
+				}
+			spriteBatch.End(); 
+
             base.Draw(gameTime);
         }
 
