@@ -17,7 +17,7 @@ namespace GameName1
 
     public class Seizonsha : Game
     {
-		int numberOfPlayers = 2;
+		int numberOfPlayers = 1;
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -37,7 +37,7 @@ namespace GameName1
 		// AlexAlpha
 
 		Viewport defaultView, p1View, p2View, p3View, p4View; 
-		Camera camera1, camera2, camera3, camera4; 
+		Camera p1Camera, p2Camera, p3Camera, p4Camera; 
 		List<Camera> cameras; 
 		Rectangle yDivider, xDivider; 
 		List<Rectangle> dividers; 
@@ -105,10 +105,10 @@ namespace GameName1
 			initViewports(numberOfPlayers);
 
 			cameras = new List<Camera>();
-			cameras.Add(camera1);
-			cameras.Add(camera2); 
-			cameras.Add(camera3); 
-			cameras.Add(camera4); 
+			cameras.Add(p1Camera);
+			cameras.Add(p2Camera); 
+			cameras.Add(p3Camera); 
+			cameras.Add(p4Camera); 
 
 			playerToController = new Dictionary<int, PlayerIndex>(); 
 			playerToController.Add(1, PlayerIndex.One); 
