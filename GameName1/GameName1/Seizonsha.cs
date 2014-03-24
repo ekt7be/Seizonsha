@@ -43,7 +43,7 @@ namespace GameName1
 		List<Rectangle> dividers; 
 
 
-		Dictionary<int, PlayerIndex> playerDict;
+		Dictionary<int, PlayerIndex> playerToController;
 
 		//-
 
@@ -51,6 +51,8 @@ namespace GameName1
             : base()
         {
             graphics = new GraphicsDeviceManager(this);
+
+	
 
             Content.RootDirectory = "Content";
         }
@@ -67,8 +69,8 @@ namespace GameName1
             spawnQueue = new Queue<Spawnable>();
             collisions = new HashSet<Collision>();
             currLevel = new Level(this);
-            graphics.PreferredBackBufferHeight = Static.SCREEN_HEIGHT;
-            graphics.PreferredBackBufferWidth = Static.SCREEN_WIDTH;
+			graphics.PreferredBackBufferHeight = Static.SCREEN_HEIGHT;
+			graphics.PreferredBackBufferWidth = Static.SCREEN_WIDTH;
             this.players = new Player[4];
             this.spriteMappings = new Dictionary<int, Texture2D>();
 
@@ -98,18 +100,44 @@ namespace GameName1
             //will use real sprites eventually..
 			// AlexAlpha
 
-			dividers = new List<Rectangle>();
-			int divWidth = 3; 
-			vertDivider = new Rectangle(Static.SCREEN_WIDTH/2+80-divWidth, 0, divWidth, Static.SCREEN_HEIGHT*2);
-			horDivider = new Rectangle(0, Static.SCREEN_HEIGHT/2-divWidth, Static.SCREEN_WIDTH*2, divWidth);
+ 
+			initSplitscreenDividers(); 
+			initViewports(numberOfPlayers);
 
-			dividers.Add(vertDivider); 
-			dividers.Add(horDivider); 
+			cameras = new List<Camera>();
+			cameras.Add(camera1);
+			cameras.Add(camera2); 
+			cameras.Add(camera3); 
+			cameras.Add(camera4); 
 
+			playerToController = new Dictionary<int, PlayerIndex>(); 
+			playerToController.Add(1, PlayerIndex.One); 
+			playerToController.Add(2, PlayerIndex.Two); 
+			playerToController.Add(3, PlayerIndex.Three);
+			playerToController.Add(4, PlayerIndex.Four); 
+
+			for (int i = 0; i < numberOfPlayers; i++) {
+				cameras[i] = new Camera(); 
+
+				players[i] = new Player(this, playerToController[i+1], playerRect, 0, 0+(i*20), cameras[i]);
+				Spawn(players[i]);
+			}
+			//-
+           // Spawn(new BasicNPC(this, npcRect, 300, 100, 10, 10));
+			Spawn(new BasicEnemy(this, basicEnemyRect, 200, 200));
+            Spawn(new SpawnEntity(this, 2, 250, 250));
+            Spawn(new SpawnEntity(this, 2, 0, 250));
+
+
+            base.Initialize();
+        }
+
+		void initViewports(int numberOfPlayers) {
 			switch (numberOfPlayers) {
 				case 1: 
 					defaultView = GraphicsDevice.Viewport;
 					leftView = defaultView; 
+
 					break;
 				case 2: 
 					defaultView = GraphicsDevice.Viewport;
@@ -122,8 +150,6 @@ namespace GameName1
 
 					break;
 				case 3: 
-
-
 					defaultView = GraphicsDevice.Viewport;
 					leftView = rightView = bottomLeftView = defaultView;
 
@@ -137,8 +163,6 @@ namespace GameName1
 
 					rightView.X = leftView.Width;
 					bottomLeftView.Y = leftView.Height; 
-							
-
 
 					break;
 				case 4: 
@@ -159,42 +183,23 @@ namespace GameName1
 					bottomLeftView.Y = leftView.Height;
 					bottomRightView.X = leftView.Width; bottomRightView.Y = leftView.Height; 
 
-
 					break;
 				default:
 					break;
 			}
 
-			cameras = new List<Camera>();
-			cameras.Add(camera1);
-			cameras.Add(camera2); 
-			cameras.Add(camera3); 
-			cameras.Add(camera4); 
+		}
 
-			playerDict = new Dictionary<int, PlayerIndex>(); 
-			playerDict.Add(1, PlayerIndex.One); 
-			playerDict.Add(2, PlayerIndex.Two); 
-			playerDict.Add(3, PlayerIndex.Three);
-			playerDict.Add(4, PlayerIndex.Four); 
+		void initSplitscreenDividers() {
+			dividers = new List<Rectangle>();
+			int divWidth = 3;	// width of dividing lines
 
-			for (int i = 0; i < numberOfPlayers; i++) {
-				cameras[i] = new Camera(); 
+			vertDivider = new Rectangle(Static.SCREEN_WIDTH/2+Static.SCREEN_WIDTH_FIX2-(divWidth/2), 0, divWidth, Static.SCREEN_HEIGHT*2);
+			horDivider = new Rectangle(0, Static.SCREEN_HEIGHT/2-(divWidth/2), Static.SCREEN_WIDTH*2, divWidth);
 
-				players[i] = new Player(this, playerDict[i+1], playerRect, 0, 0+(i*20), cameras[i]);
-				Spawn(players[i]);
-			}
-			//-
-           // Spawn(new BasicNPC(this, npcRect, 300, 100, 10, 10));
-			Spawn(new BasicEnemy(this, basicEnemyRect, 200, 200));
-            Spawn(new SpawnEntity(this, 2, 250, 250));
-            Spawn(new SpawnEntity(this, 2, 0, 250));
-
-
-            base.Initialize();
-        }
-
-
-
+			dividers.Add(vertDivider); 
+			dividers.Add(horDivider);
+		}
 
         protected override void LoadContent()
         {
@@ -295,7 +300,7 @@ namespace GameName1
 				handlePlayerInput(player);
 
 				// AlexAlpha
-				player.camera.Update(this.getPlayers().Count, gameTime, player, this.getLevelBounds()); 
+				player.camera.Update(this.getPlayers().Count, player, this.getLevelBounds()); 
 				//-
 
             }
@@ -380,25 +385,26 @@ namespace GameName1
             //print text
             //spriteBatch.DrawString(spriteFont, "TEXT", new Vector2(50, 50), Color.White);
 
-			// draw splitscreen dividers
-			spriteBatch.Begin();
-				GraphicsDevice.Viewport = defaultView; 
-				Texture2D rect = new Texture2D(GraphicsDevice, 1, 1);
-				rect.SetData(new[] { Color.White });
-
-				if (numberOfPlayers == 2) {
-					spriteBatch.Draw(rect, vertDivider, Color.White); 
-				}
-				else if (numberOfPlayers > 2) {
-					spriteBatch.Draw(rect, vertDivider, Color.White); 
-					spriteBatch.Draw(rect, horDivider, Color.White); 
-				}
-			spriteBatch.End(); 
+			drawSplitscreenDividers();
 
             base.Draw(gameTime);
         }
 
+		void drawSplitscreenDividers() {
+			spriteBatch.Begin();
+			GraphicsDevice.Viewport = defaultView; 
+			Texture2D rect = new Texture2D(GraphicsDevice, 1, 1);
+			rect.SetData(new[] { Color.White });
 
+			if (numberOfPlayers == 2) {
+				spriteBatch.Draw(rect, vertDivider, Color.White); 
+			}
+			else if (numberOfPlayers > 2) {
+				spriteBatch.Draw(rect, vertDivider, Color.White); 
+				spriteBatch.Draw(rect, horDivider, Color.White); 
+			}
+			spriteBatch.End(); 
+		}
 
         protected void handlePlayerInput(Player player)
         
@@ -458,23 +464,21 @@ namespace GameName1
                     player.R2Button();
                 }
 
+                if (Math.Abs(GamePad.GetState(player.playerIndex).ThumbSticks.Right.Y) > .1 || Math.Abs(GamePad.GetState(player.playerIndex).ThumbSticks.Right.X) > .1)
+                {
+                    player.rotateToAngle((float)Math.Atan2(GamePad.GetState(player.playerIndex).ThumbSticks.Right.Y * -1, GamePad.GetState(player.playerIndex).ThumbSticks.Right.X)); // angle to point		
+                }
 
-
+				// calculates mouse aim angle and rotation 
                 MouseState mouse = Mouse.GetState();
 
                 Vector2 playerMouseDistance; // distance between player and mouse
 
-				playerMouseDistance.X = player.camera.getWorldPositionX(mouse.X) - player.x;	// distance between player and mouse
+				playerMouseDistance.X = player.camera.getWorldPositionX(mouse.X) - player.x;
 				playerMouseDistance.Y = player.camera.getWorldPositionY(mouse.Y) - player.y;
 
-                player.rotateToAngle((float)Math.Atan2(playerMouseDistance.Y, playerMouseDistance.X)); // angle to point					
+				player.rotateToAngle((float)Math.Atan2(playerMouseDistance.Y, playerMouseDistance.X)); // angle to point at					
 
-
-                if (Math.Abs(GamePad.GetState(player.playerIndex).ThumbSticks.Right.Y) > .1 || Math.Abs(GamePad.GetState(player.playerIndex).ThumbSticks.Right.X) > .1)
-                {
-                    player.rotateToAngle((float)Math.Atan2(GamePad.GetState(player.playerIndex).ThumbSticks.Right.Y * -1, GamePad.GetState(player.playerIndex).ThumbSticks.Right.X)); // angle to point		
-
-                }
                 if (mouse.LeftButton == ButtonState.Pressed)
                 {
                     player.LeftClick();

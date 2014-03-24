@@ -19,26 +19,26 @@ namespace GameName1
 		float cameraX, cameraY; 
 		public Camera () {}
 
-		public void Update(int numberOfPlayers, GameTime gameTime, Player player, Rectangle LevelBounds) {
+		public void Update(int numberOfPlayers, Player player, Rectangle LevelBounds) {
 			int viewportWidth, viewportHeight; 
 			float cameraWidth, cameraHeight, worldWidth, worldHeight; 
 
 			if (numberOfPlayers == 1) {
 				cameraWidth = Static.SCREEN_WIDTH;
 				cameraHeight = Static.SCREEN_HEIGHT; 
-				viewportWidth = Static.SCREEN_WIDTH + 160;
+				viewportWidth = Static.SCREEN_WIDTH + Static.SCREEN_WIDTH_FIX1;
 				viewportHeight = Static.SCREEN_HEIGHT;
 			}
 			else if (numberOfPlayers == 2) {
 				cameraWidth = Static.SCREEN_WIDTH / 2; 
 				cameraHeight = Static.SCREEN_HEIGHT; 
-				viewportWidth = Static.SCREEN_WIDTH / 2 + 80;	// add 80 because SCREEN_WIDTH is off for some reason
+				viewportWidth = Static.SCREEN_WIDTH / 2 + Static.SCREEN_WIDTH_FIX2;	// add 80 because SCREEN_WIDTH is off for some reason
 				viewportHeight = Static.SCREEN_HEIGHT;
 			}
 			else {
 				cameraWidth = Static.SCREEN_WIDTH / 2; 
 				cameraHeight = Static.SCREEN_HEIGHT / 2; 
-				viewportWidth = Static.SCREEN_WIDTH / 2 + 80;
+				viewportWidth = Static.SCREEN_WIDTH / 2 + Static.SCREEN_WIDTH_FIX2;
 				viewportHeight = Static.SCREEN_HEIGHT / 2;
 			}
 
@@ -55,9 +55,9 @@ namespace GameName1
 			int cameraXOffset;
 
 			if (numberOfPlayers == 1)
-				cameraXOffset = 160;	// 640 / 4 
+				cameraXOffset = Static.SCREEN_WIDTH_FIX1;	// 640 / 4 
 			else 
-				cameraXOffset = 80;		//640 / 8 
+				cameraXOffset = Static.SCREEN_WIDTH_FIX2;		//640 / 8 
 
 			worldWidth = LevelBounds.Width;
 			worldHeight = LevelBounds.Height;

@@ -27,7 +27,7 @@ namespace GameName1
 
         //dimensions
 		public static readonly int SCREEN_WIDTH = 640;
-        public static readonly int SCREEN_HEIGHT = 480;
+		public static readonly int SCREEN_HEIGHT = 480;
         public static readonly int TILES_ON_SCREEN_X = 40;
         public static readonly int TILES_ON_SCREEN_Y = (int)((float)SCREEN_HEIGHT / (float)SCREEN_WIDTH * TILES_ON_SCREEN_X);
         public static readonly int TILE_WIDTH = SCREEN_WIDTH / TILES_ON_SCREEN_X;
