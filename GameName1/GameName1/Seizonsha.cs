@@ -36,10 +36,10 @@ namespace GameName1
 
 		// AlexAlpha
 
-		Viewport defaultView, leftView, rightView, bottomLeftView, bottomRightView; 
+		Viewport defaultView, p1View, p2View, p3View, p4View; 
 		Camera camera1, camera2, camera3, camera4; 
 		List<Camera> cameras; 
-		Rectangle vertDivider, horDivider; 
+		Rectangle yDivider, xDivider; 
 		List<Rectangle> dividers; 
 
 
@@ -136,52 +136,52 @@ namespace GameName1
 			switch (numberOfPlayers) {
 				case 1: 
 					defaultView = GraphicsDevice.Viewport;
-					leftView = defaultView; 
+					p1View = defaultView; 
 
 					break;
 				case 2: 
 					defaultView = GraphicsDevice.Viewport;
-					leftView = rightView = defaultView;
+					p1View = p2View = defaultView;
 
-					leftView.Width = leftView.Width/2; 
-					rightView.Width = rightView.Width/2;
+					p1View.Width = p1View.Width/2; 
+					p2View.Width = p2View.Width/2;
 
-					rightView.X = leftView.Width;
+					p2View.X = p1View.Width;
 
 					break;
 				case 3: 
 					defaultView = GraphicsDevice.Viewport;
-					leftView = rightView = bottomLeftView = defaultView;
+					p1View = p2View = p3View = defaultView;
 
-					leftView.Width = leftView.Width/2;
-					rightView.Width = rightView.Width/2;
-					bottomLeftView.Width = bottomLeftView.Width/2; 
+					p1View.Width = p1View.Width/2;
+					p2View.Width = p2View.Width/2;
+					p3View.Width = p3View.Width/2; 
 
-					leftView.Height = leftView.Height/2; 
-					rightView.Height = rightView.Height/2;
-					bottomLeftView.Height = bottomLeftView.Height/2;
+					p1View.Height = p1View.Height/2; 
+					p2View.Height = p2View.Height/2;
+					p3View.Height = p3View.Height/2;
 
-					rightView.X = leftView.Width;
-					bottomLeftView.Y = leftView.Height; 
+					p2View.X = p1View.Width;
+					p3View.Y = p1View.Height; 
 
 					break;
 				case 4: 
 					defaultView = GraphicsDevice.Viewport;
-					leftView = rightView = bottomLeftView = bottomRightView = defaultView;
+					p1View = p2View = p3View = p4View = defaultView;
 
-					leftView.Width = leftView.Width/2;
-					rightView.Width = rightView.Width/2;
-					bottomLeftView.Width = bottomLeftView.Width/2; 
-					bottomRightView.Width = bottomRightView.Width/2; 
+					p1View.Width = p1View.Width/2;
+					p2View.Width = p2View.Width/2;
+					p3View.Width = p3View.Width/2; 
+					p4View.Width = p4View.Width/2; 
 
-					leftView.Height = leftView.Height/2; 
-					rightView.Height = rightView.Height/2;
-					bottomLeftView.Height = bottomLeftView.Height/2;
-					bottomRightView.Height = bottomRightView.Height/2; 
+					p1View.Height = p1View.Height/2; 
+					p2View.Height = p2View.Height/2;
+					p3View.Height = p3View.Height/2;
+					p4View.Height = p4View.Height/2; 
 
-					rightView.X = leftView.Width;
-					bottomLeftView.Y = leftView.Height;
-					bottomRightView.X = leftView.Width; bottomRightView.Y = leftView.Height; 
+					p2View.X = p1View.Width;
+					p3View.Y = p1View.Height;
+					p4View.X = p1View.Width; p4View.Y = p1View.Height; 
 
 					break;
 				default:
@@ -194,11 +194,11 @@ namespace GameName1
 			dividers = new List<Rectangle>();
 			int divWidth = 3;	// width of dividing lines
 
-			vertDivider = new Rectangle(Static.SCREEN_WIDTH/2+Static.SCREEN_WIDTH_FIX2-(divWidth/2), 0, divWidth, Static.SCREEN_HEIGHT*2);
-			horDivider = new Rectangle(0, Static.SCREEN_HEIGHT/2-(divWidth/2), Static.SCREEN_WIDTH*2, divWidth);
+			yDivider = new Rectangle(Static.SCREEN_WIDTH/2+Static.SCREEN_WIDTH_FIX2-(divWidth/2), 0, divWidth, Static.SCREEN_HEIGHT*2);
+			xDivider = new Rectangle(0, Static.SCREEN_HEIGHT/2-(divWidth/2), Static.SCREEN_WIDTH*2, divWidth);
 
-			dividers.Add(vertDivider); 
-			dividers.Add(horDivider);
+			dividers.Add(yDivider); 
+			dividers.Add(xDivider);
 		}
 
         protected override void LoadContent()
@@ -340,16 +340,16 @@ namespace GameName1
 				// AlexAlpha
 				switch (Array.IndexOf(players, player) + 1) {
 					case 1: 
-						GraphicsDevice.Viewport = leftView; 
+						GraphicsDevice.Viewport = p1View; 
 						break;
 					case 2: 
-						GraphicsDevice.Viewport = rightView; 
+						GraphicsDevice.Viewport = p2View; 
 						break;
 					case 3: 
-						GraphicsDevice.Viewport = bottomLeftView; 
+						GraphicsDevice.Viewport = p3View; 
 						break;
 					case 4: 
-						GraphicsDevice.Viewport = bottomRightView; 
+						GraphicsDevice.Viewport = p4View; 
 						break;
 					default:
 						break;
@@ -397,11 +397,11 @@ namespace GameName1
 			rect.SetData(new[] { Color.White });
 
 			if (numberOfPlayers == 2) {
-				spriteBatch.Draw(rect, vertDivider, Color.White); 
+				spriteBatch.Draw(rect, yDivider, Color.White); 
 			}
 			else if (numberOfPlayers > 2) {
-				spriteBatch.Draw(rect, vertDivider, Color.White); 
-				spriteBatch.Draw(rect, horDivider, Color.White); 
+				spriteBatch.Draw(rect, yDivider, Color.White); 
+				spriteBatch.Draw(rect, xDivider, Color.White); 
 			}
 			spriteBatch.End(); 
 		}
