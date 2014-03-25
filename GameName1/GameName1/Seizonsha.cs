@@ -10,6 +10,8 @@ using Microsoft.Xna.Framework.GamerServices;
 using System.Collections;
 using GameName1.Interfaces;
 using GameName1.NPCs;
+using GameName1.Skills;
+using GameName1.Effects;
 #endregion
 
 namespace GameName1
@@ -581,17 +583,68 @@ namespace GameName1
         }
 
 
-        public void damageArea(Rectangle bounds, int amount, int damageType){
-            foreach (GameEntity entity in getEntitiesInBounds(bounds)){
-                entity.damage(amount, damageType);
+        public void healEntity(GameEntity user, GameEntity target, int amount, int damageType)
+        {
+            if (ShouldHeal(damageType, target.getTargetType())){
+                incEntityHealth(target,amount);
+                TextEffect text = new TextEffect(this, amount + "", 10, target.getCenterX(), target.getCenterY() - 60, Color.Green);
+                Spawn(text);
             }
         }
 
-        public void healArea(Rectangle bounds, int amount, int damageType)
+        public void damageEntity(GameEntity user, GameEntity target, int amount, int damageType)
+        {
+
+            if (ShouldDamage(damageType, target.getTargetType()))
+            {
+
+                TextEffect text = new TextEffect(this, amount + "", 10, target.getCenterX(), user.getCenterY() - 60, Color.Red);
+                Spawn(text);
+
+                if (user == null)
+                {
+                    incEntityHealth(target, -1 * amount);
+                    return;
+                }
+
+                user.OnDamageOther(target, amount); // if damage goes through
+                if (incEntityHealth(target, -1 * amount))
+                {
+                    user.OnKillOther(target); //if kills target
+                }
+            }
+
+        }
+
+        public bool incEntityHealth(GameEntity target, int amount)
+        { //true if dead
+            target.health += amount;
+            if (target.health > target.maxHealth)
+            {
+                target.health = target.maxHealth;
+            }
+            if (target.health < 0)
+            {
+                target.health = 0;
+                target.die();
+                return true;
+            }
+            return false;
+        }
+
+
+        public void damageArea(GameEntity user, Rectangle bounds, int amount, int damageType){ //damage not caused by an entity
+            foreach (GameEntity entity in getEntitiesInBounds(bounds)){
+                damageEntity(user, entity, amount, damageType);
+            }
+        }
+
+
+        public void healArea(GameEntity user, Rectangle bounds, int amount, int damageType)
         {
             foreach (GameEntity entity in getEntitiesInBounds(bounds))
             {
-                entity.heal(amount);
+                healEntity(user,entity,amount,damageType);
             }
         }
 
@@ -681,7 +734,7 @@ namespace GameName1
                         {
                             if (tileEntity.getLeftEdgeX() - entity.getRightEdgeX() < distanceToTravelX)
                             {
-                                if (tileEntity.OverlapsY(entity))
+                                if (tileEntity.OverlapsY(entity) && entity.shouldCollide(tileEntity) && tileEntity.shouldCollide(entity))
                                 {
                                     distanceToTravelX = tileEntity.getLeftEdgeX() - entity.getRightEdgeX();
                                     closest = tileEntity;
@@ -742,7 +795,7 @@ namespace GameName1
                         {
                             if (tileEntity.getRightEdgeX() - entity.getLeftEdgeX() > distanceToTravelX)
                             {
-                                if (tileEntity.OverlapsY(entity))
+                                if (tileEntity.OverlapsY(entity) && entity.shouldCollide(tileEntity) && tileEntity.shouldCollide(entity))
                                 {
                                     distanceToTravelX = tileEntity.getRightEdgeX() - entity.getLeftEdgeX();
                                     closest = tileEntity;
@@ -808,7 +861,7 @@ namespace GameName1
                         {
                             if (tileEntity.getTopEdgeY() - entity.getBottomEdgeY() < distanceToTravelY)
                             {
-                                if (tileEntity.OverlapsX(entity))
+                                if (tileEntity.OverlapsX(entity) && entity.shouldCollide(tileEntity) && tileEntity.shouldCollide(entity))
                                 {
                                     distanceToTravelY = tileEntity.getTopEdgeY() - entity.getBottomEdgeY();
                                     closest = tileEntity;
@@ -868,7 +921,7 @@ namespace GameName1
                         {
                             if (tileEntity.getBottomEdgeY() - entity.getTopEdgeY() > distanceToTravelY)
                             {
-                                if (tileEntity.OverlapsX(entity))
+                                if (tileEntity.OverlapsX(entity) && entity.shouldCollide(tileEntity) && tileEntity.shouldCollide(entity))
                                 {
                                     distanceToTravelY = tileEntity.getBottomEdgeY() - entity.getTopEdgeY();
                                     closest = tileEntity;
@@ -952,6 +1005,22 @@ namespace GameName1
         public void Spawn(Spawnable spawn)
         {
             spawnQueue.Enqueue(spawn);
+        }
+
+        public bool ShouldDamage(int damageType, int targetType)
+        {
+            return (targetType == Static.TARGET_TYPE_ENEMY && damageType == Static.TARGET_TYPE_FRIENDLY)
+                || (targetType == Static.TARGET_TYPE_FRIENDLY && damageType == Static.TARGET_TYPE_ENEMY)
+                || (targetType != Static.TARGET_TYPE_NOT_DAMAGEABLE && damageType == Static.DAMAGE_TYPE_ALL)
+                || (targetType == Static.TARGET_TYPE_ALL);
+        }
+
+        public bool ShouldHeal(int damageType, int targetType)
+        {
+            return (targetType == Static.TARGET_TYPE_ENEMY && damageType == Static.TARGET_TYPE_ENEMY)
+                || (targetType == Static.TARGET_TYPE_FRIENDLY && damageType == Static.TARGET_TYPE_FRIENDLY)
+                || (targetType != Static.TARGET_TYPE_NOT_DAMAGEABLE && damageType == Static.DAMAGE_TYPE_ALL)
+                || (targetType == Static.TARGET_TYPE_ALL);
         }
 
         public SpriteFont getSpriteFont()

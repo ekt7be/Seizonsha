@@ -8,36 +8,18 @@ using System.Text;
 
 namespace GameName1.Skills
 {
-    class ExplodingBullet : GameEntity
+    class ExplodingBullet : Bullet
     {
 
-        private int damageType;
-        private int amount;
-        private Vector2 bulletSpeed;
-        private Vector2 direction;
 
-        public ExplodingBullet(Seizonsha game, Texture2D sprite, Rectangle bounds, int amount, int damageType, int duration, Vector2 bulletSpeed, Vector2 alexDirection)
-            : base(game, sprite, bounds.Left, bounds.Top, bounds.Width, bounds.Height, Static.TARGET_TYPE_NOT_DAMAGEABLE, 30)
+        public ExplodingBullet(Seizonsha game, GameEntity user, Texture2D sprite, Rectangle bounds, int amount, int damageType, int duration, float bulletSpeed, Vector2 alexDirection)
+            : base(game, user, sprite, bounds, amount, damageType, duration, bulletSpeed, alexDirection)
         {
-            this.amount = amount;
-            
-            // entity.Freeze(recharge_time);
-            this.damageType = damageType;
-            this.bulletSpeed = bulletSpeed;
-            this.direction = alexDirection;
+
         }
 
 
-        public override void OnSpawn()
-        {
-            this.velocityX = (int)(bulletSpeed.X * direction.X);
-            this.velocityY = (int)(bulletSpeed.Y * direction.Y);
-        }
 
-        public override void Update()
-        {
-            this.hitbox = new Rectangle(this.x, this.y, this.width, this.height);
-        }
 
         public override void collide(GameEntity entity)
         {
@@ -45,16 +27,11 @@ namespace GameName1.Skills
             if (damageType == Static.TARGET_TYPE_FRIENDLY && entity.getTargetType() == Static.TARGET_TYPE_FRIENDLY) ;
             else
             {
-
-
-
                 int explosionWidth = 80;
                 int explosionHeight = 80;
                 Rectangle slashBounds = new Rectangle((int)(entity.getCenterX() - explosionWidth / 2), (int)(entity.getCenterY() - explosionWidth / 2), explosionWidth, explosionHeight);
-                game.Spawn(new AOECone(game, game.getTestSprite(slashBounds, Color.Green), slashBounds, amount, this.damageType, 10, entity.alexDirection));
-
+                game.Spawn(new AOECone(game, user, game.getTestSprite(slashBounds, Color.Green), slashBounds, amount, this.damageType, 10, entity.vectorDirection));
                 setRemove(true);
-                // game.damageArea(this.getHitbox(), amount, damageType);
             }
 
         }
@@ -64,15 +41,10 @@ namespace GameName1.Skills
             int explosionWidth = 80;
             int explosionHeight = 80;
             Rectangle slashBounds = new Rectangle((int)(getCenterX() - explosionWidth / 2), (int)(getCenterY() - explosionWidth / 2), explosionWidth, explosionHeight);
-            game.Spawn(new AOECone(game, game.getTestSprite(slashBounds, Color.Green), slashBounds, amount, this.damageType, 10, alexDirection));
-
+            game.Spawn(new AOECone(game, user, game.getTestSprite(slashBounds, Color.Green), slashBounds, amount, this.damageType, 10, vectorDirection));
             setRemove(true);
-            // game.damageArea(this.getHitbox(), amount, damageType);
         }
 
 
-        protected override void OnDie()
-        {
-        }
     }
 }

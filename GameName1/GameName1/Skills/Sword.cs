@@ -7,72 +7,49 @@ using System.Text;
 
 namespace GameName1.Skills
 {
-    class Sword : Equipable
+    class Sword : Skill
     {
 
-        private int recharge_time;
-        private int recharged;
         private int damage;
+        private int damageType;
 
-        public Sword(int damage, int recharge_time)
+        public Sword(Seizonsha game, GameEntity user,int damage, int recharge_time) : base(game, user, recharge_time, 0, 10)
         {
-            this.recharge_time = recharge_time;
-            this.recharged = recharge_time;
+
             this.damage = damage;
-        }
-
-        public void OnUnequip(Seizonsha game, GameEntity entity)
-        {
-
-        }
-
-        public void OnEquip(Seizonsha game, GameEntity entity)
-        {
-
-        }
-
-        public void Use(Seizonsha game, GameEntity entity)
-        {
-
-            if (entity.isFrozen())
+            this.damageType = Static.DAMAGE_TYPE_NO_DAMAGE;
+            if (user.getTargetType() == Static.TARGET_TYPE_FRIENDLY)
             {
-                return;
-            }
-            recharged = 0;
-            entity.Freeze(recharge_time);
-            int damageType = Static.DAMAGE_TYPE_NO_DAMAGE;
-            if (entity.getTargetType() == Static.TARGET_TYPE_FRIENDLY){
                 damageType = Static.DAMAGE_TYPE_FRIENDLY;
             }
-            if (entity.getTargetType() == Static.TARGET_TYPE_ENEMY){
+            if (user.getTargetType() == Static.TARGET_TYPE_ENEMY)
+            {
                 damageType = Static.DAMAGE_TYPE_ENEMY;
             }
-            Rectangle slashBounds = new Rectangle((int)(entity.getCenterX() + entity.alexDirection.X * entity.width / 2 - Static.PLAYER_WIDTH / 4), (int)(entity.getCenterY() + entity.alexDirection.Y * entity.height / 2 - Static.PLAYER_WIDTH / 4), Static.PLAYER_WIDTH / 2, Static.PLAYER_HEIGHT / 2);
-            game.Spawn(new SwordSlash(game, game.getTestSprite(slashBounds, Color.Green), slashBounds, damage, damageType, 10, entity.alexDirection));
         }
 
-        public bool Available(Seizonsha game, GameEntity entity)
-        {
-            return recharged >= recharge_time;
-        }
 
-        public string getDescription()
+
+        public override string getDescription()
         {
             return "A SWORD";
         }
 
-        public string getName()
+        public override string getName()
         {
             return "SWORD";
         }
 
 
-        public void Update(Seizonsha game, GameEntity entity)
+
+
+        protected override void UseSkill()
         {
-            if (recharged < recharge_time)
-            {
-                recharged++;
-            }
+
+
+            Rectangle slashBounds = new Rectangle((int)(user.getCenterX() + user.vectorDirection.X * user.width / 2 - Static.PLAYER_WIDTH / 4), (int)(user.getCenterY() + user.vectorDirection.Y * user.height / 2 - Static.PLAYER_WIDTH / 4), Static.PLAYER_WIDTH / 2, Static.PLAYER_HEIGHT / 2);
+            game.Spawn(new SwordSlash(game, user, game.getTestSprite(slashBounds, Color.Green), slashBounds, damage, damageType, 10, user.vectorDirection));
         }
+
     }
 }

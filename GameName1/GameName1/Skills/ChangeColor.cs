@@ -7,41 +7,31 @@ using System.Text;
 
 namespace GameName1.Skills
 {
-    public class ChangeColor : Equipable, Unlockable
+    public class ChangeColor : Skill, Unlockable
     {
         public Color color {get; set; }
 
-        public ChangeColor(Color color){
+        public ChangeColor(Seizonsha game, GameEntity user, Color color) : base(game, user, 0, 0, 0){
             this.color = color;
         }
-        public string getName()
+        public override string getName()
         {
             return "Change Color";
         }
-        public string getDescription()
+        public override string getDescription()
         {
             return "Changes user's color.";
         }
-        public bool Available(Seizonsha game, GameEntity user){
-            return true;  //always true
-        }
-        public void Use(Seizonsha game, GameEntity user)
+
+        protected override void UseSkill()
         {
             user.color = color;
         }
-        public void OnEquip(Seizonsha game, GameEntity user)
-        {
-        }
-        public void OnUnequip(Seizonsha game, GameEntity user)
-        {
-        }
+
         public void OnUnlock(Player player)
         {
             player.addEquipable(this);
         }
 
-        public void Update(Seizonsha game, GameEntity entity)
-        {
-        }
     }
 }

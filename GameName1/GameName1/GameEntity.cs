@@ -15,6 +15,7 @@ namespace GameName1
 
         public int x { get; set; }
         public int y { get; set; }
+        private int xpReward;
         public float direction { get; set; }
         public int width { get; set; }
         public int height { get; set; }
@@ -22,8 +23,8 @@ namespace GameName1
         private bool remove;
         private bool collidable;
         private int targetType;
-        private int maxHealth;
-        private int health;
+        public int maxHealth;
+        public int health;
         private bool hasHealth;
         public int velocityX { get; set; }
         public int velocityY { get; set; }
@@ -34,13 +35,14 @@ namespace GameName1
         public Color color { get; set; } //delete when we have actual sprites
         private int frozen; // stop entity from moving for a period of time
 
-        protected Rectangle? source = null;
+        protected Dictionary<int, Rectangle> FramesToAnimation;
+        protected Rectangle? spriteSource = null;
         protected float scale = 1.0f;
 
         //TODO: create depth variable that Game object can sort entities by to determine which to draw first (so effects can go on top etc)
 
 		// ALEX: new variables for mouse aim bullets and sprite rotation
-		public Vector2 alexDirection {get ; set; }
+		public Vector2 vectorDirection {get ; set; }
 		//-ALEX
 
 
@@ -65,13 +67,13 @@ namespace GameName1
                 spriteBatch.Draw(whiteRectangle, greenCoordinates, Color.Green);
             }
 
-            if (source == null)
+            if (spriteSource == null)
             {
-                spriteBatch.Draw(sprite, this.hitbox, source, color, this.direction, new Vector2(0, 0), SpriteEffects.None, 1);
+                spriteBatch.Draw(sprite, this.hitbox, spriteSource, color, this.direction, new Vector2(0, 0), SpriteEffects.None, 1);
             }
             else
             {
-                spriteBatch.Draw(sprite, this.hitbox, source, color, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+                spriteBatch.Draw(sprite, this.hitbox, spriteSource, color, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
             }
 
         }
@@ -118,6 +120,11 @@ namespace GameName1
             this.collidable = true;
             this.color = Color.White;
             this.frozen = 0;
+            this.xpReward = 0;
+
+
+            this.FramesToAnimation = new Dictionary<int, Rectangle>(); //for animations
+
 
         }
 
@@ -125,6 +132,10 @@ namespace GameName1
         public abstract void OnSpawn();
         public abstract void collideWithWall();
         public abstract void collide(GameEntity entity);
+        virtual public bool shouldCollide(GameEntity entity) //if collision flag is on, control over collision can be more specific.  for instance, bullets should not collide with other bullets
+        {
+            return true;
+        }
 
         public void setCollidable(bool collidable)
         {
@@ -190,16 +201,15 @@ namespace GameName1
             this.accelY += dAY;
         }
 
-        public void rotateToAngle(float angle){
+        public virtual void rotateToAngle(float angle){
             this.direction = angle;
-            alexDirection = new Vector2((float)Math.Cos(direction), (float)Math.Sin(direction));
+            vectorDirection = new Vector2((float)Math.Cos(direction), (float)Math.Sin(direction));
 
         }
 
         public void rotate(float angle)
         {
-            this.direction += angle;
-            alexDirection = new Vector2((float)Math.Cos(direction), (float)Math.Sin(direction));
+            rotateToAngle(this.direction + angle);
 
         }
 
@@ -261,17 +271,16 @@ namespace GameName1
             return targetType;
         }
 
-        public void damage(int amount, int damageType)
+        /*
+        public bool damage(int amount, int damageType) // true if killed
         {
-            if ((targetType == Static.TARGET_TYPE_ENEMY && damageType == Static.TARGET_TYPE_FRIENDLY) 
-                || (targetType == Static.TARGET_TYPE_FRIENDLY && damageType == Static.TARGET_TYPE_ENEMY)
-                || (targetType != Static.TARGET_TYPE_NOT_DAMAGEABLE && damageType == Static.DAMAGE_TYPE_ALL)
-                || (targetType == Static.TARGET_TYPE_ALL))
+            if (game.ShouldDamage(damageType, targetType))
             {
-                incHealth(-1 * amount);
                 TextEffect text = new TextEffect(this.game, amount +"", 10, this.getCenterX(), this.getCenterY()-60, Color.Red );
                 game.Spawn(text);
+                return incHealth(-1 * amount);
             }
+            return false;
         }
 
         public void heal(int amount)
@@ -282,7 +291,7 @@ namespace GameName1
             game.Spawn(text);
         }
 
-        public void incHealth(int amount){
+        public bool incHealth(int amount){ //true if dead
             health += amount;
             if (health > maxHealth){
                 health = maxHealth;
@@ -291,13 +300,41 @@ namespace GameName1
             {
                 health = 0;
                 die();
+                return true;
             }
+            return false;
         }
+         * 
+         */
 
         public void die()
         {
             OnDie();
             setRemove(true);
+        }
+
+
+        public virtual void OnKillOther(GameEntity entity)
+        {
+        }
+
+        public virtual void OnDamageOther(GameEntity entity, int amount)
+        {
+        }
+
+        public void setXPReward(int amount)
+        {
+            if (amount < 0)
+            {
+                amount = 0;
+            }
+
+            xpReward = amount;
+        }
+
+        public int getXPReward()
+        {
+            return xpReward;
         }
 
 

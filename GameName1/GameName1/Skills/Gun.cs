@@ -7,85 +7,56 @@ using System.Text;
 
 namespace GameName1.Skills
 {
-	class Gun : Equipable
+	class Gun : Skill
 	{
 
-		private int recharge_time;
-		private int recharged;
+
 		private int damage;
-		private Vector2 bulletSpeed; 
+        private int damageType;
+		private float bulletSpeed; 
 
-		public Gun(int damage, int recharge_time, Vector2 bulletSpeed)
+
+		public Gun(Seizonsha game, GameEntity user, int damage, int recharge_time, float bulletSpeed) : base(game, user, recharge_time,0,0)
 		{
-			this.recharge_time = recharge_time;
-			this.recharged = recharge_time;
-			this.damage = damage;
 
+			this.damage = damage;
+            this.damageType = Static.DAMAGE_TYPE_NO_DAMAGE;
+            if (user.getTargetType() == Static.TARGET_TYPE_FRIENDLY)
+            {
+                damageType = Static.DAMAGE_TYPE_FRIENDLY;
+            }
+            if (user.getTargetType() == Static.TARGET_TYPE_ENEMY)
+            {
+                damageType = Static.DAMAGE_TYPE_ENEMY;
+            }
 			this.bulletSpeed = bulletSpeed; 
 		}
 
-		public void OnUnequip(Seizonsha game, GameEntity entity)
+
+		protected override void UseSkill()
 		{
 
-		}
 
-		public void OnEquip(Seizonsha game, GameEntity entity)
-		{
-
-		}
-
-		public void Use(Seizonsha game, GameEntity entity)
-		{
-			// entity is whatever is using this 
-
-//			if (entity.isFrozen())
-//			{
-//				return;
-//			}
-			recharged = 0;
-			// entity.Freeze(recharge_time);
-			int damageType = Static.DAMAGE_TYPE_NO_DAMAGE;
-			if (entity.getTargetType() == Static.TARGET_TYPE_FRIENDLY){
-				damageType = Static.DAMAGE_TYPE_FRIENDLY;
-			}
-			if (entity.getTargetType() == Static.TARGET_TYPE_ENEMY){
-				damageType = Static.DAMAGE_TYPE_ENEMY;
-			}
-			//Rectangle slashBounds = new Rectangle(	entity.getCenterX(), 
-				//									entity.getCenterY(), 
-					//								Static.PLAYER_WIDTH/2, 
-						//							Static.PLAYER_HEIGHT/2);
             int bulletWidth = 10;
             int bulletHeight = 10;
-            Rectangle slashBounds = new Rectangle((int)(entity.getCenterX() + entity.alexDirection.X * entity.width / 2 - bulletWidth/2), (int)(entity.getCenterY() + entity.alexDirection.Y * entity.height / 2 - bulletHeight/2), bulletWidth, bulletHeight);
+            
+            Rectangle bulletBounds = new Rectangle((int)(user.getCenterX()), (int)(user.getCenterY() + user.vectorDirection.Y), bulletWidth, bulletHeight);
 
-			game.Spawn(new Bullet(game, game.getTestSprite(slashBounds, Color.Red), slashBounds, damage, damageType, 1, bulletSpeed, entity.alexDirection));
+			game.Spawn(new Bullet(game, user, game.getTestSprite(bulletBounds, Color.Red), bulletBounds, damage, damageType, 1, bulletSpeed, user.vectorDirection));
 
-			// game sprite bounds amount dmgAmount dmgType duration bulletSpeed
 		}
 
-		public bool Available(Seizonsha game, GameEntity entity)
-		{
-			return recharged >= recharge_time;
-		}
 
-		public string getDescription()
+		public override string getDescription()
 		{
 			return "A GUN";
 		}
 
-		public string getName()
+		public override string getName()
 		{
 			return "Gun";
 		}
 
 
-		public void Update(Seizonsha game, GameEntity entity)
-		{
-			if (recharged < recharge_time)
-			{
-				recharged++;
-			}
-		}
 	}
 }

@@ -13,13 +13,22 @@ namespace GameName1.NPCs
 
         int count = 0;
 
-        int currentFrame = 0;
+
+        private static readonly int UP_ANIMATION = 2;
+        private static readonly int DOWN_ANIMATION = 0;
+        private static readonly int LEFT_ANIMATION = 1;
+        private static readonly int RIGHT_ANIMATION = 3;
 
         public BasicEnemy(Seizonsha game, Texture2D sprite, int x, int y)
             : base(game, sprite, x, y, Static.BASIC_ENEMY_WIDTH, Static.BASIC_ENEMY_HEIGHT, Static.DAMAGE_TYPE_ENEMY, 200)
         {
-            base.source = new Rectangle(sprite.Width / 4 * currentFrame, 0, sprite.Width / 4, sprite.Height);
             base.scale = 1.0f;
+            setXPReward(50);
+
+            FramesToAnimation.Add(UP_ANIMATION, new Rectangle(sprite.Width / 4 * UP_ANIMATION, 0, sprite.Width / 4, sprite.Height));
+            FramesToAnimation.Add(DOWN_ANIMATION, new Rectangle(sprite.Width / 4 * DOWN_ANIMATION, 0, sprite.Width / 4, sprite.Height));
+            FramesToAnimation.Add(LEFT_ANIMATION, new Rectangle(sprite.Width / 4 * LEFT_ANIMATION, 0, sprite.Width / 4, sprite.Height));
+            FramesToAnimation.Add(RIGHT_ANIMATION, new Rectangle(sprite.Width / 4 * RIGHT_ANIMATION, 0, sprite.Width / 4, sprite.Height));
         }
 
         public void AI()
@@ -31,7 +40,7 @@ namespace GameName1.NPCs
         {
           //  Static.Debug("NPC collision with entity");
 			if(entity.getTargetType() == Static.TARGET_TYPE_FRIENDLY){
-				entity.damage(2, Static.DAMAGE_TYPE_ENEMY);
+				game.damageEntity(this, entity, 2, Static.DAMAGE_TYPE_ENEMY);
 			}
         }
 
@@ -86,28 +95,41 @@ namespace GameName1.NPCs
                 this.velocityY = 1;
 
             float playerDirection = (float)Math.Atan2(this.y - closest.y, closest.x - this.x);
-            if (playerDirection < 0)
-                playerDirection += (2.0f * (float)Math.PI);
 
-            //up
-            if (playerDirection >= .79 && playerDirection < 2.3)
-                currentFrame = 0;
-            //right
-            else if (playerDirection >= 2.3 && playerDirection < 3.9)
-                currentFrame = 1;
-            //down
-            else if (playerDirection >= 3.9 && playerDirection < 5.5)
-                currentFrame = 2;
-            //left
-            else
-                currentFrame = 3;
-
-            base.source = new Rectangle(sprite.Width / 4 * currentFrame, 0, sprite.Width / 4, sprite.Height);
+            rotateToAngle(playerDirection);
         }
 
         protected override void OnDie()
         {
             count++;
+        }
+
+
+        public override void rotateToAngle(float angle) //animation is based on rotation which is used by both movement and aiming
+        {
+            base.rotateToAngle(angle);
+
+            if (FramesToAnimation == null) //gameentity class calls this during initialization too
+            {
+                return;
+            }
+
+            if (Math.Cos(angle) > .5)
+            {
+                base.spriteSource = FramesToAnimation[RIGHT_ANIMATION];
+            }
+            else if (Math.Sin(angle) > .5)
+            {
+                base.spriteSource = FramesToAnimation[DOWN_ANIMATION];
+            }
+            else if (Math.Sin(angle) < -.5)
+            {
+                base.spriteSource = FramesToAnimation[UP_ANIMATION];
+            }
+            else if (Math.Cos(angle) < -.5)
+            {
+                base.spriteSource = FramesToAnimation[LEFT_ANIMATION];
+            }
         }
 
     }

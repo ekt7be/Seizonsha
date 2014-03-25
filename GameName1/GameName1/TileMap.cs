@@ -24,25 +24,8 @@ namespace GameName1
 
             tiles = new Tile[tilesHorz, tilesVert];
 
-/*            for (int i = 0; i < tilesHorz; i++)
-            {
-                for (int j = 0; j < tilesVert; j++)
-                {
-                    if (j > tilesVert * 3 / 4 || (i < tilesHorz / 2 && j > tilesVert / 2))
-                    {
-                        //tiles[i, j] = new Tile(Static.TILE_NOT_OBSTACLE, i * Static.TILE_WIDTH, j * Static.TILE_HEIGHT, false);
 
-                        tiles[i, j] = new Tile(Static.TILE_OBSTACLE, i * Static.TILE_WIDTH, j * Static.TILE_HEIGHT, true);
-                    }
-                    else
-                    {
-                        tiles[i, j] = new Tile(Static.TILE_NOT_OBSTACLE, i * Static.TILE_WIDTH, j * Static.TILE_HEIGHT, false);
-
-                    }
-                }
-            }
-*/
-            string filename = "map1.txt";
+            //string filename = "map1.txt";
             using (StreamReader reader = new StreamReader(@"Content/map1.txt"))
             {
                 int count = 0;
@@ -54,7 +37,6 @@ namespace GameName1
                     {
                         char c = mapText[i]; 
 
-                        //System.Diagnostics.Debug.Write("TilesHorz = \n" + tilesHorz); //80
                         count++;
                         if(c.Equals('0'))
                             tiles[i, j] = new Tile(Static.TILE_NOT_OBSTACLE, i * Static.TILE_WIDTH, j * Static.TILE_HEIGHT, false);

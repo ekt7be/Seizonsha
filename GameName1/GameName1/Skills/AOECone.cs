@@ -12,12 +12,14 @@ namespace GameName1.Skills
     {
         private int damageType;
         private int amount;
+        private GameEntity user;
 
-        public AOECone(Seizonsha game, Texture2D sprite, Rectangle bounds, int amount, int damageType, int duration, Vector2 direction)
+        public AOECone(Seizonsha game, GameEntity user, Texture2D sprite, Rectangle bounds, int amount, int damageType, int duration, Vector2 direction)
             : base(game, sprite, bounds.Left, bounds.Top, bounds.Width, bounds.Height, duration)
         {
             this.amount = amount;
             this.damageType = damageType;
+            this.user = user;
         }
 
         protected override void OnDie()
@@ -29,11 +31,11 @@ namespace GameName1.Skills
         {
             if (amount < 0)
             {
-                game.healArea(this.getHitbox(), -amount, damageType);
+                game.healArea(user,this.getHitbox(), -amount, damageType);
             }
             else
             {
-                game.damageArea(this.getHitbox(), amount, damageType);
+                game.damageArea(user, this.getHitbox(), amount, damageType);
             }
         }
     }

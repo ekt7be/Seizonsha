@@ -7,11 +7,11 @@ namespace GameName1.Interfaces
 {
     public interface Equipable
     {
-        void OnUnequip(Seizonsha game, GameEntity entity);
-        void OnEquip(Seizonsha game, GameEntity entity);
-        void Use(Seizonsha game, GameEntity entity);
-        bool Available(Seizonsha game, GameEntity entity);
-        void Update(Seizonsha game, GameEntity entity);
+        void OnUnequip();
+        void OnEquip();
+        void Use();
+        bool Available();
+        void Update();
         string getDescription();
         string getName();
     }

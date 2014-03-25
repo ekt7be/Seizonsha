@@ -1,4 +1,5 @@
 ﻿using GameName1.Effects;
+using GameName1.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -10,25 +11,26 @@ namespace GameName1.Skills
 {
 	class Bullet : GameEntity
 	{
-		private int damageType;
-		private int amount;
-		private Vector2 bulletSpeed; 
-		private Vector2 direction;
+		protected int damageType;
+		protected int amount;
+		private float bulletSpeed; 
+        protected GameEntity user;
 
-		public Bullet(Seizonsha game, Texture2D sprite, Rectangle bounds, int amount, int damageType, int duration, Vector2 bulletSpeed, Vector2 alexDirection)
+		public Bullet(Seizonsha game, GameEntity user, Texture2D sprite, Rectangle bounds, int amount, int damageType, int duration, float bulletSpeed, Vector2 alexDirection)
 			: base(game, sprite, bounds.Left, bounds.Top, bounds.Width, bounds.Height, Static.TARGET_TYPE_NOT_DAMAGEABLE, 30)
 		{
 			this.amount = amount;
 			this.damageType = damageType;
 			this.bulletSpeed = bulletSpeed;
-			this.direction = alexDirection;
+            this.velocityX = (int)(bulletSpeed * alexDirection.X);
+            this.velocityY = (int)(bulletSpeed * alexDirection.Y);
+            this.user = user;
 		}
 
 
 		public override void OnSpawn()
 		{	
-			this.velocityX = (int)(bulletSpeed.X * direction.X); 
-			this.velocityY = (int)(bulletSpeed.Y * direction.Y);
+
 		}
 
 		public override void Update()
@@ -38,14 +40,24 @@ namespace GameName1.Skills
 
         public override void collide(GameEntity entity)
         {
-            entity.damage(amount, damageType);
-            if (damageType == Static.TARGET_TYPE_FRIENDLY && entity.getTargetType() == Static.TARGET_TYPE_FRIENDLY) ;
-            else
-            {
-                setRemove(true);
-            }
-           // game.damageArea(this.getHitbox(), amount, damageType);
+            game.damageEntity(user, entity, amount, damageType);
 
+            setRemove(true);
+
+
+        }
+
+        public override bool shouldCollide(GameEntity entity)
+        {
+            if (entity == user)
+            {
+                return false;
+            }
+            if (entity is Bullet)
+            {
+                return false;
+            }
+            return true;
         }
 
         public override void collideWithWall()

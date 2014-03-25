@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -50,6 +51,11 @@ namespace GameName1
         public static readonly int TARGET_TYPE_ENEMY = 2;
         public static readonly int TARGET_TYPE_NOT_DAMAGEABLE = 0;
         public static readonly int TARGET_TYPE_ALL = 3;
+
+        //UI
+        public static readonly Color UI_XP_COLOR = Color.Yellow;
+        public static readonly Color UI_DAMAGE_COLOR = Color.Red;
+        public static readonly Color UI_HEAL_COLOR = Color.Green;
 
         //Int to Sprite Mappings
         public static readonly int BASIC_ENEMY_INT = 0;

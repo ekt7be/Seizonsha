@@ -13,18 +13,20 @@ namespace GameName1.Skills
 
         private int damageType;
         private int amount;
+        private GameEntity user;
 
-        public SwordSlash(Seizonsha game, Texture2D sprite, Rectangle bounds, int amount, int damageType, int duration, Vector2 direction)
+        public SwordSlash(Seizonsha game, GameEntity user, Texture2D sprite, Rectangle bounds, int amount, int damageType, int duration, Vector2 direction)
             : base(game, sprite, bounds.Left, bounds.Top, bounds.Width, bounds.Height, duration)
         {
             this.amount = amount;
             this.damageType = damageType;
+            this.user = user;
         }
 
 
         public override void OnSpawn()
         {
-            game.damageArea(this.getHitbox(), amount, damageType);
+            game.damageArea(user, this.getHitbox(), amount, damageType);
         }
 
 

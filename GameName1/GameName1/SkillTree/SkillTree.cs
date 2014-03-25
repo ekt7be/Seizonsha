@@ -14,10 +14,11 @@ namespace GameName1.SkillTree
         private List<SkillTreeNode> nodes;
         private SkillTreeNode currNode;
         private Player player;
+        private Seizonsha game;
         private Texture2D backgroundTexture;
         public static Dictionary<int, Texture2D> nodeTextures = new Dictionary<int, Texture2D>();
 
-        public SkillTree(Player player, Texture2D backgroundTexture)
+        public SkillTree(Seizonsha game, Player player, Texture2D backgroundTexture)
         {
             this.player = player;
             this.backgroundTexture = backgroundTexture;
@@ -27,7 +28,7 @@ namespace GameName1.SkillTree
 
         public void populateNodes()
         {
-            nodes.Add(new SkillTreeNode(this, new Rectangle(0,0, Static.SKILL_TREE_NODE_WIDTH, Static.SKILL_TREE_NODE_HEIGHT), nodeTextures[Static.SKILL_TREE_NODE_ANY], new ChangeColor(Color.Red)));
+            nodes.Add(new SkillTreeNode(this, new Rectangle(0,0, Static.SKILL_TREE_NODE_WIDTH, Static.SKILL_TREE_NODE_HEIGHT), nodeTextures[Static.SKILL_TREE_NODE_ANY], new ChangeColor(game, player, Color.Red)));
         }
 
         public void Draw(SpriteBatch spriteBatch)

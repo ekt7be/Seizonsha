@@ -25,7 +25,14 @@ namespace GameName1
         private List<Equipable> inventory;
         private SkillTree.SkillTree skilltree;
         private bool skilltreescreen;
-        int currentFrame = 0;
+
+        private static readonly int UP_ANIMATION = 0;
+        private static readonly int DOWN_ANIMATION = 2;
+        private static readonly int LEFT_ANIMATION = 1;
+        private static readonly int RIGHT_ANIMATION = 3;
+
+
+
 
 		public Camera camera; 
 
@@ -36,10 +43,10 @@ namespace GameName1
             foreach (Equipable skill in skillSlots){
                 if (skill != null)
                 {
-                    skill.Update(game, this);
+                    skill.Update();
                 }
             }
-            base.source = new Rectangle(sprite.Width / 4 * currentFrame, 0, sprite.Width / 4, sprite.Height);
+            //base.source = new Rectangle(sprite.Width / 4 * currentAnimationFrame, 0, sprite.Width / 4, sprite.Height);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -51,19 +58,15 @@ namespace GameName1
 
         public override void OnSpawn()
         {
-            //nothing happens
         }
 
         public override void collide(GameEntity entity)
         {
-            //game.Spawn(new TextEffect(game, "collision", 30, x, y));
-           // game.damageArea(game.getLevelBounds(), 300, Static.DAMAGE_TYPE_ALL);
-            //setCollidable(false);
+
         }
 
         public override void collideWithWall()
         {
-            //nothing happens
         }
 
 		public Player(Seizonsha game, PlayerIndex playerIndex, Texture2D sprite, int x, int y, Camera camera) : base(game, sprite, x, y, Static.PLAYER_WIDTH, Static.PLAYER_HEIGHT, Static.TARGET_TYPE_FRIENDLY, Static.PLAYER_MAX_HEALTH)
@@ -79,11 +82,11 @@ namespace GameName1
 
 			this.skillSlots = new Equipable[4]; //each slot is different skill, weapon, or item
             this.inventory = new List<Equipable>();
-            this.skilltree = new SkillTree.SkillTree(this, game.getTestSprite(new Rectangle(0, 0, Static.SCREEN_WIDTH, Static.SCREEN_HEIGHT), Color.Black));
-            Equip(new Gun(30, 10, new Vector2(10, 10)), Static.PLAYER_L1_SKILL_INDEX);
-            Equip(new Fireball(120, 100, new Vector2(5, 5)), Static.PLAYER_L2_SKILL_INDEX);
-            Equip(new HealingTouch(-50, 100), Static.PLAYER_R1_SKILL_INDEX);
-            Equip(new Sword(300, 10), Static.PLAYER_R2_SKILL_INDEX);
+            this.skilltree = new SkillTree.SkillTree(game, this, game.getTestSprite(new Rectangle(0, 0, Static.SCREEN_WIDTH, Static.SCREEN_HEIGHT), Color.Black));
+            Equip(new Gun(game, this, 30, 10, 10f), Static.PLAYER_L1_SKILL_INDEX);
+            Equip(new Fireball(game, this, 120, 100, 5f), Static.PLAYER_L2_SKILL_INDEX);
+            Equip(new HealingTouch(game, this, -50, 100), Static.PLAYER_R1_SKILL_INDEX);
+            Equip(new Sword(game, this, 300, 10), Static.PLAYER_R2_SKILL_INDEX);
 
 
             this.skilltreescreen = false;
@@ -91,8 +94,14 @@ namespace GameName1
 			this.camera = camera;
 
 
-            base.source = new Rectangle(sprite.Width / 4 * currentFrame, 0, sprite.Width / 4, sprite.Height);
             base.scale = 1.0f;
+            FramesToAnimation.Add(UP_ANIMATION, new Rectangle(sprite.Width / 4 * UP_ANIMATION, 0, sprite.Width / 4, sprite.Height));
+            FramesToAnimation.Add(DOWN_ANIMATION, new Rectangle(sprite.Width / 4 * DOWN_ANIMATION, 0, sprite.Width / 4, sprite.Height));
+            FramesToAnimation.Add(LEFT_ANIMATION, new Rectangle(sprite.Width / 4 * LEFT_ANIMATION, 0, sprite.Width / 4, sprite.Height));
+            FramesToAnimation.Add(RIGHT_ANIMATION, new Rectangle(sprite.Width / 4 * RIGHT_ANIMATION, 0, sprite.Width / 4, sprite.Height));
+
+            this.rotateToAngle(0f); //sets correct animation
+
 
 
 
@@ -122,12 +131,12 @@ namespace GameName1
                 return;
             }
             //make sure skill can be used
-            else if (!skillSlots[skillIndex].Available(game, this))
+            else if (!skillSlots[skillIndex].Available())
             {
                 return;
             }
             //use skill
-            skillSlots[skillIndex].Use(game, this);
+            skillSlots[skillIndex].Use();
         }
 
         public void addEquipable(Equipable equip)
@@ -143,15 +152,19 @@ namespace GameName1
             //unequip previous skill if there was one
             if (skillSlots[skillIndex] != null)
             {
-                skillSlots[skillIndex].OnUnequip(game, this);
+                skillSlots[skillIndex].OnUnequip();
             }
             //equip new skill
             skillSlots[skillIndex] = equip;
-            equip.OnEquip(game, this);
+            equip.OnEquip();
 
 
         }
 
+        public void incXP(int amount)
+        {
+            xp += amount;
+        }
         public bool SkillTreeOpen()
         {
             return skilltreescreen;
@@ -197,22 +210,18 @@ namespace GameName1
         public void MoveUp()
         {
             this.move(0, -Static.PLAYER_MOVE_SPEED);
-            currentFrame = 0;
         }
         public void MoveDown()
         {
             this.move(0, Static.PLAYER_MOVE_SPEED);
-            currentFrame = 2;
         }
         public void MoveLeft()
         {
             this.move(-Static.PLAYER_MOVE_SPEED, 0);
-            currentFrame = 1;
         }
         public void MoveRight()
         {
             this.move(Static.PLAYER_MOVE_SPEED, 0);
-            currentFrame = 3;
         }
 
         protected override void OnDie()
@@ -223,6 +232,44 @@ namespace GameName1
         public bool isDead()
         {
             return dead;
+        }
+
+        public override void OnKillOther(GameEntity entity)
+        {
+            XPEffect xpEffect = new XPEffect(game,entity.getXPReward(), 30, getCenterX(), getCenterY());
+            game.Spawn(xpEffect);
+            incXP(entity.getXPReward());
+        }
+
+        public override void OnDamageOther(GameEntity entity, int amount)
+        {
+        }
+
+        public override void rotateToAngle(float angle) //animation is based on rotation which is used by both movement and aiming
+        {
+            base.rotateToAngle(angle);
+
+            if (FramesToAnimation == null) //gameentity class calls this during initialization too
+            {
+                return;
+            }
+
+            if (Math.Cos(angle) > .5)
+            {
+                spriteSource = FramesToAnimation[RIGHT_ANIMATION];
+            }
+            else if (Math.Sin(angle) > .5)
+            {
+                spriteSource = FramesToAnimation[DOWN_ANIMATION];
+            }
+            else if (Math.Sin(angle) < -.5)
+            {
+                spriteSource = FramesToAnimation[UP_ANIMATION];
+            }
+            else if (Math.Cos(angle) < -.5)
+            {
+                spriteSource = FramesToAnimation[LEFT_ANIMATION];
+            }
         }
     }
 }

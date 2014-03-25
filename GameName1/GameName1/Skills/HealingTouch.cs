@@ -7,68 +7,31 @@ using System.Text;
 
 namespace GameName1.Skills
 {
-    class HealingTouch : Equipable, Unlockable
+    class HealingTouch : Skill, Unlockable
     {
-        private int recharge_time;
-        private int recharged;
         private int damage;
 
-        public HealingTouch(int damage, int recharge_time)
+        public HealingTouch(Seizonsha game, GameEntity user, int damage, int recharge_time) : base(game, user, recharge_time, 30, 30)
         {
-            this.recharge_time = recharge_time;
-            this.recharged = recharge_time;
+
             this.damage = damage;
         }
 
-        public void OnUnequip(Seizonsha game, GameEntity entity)
+        public override void OnUnequip()
         {
-            //throw new NotImplementedException();
         }
 
-        public void OnEquip(Seizonsha game, GameEntity entity)
+        public override void OnEquip()
         {
-            //throw new NotImplementedException();
         }
 
-        public void Use(Seizonsha game, GameEntity entity)
-        {
-            if (entity.isFrozen())
-            {
-                return;
-            }
-            recharged = 0;
-            entity.Freeze(recharge_time);
-            int damageType = Static.DAMAGE_TYPE_NO_DAMAGE;
-            if (entity.getTargetType() == Static.TARGET_TYPE_FRIENDLY)
-            {
-                damageType = Static.DAMAGE_TYPE_FRIENDLY;
-            }
-            if (entity.getTargetType() == Static.TARGET_TYPE_ENEMY)
-            {
-                damageType = Static.DAMAGE_TYPE_ENEMY;
-            }
-            damageType = Static.DAMAGE_TYPE_ALL;
 
-            Rectangle slashBounds = new Rectangle((int)(entity.getCenterX() + entity.alexDirection.X * entity.width / 2 - Static.PLAYER_WIDTH / 4), (int)(entity.getCenterY() + entity.alexDirection.Y * entity.height / 2 - Static.PLAYER_WIDTH / 4), Static.PLAYER_WIDTH / 2, Static.PLAYER_HEIGHT / 2);
-            game.Spawn(new AOECone(game, game.getTestSprite(slashBounds, Color.Green), slashBounds, damage, damageType, 10, entity.alexDirection));
-        }
-
-        public bool Available(Seizonsha game, GameEntity entity)
-        {
-            return recharged == recharge_time;
-        }
-
-        public void Update(Seizonsha game, GameEntity entity)
-        {
-            if (recharged < recharge_time) recharged++;
-        }
-
-        public string getDescription()
+        public override string getDescription()
         {
             return "Heals a player directly in front of you.";
         }
 
-        public string getName()
+        public override string getName()
         {
             return "Healing Touch";
         }
@@ -77,5 +40,18 @@ namespace GameName1.Skills
         {
             player.addEquipable(this);
         }
+
+
+        protected override void UseSkill()
+        {
+
+            int damageType = Static.DAMAGE_TYPE_NO_DAMAGE;
+
+            damageType = Static.DAMAGE_TYPE_ALL;
+
+            Rectangle healBounds = new Rectangle((int)(user.getCenterX() + user.vectorDirection.X * user.width / 2 - Static.PLAYER_WIDTH / 4), (int)(user.getCenterY() + user.vectorDirection.Y * user.height / 2 - Static.PLAYER_WIDTH / 4), Static.PLAYER_WIDTH / 2, Static.PLAYER_HEIGHT / 2);
+            game.Spawn(new AOECone(game, user, game.getTestSprite(healBounds, Color.Green), healBounds, damage, damageType, 10, user.vectorDirection));
+        }
+
     }
 }
