@@ -26,23 +26,62 @@ namespace GameName1
 
 
             //string filename = "map1.txt";
-            using (StreamReader reader = new StreamReader(@"Content/map1.txt"))
+			using (StreamReader reader = new StreamReader(@"Content/map2.txt"))
             {
                 int count = 0;
 
-                for (int j = 0; j < tilesVert; j++)
+				string mapText;
+				List<int> info = new List<int>();
+				// burn useless info
+				for (int x = 0; x < 12; x++) {
+
+					mapText = reader.ReadLine();
+
+					string[] words = mapText.Split('=');
+
+					foreach (string word in words) {
+						int n; 
+						if (int.TryParse (word, out n)) {
+							System.Console.WriteLine (word);
+							info.Add(n); 
+						}
+					}
+				}
+
+				this.tilesVert = info [1];
+				this.tilesHorz = info [0];
+					
+				for (int j = 0; j < this.tilesVert; j++)
                 {
-                    string mapText = reader.ReadLine();
-                    for (int i = 0; i < tilesHorz; i++)
+					System.Console.WriteLine(this.tilesVert);
+
+                    mapText = reader.ReadLine();
+					System.Console.WriteLine(mapText);
+
+					mapText = mapText.Trim (); 
+
+					string[] nums = mapText.Split(',');
+					System.Console.WriteLine(nums.Length + "\n");
+
+
+					for (int i = 0; i < nums.Length; i++) 
                     {
-                        char c = mapText[i]; 
+						System.Console.Write(i + " : " + nums[i] + "\n");
 
                         count++;
-                        if(c.Equals('0'))
-                            tiles[i, j] = new Tile(Static.TILE_NOT_OBSTACLE, i * Static.TILE_WIDTH, j * Static.TILE_HEIGHT, false);
-                        else
-                            tiles[i, j] = new Tile(Static.TILE_OBSTACLE, i * Static.TILE_WIDTH, j * Static.TILE_HEIGHT, true);
+
+						int m; 
+						if (int.TryParse (nums[i], out m)) {
+							if(nums[i][0].Equals('0'))
+								tiles[i, j] = new Tile(Static.TILE_NOT_OBSTACLE, i * Static.TILE_WIDTH, j * Static.TILE_HEIGHT, false);
+							else
+								tiles[i, j] = new Tile(Static.TILE_OBSTACLE, i * Static.TILE_WIDTH, j * Static.TILE_HEIGHT, true);
+						}
+
+
                     }
+					System.Console.Write("\n");
+
                 }
                 readMap();
             }
@@ -55,9 +94,14 @@ namespace GameName1
 
         public void Draw(SpriteBatch spriteBatch, int cameraX, int cameraY)
         {
-            for (int i = 0; i < tilesHorz; i++)
+
+			System.Console.WriteLine (tilesHorz);
+			System.Console.WriteLine (tilesVert);
+
+
+			for (int i = 0; i < this.tilesHorz; i++)
             {
-                for (int j = 0; j < tilesVert; j++)
+				for (int j = 0; j < this.tilesVert; j++)
                 {
                     tiles[i, j].Draw(spriteBatch, level.getTileSprite(tiles[i,j].getType()), cameraX, cameraY);
                 }

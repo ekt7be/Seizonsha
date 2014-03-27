@@ -49,6 +49,9 @@ namespace GameName1
 				// 0
 			);
 
+			cameraWidth = viewportWidth;
+			cameraHeight = viewportHeight; 
+
 			cameraX = center.X;
 			cameraY = center.Y; 
 

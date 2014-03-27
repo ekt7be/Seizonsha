@@ -27,14 +27,14 @@ namespace GameName1
 
 
         //dimensions
-		public static readonly int SCREEN_WIDTH = 640;
-		public static readonly int SCREEN_HEIGHT = 480;
+		public static readonly int SCREEN_WIDTH = 1280;
+		public static readonly int SCREEN_HEIGHT = 640;
         public static readonly int TILES_ON_SCREEN_X = 40;
-        public static readonly int TILES_ON_SCREEN_Y = (int)((float)SCREEN_HEIGHT / (float)SCREEN_WIDTH * TILES_ON_SCREEN_X);
-        public static readonly int TILE_WIDTH = SCREEN_WIDTH / TILES_ON_SCREEN_X;
+		public static readonly int TILES_ON_SCREEN_Y = 20;//(int)((float)SCREEN_HEIGHT / (float)SCREEN_WIDTH * TILES_ON_SCREEN_X);
+		public static readonly int TILE_WIDTH = 40; //SCREEN_WIDTH / TILES_ON_SCREEN_X;
         public static readonly int TILE_HEIGHT = TILE_WIDTH;
-		public static readonly int SCREEN_WIDTH_FIX1 = SCREEN_WIDTH / 4;	// 640 / 4 = 160
-		public static readonly int SCREEN_WIDTH_FIX2 = SCREEN_WIDTH / 8;	// 640 / 8 = 80 
+		public static readonly int SCREEN_WIDTH_FIX1 = 0;//SCREEN_WIDTH / 4;	// 640 / 4 = 160
+		public static readonly int SCREEN_WIDTH_FIX2 = 0;//SCREEN_WIDTH / 8;	// 640 / 8 = 80 
 
         //tile stuff
         public static readonly int TILE_OBSTACLE = 1;

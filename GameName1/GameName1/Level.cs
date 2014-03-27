@@ -16,7 +16,7 @@ namespace GameName1
         public Level(Seizonsha game)
         {
             this.game = game;
-			this.map = new TileMap(this, 80, 60);
+			this.map = new TileMap(this, 40, 20);
 
             initialize();
         }

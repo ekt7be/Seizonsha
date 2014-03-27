@@ -76,6 +76,8 @@ namespace GameName1
             this.players = new Player[4];
             this.spriteMappings = new Dictionary<int, Texture2D>();
 
+			graphics.ApplyChanges ();
+
             //just for testing -- makes a rectangle
 			//Texture2D playerRect = new Texture2D(GraphicsDevice, Static.PLAYER_HEIGHT, Static.PLAYER_WIDTH);
             Texture2D backgroundTexture = Content.Load<Texture2D>("Sprites/tile");
@@ -120,8 +122,9 @@ namespace GameName1
 
 			for (int i = 0; i < numberOfPlayers; i++) {
 				cameras[i] = new Camera(); 
+				players[i] = new Player(this, playerToController[i+1], playerRect, 500, 100, cameras[i]);
 
-				players[i] = new Player(this, playerToController[i+1], playerRect, 0, 0+(i*20), cameras[i]);
+				//players[i] = new Player(this, playerToController[i+1], playerRect, 0, 0+(i*20), cameras[i]);
 				Spawn(players[i]);
 			}
 			//-
@@ -394,17 +397,19 @@ namespace GameName1
 
 		void drawSplitscreenDividers() {
 			spriteBatch.Begin();
-			GraphicsDevice.Viewport = defaultView; 
-			Texture2D rect = new Texture2D(GraphicsDevice, 1, 1);
-			rect.SetData(new[] { Color.White });
 
-			if (numberOfPlayers == 2) {
-				spriteBatch.Draw(rect, yDivider, Color.White); 
-			}
-			else if (numberOfPlayers > 2) {
-				spriteBatch.Draw(rect, yDivider, Color.White); 
-				spriteBatch.Draw(rect, xDivider, Color.White); 
-			}
+				GraphicsDevice.Viewport = defaultView; 
+				Texture2D rect = new Texture2D(GraphicsDevice, 1, 1);
+				rect.SetData(new[] { Color.White });
+
+				if (numberOfPlayers == 2) {
+					spriteBatch.Draw(rect, yDivider, Color.White); 
+				}
+				else if (numberOfPlayers > 2) {
+					spriteBatch.Draw(rect, yDivider, Color.White); 
+					spriteBatch.Draw(rect, xDivider, Color.White); 
+				}
+
 			spriteBatch.End(); 
 		}
 
