@@ -24,8 +24,6 @@ namespace GameName1
         private void initialize()
         {
 
-
-
         }
 
        

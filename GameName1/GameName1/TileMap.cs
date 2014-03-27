@@ -23,7 +23,7 @@ namespace GameName1
 
 			wallTiles = new List<int>(new int[] {1033, 1157});	// look at map.txt and set the wall tile numbers
 
-			using (StreamReader reader = new StreamReader(@"Content/maps/map4.txt"))
+			using (StreamReader reader = new StreamReader(@"Content/maps/map5.txt"))
             {
 				string mapText;
 				List<int> info = new List<int>();
