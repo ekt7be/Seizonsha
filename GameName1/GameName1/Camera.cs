@@ -76,7 +76,7 @@ namespace GameName1
 			else if (cameraY + cameraHeight > worldHeight)
 				cameraY = worldHeight - cameraHeight;
 				
-			transform = Matrix.CreateScale(1.0f) * Matrix.CreateTranslation(new Vector3(-cameraX, -cameraY, 0)); 
+			transform = Matrix.CreateScale(1f) * Matrix.CreateTranslation(new Vector3(-cameraX, -cameraY, 0)); 
 		} 
 
 		public float getScreenPositionX(float worldPosition) {

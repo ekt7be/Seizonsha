@@ -19,7 +19,7 @@ namespace GameName1
 
     public class Seizonsha : Game
     {
-		int numberOfPlayers = 1;
+		int numberOfPlayers = 2;
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -402,15 +402,51 @@ namespace GameName1
             //print text
             //spriteBatch.DrawString(spriteFont, "TEXT", new Vector2(50, 50), Color.White);
 
+
+			GraphicsDevice.Viewport = defaultView; 
+			spriteBatch.Begin();
+
 			drawSplitscreenDividers();
+
+			foreach (Player player in players) 
+			{
+
+				if (player == null)
+				{
+					continue;
+				}
+
+				switch (Array.IndexOf(players, player) + 1) {
+				case 1: 
+					GraphicsDevice.Viewport = p1View; 
+					break;
+				case 2: 
+					GraphicsDevice.Viewport = p2View; 
+					break;
+				case 3: 
+					GraphicsDevice.Viewport = p3View; 
+					break;
+				case 4: 
+					GraphicsDevice.Viewport = p4View; 
+					break;
+				default:
+					break;
+				}
+
+				//draw player interface
+				player.DrawScreen (GraphicsDevice.Viewport.Bounds, spriteBatch);
+				spriteBatch.End(); 
+
+			}
+
+
+
 
             base.Draw(gameTime);
         }
 
 		void drawSplitscreenDividers() {
-			spriteBatch.Begin();
 
-				GraphicsDevice.Viewport = defaultView; 
 				Texture2D rect = new Texture2D(GraphicsDevice, 1, 1);
 				rect.SetData(new[] { Color.White });
 
@@ -422,7 +458,6 @@ namespace GameName1
 					spriteBatch.Draw(rect, xDivider, Color.White); 
 				}
 
-			spriteBatch.End(); 
 		}
 
         protected void handlePlayerInput(Player player)

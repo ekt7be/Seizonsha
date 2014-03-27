@@ -107,11 +107,15 @@ namespace GameName1
 
         }
 
-        public void DrawScreen(Texture2D renderedGame, Rectangle screenPortion, SpriteBatch spriteBatch)
+        public void DrawScreen(Rectangle screenPortion, SpriteBatch spriteBatch)
         {
             //we will render the entire game world and send it to each player who will use their camera coordinates
             //and the dimensions of their portion of the screen to draw their screen.
             //Interface will be drawn on top along with any menus including skill tree
+
+			if (skilltreescreen) {
+				skilltree.Draw (screenPortion, spriteBatch);
+			}
         }
 
         public Equipable getSkill(int skillIndex)

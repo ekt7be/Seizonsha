@@ -31,11 +31,11 @@ namespace GameName1.SkillTree
             nodes.Add(new SkillTreeNode(this, new Rectangle(0,0, Static.SKILL_TREE_NODE_WIDTH, Static.SKILL_TREE_NODE_HEIGHT), nodeTextures[Static.SKILL_TREE_NODE_ANY], new ChangeColor(game, player, Color.Red)));
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+		public void Draw(Rectangle bounds, SpriteBatch spriteBatch)
         {
             //draw background
-            Rectangle screenRectangle = new Rectangle(0, 0, Static.SCREEN_WIDTH, Static.SCREEN_HEIGHT);
-            spriteBatch.Draw(backgroundTexture, screenRectangle, Color.Black);
+			Rectangle screenRectangle = bounds;
+			spriteBatch.Draw(backgroundTexture, screenRectangle, Color.Black);
             foreach (SkillTreeNode node in nodes)
             {
                 Color tint = Color.White;
