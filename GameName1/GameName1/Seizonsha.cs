@@ -80,8 +80,8 @@ namespace GameName1
             this.players = new Player[4];
             this.spriteMappings = new Dictionary<int, Texture2D>();
 
-			//graphics.PreferredBackBufferHeight = Static.SCREEN_HEIGHT;
-			//graphics.PreferredBackBufferWidth = Static.SCREEN_WIDTH;
+			graphics.PreferredBackBufferHeight = Static.SCREEN_HEIGHT;
+			graphics.PreferredBackBufferWidth = Static.SCREEN_WIDTH;
 
             //just for testing -- makes a rectangle
 			//Texture2D playerRect = new Texture2D(GraphicsDevice, Static.PLAYER_HEIGHT, Static.PLAYER_WIDTH);
@@ -145,11 +145,15 @@ namespace GameName1
 			switch (numberOfPlayers) {
 				case 1: 
 					defaultView = GraphicsDevice.Viewport;
+					defaultView.Width = Static.SCREEN_WIDTH;
+					defaultView.Height = Static.SCREEN_HEIGHT;
 					p1View = defaultView; 
 
 					break;
-				case 2: 
+			case 2: 
 					defaultView = GraphicsDevice.Viewport;
+					defaultView.Width = Static.SCREEN_WIDTH;
+					defaultView.Height = Static.SCREEN_HEIGHT;
 					p1View = p2View = defaultView;
 
 					p1View.Width = p1View.Width/2; 
@@ -160,6 +164,8 @@ namespace GameName1
 					break;
 				case 3: 
 					defaultView = GraphicsDevice.Viewport;
+					defaultView.Width = Static.SCREEN_WIDTH;
+					defaultView.Height = Static.SCREEN_HEIGHT;
 					p1View = p2View = p3View = defaultView;
 
 					p1View.Width = p1View.Width/2;
@@ -176,6 +182,8 @@ namespace GameName1
 					break;
 				case 4: 
 					defaultView = GraphicsDevice.Viewport;
+					defaultView.Width = Static.SCREEN_WIDTH;
+					defaultView.Height = Static.SCREEN_HEIGHT;
 					p1View = p2View = p3View = p4View = defaultView;
 
 					p1View.Width = p1View.Width/2;
