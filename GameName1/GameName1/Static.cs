@@ -27,12 +27,14 @@ namespace GameName1
 
 
         //dimensions
-		public static readonly int SCREEN_WIDTH = 1280;
-		public static readonly int SCREEN_HEIGHT = 640;
-        public static readonly int TILES_ON_SCREEN_X = 40;
-		public static readonly int TILES_ON_SCREEN_Y = 20;//(int)((float)SCREEN_HEIGHT / (float)SCREEN_WIDTH * TILES_ON_SCREEN_X);
-		public static readonly int TILE_WIDTH = 40; //SCREEN_WIDTH / TILES_ON_SCREEN_X;
-        public static readonly int TILE_HEIGHT = TILE_WIDTH;
+		public static int SCREEN_WIDTH = 640; // 640 x 480, 1280 x 640
+		public static int SCREEN_HEIGHT = 480;
+		// these values are read in through the map.txt file
+		public static int TILES_ON_SCREEN_X = 0;
+		public static int TILES_ON_SCREEN_Y = 0;//(int)((float)SCREEN_HEIGHT / (float)SCREEN_WIDTH * TILES_ON_SCREEN_X);
+		public static int TILE_WIDTH = 0; //SCREEN_WIDTH / TILES_ON_SCREEN_X;
+        public static int TILE_HEIGHT = TILE_WIDTH;
+
 		public static readonly int SCREEN_WIDTH_FIX1 = 0;//SCREEN_WIDTH / 4;	// 640 / 4 = 160
 		public static readonly int SCREEN_WIDTH_FIX2 = 0;//SCREEN_WIDTH / 8;	// 640 / 8 = 80 
 

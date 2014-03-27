@@ -71,12 +71,12 @@ namespace GameName1
             spawnQueue = new Queue<Spawnable>();
             collisions = new HashSet<Collision>();
             currLevel = new Level(this);
-			graphics.PreferredBackBufferHeight = Static.SCREEN_HEIGHT;
-			graphics.PreferredBackBufferWidth = Static.SCREEN_WIDTH;
+
             this.players = new Player[4];
             this.spriteMappings = new Dictionary<int, Texture2D>();
 
-			graphics.ApplyChanges ();
+			//graphics.PreferredBackBufferHeight = Static.SCREEN_HEIGHT;
+			//graphics.PreferredBackBufferWidth = Static.SCREEN_WIDTH;
 
             //just for testing -- makes a rectangle
 			//Texture2D playerRect = new Texture2D(GraphicsDevice, Static.PLAYER_HEIGHT, Static.PLAYER_WIDTH);
@@ -86,7 +86,6 @@ namespace GameName1
             Texture2D npcRect = Content.Load<Texture2D>("Sprites/player");
 			Texture2D basicEnemyRect = Content.Load<Texture2D>("Sprites/BasicEnemySprite");
             SkillTree.SkillTree.nodeTextures.Add(Static.SKILL_TREE_NODE_ANY, basicEnemyRect);
-
 
             Level.tileSprites.Add(Static.TILE_OBSTACLE, wallTexture);
             Level.tileSprites.Add(Static.TILE_NOT_OBSTACLE, backgroundTexture);
@@ -104,9 +103,12 @@ namespace GameName1
             //will use real sprites eventually..
 			// AlexAlpha
 
- 
-			initSplitscreenDividers(); 
 			initViewports(numberOfPlayers);
+
+			Static.SCREEN_HEIGHT = defaultView.Height;
+			Static.SCREEN_WIDTH = defaultView.Width;
+
+			initSplitscreenDividers(); 
 
 			cameras = new List<Camera>();
 			cameras.Add(p1Camera);
@@ -122,7 +124,7 @@ namespace GameName1
 
 			for (int i = 0; i < numberOfPlayers; i++) {
 				cameras[i] = new Camera(); 
-				players[i] = new Player(this, playerToController[i+1], playerRect, 500, 100, cameras[i]);
+				players[i] = new Player(this, playerToController[i+1], playerRect, 500, 100+(i*40), cameras[i]);
 
 				//players[i] = new Player(this, playerToController[i+1], playerRect, 0, 0+(i*20), cameras[i]);
 				Spawn(players[i]);
@@ -132,7 +134,6 @@ namespace GameName1
 			Spawn(new BasicEnemy(this, basicEnemyRect, 200, 200));
             Spawn(new SpawnEntity(this, 2, 250, 250));
             Spawn(new SpawnEntity(this, 2, 0, 250));
-
 
             base.Initialize();
         }
@@ -210,7 +211,6 @@ namespace GameName1
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             spriteFont = Content.Load<SpriteFont>("Font");
-
         }
 
         protected override void UnloadContent()
@@ -367,22 +367,23 @@ namespace GameName1
 					null, 
 					null, 
 					null, 
-					player.camera.transform);
+					player.camera.transform
+				);
 
-				currLevel.Draw(spriteBatch, 0, 0);
+					currLevel.Draw(spriteBatch, 0, 0);
 
-				foreach (GameEntity entity in entities)
-				{
-					entity.Draw(spriteBatch);
-				}
+					foreach (GameEntity entity in entities)
+					{
+						entity.Draw(spriteBatch);
+					}
 
-				// DISPLAY TEXT FOR LIST OF SKILLS 
-                string displaySkills = "L1: " + player.getSkill(Static.PLAYER_L1_SKILL_INDEX).getName() + "\n" +
-                    "L2: " + player.getSkill(Static.PLAYER_L2_SKILL_INDEX).getName() + "\n" +
-                    "R1: " + player.getSkill(Static.PLAYER_R1_SKILL_INDEX).getName() + "\n" +
-                    "R2: " + player.getSkill(Static.PLAYER_R2_SKILL_INDEX).getName() + "\n";
-					
-				spriteBatch.DrawString(spriteFont, displaySkills, new Vector2(50, 50), Color.White);
+					// DISPLAY TEXT FOR LIST OF SKILLS 
+	                string displaySkills = "L1: " + player.getSkill(Static.PLAYER_L1_SKILL_INDEX).getName() + "\n" +
+	                    "L2: " + player.getSkill(Static.PLAYER_L2_SKILL_INDEX).getName() + "\n" +
+	                    "R1: " + player.getSkill(Static.PLAYER_R1_SKILL_INDEX).getName() + "\n" +
+	                    "R2: " + player.getSkill(Static.PLAYER_R2_SKILL_INDEX).getName() + "\n";
+						
+					spriteBatch.DrawString(spriteFont, displaySkills, new Vector2(50, 50), Color.White);
 
 				spriteBatch.End();
             }

@@ -16,71 +16,59 @@ namespace GameName1
         private int tilesHorz;
         private int tilesVert;
 
-        public TileMap(Level level, int tilesHorz, int tilesVert)
+        public TileMap(Level level)
         {
-            this.tilesHorz = tilesHorz;
-            this.tilesVert = tilesVert;
             this.level = level;
 
-            tiles = new Tile[tilesHorz, tilesVert];
-
-
-            //string filename = "map1.txt";
-			using (StreamReader reader = new StreamReader(@"Content/map2.txt"))
+			using (StreamReader reader = new StreamReader(@"Content/maps/map3.txt"))
             {
-                int count = 0;
-
 				string mapText;
 				List<int> info = new List<int>();
-				// burn useless info
-				for (int x = 0; x < 12; x++) {
 
+				// non-grid lines
+				for (int x = 0; x < 12; x++) {
 					mapText = reader.ReadLine();
 
 					string[] words = mapText.Split('=');
 
 					foreach (string word in words) {
 						int n; 
-						if (int.TryParse (word, out n)) {
+						if (int.TryParse(word, out n)) {
 							System.Console.WriteLine (word);
 							info.Add(n); 
 						}
 					}
 				}
+																		// see map.txt file
+				this.tilesHorz = Static.TILES_ON_SCREEN_X = info[0]; 			// number of y tiles
+				this.tilesVert = Static.TILES_ON_SCREEN_Y = info[1]; 			// number of x tiles
+				Static.TILE_WIDTH = info[2]; 									// tile width
+				Static.TILE_HEIGHT = info[3];									// tile height
 
-				this.tilesVert = info [1];
-				this.tilesHorz = info [0];
-					
+				tiles = new Tile[tilesHorz, tilesVert];
+
+				// start reading grid of numbers	
 				for (int j = 0; j < this.tilesVert; j++)
                 {
-					System.Console.WriteLine(this.tilesVert);
-
+					//System.Console.WriteLine(this.tilesVert);
                     mapText = reader.ReadLine();
-					System.Console.WriteLine(mapText);
+					//System.Console.WriteLine(mapText);
 
-					mapText = mapText.Trim (); 
-
-					string[] nums = mapText.Split(',');
-					System.Console.WriteLine(nums.Length + "\n");
-
+					string[] nums = mapText.Trim().Split(',');
+					//System.Console.WriteLine(nums.Length + "\n");
 
 					for (int i = 0; i < nums.Length; i++) 
                     {
-						System.Console.Write(i + " : " + nums[i] + "\n");
-
-                        count++;
-
+						//System.Console.Write(i + " : " + nums[i] + "\n");
 						int m; 
-						if (int.TryParse (nums[i], out m)) {
+						if (int.TryParse(nums[i], out m)) {
 							if(nums[i][0].Equals('0'))
 								tiles[i, j] = new Tile(Static.TILE_NOT_OBSTACLE, i * Static.TILE_WIDTH, j * Static.TILE_HEIGHT, false);
 							else
 								tiles[i, j] = new Tile(Static.TILE_OBSTACLE, i * Static.TILE_WIDTH, j * Static.TILE_HEIGHT, true);
 						}
-
-
                     }
-					System.Console.Write("\n");
+					//System.Console.Write("\n");
 
                 }
                 readMap();
@@ -95,9 +83,8 @@ namespace GameName1
         public void Draw(SpriteBatch spriteBatch, int cameraX, int cameraY)
         {
 
-			System.Console.WriteLine (tilesHorz);
-			System.Console.WriteLine (tilesVert);
-
+			//System.Console.WriteLine (tilesHorz);
+			//System.Console.WriteLine (tilesVert);
 
 			for (int i = 0; i < this.tilesHorz; i++)
             {
