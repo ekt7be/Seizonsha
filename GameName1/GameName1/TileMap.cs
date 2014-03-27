@@ -15,12 +15,15 @@ namespace GameName1
         public Level level;
         private int tilesHorz;
         private int tilesVert;
+		List<int> wallTiles; 
 
         public TileMap(Level level)
         {
             this.level = level;
 
-			using (StreamReader reader = new StreamReader(@"Content/maps/map3.txt"))
+			wallTiles = new List<int>(new int[] {1033, 1157});	// look at map.txt and set the wall tile numbers
+
+			using (StreamReader reader = new StreamReader(@"Content/maps/map4.txt"))
             {
 				string mapText;
 				List<int> info = new List<int>();
@@ -34,7 +37,7 @@ namespace GameName1
 					foreach (string word in words) {
 						int n; 
 						if (int.TryParse(word, out n)) {
-							System.Console.WriteLine (word);
+							// System.Console.WriteLine (word);
 							info.Add(n); 
 						}
 					}
@@ -57,19 +60,20 @@ namespace GameName1
 					string[] nums = mapText.Trim().Split(',');
 					//System.Console.WriteLine(nums.Length + "\n");
 
-					for (int i = 0; i < nums.Length; i++) 
+					for (int i = 0; i < tilesHorz; i++) 
                     {
 						//System.Console.Write(i + " : " + nums[i] + "\n");
 						int m; 
 						if (int.TryParse(nums[i], out m)) {
-							if(nums[i][0].Equals('0'))
-								tiles[i, j] = new Tile(Static.TILE_NOT_OBSTACLE, i * Static.TILE_WIDTH, j * Static.TILE_HEIGHT, false);
+							int tileType = Convert.ToInt32(nums[i]); 
+
+							if (wallTiles.Contains(tileType))
+								tiles[i, j] = new Tile(Static.TILE_OBSTACLE, i * Static.TILE_WIDTH, j * Static.TILE_HEIGHT, true, tileType);
 							else
-								tiles[i, j] = new Tile(Static.TILE_OBSTACLE, i * Static.TILE_WIDTH, j * Static.TILE_HEIGHT, true);
+								tiles[i, j] = new Tile(Static.TILE_NOT_OBSTACLE, i * Static.TILE_WIDTH, j * Static.TILE_HEIGHT, false, tileType);
 						}
                     }
 					//System.Console.Write("\n");
-
                 }
                 readMap();
             }
@@ -90,7 +94,8 @@ namespace GameName1
             {
 				for (int j = 0; j < this.tilesVert; j++)
                 {
-                    tiles[i, j].Draw(spriteBatch, level.getTileSprite(tiles[i,j].getType()), cameraX, cameraY);
+					// System.Console.WriteLine(tiles[i,j].tileID); 
+					tiles[i, j].Draw(spriteBatch, level.getTileSprite(tiles[i,j].tileType), cameraX, cameraY);
                 }
             }
         }

@@ -10,7 +10,7 @@ namespace GameName1
     public class Level
     {
         private TileMap map;
-        public static Dictionary<int, Texture2D> tileSprites = new Dictionary<int,Texture2D>();
+		public static Dictionary<int, Texture2D> tileSprites = new Dictionary<int,Texture2D>();
         private Seizonsha game;
 
         public Level(Seizonsha game)
@@ -37,10 +37,10 @@ namespace GameName1
  
         }
 
-        public Texture2D getTileSprite(int tileType)
+		public Texture2D getTileSprite(int tileType)
         {
             if (tileSprites.ContainsKey(tileType)){
-                return tileSprites[tileType];
+				return tileSprites[tileType];
             } else{
                 return null;
             }

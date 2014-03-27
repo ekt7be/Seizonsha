@@ -19,7 +19,7 @@ namespace GameName1
 
     public class Seizonsha : Game
     {
-		int numberOfPlayers = 1;
+		int numberOfPlayers = 2;
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -37,16 +37,13 @@ namespace GameName1
         private Dictionary<int, Texture2D> spriteMappings;
 
 		// AlexAlpha
-
 		Viewport defaultView, p1View, p2View, p3View, p4View; 
 		Camera p1Camera, p2Camera, p3Camera, p4Camera; 
 		List<Camera> cameras; 
 		Rectangle yDivider, xDivider; 
 		List<Rectangle> dividers; 
 
-
 		Dictionary<int, PlayerIndex> playerToController;
-
 		//-
 
         public Seizonsha()
@@ -54,14 +51,22 @@ namespace GameName1
         {
             graphics = new GraphicsDeviceManager(this);
 
-	
-
             Content.RootDirectory = "Content";
         }
+			
+		void initTileSprites() {
+			Texture2D floor_grass = Content.Load<Texture2D>("tiles/dc_tiles/dc-dngn/floor/grass/grass0");
+			Texture2D floor_nerves = Content.Load<Texture2D>("tiles/dc_tiles/dc-dngn/floor/floor_nerves1");
 
-        
+			Texture2D wall_brick = Content.Load<Texture2D>("tiles/dc_tiles/dc-dngn/wall/brick_brown0");
+			Texture2D wall_stone = Content.Load<Texture2D>("tiles/dc_tiles/dc-dngn/wall/stone_gray0");
 
+			Level.tileSprites.Add(961, floor_grass);
+			Level.tileSprites.Add(840, floor_nerves);
 
+			Level.tileSprites.Add(1033, wall_brick);
+			Level.tileSprites.Add(1157, wall_stone);
+		}
 
         protected override void Initialize()
         {
@@ -80,15 +85,13 @@ namespace GameName1
 
             //just for testing -- makes a rectangle
 			//Texture2D playerRect = new Texture2D(GraphicsDevice, Static.PLAYER_HEIGHT, Static.PLAYER_WIDTH);
-            Texture2D backgroundTexture = Content.Load<Texture2D>("Sprites/tile");
-            Texture2D wallTexture = Content.Load<Texture2D>("Sprites/wallTexture");
+
 			Texture2D playerRect = Content.Load<Texture2D>("Sprites/BasicPlayerSpriteSheet");
             Texture2D npcRect = Content.Load<Texture2D>("Sprites/player");
 			Texture2D basicEnemyRect = Content.Load<Texture2D>("Sprites/BasicEnemySprite");
             SkillTree.SkillTree.nodeTextures.Add(Static.SKILL_TREE_NODE_ANY, basicEnemyRect);
 
-            Level.tileSprites.Add(Static.TILE_OBSTACLE, wallTexture);
-            Level.tileSprites.Add(Static.TILE_NOT_OBSTACLE, backgroundTexture);
+			initTileSprites();
 
             spriteMappings.Add(Static.BASIC_ENEMY_INT, basicEnemyRect);
             spriteMappings.Add(Static.PLAYER_INT, playerRect);
