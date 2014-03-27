@@ -15,7 +15,6 @@ namespace GameName1
     {
         public int cameraX { get; set; }
         public int cameraY { get; set; }
-        public int health { get; set; } // should add to GameEntity or make interface?  Will be redundent to code health for all enemies
         public int mana { get; set; }
         public int xp { get; set; }
         public int skillPoints { get; set; }
@@ -113,6 +112,55 @@ namespace GameName1
             //and the dimensions of their portion of the screen to draw their screen.
             //Interface will be drawn on top along with any menus including skill tree
 
+			Texture2D texture = new Texture2D(game.GraphicsDevice, 1, 1);
+			texture.SetData(new[] { Color.White });
+
+			int barLength = screenPortion.Width / 2; 
+			int barHeight = screenPortion.Height / 32; 
+
+			double green = ((double)this.health/(double)this.maxHealth) * barLength;
+			Rectangle hpMax = new Rectangle(20, 20, barLength, barHeight);
+			Rectangle hpRemaining = new Rectangle(20, 20, (int)green, barHeight);
+			Rectangle mana = new Rectangle (20, 20+(barHeight), barLength, barHeight); 
+			Rectangle xp = new Rectangle (20, 20+(barHeight*2), barLength, barHeight); 
+
+			// draw HP bar
+			spriteBatch.Draw(texture, hpMax, Color.Red); 
+			spriteBatch.Draw(texture, hpRemaining, Color.Green); 
+			// draw Mana bar
+			spriteBatch.Draw(texture, mana, Color.Blue); 
+			// draw XP bar
+			spriteBatch.Draw(texture, xp, Color.Yellow); 
+
+			// draw HP text
+			spriteBatch.DrawString(
+				game.getSpriteFont(), 
+				"HP : " + this.health + "/" + this.maxHealth, 
+				new Vector2(20, 20), 
+				Color.White
+			);
+			// draw Mana text
+			spriteBatch.DrawString(
+				game.getSpriteFont(), 
+				"Mana : " + this.mana, 
+				new Vector2(20, 20+(barHeight)), 
+				Color.White
+			);
+			// draw XP text
+			spriteBatch.DrawString(
+				game.getSpriteFont(), 
+				"XP : " + this.xp, 
+				new Vector2(20, 20+(barHeight*2)), 
+				Color.Black
+			);
+
+			// draw skills text
+			string displaySkills = "L1: " + this.getSkill(Static.PLAYER_L1_SKILL_INDEX).getName() + "\n" +
+				"L2: " + this.getSkill(Static.PLAYER_L2_SKILL_INDEX).getName() + "\n" +
+				"R1: " + this.getSkill(Static.PLAYER_R1_SKILL_INDEX).getName() + "\n" +
+				"R2: " + this.getSkill(Static.PLAYER_R2_SKILL_INDEX).getName() + "\n";
+			spriteBatch.DrawString(game.getSpriteFont(), displaySkills, new Vector2(20, 100), Color.White);
+				
 			if (skilltreescreen) {
 				skilltree.Draw (screenPortion, spriteBatch);
 			}

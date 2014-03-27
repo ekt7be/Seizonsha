@@ -19,7 +19,7 @@ namespace GameName1
 
     public class Seizonsha : Game
     {
-		int numberOfPlayers = 2;
+		int numberOfPlayers = 1;
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -389,12 +389,7 @@ namespace GameName1
 					}
 
 					// DISPLAY TEXT FOR LIST OF SKILLS 
-	                string displaySkills = "L1: " + player.getSkill(Static.PLAYER_L1_SKILL_INDEX).getName() + "\n" +
-	                    "L2: " + player.getSkill(Static.PLAYER_L2_SKILL_INDEX).getName() + "\n" +
-	                    "R1: " + player.getSkill(Static.PLAYER_R1_SKILL_INDEX).getName() + "\n" +
-	                    "R2: " + player.getSkill(Static.PLAYER_R2_SKILL_INDEX).getName() + "\n";
-						
-					spriteBatch.DrawString(spriteFont, displaySkills, new Vector2(50, 50), Color.White);
+
 
 				spriteBatch.End();
             }
@@ -404,9 +399,16 @@ namespace GameName1
 
 
 			GraphicsDevice.Viewport = defaultView; 
+
+
 			spriteBatch.Begin();
 
 			drawSplitscreenDividers();
+
+			spriteBatch.End();
+
+
+
 
 			foreach (Player player in players) 
 			{
@@ -415,6 +417,9 @@ namespace GameName1
 				{
 					continue;
 				}
+
+				spriteBatch.Begin();
+
 
 				switch (Array.IndexOf(players, player) + 1) {
 				case 1: 

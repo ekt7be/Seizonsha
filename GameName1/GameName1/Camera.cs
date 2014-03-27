@@ -17,10 +17,12 @@ namespace GameName1
 		public Matrix transform;
 		Vector2 center; 
 		float cameraX, cameraY; 
+
 		public Camera () {}
 
 		public void Update(int numberOfPlayers, Player player, Rectangle LevelBounds) {
 			int viewportWidth, viewportHeight; 
+
 			float cameraWidth, cameraHeight, worldWidth, worldHeight; 
 
 			if (numberOfPlayers == 1) {
