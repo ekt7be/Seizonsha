@@ -483,7 +483,6 @@ namespace GameName1
                     player.SkillTreeButtonDown();
                 } else if (GamePad.GetState(player.playerIndex).Buttons.Start == ButtonState.Released || Keyboard.GetState().IsKeyUp(Keys.Space)){
                     player.SkillTreeButtonRelease();
-
                 }
 
                 if (GamePad.GetState(player.playerIndex).Buttons.A == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Enter))
@@ -498,25 +497,21 @@ namespace GameName1
                 if (GamePad.GetState(player.playerIndex).ThumbSticks.Left.Y > .5 || Keyboard.GetState().IsKeyDown(Keys.W))
                 {
                     player.UpButton();
-                    //player.rotateToAngle((float)(3 * Math.PI / 2));
 
                 }
                 if (GamePad.GetState(player.playerIndex).ThumbSticks.Left.X < -.5 || Keyboard.GetState().IsKeyDown(Keys.A))
                 {
                     player.LeftButton();
-                    //player.rotateToAngle((float)Math.PI);
 
                 }
                 if (GamePad.GetState(player.playerIndex).ThumbSticks.Left.X > .5 || Keyboard.GetState().IsKeyDown(Keys.D))
                 {
                     player.RightButton();
-                    // player.rotateToAngle((float)0);
 
                 }
                 if (GamePad.GetState(player.playerIndex).ThumbSticks.Left.Y < -.5 || Keyboard.GetState().IsKeyDown(Keys.S))
                 {
                     player.DownButton();
-                    // player.rotateToAngle((float)Math.PI / 2);
                 }
 
 
@@ -560,6 +555,7 @@ namespace GameName1
             else
             {
 
+                
                 if (GamePad.GetState(player.playerIndex).Buttons.Start == ButtonState.Pressed)
                 {
                     player.SkillTreeButtonDown();
@@ -569,8 +565,9 @@ namespace GameName1
                     player.SkillTreeButtonRelease();
 
                 }
+                 
 
-                if (GamePad.GetState(player.playerIndex).Buttons.A == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Enter))
+                if (GamePad.GetState(player.playerIndex).Buttons.A == ButtonState.Pressed)
                 {
                     player.AButton();
                 }

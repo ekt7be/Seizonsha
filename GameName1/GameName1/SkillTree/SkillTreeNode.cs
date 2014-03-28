@@ -64,26 +64,37 @@ namespace GameName1.SkillTree
             return unlocked;
         }
 
-        public int getCenterX(Rectangle viewBounds)
+        public int getCenterX()
         {
-            return viewBounds.Left + x+Static.SKILL_TREE_NODE_WIDTH / 2;
+            return  x+Static.SKILL_TREE_NODE_WIDTH / 2;
         }
 
-        public int getCenterY(Rectangle viewBounds)
+        public int getCenterY()
         {
-            return viewBounds.Top + y + Static.SKILL_TREE_NODE_HEIGHT/2;
+            return y + Static.SKILL_TREE_NODE_HEIGHT/2;
+        }
+
+        public int getX()
+        {
+            return x;
+
+        }
+
+        public int getY()
+        {
+            return y;
         }
 
 
-        public void Draw(SpriteBatch spriteBatch, Rectangle viewBounds, Color color)
+        public void Draw(SpriteBatch spriteBatch, Vector2 cameraOffset, Color color)
         {
-            bounds = new Rectangle(viewBounds.Left+x, viewBounds.Top+y, Static.SKILL_TREE_NODE_WIDTH, Static.SKILL_TREE_NODE_HEIGHT);
+            bounds = new Rectangle(x - (int)cameraOffset.X, y - (int)cameraOffset.Y, Static.SKILL_TREE_NODE_WIDTH, Static.SKILL_TREE_NODE_HEIGHT);
             spriteBatch.Draw(sprite, bounds, color);
             if (unlockable == null)
             {
                 return;
             }
-            spriteBatch.DrawString(Static.SPRITE_FONT, unlockable.getName(), new Vector2(viewBounds.Left+x, viewBounds.Top+y),Color.Green);
+            spriteBatch.DrawString(Static.SPRITE_FONT, unlockable.getName(), new Vector2(bounds.Left, bounds.Top),Color.Green);
         }
 
         public void attachLeft(SkillTreeNode node, int weight)
@@ -137,7 +148,7 @@ namespace GameName1.SkillTree
         public void attachBottom(SkillTreeNode node, int weight)
         {
             this.bottomNode = node;
-            node.bottomNode = this;
+            node.topNode = this;
             setBottomWeight(weight);
         }
         public void setBottomWeight(int weight)

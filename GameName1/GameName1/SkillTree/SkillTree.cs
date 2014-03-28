@@ -16,6 +16,7 @@ namespace GameName1.SkillTree
         private Player player;
         private Seizonsha game;
         private Texture2D backgroundTexture;
+        private Vector2 cameraOffset;
         public static Dictionary<int, Texture2D> nodeTextures = new Dictionary<int, Texture2D>();
 
 
@@ -28,32 +29,34 @@ namespace GameName1.SkillTree
             this.nodes = new List<SkillTreeNode>();
             populateNodes();
             this.movementRecharge = Static.SKILL_TREE_MOVEMENT_RECHARGE;
+            cameraOffset = new Vector2(0, 0);
         }
 
         public void populateNodes()
         {
 
 
-            BlankNode startNode = new BlankNode(this, Static.SKILL_TREE_CENTER_OFFSET_X, Static.SKILL_TREE_CENTER_OFFSET_Y, nodeTextures[Static.SKILL_TREE_NODE_ANY]);
+            BlankNode startNode = new BlankNode(this, 0, 0, nodeTextures[Static.SKILL_TREE_NODE_ANY]);
             nodes.Add(startNode);
             currNode = startNode;
                 
-            SkillTreeNode cColorNode = new SkillTreeNode(this, 0, 0, nodeTextures[Static.SKILL_TREE_NODE_ANY], new ChangeColor(game, player, Color.Red));
+            SkillTreeNode cColorNode = new SkillTreeNode(this, startNode.getX()+Static.SKILL_TREE_NODE_WIDTH*2, startNode.getY(), nodeTextures[Static.SKILL_TREE_NODE_ANY], new ChangeColor(game, player, Color.Red));
             nodes.Add(cColorNode);
-            cColorNode.attachLeft(startNode, Static.SKILL_TREE_WEIGHT_UNLOCKED);
+            startNode.attachRight(cColorNode, Static.SKILL_TREE_WEIGHT_LOCKED);
 
-            SkillTreeNode FireballNode = new SkillTreeNode(this, 100, 200, nodeTextures[Static.SKILL_TREE_NODE_ANY], new Fireball(game, player, 300, 20, 12));
+            SkillTreeNode FireballNode = new SkillTreeNode(this, startNode.getX(), startNode.getY() + Static.SKILL_TREE_NODE_HEIGHT*2, nodeTextures[Static.SKILL_TREE_NODE_ANY], new Fireball(game, player, 300, 20, 12));
             nodes.Add(FireballNode);
-            FireballNode.attachLeft(cColorNode, Static.SKILL_TREE_WEIGHT_LOCKED);
+            startNode.attachBottom(FireballNode, Static.SKILL_TREE_WEIGHT_LOCKED);
 
-            SkillTreeNode HealNode = new SkillTreeNode(this, 500, 600, nodeTextures[Static.SKILL_TREE_NODE_ANY], new HealingTouch(game, player, 300, 12));
+            SkillTreeNode HealNode = new SkillTreeNode(this, startNode.getX()-Static.SKILL_TREE_NODE_WIDTH * 2, startNode.getY(), nodeTextures[Static.SKILL_TREE_NODE_ANY], new HealingTouch(game, player, 300, 12));
             nodes.Add(HealNode);
-            HealNode.attachTop(FireballNode, Static.SKILL_TREE_WEIGHT_LOCKED);
+            startNode.attachLeft(HealNode, Static.SKILL_TREE_WEIGHT_LOCKED);
 
 
             
         
         }
+
 
         public void Update()
         {
@@ -66,8 +69,11 @@ namespace GameName1.SkillTree
 		public void Draw(Rectangle bounds, SpriteBatch spriteBatch)
         {
             //draw background
-			Rectangle screenRectangle = bounds;
+			Rectangle screenRectangle = new Rectangle(0,0,bounds.Width, bounds.Height);
 			spriteBatch.Draw(backgroundTexture, screenRectangle, Color.Black);
+
+
+            cameraOffset = new Vector2(currNode.getCenterX() - bounds.Width/2, currNode.getCenterY()- bounds.Height/2);
             foreach (SkillTreeNode node in nodes)
             {
 
@@ -79,7 +85,7 @@ namespace GameName1.SkillTree
                     {
                         lineColor = Color.Red;
                     }
-                    Static.DrawLine(spriteBatch, Static.PIXEL_THICK, new Vector2(node.getCenterX(bounds), node.getCenterY(bounds)), new Vector2(node.leftNode.getCenterX(bounds), node.leftNode.getCenterY(bounds)), lineColor);
+                    Static.DrawLine(spriteBatch, Static.PIXEL_THICK, new Vector2(node.getCenterX()-cameraOffset.X, node.getCenterY()-cameraOffset.Y), new Vector2(node.leftNode.getCenterX() - cameraOffset.X, node.leftNode.getCenterY() - cameraOffset.Y), lineColor);
                 }
 
 
@@ -90,7 +96,7 @@ namespace GameName1.SkillTree
                     {
                         lineColor = Color.Red;
                     }
-                    Static.DrawLine(spriteBatch, Static.PIXEL_THICK, new Vector2(node.getCenterX(bounds), node.getCenterY(bounds)), new Vector2(node.topNode.getCenterX(bounds), node.topNode.getCenterY(bounds)), lineColor);
+                    Static.DrawLine(spriteBatch, Static.PIXEL_THICK, new Vector2(node.getCenterX() - cameraOffset.X, node.getCenterY() - cameraOffset.Y), new Vector2(node.topNode.getCenterX() - cameraOffset.X, node.topNode.getCenterY() - cameraOffset.Y), lineColor);
                 }
 
             }
@@ -109,7 +115,7 @@ namespace GameName1.SkillTree
                     tint = Color.White;
                 }
 
-                node.Draw(spriteBatch, bounds, tint);
+                node.Draw(spriteBatch, cameraOffset, tint);
 
 
 

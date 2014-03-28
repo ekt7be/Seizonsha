@@ -70,8 +70,6 @@ namespace GameName1
         public static readonly int SKILL_TREE_NODE_WIDTH = 100;
         public static readonly int SKILL_TREE_NODE_HEIGHT = 100;
         public static readonly int SKILL_TREE_MOVEMENT_RECHARGE = 20;
-        public static readonly int SKILL_TREE_CENTER_OFFSET_X = 1000;
-        public static readonly int SKILL_TREE_CENTER_OFFSET_Y = 1000;
 
 
 
