@@ -37,6 +37,7 @@ namespace GameName1
         SpriteBatch spriteBatch;
         SpriteFont font;
         Texture2D blankTexture;
+        Seizonsha game;
 
         bool isInitialized;
 
@@ -87,12 +88,13 @@ namespace GameName1
         /// <summary>
         /// Constructs a new screen manager component.
         /// </summary>
-        public ScreenManager(Game game)
+        public ScreenManager(Seizonsha game)
             : base(game)
         {
             // we must set EnabledGestures before we can query for them, but
             // we don't assume the game wants to read them.
             TouchPanel.EnabledGestures = GestureType.None;
+            this.game = game;
         }
 
 
@@ -116,7 +118,7 @@ namespace GameName1
             ContentManager content = Game.Content;
 
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            font = content.Load<SpriteFont>("menufont");
+            font = content.Load<SpriteFont>("Font");
             blankTexture = content.Load<Texture2D>("blank");
 
             // Tell each of the screens to load their content.
@@ -172,7 +174,7 @@ namespace GameName1
                 screensToUpdate.RemoveAt(screensToUpdate.Count - 1);
 
                 // Update the screen.
-                screen.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
+                    screen.Update(gameTime, otherScreenHasFocus, coveredByOtherScreen);
 
                 if (screen.ScreenState == ScreenState.TransitionOn ||
                     screen.ScreenState == ScreenState.Active)
@@ -220,6 +222,10 @@ namespace GameName1
         {
             foreach (GameScreen screen in screens)
             {
+                if (screen is GameplayScreen)
+                {
+                    ((GameplayScreen)screen).setGame(game);
+                }
                 if (screen.ScreenState == ScreenState.Hidden)
                     continue;
 
