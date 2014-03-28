@@ -36,6 +36,11 @@ namespace GameName1.Effects
             spriteBatch.DrawString(game.getSpriteFont(), text, new Vector2(x, y), this.textColor);
         }
 
+        public override void Update(GameTime gameTime)
+        {
+
+        }
+
         protected override void OnDie()
         {
         }

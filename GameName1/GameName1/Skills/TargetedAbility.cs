@@ -47,7 +47,7 @@ namespace GameName1.Skills
             setRemove(true);
         }
 
-        public override void Update()
+        public override void Update(GameTime gameTime)
         {
             Rectangle slashBounds = new Rectangle((int)(user.getCenterX()), (int)(user.getCenterY()), (int)this.getDistanceToTarget(), 5);
             //this.hitbox = new Rectangle(this.x, this.y, this.width, this.height);

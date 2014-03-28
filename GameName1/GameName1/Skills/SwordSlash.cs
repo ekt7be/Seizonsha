@@ -33,5 +33,10 @@ namespace GameName1.Skills
         protected override void OnDie()
         {
         }
+
+        public override void Update(GameTime gameTime)
+        {
+
+        }
     }
 }

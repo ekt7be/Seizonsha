@@ -16,10 +16,10 @@ namespace GameName1.NPCs
      
         }
 
-        public override void Update()
+        public override void Update(GameTime gameTime)
         {
             throw new NotImplementedException();
-            base.Update();
+            base.Update(gameTime);
         }
 
         protected override void OnDie()

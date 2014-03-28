@@ -42,6 +42,8 @@ namespace GameName1
         protected Rectangle? spriteSource = null;
         protected float scale = 1.0f;
 
+
+
         //TODO: create depth variable that Game object can sort entities by to determine which to draw first (so effects can go on top etc)
 
 		// ALEX: new variables for mouse aim bullets and sprite rotation
@@ -81,7 +83,7 @@ namespace GameName1
 
         }
 
-        public virtual void Update()
+        public virtual void Update(GameTime gameTime)
         {
             foreach (StatusEffect statusEffect in this.outgoingStatusEffects)
             {
@@ -99,9 +101,9 @@ namespace GameName1
             }
         }
 
-        public void UpdateAll()
+        public void UpdateAll(GameTime gameTime)
         {
-            Update();
+            Update(gameTime);
             incVelocityX(accelX);
             incVelocityY(accelY);
             if (velocityX != 0 || velocityY != 0)

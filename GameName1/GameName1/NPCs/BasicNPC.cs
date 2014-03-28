@@ -1,4 +1,5 @@
 ﻿using GameName1.Interfaces;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -36,7 +37,7 @@ namespace GameName1.NPCs
 
         }
 
-        public override void Update()
+        public override void Update(GameTime gameTime)
         {
             
         }

@@ -33,7 +33,7 @@ namespace GameName1.Skills
 
 		}
 
-		public override void Update()
+		public override void Update(GameTime gameTime)
 		{
 			this.hitbox = new Rectangle(this.x, this.y, this.width, this.height); 
 		}

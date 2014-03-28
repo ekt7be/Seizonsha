@@ -38,5 +38,6 @@ namespace GameName1.Skills
                 game.damageArea(user, this.getHitbox(), amount, damageType);
             }
         }
+
     }
 }

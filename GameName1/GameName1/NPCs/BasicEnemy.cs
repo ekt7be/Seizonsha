@@ -13,11 +13,23 @@ namespace GameName1.NPCs
 
         int count = 0;
 
+        private static float elapsed;
+        private static readonly float delay = 200f;
+        private static int currentFrame = 0;
 
         private static readonly int UP_ANIMATION = 2;
         private static readonly int DOWN_ANIMATION = 0;
         private static readonly int LEFT_ANIMATION = 1;
         private static readonly int RIGHT_ANIMATION = 3;
+        private static readonly int WALK_ANIMATION_FRAMES = 9;
+
+        // This states that they are always going to be walking... which is true for now. But when we add things such as attacks for enemies, we need to change it so that it sets this to false and sets isAttacking, or something, to true
+        private bool isWalking = true;
+        
+        private bool up;
+        private bool down;
+        private bool left;
+        private bool right;
 
         public BasicEnemy(Seizonsha game, Texture2D sprite, int x, int y)
             : base(game, sprite, x, y, Static.BASIC_ENEMY_WIDTH, Static.BASIC_ENEMY_HEIGHT, Static.DAMAGE_TYPE_ENEMY, 200)
@@ -61,8 +73,9 @@ namespace GameName1.NPCs
 
         }
 
-        public override void Update()
+        public override void Update(GameTime gameTime)
         {
+            base.Update(gameTime);
 
             List<Player> players = game.getPlayers();
 
@@ -97,7 +110,44 @@ namespace GameName1.NPCs
             float playerDirection = (float)Math.Atan2(this.y - closest.y, closest.x - this.x);
 
             rotateToAngle(playerDirection);
-            base.Update();
+
+            elapsed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+
+            if (elapsed > delay)
+            {
+                if (currentFrame >= WALK_ANIMATION_FRAMES - 1)
+                {
+                    currentFrame = 0;
+                }
+                else
+                {
+                    currentFrame++;
+                }
+                elapsed = 0;
+            }
+
+            if (isWalking)
+            {
+                if (up)
+                    base.spriteSource = new Rectangle(64 * currentFrame, UP_ANIMATION * 64, 64, 64);
+                else if (left)
+                    base.spriteSource = new Rectangle(64 * currentFrame, LEFT_ANIMATION * 64, 64, 64);
+                else if (down)
+                    base.spriteSource = new Rectangle(64 * currentFrame, DOWN_ANIMATION * 64, 64, 64);
+                else if (right)
+                    base.spriteSource = new Rectangle(64 * currentFrame, RIGHT_ANIMATION * 64, 64, 64);
+            }
+            else
+            {
+                if (up)
+                    base.spriteSource = new Rectangle(64 * 0, UP_ANIMATION * 64, 64, 64);
+                else if (left)
+                    base.spriteSource = new Rectangle(64 * 0, LEFT_ANIMATION * 64, 64, 64);
+                else if (down)
+                    base.spriteSource = new Rectangle(64 * 0, DOWN_ANIMATION * 64, 64, 64);
+                else if (right)
+                    base.spriteSource = new Rectangle(64 * 0, RIGHT_ANIMATION * 64, 64, 64);
+            }
         }
 
         protected override void OnDie()
@@ -117,19 +167,27 @@ namespace GameName1.NPCs
 
             if (Math.Cos(angle) > .5)
             {
-                base.spriteSource = FramesToAnimation[RIGHT_ANIMATION];
+                //base.spriteSource = FramesToAnimation[RIGHT_ANIMATION];
+                right = true;
+                up = left = down = false;
             }
             else if (Math.Sin(angle) > .5)
             {
-                base.spriteSource = FramesToAnimation[DOWN_ANIMATION];
+                //base.spriteSource = FramesToAnimation[DOWN_ANIMATION];
+                down = true;
+                up = left = right = false;
             }
             else if (Math.Sin(angle) < -.5)
             {
-                base.spriteSource = FramesToAnimation[UP_ANIMATION];
+                //base.spriteSource = FramesToAnimation[UP_ANIMATION];
+                up = true;
+                right = left = down = false;
             }
             else if (Math.Cos(angle) < -.5)
             {
-                base.spriteSource = FramesToAnimation[LEFT_ANIMATION];
+                //base.spriteSource = FramesToAnimation[LEFT_ANIMATION];
+                left = true;
+                up = right = down = false;
             }
         }
 

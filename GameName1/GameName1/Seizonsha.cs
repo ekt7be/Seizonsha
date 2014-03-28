@@ -34,7 +34,7 @@ namespace GameName1
 
         private Level currLevel;
 
-        private Dictionary<int, Texture2D> spriteMappings;
+        public static Dictionary<int, Texture2D> spriteMappings;
 
 		// AlexAlpha
 		Viewport defaultView, p1View, p2View, p3View, p4View; 
@@ -78,7 +78,7 @@ namespace GameName1
             currLevel = new Level(this);
 
             this.players = new Player[4];
-            this.spriteMappings = new Dictionary<int, Texture2D>();
+            spriteMappings = new Dictionary<int, Texture2D>();
 
 			graphics.PreferredBackBufferHeight = Static.SCREEN_HEIGHT;
 			graphics.PreferredBackBufferWidth = Static.SCREEN_WIDTH;
@@ -86,16 +86,30 @@ namespace GameName1
             //just for testing -- makes a rectangle
 			//Texture2D playerRect = new Texture2D(GraphicsDevice, Static.PLAYER_HEIGHT, Static.PLAYER_WIDTH);
 
-			Texture2D playerRect = Content.Load<Texture2D>("Sprites/BasicPlayerSpriteSheet");
+            Texture2D playerRect = Content.Load<Texture2D>("Sprites/humanfullspritesheet");
             Texture2D npcRect = Content.Load<Texture2D>("Sprites/player");
-			Texture2D basicEnemyRect = Content.Load<Texture2D>("Sprites/BasicEnemySprite");
+			Texture2D basicEnemyRect = Content.Load<Texture2D>("Sprites/SkeletonWalkingSpritesheet");
             Texture2D nodeRect = Content.Load<Texture2D>("Sprites/SkillNode");
+            
+            Texture2D plateArmorHead = Content.Load<Texture2D>("Sprites/PlateArmorHeadSpritesheet");
+            Texture2D plateArmorFeet = Content.Load<Texture2D>("Sprites/PlateArmorFeetSpritesheet");
+            Texture2D plateArmorGloves = Content.Load<Texture2D>("Sprites/PlateArmorGlovesSpritesheet");
+            Texture2D plateArmorPants = Content.Load<Texture2D>("Sprites/PlateArmorPantsSpritesheet");
+            Texture2D plateArmorArmsShoulder = Content.Load<Texture2D>("Sprites/PlateArmorArmsShoulderSpriteSheet");
+            Texture2D plateArmorTorso = Content.Load<Texture2D>("Sprites/PlateArmorTorsoSpritesheet");
+
             SkillTree.SkillTree.nodeTextures.Add(Static.SKILL_TREE_NODE_ANY, nodeRect);
 
 			initTileSprites();
 
             spriteMappings.Add(Static.BASIC_ENEMY_INT, basicEnemyRect);
             spriteMappings.Add(Static.PLAYER_INT, playerRect);
+            spriteMappings.Add(Static.PLATE_ARMOR_HEAD, plateArmorHead);
+            spriteMappings.Add(Static.PLATE_ARMOR_FEET, plateArmorFeet);
+            spriteMappings.Add(Static.PLATE_ARMOR_GLOVES, plateArmorGloves);
+            spriteMappings.Add(Static.PLATE_ARMOR_PANTS, plateArmorPants);
+            spriteMappings.Add(Static.PLATE_ARMOR_ARMS_SHOULDER, plateArmorArmsShoulder);
+            spriteMappings.Add(Static.PLATE_ARMOR_TORSO, plateArmorTorso);
            
             Color[] data = new Color[Static.PLAYER_HEIGHT * Static.PLAYER_WIDTH];
             for (int i = 0; i < data.Length; ++i)
@@ -310,7 +324,7 @@ namespace GameName1
             //update all entities including players
             foreach (GameEntity entity in entities)
             {
-                entity.UpdateAll();
+                entity.UpdateAll(gameTime);
             }
 
             //handle all player input
@@ -513,7 +527,11 @@ namespace GameName1
                 {
                     player.DownButton();
                 }
-
+                
+                if(Math.Abs(GamePad.GetState(player.playerIndex).ThumbSticks.Left.X) <= .5 && Math.Abs(GamePad.GetState(player.playerIndex).ThumbSticks.Left.Y) <= .5 && Keyboard.GetState().GetPressedKeys().Length == 0)
+                {
+                    player.noMovement();
+                }
 
                 if (GamePad.GetState(player.playerIndex).Buttons.LeftShoulder == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.D1))
                 {
@@ -594,12 +612,18 @@ namespace GameName1
                     // player.rotateToAngle((float)0);
 
                 }
+
                 if (GamePad.GetState(player.playerIndex).ThumbSticks.Left.Y < -.5)
                 {
                     player.DownButton();
                     // player.rotateToAngle((float)Math.PI / 2);
 
 
+                }
+
+                if (Math.Abs(GamePad.GetState(player.playerIndex).ThumbSticks.Left.X) <= .5 && Math.Abs(GamePad.GetState(player.playerIndex).ThumbSticks.Left.Y) <= .5)
+                {
+                    player.noMovement();
                 }
 
 
