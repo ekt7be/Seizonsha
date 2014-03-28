@@ -15,7 +15,6 @@ namespace GameName1
     {
         public int cameraX { get; set; }
         public int cameraY { get; set; }
-        public int mana { get; set; }
         public int xp { get; set; }
         public int skillPoints { get; set; }
         public PlayerIndex playerIndex { get; set; }
@@ -23,6 +22,9 @@ namespace GameName1
         private Equipable[] skillSlots;
         private List<Equipable> inventory;
         private SkillTree.SkillTree skilltree;
+        private float manaRegen;
+        private float mana;
+        private int maxMana;
 
         private bool skilltreebuttondown;
         private bool skilltreescreen;
@@ -52,9 +54,21 @@ namespace GameName1
             {
                 skilltree.Update();
             }
-
+            this.mana += manaRegen;
+            if (this.mana > this.maxMana) this.mana = maxMana;
             base.Update();
             //base.source = new Rectangle(sprite.Width / 4 * currentAnimationFrame, 0, sprite.Width / 4, sprite.Height);
+        }
+
+        public bool hasEnoughMana(int manaCost)
+        {
+            if ((int)this.mana >= manaCost) return true;
+            else return false;
+        }
+
+        public void costMana(int manaCost)
+        {
+            this.mana -= (float)manaCost;
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -100,7 +114,6 @@ namespace GameName1
             this.cameraY = 0;
             this.skillPoints = 0;
             this.xp = 0;
-            this.mana = Static.PLAYER_MAX_MANA;
             this.health = Static.PLAYER_MAX_HEALTH;
             this.dead = false;
             this.playerIndex = playerIndex;
@@ -114,7 +127,9 @@ namespace GameName1
             Equip(new HealingTouch(game, this, -50, 100), Static.PLAYER_R1_SKILL_INDEX);
             Equip(new Sword(game, this, 300, 10), Static.PLAYER_R2_SKILL_INDEX);
 
-
+            this.mana = 0f;
+            this.maxMana = Static.PLAYER_MAX_MANA;
+            this.manaRegen = 0.2f;
             this.skilltreescreen = false;
             this.skilltreebuttondown = false;
 
@@ -152,16 +167,19 @@ namespace GameName1
 			int barHeight = screenPortion.Height / 32; 
 
 			double green = ((double)this.health/(double)this.maxHealth) * barLength;
+            double blue = ((double)this.mana / (double)this.maxMana) * barLength;
 			Rectangle hpMax = new Rectangle(20, 20, barLength, barHeight);
 			Rectangle hpRemaining = new Rectangle(20, 20, (int)green, barHeight);
-			Rectangle mana = new Rectangle (20, 20+(barHeight), barLength, barHeight); 
+			Rectangle manaMax = new Rectangle (20, 20+(barHeight), barLength, barHeight);
+            Rectangle manaRemaining = new Rectangle(20, 20 + (barHeight), (int) blue, barHeight);
 			Rectangle xp = new Rectangle (20, 20+(barHeight*2), barLength, barHeight); 
 
 			// draw HP bar
 			spriteBatch.Draw(texture, hpMax, Color.Red); 
 			spriteBatch.Draw(texture, hpRemaining, Color.Green); 
 			// draw Mana bar
-			spriteBatch.Draw(texture, mana, Color.Blue); 
+			spriteBatch.Draw(texture, manaMax, Color.LightBlue);
+            spriteBatch.Draw(texture, manaRemaining, Color.Blue);
 			// draw XP bar
 			spriteBatch.Draw(texture, xp, Color.Yellow); 
 
@@ -175,7 +193,7 @@ namespace GameName1
 			// draw Mana text
 			spriteBatch.DrawString(
 				game.getSpriteFont(), 
-				"Mana : " + this.mana, 
+				"Mana : " + (int)this.mana + "/" + this.maxMana, 
 				new Vector2(20, 20+(barHeight)), 
 				Color.White
 			);

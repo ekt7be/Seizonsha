@@ -11,7 +11,7 @@ namespace GameName1.Skills
     {
         public Color color {get; set; }
 
-        public ChangeColor(Seizonsha game, GameEntity user, Color color) : base(game, user, 0, 0, 0){
+        public ChangeColor(Seizonsha game, GameEntity user, Color color) : base(game, user,0, 0, 0, 0){
             this.color = color;
         }
         public override string getName()

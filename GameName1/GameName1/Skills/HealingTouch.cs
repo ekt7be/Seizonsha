@@ -11,7 +11,7 @@ namespace GameName1.Skills
     {
         private int damage;
 
-        public HealingTouch(Seizonsha game, GameEntity user, int damage, int recharge_time) : base(game, user, recharge_time, 30, 30)
+        public HealingTouch(Seizonsha game, GameEntity user, int damage, int recharge_time) : base(game, user, 60,recharge_time, 30, 30)
         {
             this.damage = damage;
         }

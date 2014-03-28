@@ -13,7 +13,7 @@ namespace GameName1.Skills
         private int damage;
         private int damageType;
 
-        public Sword(Seizonsha game, GameEntity user,int damage, int recharge_time) : base(game, user, recharge_time, 0, 10)
+        public Sword(Seizonsha game, GameEntity user,int damage, int recharge_time) : base(game, user, 0, recharge_time, 0, 10)
         {
 
             this.damage = damage;

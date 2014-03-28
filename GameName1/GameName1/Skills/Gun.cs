@@ -16,7 +16,7 @@ namespace GameName1.Skills
 		private float bulletSpeed; 
 
 
-		public Gun(Seizonsha game, GameEntity user, int damage, int recharge_time, float bulletSpeed) : base(game, user, recharge_time,0,0)
+		public Gun(Seizonsha game, GameEntity user, int damage, int recharge_time, float bulletSpeed) : base(game, user, 0, recharge_time,0,0)
 		{
 
 			this.damage = damage;

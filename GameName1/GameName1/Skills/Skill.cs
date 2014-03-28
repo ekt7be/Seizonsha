@@ -16,10 +16,12 @@ namespace GameName1.Skills
         protected int freezeTime;
         protected int castingTime;
         private bool waitingForCast;
+        private int manaCost;
 
-        public Skill(Seizonsha game, GameEntity user, int rechargeTime, int castingTime, int freezeTime)
+        public Skill(Seizonsha game, GameEntity user, int manaCost, int rechargeTime, int castingTime, int freezeTime)
         {
-            this.rechargeTime = rechargeTime;
+            this.rechargeTime = rechargeTime + castingTime;
+            this.manaCost = manaCost;
             this.castingTime = castingTime;
             this.freezeTime = freezeTime;
             this.waitingForCast = false;
@@ -40,10 +42,10 @@ namespace GameName1.Skills
 
         public virtual void Use()
         {
-            if (!(Available()) || user.isFrozen()){
+            if (!(Available()) || user.isFrozen() || this.waitingForCast){
                 return;
             }
-
+            if (user is Player) ((Player)user).costMana(manaCost);
             user.Freeze(freezeTime);
             if (castingTime > 0)
             {
@@ -63,7 +65,7 @@ namespace GameName1.Skills
 
         public virtual bool Available()
         {
-            return recharged >= rechargeTime;
+            return (recharged >= rechargeTime && (user is Player ? ((Player)user).hasEnoughMana(this.manaCost) : true));
         }
 
         public double percentCasted()

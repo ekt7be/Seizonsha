@@ -19,7 +19,7 @@ namespace GameName1
 
     public class Seizonsha : Game
     {
-		int numberOfPlayers = 2;
+		int numberOfPlayers = 1;
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;

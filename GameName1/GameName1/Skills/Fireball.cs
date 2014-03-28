@@ -14,7 +14,7 @@ namespace GameName1.Skills
         private int damageType;
         private float bulletSpeed;
 
-        public Fireball(Seizonsha game, GameEntity user, int damage, int recharge_time, float bulletSpeed) : base(game, user, recharge_time, 20, 20)
+        public Fireball(Seizonsha game, GameEntity user, int damage, int recharge_time, float bulletSpeed) : base(game, user, 40, recharge_time, 20, 20)
         {
 
             this.damage = damage;

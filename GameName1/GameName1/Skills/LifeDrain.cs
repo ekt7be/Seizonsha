@@ -18,7 +18,7 @@ namespace GameName1.Skills
         private bool timerStarted;
 
         public LifeDrain(Seizonsha game, GameEntity user, int damage, int recharge_time, int duration)
-            : base(game, user, recharge_time, 20, 20)
+            : base(game, user, 50, recharge_time, 20, 20)
         {
 
             this.damage = damage;
