@@ -23,6 +23,8 @@ namespace GameName1
         private Equipable[] skillSlots;
         private List<Equipable> inventory;
         private SkillTree.SkillTree skilltree;
+
+        private bool skilltreebuttondown;
         private bool skilltreescreen;
 
         private static readonly int UP_ANIMATION = 0;
@@ -44,6 +46,11 @@ namespace GameName1
                 {
                     skill.Update();
                 }
+            }
+
+            if (SkillTreeOpen())
+            {
+                skilltree.Update();
             }
             //base.source = new Rectangle(sprite.Width / 4 * currentAnimationFrame, 0, sprite.Width / 4, sprite.Height);
         }
@@ -89,6 +96,7 @@ namespace GameName1
 
 
             this.skilltreescreen = false;
+            this.skilltreebuttondown = false;
 
 			this.camera = camera;
 
@@ -112,6 +120,11 @@ namespace GameName1
             //and the dimensions of their portion of the screen to draw their screen.
             //Interface will be drawn on top along with any menus including skill tree
 
+            if (SkillTreeOpen())
+            {
+                skilltree.Draw(screenPortion, spriteBatch);
+                return;
+            }
 			Texture2D texture = new Texture2D(game.GraphicsDevice, 1, 1);
 			texture.SetData(new[] { Color.White });
 
@@ -161,9 +174,7 @@ namespace GameName1
 				"R2: " + this.getSkill(Static.PLAYER_R2_SKILL_INDEX).getName() + "\n";
 			spriteBatch.DrawString(game.getSpriteFont(), displaySkills, new Vector2(20, 100), Color.White);
 				
-			if (skilltreescreen) {
-				skilltree.Draw (screenPortion, spriteBatch);
-			}
+
         }
 
         public Equipable getSkill(int skillIndex)
@@ -222,56 +233,154 @@ namespace GameName1
             return skilltreescreen;
         }
 
-        public void OpenSkillTree(bool open)
+        public void SkillTreeButtonDown()
         {
-            skilltreescreen = open;
+            if (!skilltreebuttondown)
+            {
+                skilltreebuttondown = true;
+                OpenSkillTree();
+            }
+            else
+            {
+                return;
+            }
+        }
+
+        public void SkillTreeButtonRelease()
+        {
+            if (skilltreebuttondown)
+            {
+                skilltreebuttondown = false;
+            }
+            else
+            {
+                return;
+            }
+
+
+        }
+
+        private void OpenSkillTree()
+        {
+            skilltreescreen = !skilltreescreen;
         }
 
 		public void LeftClick()
 		{
+            if (SkillTreeOpen())
+            {
+                return;
+            }
 			UseSkill(Static.PLAYER_LEFTCLICK_SKILL_INDEX);
 		}
 
         public void AButton()
         {
+            if (SkillTreeOpen())
+            {
+                skilltree.Unlock();
+            }
             //whatever A Button does
         }
 
         public void BButton()
         {
+            if (SkillTreeOpen())
+            {
+                return;
+            }
             //whatever B Button does
         }
 
         public void L1Button()
         {
+            if (SkillTreeOpen())
+            {
+                return;
+            }
             UseSkill(Static.PLAYER_L1_SKILL_INDEX);
         }
         public void L2Button()
         {
+            if (SkillTreeOpen())
+            {
+                return;
+            }
             UseSkill(Static.PLAYER_L2_SKILL_INDEX);
         }
         public void R1Button()
         {
+            if (SkillTreeOpen())
+            {
+                return;
+            }
             UseSkill(Static.PLAYER_R1_SKILL_INDEX);
         }
         public void R2Button()
         {
+            if (SkillTreeOpen())
+            {
+                return;
+            }
             UseSkill(Static.PLAYER_R2_SKILL_INDEX);
         }
 
-        public void MoveUp()
+        public void UpButton()
+        {
+            if (SkillTreeOpen())
+            {
+                skilltree.Up();
+
+                return;
+            }
+            MoveUp();
+        }
+
+        public void DownButton()
+        {
+            if (SkillTreeOpen())
+            {
+                skilltree.Down();
+                return;
+            }
+            MoveDown();
+        }
+
+        public void LeftButton()
+        {
+            if (SkillTreeOpen())
+            {
+                skilltree.Left();
+
+                return;
+            }
+            MoveLeft();
+        }
+
+        public void RightButton()
+        {
+            if (SkillTreeOpen())
+            {
+                skilltree.Right();
+
+                return;
+            }
+            MoveRight();
+        }
+
+        private void MoveUp()
         {
             this.move(0, -Static.PLAYER_MOVE_SPEED);
         }
-        public void MoveDown()
+        private void MoveDown()
         {
             this.move(0, Static.PLAYER_MOVE_SPEED);
         }
-        public void MoveLeft()
+        private void MoveLeft()
         {
             this.move(-Static.PLAYER_MOVE_SPEED, 0);
         }
-        public void MoveRight()
+        private void MoveRight()
         {
             this.move(Static.PLAYER_MOVE_SPEED, 0);
         }
@@ -299,6 +408,12 @@ namespace GameName1
 
         public override void rotateToAngle(float angle) //animation is based on rotation which is used by both movement and aiming
         {
+
+            if (SkillTreeOpen())
+            {
+                return;
+            }
+
             base.rotateToAngle(angle);
 
             if (FramesToAnimation == null) //gameentity class calls this during initialization too

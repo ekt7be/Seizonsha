@@ -19,7 +19,7 @@ namespace GameName1
 
     public class Seizonsha : Game
     {
-		int numberOfPlayers = 1;
+		int numberOfPlayers = 2;
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -89,7 +89,8 @@ namespace GameName1
 			Texture2D playerRect = Content.Load<Texture2D>("Sprites/BasicPlayerSpriteSheet");
             Texture2D npcRect = Content.Load<Texture2D>("Sprites/player");
 			Texture2D basicEnemyRect = Content.Load<Texture2D>("Sprites/BasicEnemySprite");
-            SkillTree.SkillTree.nodeTextures.Add(Static.SKILL_TREE_NODE_ANY, basicEnemyRect);
+            Texture2D nodeRect = Content.Load<Texture2D>("Sprites/SkillNode");
+            SkillTree.SkillTree.nodeTextures.Add(Static.SKILL_TREE_NODE_ANY, nodeRect);
 
 			initTileSprites();
 
@@ -222,6 +223,13 @@ namespace GameName1
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             spriteFont = Content.Load<SpriteFont>("Font");
+            Static.SPRITE_FONT = spriteFont;
+            Static.PIXEL_THIN = new Texture2D(GraphicsDevice, 1, 1);
+            Static.PIXEL_THIN.SetData(new[] { Color.White });
+            Static.PIXEL_THICK = new Texture2D(GraphicsDevice, 3, 3);
+            Static.PIXEL_THICK.SetData(new[] { Color.White });
+
+
         }
 
         protected override void UnloadContent()
@@ -394,9 +402,6 @@ namespace GameName1
 				spriteBatch.End();
             }
 
-            //print text
-            //spriteBatch.DrawString(spriteFont, "TEXT", new Vector2(50, 50), Color.White);
-
 
 			GraphicsDevice.Viewport = defaultView; 
 
@@ -417,6 +422,7 @@ namespace GameName1
 				{
 					continue;
 				}
+
 
 				spriteBatch.Begin();
 
@@ -474,7 +480,15 @@ namespace GameName1
 
                 if (GamePad.GetState(player.playerIndex).Buttons.Start == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Space))
                 {
-                    player.OpenSkillTree(!player.SkillTreeOpen());
+                    player.SkillTreeButtonDown();
+                } else if (GamePad.GetState(player.playerIndex).Buttons.Start == ButtonState.Released || Keyboard.GetState().IsKeyUp(Keys.Space)){
+                    player.SkillTreeButtonRelease();
+
+                }
+
+                if (GamePad.GetState(player.playerIndex).Buttons.A == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Enter))
+                {
+                    player.AButton();
                 }
 
                 if (GamePad.GetState(player.playerIndex).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
@@ -483,25 +497,25 @@ namespace GameName1
                 }
                 if (GamePad.GetState(player.playerIndex).ThumbSticks.Left.Y > .5 || Keyboard.GetState().IsKeyDown(Keys.W))
                 {
-                    player.MoveUp();
+                    player.UpButton();
                     //player.rotateToAngle((float)(3 * Math.PI / 2));
 
                 }
                 if (GamePad.GetState(player.playerIndex).ThumbSticks.Left.X < -.5 || Keyboard.GetState().IsKeyDown(Keys.A))
                 {
-                    player.MoveLeft();
+                    player.LeftButton();
                     //player.rotateToAngle((float)Math.PI);
 
                 }
                 if (GamePad.GetState(player.playerIndex).ThumbSticks.Left.X > .5 || Keyboard.GetState().IsKeyDown(Keys.D))
                 {
-                    player.MoveRight();
+                    player.RightButton();
                     // player.rotateToAngle((float)0);
 
                 }
                 if (GamePad.GetState(player.playerIndex).ThumbSticks.Left.Y < -.5 || Keyboard.GetState().IsKeyDown(Keys.S))
                 {
-                    player.MoveDown();
+                    player.DownButton();
                     // player.rotateToAngle((float)Math.PI / 2);
                 }
 
@@ -548,33 +562,44 @@ namespace GameName1
 
                 if (GamePad.GetState(player.playerIndex).Buttons.Start == ButtonState.Pressed)
                 {
-                    player.OpenSkillTree(!player.SkillTreeOpen());
+                    player.SkillTreeButtonDown();
                 }
+                else if (GamePad.GetState(player.playerIndex).Buttons.Start == ButtonState.Released)
+                {
+                    player.SkillTreeButtonRelease();
+
+                }
+
+                if (GamePad.GetState(player.playerIndex).Buttons.A == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Enter))
+                {
+                    player.AButton();
+                }
+
                 if (GamePad.GetState(player.playerIndex).Buttons.Back == ButtonState.Pressed)
                 {
                     Exit();
                 }
                 if (GamePad.GetState(player.playerIndex).ThumbSticks.Left.Y > .5)
                 {
-                    player.MoveUp();
+                    player.UpButton();
                     //player.rotateToAngle((float)(3 * Math.PI / 2));
 
                 }
                 if (GamePad.GetState(player.playerIndex).ThumbSticks.Left.X < -.5)
                 {
-                    player.MoveLeft();
+                    player.LeftButton();
                     //player.rotateToAngle((float)Math.PI);
 
                 }
                 if (GamePad.GetState(player.playerIndex).ThumbSticks.Left.X > .5)
                 {
-                    player.MoveRight();
+                    player.RightButton();
                     // player.rotateToAngle((float)0);
 
                 }
                 if (GamePad.GetState(player.playerIndex).ThumbSticks.Left.Y < -.5)
                 {
-                    player.MoveDown();
+                    player.DownButton();
                     // player.rotateToAngle((float)Math.PI / 2);
 
 
@@ -1057,6 +1082,11 @@ namespace GameName1
         public int getTileIndexFromBottomEdgeY(int y)
         {
             return (int)Math.Ceiling(((float)y / Static.TILE_HEIGHT)) - 1;
+        }
+
+        public Tile getTileFromCoordinates(int x, int y)
+        {
+            return currLevel.getTile(x, y);
         }
 
         public void Spawn(Spawnable spawn)

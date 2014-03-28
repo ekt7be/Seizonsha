@@ -70,6 +70,8 @@
     <Compile Include="Skills\Skill.cs" />
     <Compile Include="Skills\SwordSlash.cs" />
     <Compile Include="Skills\Sword.cs" />
+    <Compile Include="SkillTree\BlankNode.cs" />
+    <Compile Include="SkillTree\HealthPlusUnlockable.cs" />
     <Compile Include="SpawnEntity.cs" />
     <Compile Include="SkillTree\SkillTree.cs" />
     <Compile Include="SkillTree\SkillTreeNode.cs" />
@@ -115,7 +117,7 @@
     <Content Include="Content\Sprites\BasicPlayerSpritesheet.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\Sprites\wallTexture.jpg">
+    <Content Include="Content\Sprites\SkillNode.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Sprites\tile.png">
@@ -1248,11 +1250,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <ItemGroup>
-    <Folder Include="Content\maps\" />
-    <Folder Include="Content\tilesets\" />
-    <Folder Include="Content\tiles\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="Content\tilesets\dc_tileset.png" />
     <None Include="Content\tiles\dc_tiles\dc-dngn\crumbled_column.png" />

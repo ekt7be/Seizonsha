@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -68,7 +69,41 @@ namespace GameName1
         public static readonly int SKILL_TREE_WEIGHT_LOCKED = 0;
         public static readonly int SKILL_TREE_NODE_WIDTH = 100;
         public static readonly int SKILL_TREE_NODE_HEIGHT = 100;
+        public static readonly int SKILL_TREE_MOVEMENT_RECHARGE = 20;
+        public static readonly int SKILL_TREE_CENTER_OFFSET_X = 1000;
+        public static readonly int SKILL_TREE_CENTER_OFFSET_Y = 1000;
+
+
+
+        //skilltree sprites
         public static readonly int SKILL_TREE_NODE_ANY = 4;
+
+        //spritefont
+        public static SpriteFont SPRITE_FONT = null;
+
+        //static pixel for drawing rectangles
+        public static Texture2D PIXEL_THIN = null;
+        public static Texture2D PIXEL_THICK = null;
+
+        public static void DrawLine(SpriteBatch spriteBatch, Texture2D sprite, Vector2 start, Vector2 end, Color color)
+        {
+
+            float distance = Vector2.Distance(start, end);
+            float progress = 0f;
+
+            Vector2 slope = new Vector2((end.X - start.X),(end.Y - start.Y));
+            slope.Normalize();
+
+            while (progress < distance)
+            {
+
+                spriteBatch.Draw(sprite, start + slope*progress, color);
+                progress += 1f;
+            }
+            
+
+
+        }
 
 
         public static void Debug(string line)

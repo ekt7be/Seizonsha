@@ -23,15 +23,19 @@ namespace GameName1.SkillTree
         private Rectangle bounds;
         private Unlockable unlockable;
         private Texture2D sprite;
+        private int x; //offset from origin
+        private int y;
+
 
         private bool unlocked;
 
 
-        public SkillTreeNode(SkillTree skilltree, Rectangle bounds, Texture2D sprite, Unlockable unlockable)
+        public SkillTreeNode(SkillTree skilltree, int x,int  y, Texture2D sprite, Unlockable unlockable)
         {
             this.unlockable = unlockable;
             this.unlocked = false;
-            this.bounds = bounds;
+            this.x = x;
+            this.y = y;
             this.sprite = sprite;
             this.skilltree =skilltree;
         }
@@ -39,15 +43,19 @@ namespace GameName1.SkillTree
 
         public void Unlock(Player player)
         {
-            unlockable.OnUnlock(player);
-            this.unlocked = true;
+
 
             setLeftWeight(Static.SKILL_TREE_WEIGHT_UNLOCKED);
             setRightWeight(Static.SKILL_TREE_WEIGHT_UNLOCKED);
             setBottomWeight(Static.SKILL_TREE_WEIGHT_UNLOCKED);
             setTopWeight(Static.SKILL_TREE_WEIGHT_UNLOCKED);
 
-
+            if (unlockable == null)
+            {
+                return;
+            }
+            unlockable.OnUnlock(player);
+            this.unlocked = true;
 
         }
 
@@ -56,15 +64,32 @@ namespace GameName1.SkillTree
             return unlocked;
         }
 
-
-        public void Draw(SpriteBatch spriteBatch, Color color)
+        public int getCenterX(Rectangle viewBounds)
         {
+            return viewBounds.Left + x+Static.SKILL_TREE_NODE_WIDTH / 2;
+        }
+
+        public int getCenterY(Rectangle viewBounds)
+        {
+            return viewBounds.Top + y + Static.SKILL_TREE_NODE_HEIGHT/2;
+        }
+
+
+        public void Draw(SpriteBatch spriteBatch, Rectangle viewBounds, Color color)
+        {
+            bounds = new Rectangle(viewBounds.Left+x, viewBounds.Top+y, Static.SKILL_TREE_NODE_WIDTH, Static.SKILL_TREE_NODE_HEIGHT);
             spriteBatch.Draw(sprite, bounds, color);
+            if (unlockable == null)
+            {
+                return;
+            }
+            spriteBatch.DrawString(Static.SPRITE_FONT, unlockable.getName(), new Vector2(viewBounds.Left+x, viewBounds.Top+y),Color.Green);
         }
 
         public void attachLeft(SkillTreeNode node, int weight)
         {
             this.leftNode = node;
+            node.rightNode = this;
             setLeftWeight(weight);
         }
         public void setLeftWeight(int weight)
@@ -80,6 +105,7 @@ namespace GameName1.SkillTree
         public void attachRight(SkillTreeNode node, int weight)
         {
             this.rightNode = node;
+            node.leftNode = this;
             setRightWeight(weight);
         }
         public void setRightWeight(int weight)
@@ -95,6 +121,7 @@ namespace GameName1.SkillTree
         public void attachTop(SkillTreeNode node, int weight)
         {
             this.topNode = node;
+            node.bottomNode = this;
             setTopWeight(weight);
         }
         public void setTopWeight(int weight)
@@ -110,6 +137,7 @@ namespace GameName1.SkillTree
         public void attachBottom(SkillTreeNode node, int weight)
         {
             this.bottomNode = node;
+            node.bottomNode = this;
             setBottomWeight(weight);
         }
         public void setBottomWeight(int weight)
