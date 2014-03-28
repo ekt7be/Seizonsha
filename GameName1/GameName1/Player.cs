@@ -27,19 +27,28 @@ namespace GameName1
         private bool skilltreebuttondown;
         private bool skilltreescreen;
 
+        private static float elapsed;
+        private static readonly float delay = 200f;
+        private static int currentFrame = 0;
+
         private static readonly int UP_ANIMATION = 0;
         private static readonly int DOWN_ANIMATION = 2;
         private static readonly int LEFT_ANIMATION = 1;
         private static readonly int RIGHT_ANIMATION = 3;
+        private static readonly int WALK_ANIMATION_FRAMES = 9;
 
-
-
+        // This is messy. Make this more efficient.
+        private bool isWalking = false;
+        private bool up;
+        private bool down;
+        private bool left;
+        private bool right;
 
 		public Camera camera; 
 
 
 
-        public override void Update()
+        public override void Update(GameTime gameTime)
         {
             foreach (Equipable skill in skillSlots){
                 if (skill != null)
@@ -53,14 +62,48 @@ namespace GameName1
                 skilltree.Update();
             }
             //base.source = new Rectangle(sprite.Width / 4 * currentAnimationFrame, 0, sprite.Width / 4, sprite.Height);
+
+            elapsed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+
+            if (elapsed > delay)
+            {
+                if (currentFrame >= WALK_ANIMATION_FRAMES - 1)
+                {
+                    currentFrame = 0;
+                }
+                else
+                {
+                    currentFrame++;
+                }
+                elapsed = 0;
+            }
+
+            if (isWalking)
+            {
+                if (up)
+                    base.spriteSource = new Rectangle(64 * currentFrame, UP_ANIMATION * 64, 64, 64);
+                else if (left)
+                    base.spriteSource = new Rectangle(64 * currentFrame, LEFT_ANIMATION * 64, 64, 64);
+                else if (down)
+                    base.spriteSource = new Rectangle(64 * currentFrame, DOWN_ANIMATION * 64, 64, 64);
+                else if (right)
+                    base.spriteSource = new Rectangle(64 * currentFrame, RIGHT_ANIMATION * 64, 64, 64);
+            }
+            else
+            {
+                if (up)
+                    base.spriteSource = new Rectangle(64 * 0, UP_ANIMATION * 64, 64, 64);
+                else if (left)
+                    base.spriteSource = new Rectangle(64 * 0, LEFT_ANIMATION * 64, 64, 64);
+                else if (down)
+                    base.spriteSource = new Rectangle(64 * 0, DOWN_ANIMATION * 64, 64, 64);
+                else if (right)
+                    base.spriteSource = new Rectangle(64 * 0, RIGHT_ANIMATION * 64, 64, 64);
+            }
+
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
-        {
-            base.Draw(spriteBatch);
-            //draw armor and weapons equipped etc
 
-        }
 
         public override void OnSpawn()
         {
@@ -102,10 +145,10 @@ namespace GameName1
 
 
             base.scale = 1.0f;
-            FramesToAnimation.Add(UP_ANIMATION, new Rectangle(sprite.Width / 4 * UP_ANIMATION, 0, sprite.Width / 4, sprite.Height));
-            FramesToAnimation.Add(DOWN_ANIMATION, new Rectangle(sprite.Width / 4 * DOWN_ANIMATION, 0, sprite.Width / 4, sprite.Height));
-            FramesToAnimation.Add(LEFT_ANIMATION, new Rectangle(sprite.Width / 4 * LEFT_ANIMATION, 0, sprite.Width / 4, sprite.Height));
-            FramesToAnimation.Add(RIGHT_ANIMATION, new Rectangle(sprite.Width / 4 * RIGHT_ANIMATION, 0, sprite.Width / 4, sprite.Height));
+            FramesToAnimation.Add(UP_ANIMATION, new Rectangle(0, 64 * UP_ANIMATION, 64, 64));
+            FramesToAnimation.Add(DOWN_ANIMATION, new Rectangle(0, 64 * DOWN_ANIMATION, 64, 64));
+            FramesToAnimation.Add(LEFT_ANIMATION, new Rectangle(0, 64 * LEFT_ANIMATION, 64, 64));
+            FramesToAnimation.Add(RIGHT_ANIMATION, new Rectangle(0, 64 * RIGHT_ANIMATION, 64, 64));
 
             this.rotateToAngle(0f); //sets correct animation
 
@@ -175,6 +218,17 @@ namespace GameName1
 			spriteBatch.DrawString(game.getSpriteFont(), displaySkills, new Vector2(20, 100), Color.White);
 				
 
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            base.Draw(spriteBatch);
+            spriteBatch.Draw(Seizonsha.spriteMappings[3], this.hitbox, base.spriteSource, color, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+            spriteBatch.Draw(Seizonsha.spriteMappings[5], this.hitbox, base.spriteSource, color, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+            spriteBatch.Draw(Seizonsha.spriteMappings[4], this.hitbox, base.spriteSource, color, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+            spriteBatch.Draw(Seizonsha.spriteMappings[6], this.hitbox, base.spriteSource, color, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+            spriteBatch.Draw(Seizonsha.spriteMappings[7], this.hitbox, base.spriteSource, color, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+            spriteBatch.Draw(Seizonsha.spriteMappings[2], this.hitbox, base.spriteSource, color, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
         }
 
         public Equipable getSkill(int skillIndex)
@@ -370,19 +424,28 @@ namespace GameName1
 
         private void MoveUp()
         {
+            isWalking = true;
             this.move(0, -Static.PLAYER_MOVE_SPEED);
         }
         private void MoveDown()
         {
+            isWalking = true;
             this.move(0, Static.PLAYER_MOVE_SPEED);
         }
         private void MoveLeft()
         {
+            isWalking = true;
             this.move(-Static.PLAYER_MOVE_SPEED, 0);
         }
         private void MoveRight()
         {
+            isWalking = true;
             this.move(Static.PLAYER_MOVE_SPEED, 0);
+        }
+
+        public void noMovement()
+        {
+            isWalking = false;
         }
 
         protected override void OnDie()
@@ -423,19 +486,27 @@ namespace GameName1
 
             if (Math.Cos(angle) > .5)
             {
-                spriteSource = FramesToAnimation[RIGHT_ANIMATION];
+                //spriteSource = FramesToAnimation[RIGHT_ANIMATION];
+                right = true;
+                up = left = down = false;
             }
             else if (Math.Sin(angle) > .5)
             {
-                spriteSource = FramesToAnimation[DOWN_ANIMATION];
+                //spriteSource = FramesToAnimation[DOWN_ANIMATION];
+                down = true;
+                up = left = right = false;
             }
             else if (Math.Sin(angle) < -.5)
             {
-                spriteSource = FramesToAnimation[UP_ANIMATION];
+                //spriteSource = FramesToAnimation[UP_ANIMATION];
+                up = true;
+                right = left = down = false;
             }
             else if (Math.Cos(angle) < -.5)
             {
-                spriteSource = FramesToAnimation[LEFT_ANIMATION];
+                //spriteSource = FramesToAnimation[LEFT_ANIMATION];
+                left = true;
+                up = right = down = false;
             }
         }
     }

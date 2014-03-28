@@ -64,6 +64,13 @@ namespace GameName1
         public static readonly int BASIC_ENEMY_INT = 0;
         public static readonly int PLAYER_INT = 1;
 
+        public static readonly int PLATE_ARMOR_HEAD = 2;
+        public static readonly int PLATE_ARMOR_FEET = 3;
+        public static readonly int PLATE_ARMOR_GLOVES = 4;
+        public static readonly int PLATE_ARMOR_PANTS = 5;
+        public static readonly int PLATE_ARMOR_ARMS_SHOULDER = 6;
+        public static readonly int PLATE_ARMOR_TORSO = 7;
+
         //Skilltree
         public static readonly int SKILL_TREE_WEIGHT_UNLOCKED = 1;
         public static readonly int SKILL_TREE_WEIGHT_LOCKED = 0;

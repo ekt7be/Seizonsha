@@ -16,7 +16,7 @@ namespace GameName1.NPCs
      
         }
 
-        public override void Update()
+        public override void Update(GameTime gameTime)
         {
             throw new NotImplementedException();
         }

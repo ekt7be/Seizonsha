@@ -5,6 +5,7 @@ using System.Text;
 using GameName1.Interfaces;
 using GameName1.NPCs;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
 
 namespace GameName1
 {
@@ -20,7 +21,7 @@ namespace GameName1
         {
             this.spawnChance = spawnChance;
         }
-        public override void Update()
+        public override void Update(GameTime gameTime)
         {
         
                 if (!spawned)

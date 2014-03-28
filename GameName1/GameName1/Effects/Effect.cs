@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace GameName1.Effects
             setCollidable(false);
         }
 
-        public override void Update()
+        public override void Update(GameTime gameTime)
         {
             duration--;
             if (duration <= 0)
