@@ -16,12 +16,12 @@ using GameName1.Effects;
 
 namespace GameName1
 {
-
     public class Seizonsha : Game
     {
 		int numberOfPlayers = 2;
 
         GraphicsDeviceManager graphics;
+        ScreenManager screenManager;
         SpriteBatch spriteBatch;
         private SpriteFont spriteFont;
         private static readonly Random randomGen = new Random();
@@ -32,8 +32,14 @@ namespace GameName1
         private Queue<Vector2> spawnPointQueue;
         private HashSet<Collision> collisions;
         private List<AI> AIs;
-
         private Level currLevel;
+
+        // By preloading any assets used by UI rendering, we avoid framerate glitches
+        // when they suddenly need to be loaded in the middle of a menu transition.
+        static readonly string[] preloadAssets =
+        {
+            "gradient",
+        };
 
 
         public static Dictionary<int, Texture2D> spriteMappings = new Dictionary<int, Texture2D>();
@@ -50,12 +56,22 @@ namespace GameName1
         public int numberEnemies;
         private int difficulty;
 
-        public Seizonsha()
-            : base()
+        public Seizonsha() : base()
         {
-            graphics = new GraphicsDeviceManager(this);
 
             Content.RootDirectory = "Content";
+            graphics = new GraphicsDeviceManager(this);
+            graphics.PreferredBackBufferWidth = 853;
+            graphics.PreferredBackBufferHeight = 480;
+
+            // Create the screen manager component.
+            screenManager = new ScreenManager(this);
+
+            Components.Add(screenManager);
+
+            // Activate the first screens.
+            screenManager.AddScreen(new BackgroundScreen(), null);
+            screenManager.AddScreen(new MainMenuScreen(), null);
         }
 			
 		void initTileSprites() {
@@ -236,8 +252,10 @@ namespace GameName1
             Static.PIXEL_THIN.SetData(new[] { Color.White });
             Static.PIXEL_THICK = new Texture2D(GraphicsDevice, 3, 3);
             Static.PIXEL_THICK.SetData(new[] { Color.White });
-
-
+            foreach (string asset in preloadAssets)
+            {
+                Content.Load<Texture2D>(asset);
+            }
         }
 
         protected override void UnloadContent()
@@ -247,14 +265,18 @@ namespace GameName1
 
 
 
+        /*protected override void Update(GameTime gameTime)
+        {
+            
+        }*/
+
         /// <summary>
         /// Allows the game to run logic such as updating the world,
         /// checking for collisions, gathering input, and playing audio.
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
-        protected override void Update(GameTime gameTime)
+        public void UpdateGame(GameTime gameTime)
         {
-            
 			// ALEX
 			IsMouseVisible = true; 
 			//-ALEX
@@ -342,7 +364,6 @@ namespace GameName1
 				// AlexAlpha
 				player.camera.Update(this.getPlayers().Count, player, this.getLevelBounds()); 
 				//-
-
             }
 
             //run AI
@@ -357,8 +378,6 @@ namespace GameName1
                 collision.execute();
             }
             collisions.Clear();
-
-            base.Update(gameTime);
         }
 
 
@@ -367,6 +386,14 @@ namespace GameName1
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
+        {
+            graphics.GraphicsDevice.Clear(Color.Black);
+
+            // The real drawing happens inside the screen manager component.
+            base.Draw(gameTime);
+        }
+
+        public void DrawGame(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
@@ -377,59 +404,53 @@ namespace GameName1
                     continue;
                 }
 
-				// AlexAlpha
-				switch (Array.IndexOf(players, player) + 1) {
-					case 1: 
-						GraphicsDevice.Viewport = p1View; 
-						break;
-					case 2: 
-						GraphicsDevice.Viewport = p2View; 
-						break;
-					case 3: 
-						GraphicsDevice.Viewport = p3View; 
-						break;
-					case 4: 
-						GraphicsDevice.Viewport = p4View; 
-						break;
-					default:
-						break;
-				}
+                // AlexAlpha
+                switch (Array.IndexOf(players, player) + 1)
+                {
+                    case 1:
+                        GraphicsDevice.Viewport = p1View;
+                        break;
+                    case 2:
+                        GraphicsDevice.Viewport = p2View;
+                        break;
+                    case 3:
+                        GraphicsDevice.Viewport = p3View;
+                        break;
+                    case 4:
+                        GraphicsDevice.Viewport = p4View;
+                        break;
+                    default:
+                        break;
+                }
 
-				spriteBatch.Begin(
-					SpriteSortMode.Deferred, 
-					BlendState.AlphaBlend, 
-					null, 
-					null, 
-					null, 
-					null, 
-					player.camera.transform
-				);
+                spriteBatch.Begin(
+                    SpriteSortMode.Deferred,
+                    BlendState.AlphaBlend,
+                    null,
+                    null,
+                    null,
+                    null,
+                    player.camera.transform
+                );
 
-					currLevel.Draw(spriteBatch, 0, 0);
+                currLevel.Draw(spriteBatch, 0, 0);
 
-					foreach (GameEntity entity in entities)
-					{
-						entity.Draw(spriteBatch);
-					}
-
-					// DISPLAY TEXT FOR LIST OF SKILLS 
-
-
-				spriteBatch.End();
+                foreach (GameEntity entity in entities)
+                {
+                    entity.Draw(spriteBatch);
+                }
+                // DISPLAY TEXT FOR LIST OF SKILLS 
+                spriteBatch.End();
             }
 
 
 			GraphicsDevice.Viewport = defaultView; 
-
 
 			spriteBatch.Begin();
 
 			drawSplitscreenDividers();
 
 			spriteBatch.End();
-
-
-
 
 			foreach (Player player in players) 
 			{
@@ -463,13 +484,8 @@ namespace GameName1
 				//draw player interface
 				player.DrawScreen (GraphicsDevice.Viewport.Bounds, spriteBatch);
 				spriteBatch.End(); 
-
 			}
 
-
-
-
-            base.Draw(gameTime);
         }
 
 		void drawSplitscreenDividers() {
@@ -488,9 +504,7 @@ namespace GameName1
 		}
 
         protected void handlePlayerInput(Player player)
-        
         {
-
             if (player.playerIndex == PlayerIndex.One)
             {
 
@@ -573,9 +587,7 @@ namespace GameName1
                 }
             }
             else
-            {
-
-                
+            {           
                 if (GamePad.GetState(player.playerIndex).Buttons.Start == ButtonState.Pressed)
                 {
                     player.SkillTreeButtonDown();
@@ -586,7 +598,6 @@ namespace GameName1
 
                 }
                  
-
                 if (GamePad.GetState(player.playerIndex).Buttons.A == ButtonState.Pressed)
                 {
                     player.AButton();
@@ -619,15 +630,12 @@ namespace GameName1
                 {
                     player.DownButton();
                     // player.rotateToAngle((float)Math.PI / 2);
-
-
                 }
 
                 if (Math.Abs(GamePad.GetState(player.playerIndex).ThumbSticks.Left.X) <= .5 && Math.Abs(GamePad.GetState(player.playerIndex).ThumbSticks.Left.Y) <= .5)
                 {
                     player.noMovement();
                 }
-
 
                 if (GamePad.GetState(player.playerIndex).Buttons.LeftShoulder == ButtonState.Pressed)
                 {
@@ -646,15 +654,11 @@ namespace GameName1
                     player.R2Button();
                 }
 
-
                 if (Math.Abs(GamePad.GetState(player.playerIndex).ThumbSticks.Right.Y) > .1 || Math.Abs(GamePad.GetState(player.playerIndex).ThumbSticks.Right.X) > .1)
                 {
                     player.rotateToAngle((float)Math.Atan2(GamePad.GetState(player.playerIndex).ThumbSticks.Right.Y * -1, GamePad.GetState(player.playerIndex).ThumbSticks.Right.X)); // angle to point		
                 }
-
-
             }
-
         }
 
 
