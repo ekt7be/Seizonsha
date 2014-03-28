@@ -19,6 +19,7 @@ namespace GameName1.NPCs
         public override void Update()
         {
             throw new NotImplementedException();
+            base.Update();
         }
 
         protected override void OnDie()

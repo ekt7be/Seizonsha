@@ -11,12 +11,14 @@ namespace GameName1.Effects
     {
         string text;
         Color textColor;
-        public TextEffect(Seizonsha game, string text, int duration, int x, int y, Color textColor) : base(game, null, x, y, 0, 0, duration)
+        public TextEffect(Seizonsha game, string text, int duration, int x, int y, Vector2 velocity,Color textColor) : base(game, null, x, y, 0, 0, duration)
         {
-            incVelocityY(-2);
+            this.incVelocityY((int)velocity.Y);
+            this.incVelocityX((int)velocity.X);
             this.text = text;
             this.textColor = textColor;
         }
+
         public override void OnSpawn()
         {
         }

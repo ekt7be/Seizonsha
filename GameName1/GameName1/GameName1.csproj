@@ -51,7 +51,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Collision.cs" />
+    <Compile Include="Effects\Burning.cs" />
     <Compile Include="Effects\Effect.cs" />
+    <Compile Include="Interfaces\StatusEffect.cs" />
     <Compile Include="Effects\TextEffect.cs" />
     <Compile Include="Effects\XPEffect.cs" />
     <Compile Include="Interfaces\AI.cs" />
@@ -67,11 +69,13 @@
     <Compile Include="Skills\ExplodingBullet.cs" />
     <Compile Include="Skills\Fireball.cs" />
     <Compile Include="Skills\HealingTouch.cs" />
+    <Compile Include="Skills\LifeDrain.cs" />
     <Compile Include="Skills\Skill.cs" />
     <Compile Include="Skills\SwordSlash.cs" />
     <Compile Include="Skills\Sword.cs" />
     <Compile Include="SkillTree\BlankNode.cs" />
     <Compile Include="SkillTree\HealthPlusUnlockable.cs" />
+    <Compile Include="Skills\TargetedAbility.cs" />
     <Compile Include="SpawnEntity.cs" />
     <Compile Include="SkillTree\SkillTree.cs" />
     <Compile Include="SkillTree\SkillTreeNode.cs" />

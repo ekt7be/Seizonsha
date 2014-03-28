@@ -66,6 +66,13 @@ namespace GameName1.Skills
             return recharged >= rechargeTime;
         }
 
+        public double percentCasted()
+        {
+            return (double)casting / (double) castingTime;
+        }
+
+        public abstract void affect(GameEntity affected);
+
         public virtual void Update()
         {
 

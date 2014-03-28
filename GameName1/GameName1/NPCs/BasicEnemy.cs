@@ -97,6 +97,7 @@ namespace GameName1.NPCs
             float playerDirection = (float)Math.Atan2(this.y - closest.y, closest.x - this.x);
 
             rotateToAngle(playerDirection);
+            base.Update();
         }
 
         protected override void OnDie()

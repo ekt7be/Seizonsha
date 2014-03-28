@@ -666,10 +666,11 @@ namespace GameName1
         {
             if (ShouldHeal(damageType, target.getTargetType())){
                 incEntityHealth(target,amount);
-                TextEffect text = new TextEffect(this, amount + "", 10, target.getCenterX(), target.getCenterY() - 60, Color.Green);
+                TextEffect text = new TextEffect(this, amount + "", 10, target.getCenterX(), target.getCenterY() - 60,new Vector2(0,-2), Color.Green);
                 Spawn(text);
             }
         }
+
 
         public void damageEntity(GameEntity user, GameEntity target, int amount, int damageType)
         {
@@ -677,7 +678,7 @@ namespace GameName1
             if (ShouldDamage(damageType, target.getTargetType()))
             {
 
-                TextEffect text = new TextEffect(this, amount + "", 10, target.getCenterX(), user.getCenterY() - 60, Color.Red);
+                TextEffect text = new TextEffect(this, amount + "", 10, target.getCenterX(), user.getCenterY() - 60,new Vector2(0,-2), Color.Red);
                 Spawn(text);
 
                 if (user == null)

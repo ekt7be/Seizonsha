@@ -13,13 +13,15 @@ namespace GameName1.Skills
         private int damageType;
         private int amount;
         private GameEntity user;
+        private Skill origin;
 
-        public AOECone(Seizonsha game, GameEntity user, Texture2D sprite, Rectangle bounds, int amount, int damageType, int duration, Vector2 direction)
+        public AOECone(Seizonsha game, GameEntity user, Texture2D sprite, Skill origin, Rectangle bounds, int amount, int damageType, int duration, Vector2 direction)
             : base(game, sprite, bounds.Left, bounds.Top, bounds.Width, bounds.Height, duration)
         {
             this.amount = amount;
             this.damageType = damageType;
             this.user = user;
+            this.origin = origin;
         }
 
         protected override void OnDie()
@@ -36,6 +38,10 @@ namespace GameName1.Skills
             else
             {
                 game.damageArea(user, this.getHitbox(), amount, damageType);
+                foreach (GameEntity entity in game.getEntitiesInBounds(this.getHitbox()))
+                {
+                    if (entity.getTargetType() == Static.TARGET_TYPE_ENEMY) this.origin.affect(entity);
+                }
             }
         }
     }

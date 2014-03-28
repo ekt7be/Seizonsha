@@ -28,6 +28,11 @@ namespace GameName1.Skills
             user.color = color;
         }
 
+        public override void affect(GameEntity affected)
+        {
+            //throw new NotImplementedException();
+        }
+
         public void OnUnlock(Player player)
         {
             player.addEquipable(this);

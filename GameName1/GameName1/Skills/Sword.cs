@@ -40,7 +40,10 @@ namespace GameName1.Skills
             return "SWORD";
         }
 
-
+        public override void affect(GameEntity affected)
+        {
+          //  throw new NotImplementedException();
+        }
 
 
         protected override void UseSkill()

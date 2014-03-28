@@ -40,6 +40,7 @@ namespace GameName1.Skills
 
         public override void collide(GameEntity entity)
         {
+
             game.damageEntity(user, entity, amount, damageType);
 
             setRemove(true);

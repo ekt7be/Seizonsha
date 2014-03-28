@@ -10,11 +10,13 @@ namespace GameName1.Skills
 {
     class ExplodingBullet : Bullet
     {
+        Skill origin;
 
 
-        public ExplodingBullet(Seizonsha game, GameEntity user, Texture2D sprite, Rectangle bounds, int amount, int damageType, int duration, float bulletSpeed, Vector2 alexDirection)
+        public ExplodingBullet(Seizonsha game, GameEntity user, Texture2D sprite, Skill origin, Rectangle bounds, int amount, int damageType, int duration, float bulletSpeed, Vector2 alexDirection)
             : base(game, user, sprite, bounds, amount, damageType, duration, bulletSpeed, alexDirection)
         {
+            this.origin = origin;
 
         }
 
@@ -30,7 +32,7 @@ namespace GameName1.Skills
                 int explosionWidth = 80;
                 int explosionHeight = 80;
                 Rectangle slashBounds = new Rectangle((int)(entity.getCenterX() - explosionWidth / 2), (int)(entity.getCenterY() - explosionWidth / 2), explosionWidth, explosionHeight);
-                game.Spawn(new AOECone(game, user, game.getTestSprite(slashBounds, Color.Green), slashBounds, amount, this.damageType, 10, entity.vectorDirection));
+                game.Spawn(new AOECone(game, user, game.getTestSprite(slashBounds, Color.Green), this.origin, slashBounds, amount, this.damageType, 10, entity.vectorDirection));
                 setRemove(true);
             }
 
@@ -41,7 +43,7 @@ namespace GameName1.Skills
             int explosionWidth = 80;
             int explosionHeight = 80;
             Rectangle slashBounds = new Rectangle((int)(getCenterX() - explosionWidth / 2), (int)(getCenterY() - explosionWidth / 2), explosionWidth, explosionHeight);
-            game.Spawn(new AOECone(game, user, game.getTestSprite(slashBounds, Color.Green), slashBounds, amount, this.damageType, 10, vectorDirection));
+            game.Spawn(new AOECone(game, user, game.getTestSprite(slashBounds, Color.Green), this.origin, slashBounds, amount, this.damageType, 10, vectorDirection));
             setRemove(true);
         }
 

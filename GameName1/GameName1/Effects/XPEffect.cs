@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,7 @@ namespace GameName1.Effects
     {
 
         public XPEffect(Seizonsha game, int amount, int duration, int x, int y)
-            : base(game, "+" + amount + "XP", duration, x, y, Static.UI_XP_COLOR)
+            : base(game, "+" + amount + "XP", duration, x, y, new Vector2(0,-2), Static.UI_XP_COLOR)
         {
 
         }

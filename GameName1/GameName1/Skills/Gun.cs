@@ -46,6 +46,11 @@ namespace GameName1.Skills
 
 		}
 
+        public override void affect(GameEntity affected)
+        {
+            throw new NotImplementedException();
+        }
+
 
 		public override string getDescription()
 		{

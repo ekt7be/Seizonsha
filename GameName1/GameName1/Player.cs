@@ -52,12 +52,31 @@ namespace GameName1
             {
                 skilltree.Update();
             }
+
+            base.Update();
             //base.source = new Rectangle(sprite.Width / 4 * currentAnimationFrame, 0, sprite.Width / 4, sprite.Height);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
+            foreach(Equipable equip in this.skillSlots)
+            {
+                if (equip is Skill)
+                {
+                    Skill skill = (Skill)equip;
+                    if (skill.percentCasted() < .99 && skill.percentCasted() > .01)
+                    {
+
+                        spriteBatch.DrawString(game.getSpriteFont(), skill.getName(), new Vector2(this.getCenterX() - 50, this.hitbox.Y + this.hitbox.Height), Color.White);
+                        Rectangle cBounds = new Rectangle(this.getCenterX() - 30, this.hitbox.Y + this.hitbox.Height + 30, (int)(skill.percentCasted()*60), 5);
+                        Rectangle tBounds = new Rectangle(this.getCenterX() - 30, this.hitbox.Y + this.hitbox.Height + 30, 60, 5);
+                        
+                        spriteBatch.Draw(game.getTestSprite(tBounds, Color.White), tBounds, Color.White);
+                        spriteBatch.Draw(game.getTestSprite(cBounds, Color.Blue), cBounds, Color.Blue);
+                    }
+                }
+            }
             //draw armor and weapons equipped etc
 
         }
@@ -91,6 +110,7 @@ namespace GameName1
             this.skilltree = new SkillTree.SkillTree(game, this, game.getTestSprite(new Rectangle(0, 0, Static.SCREEN_WIDTH, Static.SCREEN_HEIGHT), Color.Black));
             Equip(new Gun(game, this, 30, 10, 10f), Static.PLAYER_L1_SKILL_INDEX);
             Equip(new Fireball(game, this, 120, 100, 5f), Static.PLAYER_L2_SKILL_INDEX);
+            //Equip(new LifeDrain(game, this, 2, 2, 40), Static.PLAYER_L2_SKILL_INDEX);
             Equip(new HealingTouch(game, this, -50, 100), Static.PLAYER_R1_SKILL_INDEX);
             Equip(new Sword(game, this, 300, 10), Static.PLAYER_R2_SKILL_INDEX);
 

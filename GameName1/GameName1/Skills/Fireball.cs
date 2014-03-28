@@ -30,6 +30,10 @@ namespace GameName1.Skills
             this.bulletSpeed = bulletSpeed;
         }
 
+        public override void affect(GameEntity affected)
+        {
+            affected.addStatusEffect(new GameName1.Effects.Burning(game, user, null, affected, 1, damageType, 40));
+        }
 
 
         protected override void UseSkill()
@@ -39,7 +43,7 @@ namespace GameName1.Skills
             int bulletHeight = 15;
          
             Rectangle slashBounds = new Rectangle((int)(user.getCenterX()), (int)(user.getCenterY()), bulletWidth, bulletHeight);
-            game.Spawn(new ExplodingBullet(game, user, game.getTestSprite(slashBounds, Color.Red), slashBounds, damage, damageType, 1, bulletSpeed, user.vectorDirection));
+            game.Spawn(new ExplodingBullet(game, user, game.getTestSprite(slashBounds, Color.Red), this, slashBounds, damage, damageType, 1, bulletSpeed, user.vectorDirection));
 
             // game sprite bounds amount dmgAmount dmgType duration bulletSpeed
         }

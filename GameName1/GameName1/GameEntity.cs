@@ -34,6 +34,9 @@ namespace GameName1
         public Texture2D sprite { get; set; }
         public Color color { get; set; } //delete when we have actual sprites
         private int frozen; // stop entity from moving for a period of time
+        private List<StatusEffect> statusEffects;
+        private List<StatusEffect> incomingStatusEffects;
+        private List<StatusEffect> outgoingStatusEffects;
 
         protected Dictionary<int, Rectangle> FramesToAnimation;
         protected Rectangle? spriteSource = null;
@@ -78,7 +81,23 @@ namespace GameName1
 
         }
 
-        public abstract void Update();
+        public virtual void Update()
+        {
+            foreach (StatusEffect statusEffect in this.outgoingStatusEffects)
+            {
+                this.statusEffects.Remove(statusEffect);
+            }
+            this.outgoingStatusEffects.Clear();
+            foreach (StatusEffect statusEffect in this.incomingStatusEffects)
+            {
+                this.statusEffects.Add(statusEffect);
+            }
+            this.incomingStatusEffects.Clear();
+            foreach (StatusEffect statusEffect in this.statusEffects)
+            {
+                statusEffect.Update();
+            }
+        }
 
         public void UpdateAll()
         {
@@ -121,6 +140,9 @@ namespace GameName1
             this.color = Color.White;
             this.frozen = 0;
             this.xpReward = 0;
+            this.statusEffects = new List<StatusEffect>();
+            this.incomingStatusEffects = new List<StatusEffect>();
+            this.outgoingStatusEffects = new List<StatusEffect>();
 
 
             this.FramesToAnimation = new Dictionary<int, Rectangle>(); //for animations
@@ -162,6 +184,16 @@ namespace GameName1
                 || (this.getLeftEdgeX() >= entity.getLeftEdgeX() && this.getRightEdgeX() <= entity.getRightEdgeX())
                 || (this.getLeftEdgeX() <= entity.getLeftEdgeX() && this.getRightEdgeX() >= entity.getRightEdgeX()));
 
+        }
+
+        public void addStatusEffect(StatusEffect statusEffect)
+        {
+            this.incomingStatusEffects.Add(statusEffect);
+        }
+
+        public void removeStatusEffect(StatusEffect statusEffect)
+        {
+            this.outgoingStatusEffects.Add(statusEffect);
         }
 
         public void Freeze(int time)
