@@ -165,7 +165,7 @@ namespace GameName1
         {
         }
 
-		public Player(Seizonsha game, PlayerIndex playerIndex, Texture2D sprite, int x, int y, Camera camera) : base(game, sprite, x, y, Static.PLAYER_WIDTH, Static.PLAYER_HEIGHT, Static.TARGET_TYPE_FRIENDLY, Static.PLAYER_MAX_HEALTH)
+		public Player(Seizonsha game, PlayerIndex playerIndex, Texture2D sprite, Camera camera) : base(game, sprite, Static.PLAYER_WIDTH, Static.PLAYER_HEIGHT, Static.TARGET_TYPE_FRIENDLY, Static.PLAYER_MAX_HEALTH)
         {
             this.cameraX = 0;
             this.cameraY = 0;
@@ -184,8 +184,9 @@ namespace GameName1
             Equip(new HealingTouch(game, this, -50, 100), Static.PLAYER_R1_SKILL_INDEX);
             Equip(new Sword(game, this, 300, 10), Static.PLAYER_R2_SKILL_INDEX);
 
-            this.mana = 0f;
             this.maxMana = Static.PLAYER_MAX_MANA;
+            this.mana = maxMana;
+
             this.manaRegen = 0.2f;
             this.skilltreescreen = false;
             this.skilltreebuttondown = false;
@@ -492,6 +493,7 @@ namespace GameName1
 
         protected override void OnDie()
         {
+            this.skilltreescreen = false;
             dead = true;
         }
 
@@ -502,8 +504,8 @@ namespace GameName1
 
         public override void OnKillOther(GameEntity entity)
         {
-            XPEffect xpEffect = new XPEffect(game,entity.getXPReward(), 30, getCenterX(), getCenterY());
-            game.Spawn(xpEffect);
+            XPEffect xpEffect = new XPEffect(game,entity.getXPReward(), 30);
+            game.Spawn(xpEffect,getCenterX(), getCenterY());
             incXP(entity.getXPReward());
         }
 

@@ -19,7 +19,7 @@ namespace GameName1
 
     public class Seizonsha : Game
     {
-		int numberOfPlayers = 1;
+		int numberOfPlayers = 2;
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -29,12 +29,14 @@ namespace GameName1
         private List<GameEntity> entities;
         private Queue<GameEntity> removalQueue;
         private Queue<Spawnable> spawnQueue;
+        private Queue<Vector2> spawnPointQueue;
         private HashSet<Collision> collisions;
         private List<AI> AIs;
 
         private Level currLevel;
 
-        public static Dictionary<int, Texture2D> spriteMappings;
+
+        public static Dictionary<int, Texture2D> spriteMappings = new Dictionary<int, Texture2D>();
 
 		// AlexAlpha
 		Viewport defaultView, p1View, p2View, p3View, p4View; 
@@ -45,6 +47,8 @@ namespace GameName1
 
 		Dictionary<int, PlayerIndex> playerToController;
 		//-
+        public int numberEnemies;
+        private int difficulty;
 
         public Seizonsha()
             : base()
@@ -74,11 +78,11 @@ namespace GameName1
             AIs = new List<AI>();
             removalQueue = new Queue<GameEntity>();
             spawnQueue = new Queue<Spawnable>();
+            spawnPointQueue = new Queue<Vector2>();
             collisions = new HashSet<Collision>();
             currLevel = new Level(this);
 
             this.players = new Player[4];
-            spriteMappings = new Dictionary<int, Texture2D>();
 
 			graphics.PreferredBackBufferHeight = Static.SCREEN_HEIGHT;
 			graphics.PreferredBackBufferWidth = Static.SCREEN_WIDTH;
@@ -111,15 +115,6 @@ namespace GameName1
             spriteMappings.Add(Static.PLATE_ARMOR_ARMS_SHOULDER, plateArmorArmsShoulder);
             spriteMappings.Add(Static.PLATE_ARMOR_TORSO, plateArmorTorso);
            
-            Color[] data = new Color[Static.PLAYER_HEIGHT * Static.PLAYER_WIDTH];
-            for (int i = 0; i < data.Length; ++i)
-            {
-                data[i] = Color.Aquamarine;
-            }
-
-//		     playerRect.SetData(data);
-            //will use real sprites eventually..
-			// AlexAlpha
 
 			initViewports(numberOfPlayers);
 
@@ -142,16 +137,15 @@ namespace GameName1
 
 			for (int i = 0; i < numberOfPlayers; i++) {
 				cameras[i] = new Camera(); 
-				players[i] = new Player(this, playerToController[i+1], playerRect, 500, 100+(i*40), cameras[i]);
+				players[i] = new Player(this, playerToController[i+1], playerRect, cameras[i]);
 
-				//players[i] = new Player(this, playerToController[i+1], playerRect, 0, 0+(i*20), cameras[i]);
-				Spawn(players[i]);
+                Spawn(players[i], 500, 100 + (i * 40));
 			}
-			//-
-           // Spawn(new BasicNPC(this, npcRect, 300, 100, 10, 10));
-			Spawn(new BasicEnemy(this, basicEnemyRect, 200, 200));
-            Spawn(new SpawnEntity(this, 2, 250, 250));
-            Spawn(new SpawnEntity(this, 2, 0, 250));
+
+            this.difficulty = 5;
+            this.numberEnemies = 0;
+
+            currLevel.spawnEnemies(difficulty);
 
             base.Initialize();
         }
@@ -298,24 +292,32 @@ namespace GameName1
             while (spawnQueue.Count > 0)
             {
                 Spawnable spawn = spawnQueue.Dequeue();
+                Vector2 spawnPoint = spawnPointQueue.Dequeue();
                 if (spawn is GameEntity)
                 {
- 
+
+
                     entities.Add((GameEntity)spawn);
-                    if (((GameEntity)spawn).isCollidable())
-                    {
-                        BindEntityToTiles((GameEntity)spawn, true);
-                    }
 
                     if (spawn is AI)
                     {
                         AIs.Add((AI)spawn);
                     }
+
+                    ((GameEntity)spawn).OnSpawnAll((int)spawnPoint.X, (int)spawnPoint.Y);
+                    if (((GameEntity)spawn).isCollidable())
+                    {
+                        BindEntityToTiles((GameEntity)spawn, true);
+                    }
+
+                }
+                else
+                {
+                    spawn.OnSpawn();
                 }
 
 
 
-                spawn.OnSpawn();
 
             }
 
@@ -690,8 +692,9 @@ namespace GameName1
         {
             if (ShouldHeal(damageType, target.getTargetType())){
                 incEntityHealth(target,amount);
-                TextEffect text = new TextEffect(this, amount + "", 10, target.getCenterX(), target.getCenterY() - 60,new Vector2(0,-2), Color.Green);
-                Spawn(text);
+
+                TextEffect text = new TextEffect(this, amount + "", 10, new Vector2(0,-2),Color.Green);
+                Spawn(text,target.getCenterX(), target.getCenterY() - 60);
             }
         }
 
@@ -702,8 +705,9 @@ namespace GameName1
             if (ShouldDamage(damageType, target.getTargetType()))
             {
 
-                TextEffect text = new TextEffect(this, amount + "", 10, target.getCenterX(), user.getCenterY() - 60,new Vector2(0,-2), Color.Red);
-                Spawn(text);
+
+                TextEffect text = new TextEffect(this, amount + "", 10,new Vector2(0,-2), Color.Red);
+                Spawn(text, target.getCenterX(), target.getCenterY() - 60);
 
                 if (user == null)
                 {
@@ -730,8 +734,13 @@ namespace GameName1
             if (target.health < 0)
             {
                 target.health = 0;
-                target.die();
-                return true;
+                if (!target.shouldRemove())
+                {
+                    target.die();
+                    return true;
+
+                }
+                return false;
             }
             return false;
         }
@@ -1055,7 +1064,20 @@ namespace GameName1
         }
 
 
+        public void increaseNumberEnemies()
+        {
+            numberEnemies++;
+        }
 
+        public void decreaseNumberEnemies()
+        {
+            numberEnemies--;
+            if (numberEnemies <= 0)
+            {
+                currLevel.spawnEnemies(difficulty);
+            }
+
+        }
 
         public List<GameEntity> getEntitiesInBounds(Rectangle bounds)
         {
@@ -1111,9 +1133,10 @@ namespace GameName1
             return currLevel.getTile(x, y);
         }
 
-        public void Spawn(Spawnable spawn)
+        public void Spawn(Spawnable spawn, int x, int y)
         {
             spawnQueue.Enqueue(spawn);
+            spawnPointQueue.Enqueue(new Vector2(x, y));
         }
 
         public bool ShouldDamage(int damageType, int targetType)

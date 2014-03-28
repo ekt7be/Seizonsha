@@ -77,7 +77,7 @@ namespace GameName1.Skills
                 int bulletHeight = 15;
                 Rectangle slashBounds = new Rectangle((int)(user.getCenterX()), (int)(user.getCenterY()), bulletWidth, bulletHeight);
                 ability = new TargetedAbility(game, user, game.getTestSprite(slashBounds, Color.Red), t, damage, damageType, 5, user.vectorDirection);
-                game.Spawn(ability);
+                game.Spawn(ability, slashBounds.Left, slashBounds.Top);
             }
             
             // game sprite bounds amount dmgAmount dmgType duration bulletSpeed

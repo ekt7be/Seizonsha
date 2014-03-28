@@ -11,7 +11,8 @@ namespace GameName1.Effects
     {
         string text;
         Color textColor;
-        public TextEffect(Seizonsha game, string text, int duration, int x, int y, Vector2 velocity,Color textColor) : base(game, null, x, y, 0, 0, duration)
+
+        public TextEffect(Seizonsha game, string text, int duration,Vector2 velocity, Color textColor) : base(game, null, 0, 0, duration)
         {
             this.incVelocityY((int)velocity.Y);
             this.incVelocityX((int)velocity.X);
@@ -36,10 +37,6 @@ namespace GameName1.Effects
             spriteBatch.DrawString(game.getSpriteFont(), text, new Vector2(x, y), this.textColor);
         }
 
-        public override void Update(GameTime gameTime)
-        {
-
-        }
 
         protected override void OnDie()
         {

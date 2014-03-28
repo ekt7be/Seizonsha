@@ -12,8 +12,8 @@ namespace GameName1.NPCs
     {
         private int count = 0;
 
-        public BasicNPC(Seizonsha game, Texture2D sprite, int x, int y, int width, int height)
-            : base(game, sprite, x, y, width, height, Static.DAMAGE_TYPE_ENEMY, 20)
+        public BasicNPC(Seizonsha game, Texture2D sprite, int width, int height)
+            : base(game, sprite,width, height, Static.DAMAGE_TYPE_ENEMY, 20)
         {
 
         }

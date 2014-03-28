@@ -16,7 +16,7 @@ namespace GameName1.Skills
         private GameEntity target;
 
         public TargetedAbility(Seizonsha game, GameEntity user, Texture2D sprite, GameEntity target, int amount, int damageType, int duration, Vector2 direction)
-            : base(game, sprite, user.x, user.y, user.width, user.height, duration)
+            : base(game, sprite, user.width, user.height, duration)
         {
             this.amount = amount;
             this.damageType = damageType;

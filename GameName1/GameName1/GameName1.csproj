@@ -76,7 +76,7 @@
     <Compile Include="SkillTree\BlankNode.cs" />
     <Compile Include="SkillTree\HealthPlusUnlockable.cs" />
     <Compile Include="Skills\TargetedAbility.cs" />
-    <Compile Include="SpawnEntity.cs" />
+    <Compile Include="SpawnTile.cs" />
     <Compile Include="SkillTree\SkillTree.cs" />
     <Compile Include="SkillTree\SkillTreeNode.cs" />
     <Compile Include="Static.cs" />

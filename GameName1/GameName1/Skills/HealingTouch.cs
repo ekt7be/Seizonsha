@@ -54,7 +54,8 @@ namespace GameName1.Skills
             damageType = Static.DAMAGE_TYPE_ALL;
 
             Rectangle healBounds = new Rectangle((int)(user.getCenterX() + user.vectorDirection.X * user.width / 2 - Static.PLAYER_WIDTH / 4), (int)(user.getCenterY() + user.vectorDirection.Y * user.height / 2 - Static.PLAYER_WIDTH / 4), Static.PLAYER_WIDTH / 2, Static.PLAYER_HEIGHT / 2);
-            game.Spawn(new AOECone(game, user, game.getTestSprite(healBounds, Color.Green), this, healBounds, damage, damageType, 10, user.vectorDirection));
+
+            game.Spawn(new AOECone(game, user, game.getTestSprite(healBounds, Color.Green), this, healBounds, damage, damageType, 10, user.vectorDirection), healBounds.Left, healBounds.Top);
         }
 
     }

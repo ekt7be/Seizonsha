@@ -15,7 +15,7 @@ namespace GameName1.Skills
         private GameEntity user;
 
         public AOECircle(Seizonsha game, GameEntity user, Texture2D sprite, Rectangle bounds, int amount, int damageType, int duration, Vector2 direction)
-            : base(game, sprite, bounds.Left, bounds.Top, bounds.Width, bounds.Height, duration)
+            : base(game, sprite, bounds.Width, bounds.Height, duration)
         {
             this.amount = amount;
             this.damageType = damageType;

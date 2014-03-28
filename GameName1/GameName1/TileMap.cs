@@ -65,12 +65,18 @@ namespace GameName1
 						//System.Console.Write(i + " : " + nums[i] + "\n");
 						int m; 
 						if (int.TryParse(nums[i], out m)) {
-							int tileType = Convert.ToInt32(nums[i]); 
+							int tileType = Convert.ToInt32(nums[i]);
 
-							if (wallTiles.Contains(tileType))
-								tiles[i, j] = new Tile(Static.TILE_OBSTACLE, i * Static.TILE_WIDTH, j * Static.TILE_HEIGHT, true, tileType);
-							else
-								tiles[i, j] = new Tile(Static.TILE_NOT_OBSTACLE, i * Static.TILE_WIDTH, j * Static.TILE_HEIGHT, false, tileType);
+                            if (tileType == Static.TILE_SPAWN)
+                            {
+                                SpawnTile spawnTile = new SpawnTile(0,i * Static.TILE_WIDTH, j * Static.TILE_HEIGHT);
+                                level.AddSpawnPoint(spawnTile);
+                                tiles[i, j] = spawnTile;
+                            }
+                            else if (wallTiles.Contains(tileType))
+                                tiles[i, j] = new Tile(i * Static.TILE_WIDTH, j * Static.TILE_HEIGHT, true, tileType);
+                            else
+                                tiles[i, j] = new Tile(i * Static.TILE_WIDTH, j * Static.TILE_HEIGHT, false, tileType);
 						}
                     }
 					//System.Console.Write("\n");

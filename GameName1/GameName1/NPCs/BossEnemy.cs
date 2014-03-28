@@ -10,8 +10,8 @@ namespace GameName1.NPCs
 {
     class BossEnemy : GameEntity
     {
-        public BossEnemy(Seizonsha game, Texture2D sprite, int x, int y, int width, int height)
-            : base(game, sprite, x, y, width, height, Static.DAMAGE_TYPE_ENEMY, 20)
+        public BossEnemy(Seizonsha game, Texture2D sprite, int width, int height)
+            : base(game, sprite, width, height, Static.DAMAGE_TYPE_ENEMY, 20)
         {
      
         }

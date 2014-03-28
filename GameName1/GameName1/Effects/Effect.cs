@@ -12,8 +12,8 @@ namespace GameName1.Effects
 
         protected int duration;
 
-        public Effect(Seizonsha game, Texture2D sprite, int x, int y, int width, int height, int duration)
-            : base(game, sprite, x, y, width, height, Static.TARGET_TYPE_NOT_DAMAGEABLE, 0)
+        public Effect(Seizonsha game, Texture2D sprite, int width, int height, int duration)
+            : base(game, sprite,width, height, Static.TARGET_TYPE_NOT_DAMAGEABLE, 0)
         {
             this.duration = duration;
             setCollidable(false);

@@ -117,11 +117,9 @@ namespace GameName1
         }
 
 
-        public GameEntity(Seizonsha game, Texture2D sprite, int x, int y, int width, int height, int targetType, int maxHealth)
+        public GameEntity(Seizonsha game, Texture2D sprite, int width, int height, int targetType, int maxHealth)
         {
 
-            this.x = x;
-            this.y = y;
             this.width = width;
             this.height = height;
             this.targetType = targetType;
@@ -132,12 +130,10 @@ namespace GameName1
                 this.hasHealth = true;
             }
             this.remove = false;
-            this.hitbox = new Rectangle(x, y, width, height);
             this.velocityX = 0;
             this.velocityY = 0;
             this.game = game;
             this.sprite = sprite;
-            this.rotateToAngle(0);
             this.collidable = true;
             this.color = Color.White;
             this.frozen = 0;
@@ -153,6 +149,16 @@ namespace GameName1
         }
 
         protected abstract void OnDie();
+
+        public void OnSpawnAll(int x, int y)
+        {
+            this.x = x;
+            this.y = y;
+            this.hitbox = new Rectangle(x, y, width, height);
+            this.rotateToAngle(0);
+            OnSpawn();
+        }
+
         public abstract void OnSpawn();
         public abstract void collideWithWall();
         public abstract void collide(GameEntity entity);

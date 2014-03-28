@@ -12,17 +12,15 @@ namespace GameName1
     {
 
         private bool obstacle;
-        private int type;
         public int x;
         public int y;
         private List<GameEntity> touching;
         public Rectangle bounds;
 		public int tileType;
 
-		public Tile (int type, int x, int y, bool obstacle, int tileType){
+		public Tile (int x, int y, bool obstacle, int tileType){
             this.x = x;
             this.y = y;
-            this.type = type;
             this.obstacle = obstacle;
             this.touching = new List<GameEntity>();
             this.bounds = new Rectangle(x, y, Static.TILE_WIDTH, Static.TILE_HEIGHT);
@@ -30,7 +28,11 @@ namespace GameName1
         }
 
         public void Draw(SpriteBatch spriteBatch, Texture2D sprite, int cameraX, int cameraY)
-		{		
+		{
+            if (sprite == null)
+            {
+                return;
+            }
                 spriteBatch.Draw(sprite, new Rectangle(x - cameraX, y - cameraY, Static.TILE_WIDTH, Static.TILE_HEIGHT), Color.White);
         }
 
@@ -58,7 +60,7 @@ namespace GameName1
 
         public int getType()
         {
-            return type;
+            return tileType;
         }
         public Rectangle getBounds()
         {

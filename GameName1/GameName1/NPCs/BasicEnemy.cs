@@ -11,11 +11,10 @@ namespace GameName1.NPCs
     class BasicEnemy : GameEntity, AI
     {
 
-        int count = 0;
-
         private static float elapsed;
         private static readonly float delay = 200f;
         private static int currentFrame = 0;
+
 
         private static readonly int UP_ANIMATION = 2;
         private static readonly int DOWN_ANIMATION = 0;
@@ -31,8 +30,8 @@ namespace GameName1.NPCs
         private bool left;
         private bool right;
 
-        public BasicEnemy(Seizonsha game, Texture2D sprite, int x, int y)
-            : base(game, sprite, x, y, Static.BASIC_ENEMY_WIDTH, Static.BASIC_ENEMY_HEIGHT, Static.DAMAGE_TYPE_ENEMY, 200)
+        public BasicEnemy(Seizonsha game)
+            : base(game, Seizonsha.spriteMappings[Static.BASIC_ENEMY_INT], Static.BASIC_ENEMY_WIDTH, Static.BASIC_ENEMY_HEIGHT, Static.DAMAGE_TYPE_ENEMY, 200)
         {
             base.scale = 1.0f;
             setXPReward(50);
@@ -152,7 +151,7 @@ namespace GameName1.NPCs
 
         protected override void OnDie()
         {
-            count++;
+            game.decreaseNumberEnemies();
         }
 
 

@@ -17,7 +17,7 @@ namespace GameName1.Skills
         protected GameEntity user;
 
 		public Bullet(Seizonsha game, GameEntity user, Texture2D sprite, Rectangle bounds, int amount, int damageType, int duration, float bulletSpeed, Vector2 alexDirection)
-			: base(game, sprite, bounds.Left, bounds.Top, bounds.Width, bounds.Height, Static.TARGET_TYPE_NOT_DAMAGEABLE, 30)
+			: base(game, sprite, bounds.Width, bounds.Height, Static.TARGET_TYPE_NOT_DAMAGEABLE, 30)
 		{
 			this.amount = amount;
 			this.damageType = damageType;
@@ -50,7 +50,7 @@ namespace GameName1.Skills
 
         public override bool shouldCollide(GameEntity entity)
         {
-            if (entity == user)
+            if (entity == user || !game.ShouldDamage(damageType,entity.getTargetType()))
             {
                 return false;
             }

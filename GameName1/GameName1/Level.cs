@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GameName1.NPCs;
+using GameName1.SkillTree;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -12,11 +14,15 @@ namespace GameName1
         private TileMap map;
 		public static Dictionary<int, Texture2D> tileSprites = new Dictionary<int,Texture2D>();
         private Seizonsha game;
+        private List<SpawnTile> spawnPoints;
+        private Random rnd = new Random();
+
 
         public Level(Seizonsha game)
         {
             this.game = game;
-			this.map = new TileMap(this);
+            this.spawnPoints = new List<SpawnTile>();
+            this.map = new TileMap(this);
 
             initialize();
         }
@@ -26,6 +32,51 @@ namespace GameName1
 
         }
 
+
+
+
+        public void AddSpawnPoint(SpawnTile spawnPoint)
+        {
+            spawnPoints.Add(spawnPoint);
+        }
+
+        public List<SpawnTile> GetSpawnPoints()
+        {
+            return spawnPoints;
+        }
+
+        public void Update()
+        {
+        }
+
+        public void SpawnEnemy()
+        {
+            //List<GameEntity> entities = getRandomSpawnPoint().get
+        }
+
+        public void spawnEnemies(int totalDifficulty)
+        {
+
+            for (int i = 0; i < totalDifficulty; i++)
+            {
+                SpawnTile spawn = getRandomSpawnPoint();
+                GameEntity enemy = new BasicEnemy(game);
+                Vector2 spawnPoint = spawn.getSpawnPosition(enemy);
+                game.Spawn(enemy, (int)spawnPoint.X, (int)spawnPoint.Y);
+                game.increaseNumberEnemies();
+            }
+
+        }
+
+        public SpawnTile getRandomSpawnPoint()
+        {
+            if (spawnPoints.Count <= 0)
+            {
+                return null;
+            }
+            int index = rnd.Next(0, spawnPoints.Count);
+            return spawnPoints[index];
+        }
        
 
 

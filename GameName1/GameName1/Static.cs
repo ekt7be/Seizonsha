@@ -13,7 +13,7 @@ namespace GameName1
         //player stuff
         public static readonly int PLAYER_HEIGHT = 45;
         public static readonly int PLAYER_WIDTH = 45;
-		public static readonly int PLAYER_MOVE_SPEED = 6;
+		public static readonly int PLAYER_MOVE_SPEED = 4;
         public static readonly int PLAYER_MAX_HEALTH = 100;
         public static readonly int PLAYER_MAX_MANA = 100;
         public static readonly int PLAYER_L1_SKILL_INDEX = 0;
@@ -40,8 +40,18 @@ namespace GameName1
 		public static readonly int SCREEN_WIDTH_FIX2 = 0;//SCREEN_WIDTH / 8;	// 640 / 8 = 80 
 
         //tile stuff
-        public static readonly int TILE_OBSTACLE = 1;
-        public static readonly int TILE_NOT_OBSTACLE = 0;
+        public static readonly int TILE_GRASS = 961;
+        public static readonly int TILE_NERVES = 840;
+        public static readonly int TILE_BRICK = 1033;
+        public static readonly int TILE_STONE = 1157;
+        public static readonly int TILE_SPAWN = 0;
+
+        //spawn directions
+        public static readonly int SPAWN_POINT_UP = 0;
+        public static readonly int SPAWN_POINT_RIGHT = 1;
+        public static readonly int SPAWN_POINT_DOWN = 2;
+        public static readonly int SPAWN_POINT_LEFT = 3;
+
 
         //Damage
         public static readonly int DAMAGE_TYPE_FRIENDLY = 1;

@@ -42,7 +42,7 @@ namespace GameName1.Skills
             
             Rectangle bulletBounds = new Rectangle((int)(user.getCenterX()), (int)(user.getCenterY() + user.vectorDirection.Y), bulletWidth, bulletHeight);
 
-			game.Spawn(new Bullet(game, user, game.getTestSprite(bulletBounds, Color.Red), bulletBounds, damage, damageType, 1, bulletSpeed, user.vectorDirection));
+			game.Spawn(new Bullet(game, user, game.getTestSprite(bulletBounds, Color.Red), bulletBounds, damage, damageType, 1, bulletSpeed, user.vectorDirection), bulletBounds.Left, bulletBounds.Top);
 
 		}
 
