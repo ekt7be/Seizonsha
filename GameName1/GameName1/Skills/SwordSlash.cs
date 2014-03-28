@@ -34,9 +34,6 @@ namespace GameName1.Skills
         {
         }
 
-        public override void Update(GameTime gameTime)
-        {
 
-        }
     }
 }

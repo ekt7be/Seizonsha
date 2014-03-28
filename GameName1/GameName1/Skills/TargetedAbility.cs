@@ -49,6 +49,7 @@ namespace GameName1.Skills
 
         public override void Update(GameTime gameTime)
         {
+            base.Update(gameTime);
             Rectangle slashBounds = new Rectangle((int)(user.getCenterX()), (int)(user.getCenterY()), (int)this.getDistanceToTarget(), 5);
             //this.hitbox = new Rectangle(this.x, this.y, this.width, this.height);
             this.sprite = game.getTestSprite(slashBounds, Color.Black);
