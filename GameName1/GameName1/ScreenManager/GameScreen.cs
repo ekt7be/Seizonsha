@@ -281,7 +281,6 @@ namespace GameName1
             }
         }
 
-
         /// <summary>
         /// Helper for updating the screen transition position.
         /// </summary>

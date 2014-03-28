@@ -10,7 +10,6 @@ namespace GameName1.NPCs
 {
     class BasicEnemy : GameEntity, AI
     {
-
         private static float elapsed;
         private static readonly float delay = 200f;
         private static int currentFrame = 0;

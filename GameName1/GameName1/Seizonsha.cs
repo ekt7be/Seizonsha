@@ -22,6 +22,7 @@ namespace GameName1
 		int numberOfPlayers = 2;
 
         GraphicsDeviceManager graphics;
+        ScreenManager screenManager;
         SpriteBatch spriteBatch;
         private SpriteFont spriteFont;
         private static readonly Random randomGen = new Random();
@@ -32,8 +33,14 @@ namespace GameName1
         private Queue<Vector2> spawnPointQueue;
         private HashSet<Collision> collisions;
         private List<AI> AIs;
-
         private Level currLevel;
+
+        // By preloading any assets used by UI rendering, we avoid framerate glitches
+        // when they suddenly need to be loaded in the middle of a menu transition.
+        static readonly string[] preloadAssets =
+        {
+            "gradient",
+        };
 
 
         public static Dictionary<int, Texture2D> spriteMappings = new Dictionary<int, Texture2D>();
@@ -50,12 +57,22 @@ namespace GameName1
         public int numberEnemies;
         private int difficulty;
 
-        public Seizonsha()
-            : base()
+        public Seizonsha() : base()
         {
-            graphics = new GraphicsDeviceManager(this);
 
             Content.RootDirectory = "Content";
+            graphics = new GraphicsDeviceManager(this);
+            graphics.PreferredBackBufferWidth = 853;
+            graphics.PreferredBackBufferHeight = 480;
+
+            // Create the screen manager component.
+            screenManager = new ScreenManager(this);
+
+            Components.Add(screenManager);
+
+            // Activate the first screens.
+            screenManager.AddScreen(new BackgroundScreen(), null);
+            screenManager.AddScreen(new MainMenuScreen(), null);
         }
 			
 		void initTileSprites() {
@@ -236,8 +253,10 @@ namespace GameName1
             Static.PIXEL_THIN.SetData(new[] { Color.White });
             Static.PIXEL_THICK = new Texture2D(GraphicsDevice, 3, 3);
             Static.PIXEL_THICK.SetData(new[] { Color.White });
-
-
+            foreach (string asset in preloadAssets)
+            {
+                Content.Load<Texture2D>(asset);
+            }
         }
 
         protected override void UnloadContent()
@@ -247,14 +266,18 @@ namespace GameName1
 
 
 
+        /*protected override void Update(GameTime gameTime)
+        {
+            
+        }*/
+
         /// <summary>
         /// Allows the game to run logic such as updating the world,
         /// checking for collisions, gathering input, and playing audio.
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
-        protected override void Update(GameTime gameTime)
+        public void UpdateGame(GameTime gameTime)
         {
-            
 			// ALEX
 			IsMouseVisible = true; 
 			//-ALEX
@@ -368,6 +391,14 @@ namespace GameName1
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
+            graphics.GraphicsDevice.Clear(Color.Black);
+
+            // The real drawing happens inside the screen manager component.
+            base.Draw(gameTime);
+        }
+
+        public void DrawGame(GameTime gameTime)
+        {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             foreach (Player player in players)
@@ -413,7 +444,7 @@ namespace GameName1
 					}
 
 					// DISPLAY TEXT FOR LIST OF SKILLS 
-
+                    Static.Debug("TEST");
 
 				spriteBatch.End();
             }
