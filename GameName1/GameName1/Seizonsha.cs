@@ -504,9 +504,7 @@ namespace GameName1
 		}
 
         protected void handlePlayerInput(Player player)
-        
         {
-
             if (player.playerIndex == PlayerIndex.One)
             {
 

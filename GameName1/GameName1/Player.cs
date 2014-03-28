@@ -267,7 +267,8 @@ namespace GameName1
 			string displaySkills = "L1: " + this.getSkill(Static.PLAYER_L1_SKILL_INDEX).getName() + "\n" +
 				"L2: " + this.getSkill(Static.PLAYER_L2_SKILL_INDEX).getName() + "\n" +
 				"R1: " + this.getSkill(Static.PLAYER_R1_SKILL_INDEX).getName() + "\n" +
-				"R2: " + this.getSkill(Static.PLAYER_R2_SKILL_INDEX).getName() + "\n";
+				"R2: " + this.getSkill(Static.PLAYER_R2_SKILL_INDEX).getName() + "\n" +
+                "P:  Pause/Quit Menu (temp)" ;
 			spriteBatch.DrawString(game.getSpriteFont(), displaySkills, new Vector2(20, 100), Color.White);
 				
 
