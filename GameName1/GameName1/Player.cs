@@ -270,8 +270,6 @@ namespace GameName1
 				"R2: " + this.getSkill(Static.PLAYER_R2_SKILL_INDEX).getName() + "\n" +
                 "P:  Pause/Quit Menu (temp)" ;
 			spriteBatch.DrawString(game.getSpriteFont(), displaySkills, new Vector2(20, 100), Color.White);
-				
-
         }
 
 
