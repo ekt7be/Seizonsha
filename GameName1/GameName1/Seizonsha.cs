@@ -19,7 +19,7 @@ namespace GameName1
 {
     public class Seizonsha : Game
     {
-		int numberOfPlayers = 1;
+		int numberOfPlayers = 2;
 
         GraphicsDeviceManager graphics;
         ScreenManager screenManager;
@@ -34,6 +34,8 @@ namespace GameName1
         private HashSet<Collision> collisions;
         private List<AI> AIs;
         private Level currLevel;
+
+        private bool paused;
 
 
 
@@ -100,6 +102,8 @@ namespace GameName1
             spawnPointQueue = new Queue<Vector2>();
             collisions = new HashSet<Collision>();
             currLevel = new Level(this);
+
+            paused = false;
 
             this.players = new Player[4];
 
@@ -466,13 +470,6 @@ namespace GameName1
             }
 
 
-			GraphicsDevice.Viewport = defaultView; 
-
-			spriteBatch.Begin();
-
-			drawSplitscreenDividers();
-
-			spriteBatch.End();
 
 			foreach (Player player in players) 
 			{
@@ -507,6 +504,14 @@ namespace GameName1
 				player.DrawScreen (GraphicsDevice.Viewport.Bounds, spriteBatch);
 				spriteBatch.End(); 
 			}
+
+            GraphicsDevice.Viewport = defaultView;
+
+            spriteBatch.Begin();
+
+            drawSplitscreenDividers();
+
+            spriteBatch.End();
 
         }
 
@@ -805,6 +810,34 @@ namespace GameName1
             {
                 healEntity(user,entity,amount,damageType);
             }
+        }
+
+
+        public bool willCollide(GameEntity entity, int x, int y)
+        {
+
+            Rectangle bounds = new Rectangle(x, y, entity.width, entity.height);
+            bool collide = false;
+
+            for (int i = getTileIndexFromLeftEdgeX(entity.getLeftEdgeX()); i <= getTileIndexFromRightEdgeX(entity.getRightEdgeX()); i++)
+            {
+                for (int j = getTileIndexFromTopEdgeY(entity.getTopEdgeY()); j <= getTileIndexFromBottomEdgeY(entity.getBottomEdgeY()); j++)
+                {
+                    Tile tile = currLevel.getTile(i, j);
+                    if (tile.isObstacle())
+                    {
+                        collide = true;
+                    }
+                }
+            }
+
+            foreach (GameEntity tileEntity in getEntitiesInBounds(bounds)){
+                if (entity.shouldCollide(tileEntity)){
+                    collide = true;
+                }
+            }
+
+            return collide;
         }
 
         private void moveGameEntityWithoutCollision(GameEntity entity, float x, float y)
