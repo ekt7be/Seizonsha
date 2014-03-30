@@ -223,9 +223,9 @@ namespace GameName1
             foreach (GameScreen screen in screens)
             {
                 if (screen is GameplayScreen)
-                {
                     ((GameplayScreen)screen).setGame(game);
-                }
+                if (screen is PauseMenuScreen)
+                    ((PauseMenuScreen)screen).setGame(game);
                 if (screen.ScreenState == ScreenState.Hidden)
                     continue;
 

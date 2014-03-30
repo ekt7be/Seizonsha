@@ -24,6 +24,8 @@ namespace GameName1
         GraphicsDeviceManager graphics;
         ScreenManager screenManager;
         SpriteBatch spriteBatch;
+
+        Texture2D playerRect;
         private SpriteFont spriteFont;
         private static readonly Random randomGen = new Random();
         private Player[] players;
@@ -95,17 +97,7 @@ namespace GameName1
 
         protected override void Initialize()
         {
-            entities = new List<GameEntity>();
-            AIs = new List<AI>();
-            removalQueue = new Queue<GameEntity>();
-            spawnQueue = new Queue<Spawnable>();
-            spawnPointQueue = new Queue<Vector2>();
-            collisions = new HashSet<Collision>();
-            currLevel = new Level(this);
-
-            paused = false;
-
-            this.players = new Player[4];
+            initializeVariables();
 
 			graphics.PreferredBackBufferHeight = Static.SCREEN_HEIGHT;
 			graphics.PreferredBackBufferWidth = Static.SCREEN_WIDTH;
@@ -113,7 +105,7 @@ namespace GameName1
             //just for testing -- makes a rectangle
 			//Texture2D playerRect = new Texture2D(GraphicsDevice, Static.PLAYER_HEIGHT, Static.PLAYER_WIDTH);
 
-            Texture2D playerRect = Content.Load<Texture2D>("Sprites/humanfullspritesheet");
+            playerRect = Content.Load<Texture2D>("Sprites/humanfullspritesheet");
             Texture2D npcRect = Content.Load<Texture2D>("Sprites/player");
 			Texture2D basicEnemyRect = Content.Load<Texture2D>("Sprites/SkeletonWalkingSpritesheet");
             Texture2D nodeRect = Content.Load<Texture2D>("Sprites/SkillNode");
@@ -137,7 +129,6 @@ namespace GameName1
             spriteMappings.Add(Static.PLATE_ARMOR_PANTS, plateArmorPants);
             spriteMappings.Add(Static.PLATE_ARMOR_ARMS_SHOULDER, plateArmorArmsShoulder);
             spriteMappings.Add(Static.PLATE_ARMOR_TORSO, plateArmorTorso);
-           
 
 			initViewports(numberOfPlayers);
 
@@ -156,23 +147,43 @@ namespace GameName1
 			playerToController.Add(1, PlayerIndex.One); 
 			playerToController.Add(2, PlayerIndex.Two); 
 			playerToController.Add(3, PlayerIndex.Three);
-			playerToController.Add(4, PlayerIndex.Four); 
+			playerToController.Add(4, PlayerIndex.Four);
 
-			for (int i = 0; i < numberOfPlayers; i++) {
-				cameras[i] = new Camera(); 
-				players[i] = new Player(this, playerToController[i+1], playerRect, cameras[i]);
+            spawnInitialEntities();
+
+            base.Initialize();
+        }
+
+        public void spawnInitialEntities()
+        {
+            for (int i = 0; i < numberOfPlayers; i++)
+            {
+                cameras[i] = new Camera();
+                players[i] = new Player(this, playerToController[i + 1], playerRect, cameras[i]);
 
                 Spawn(players[i], 500, 100 + (i * 40));
-			}
+            }
 
             this.difficulty = 5;
             this.numberEnemies = 0;
 
             currLevel.spawnEnemies(difficulty);
-
-            base.Initialize();
         }
 
+        public void initializeVariables()
+        {
+            entities = new List<GameEntity>();
+            AIs = new List<AI>();
+            removalQueue = new Queue<GameEntity>();
+            spawnQueue = new Queue<Spawnable>();
+            spawnPointQueue = new Queue<Vector2>();
+            collisions = new HashSet<Collision>();
+            currLevel = new Level(this);
+
+            paused = false;
+
+            this.players = new Player[4];
+        }
 		void initViewports(int numberOfPlayers) {
 			switch (numberOfPlayers) {
 				case 1: 
