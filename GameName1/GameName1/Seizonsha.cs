@@ -18,7 +18,7 @@ namespace GameName1
 {
     public class Seizonsha : Game
     {
-		int numberOfPlayers = 2;
+		int numberOfPlayers = 1;
 
         GraphicsDeviceManager graphics;
         ScreenManager screenManager;
@@ -33,6 +33,8 @@ namespace GameName1
         private HashSet<Collision> collisions;
         private List<AI> AIs;
         private Level currLevel;
+
+
 
         // By preloading any assets used by UI rendering, we avoid framerate glitches
         // when they suddenly need to be loaded in the middle of a menu transition.
@@ -689,6 +691,24 @@ namespace GameName1
 
             testRect.SetData(data);
             return testRect;
+        }
+
+        public Texture2D getFireballSprite()
+        {
+            Texture2D fireballTexture = Content.Load<Texture2D>("Sprites/fireballsprite");
+            return fireballTexture;
+        }
+
+        public Texture2D getBulletSprite()
+        {
+            Texture2D bulletTexture = Content.Load<Texture2D>("Sprites/bulletsprite");
+            return bulletTexture;
+        }
+
+        public Texture2D getHealSprite()
+        {
+            Texture2D healTexture = Content.Load<Texture2D>("Sprites/healsprite");
+            return healTexture;
         }
 
 

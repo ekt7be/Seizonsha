@@ -68,8 +68,8 @@ namespace GameName1
             base.Update(gameTime);
             //base.source = new Rectangle(sprite.Width / 4 * currentAnimationFrame, 0, sprite.Width / 4, sprite.Height);
 
-
-                        elapsed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            // Animation stuff
+            elapsed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
 
             if (elapsed > delay)
             {

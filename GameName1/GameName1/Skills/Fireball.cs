@@ -39,11 +39,11 @@ namespace GameName1.Skills
         protected override void UseSkill()
         {
 
-            int bulletWidth = 15;
-            int bulletHeight = 15;
+            int bulletWidth = 20;
+            int bulletHeight = 20;
          
             Rectangle slashBounds = new Rectangle((int)(user.getCenterX()), (int)(user.getCenterY()), bulletWidth, bulletHeight);
-            game.Spawn(new ExplodingBullet(game, user, game.getTestSprite(slashBounds, Color.Red), this,slashBounds, damage, damageType, 1, bulletSpeed, user.vectorDirection), slashBounds.Left, slashBounds.Top);
+            game.Spawn(new ExplodingBullet(game, user, game.getFireballSprite(), this,slashBounds, damage, damageType, 1, bulletSpeed, user.vectorDirection), slashBounds.Left, slashBounds.Top);
 
             // game sprite bounds amount dmgAmount dmgType duration bulletSpeed
         }
