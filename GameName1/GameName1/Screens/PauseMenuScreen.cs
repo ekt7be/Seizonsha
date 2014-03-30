@@ -19,7 +19,6 @@ namespace GameName1
     /// </summary>
     class PauseMenuScreen : MenuScreen
     {
-        Seizonsha game;
         #region Initialization
 
 
@@ -41,12 +40,6 @@ namespace GameName1
             MenuEntries.Add(resumeGameMenuEntry);
             MenuEntries.Add(quitGameMenuEntry);
         }
-
-        public void setGame(Seizonsha game)
-        {
-            this.game = game;
-        }
-
         #endregion
 
         #region Handle Input
@@ -66,7 +59,6 @@ namespace GameName1
             ScreenManager.AddScreen(confirmQuitMessageBox, ControllingPlayer);
         }
 
-
         /// <summary>
         /// Event handler for when the user selects ok on the "are you sure
         /// you want to quit" message box. This uses the loading screen to
@@ -76,8 +68,6 @@ namespace GameName1
         {
             LoadingScreen.Load(ScreenManager, false, null, new BackgroundScreen(),
                                                            new MainMenuScreen());
-            game.initializeVariables();
-            game.spawnInitialEntities();
         }
 
 

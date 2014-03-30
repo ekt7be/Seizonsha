@@ -19,8 +19,6 @@ namespace GameName1
 {
     public class Seizonsha : Game
     {
-		int numberOfPlayers = 2;
-
         GraphicsDeviceManager graphics;
         ScreenManager screenManager;
         SpriteBatch spriteBatch;
@@ -65,6 +63,8 @@ namespace GameName1
         public int numberEnemies;
         private int difficulty;
 
+
+
         public Seizonsha() : base()
         {
 
@@ -83,6 +83,16 @@ namespace GameName1
             screenManager.AddScreen(new MainMenuScreen(), null);
         }
 			
+	
+		// for pathfinding 
+		public Tile getTileFromCoord(int x, int y) {
+			return currLevel.getTileFromIndex(getTileIndexFromLeftEdgeX(x), getTileIndexFromTopEdgeY(y)); 
+		}
+
+		public Tile getTileFromIndex(int x, int y) {
+			return currLevel.getTileFromIndex(x, y); 
+		}
+
 		void initTileSprites() {
 			Texture2D floor_grass = Content.Load<Texture2D>("tiles/dc_tiles/dc-dngn/floor/grass/grass0");
 			Texture2D floor_nerves = Content.Load<Texture2D>("tiles/dc_tiles/dc-dngn/floor/floor_nerves1");
@@ -101,17 +111,17 @@ namespace GameName1
         {
             initializeVariables();
 
-			graphics.PreferredBackBufferHeight = Static.SCREEN_HEIGHT;
-			graphics.PreferredBackBufferWidth = Static.SCREEN_WIDTH;
+            graphics.PreferredBackBufferHeight = Static.SCREEN_HEIGHT;
+            graphics.PreferredBackBufferWidth = Static.SCREEN_WIDTH;
 
             //just for testing -- makes a rectangle
-			//Texture2D playerRect = new Texture2D(GraphicsDevice, Static.PLAYER_HEIGHT, Static.PLAYER_WIDTH);
+            //Texture2D playerRect = new Texture2D(GraphicsDevice, Static.PLAYER_HEIGHT, Static.PLAYER_WIDTH);
 
             playerRect = Content.Load<Texture2D>("Sprites/humanfullspritesheet");
             Texture2D npcRect = Content.Load<Texture2D>("Sprites/player");
-			Texture2D basicEnemyRect = Content.Load<Texture2D>("Sprites/SkeletonWalkingSpritesheet");
+            Texture2D basicEnemyRect = Content.Load<Texture2D>("Sprites/SkeletonWalkingSpritesheet");
             Texture2D nodeRect = Content.Load<Texture2D>("Sprites/SkillNode");
-            
+
             Texture2D plateArmorHead = Content.Load<Texture2D>("Sprites/PlateArmorHeadSpritesheet");
             Texture2D plateArmorFeet = Content.Load<Texture2D>("Sprites/PlateArmorFeetSpritesheet");
             Texture2D plateArmorGloves = Content.Load<Texture2D>("Sprites/PlateArmorGlovesSpritesheet");
@@ -124,7 +134,7 @@ namespace GameName1
 
             SkillTree.SkillTree.nodeTextures.Add(Static.SKILL_TREE_NODE_ANY, nodeRect);
 
-			initTileSprites();
+            initTileSprites();
 
             spriteMappings.Add(Static.SPRITE_BASIC_ENEMY_INT, basicEnemyRect);
             spriteMappings.Add(Static.SPRITE_PLAYER_INT, playerRect);
@@ -140,48 +150,26 @@ namespace GameName1
 
 
 
-			initViewports(numberOfPlayers);
+            Static.SCREEN_HEIGHT = defaultView.Height;
+            Static.SCREEN_WIDTH = defaultView.Width;
 
-			Static.SCREEN_HEIGHT = defaultView.Height;
-			Static.SCREEN_WIDTH = defaultView.Width;
+            initSplitscreenDividers();
 
-			initSplitscreenDividers(); 
+            cameras = new List<Camera>();
+            cameras.Add(p1Camera);
+            cameras.Add(p2Camera);
+            cameras.Add(p3Camera);
+            cameras.Add(p4Camera);
 
-			cameras = new List<Camera>();
-			cameras.Add(p1Camera);
-			cameras.Add(p2Camera); 
-			cameras.Add(p3Camera); 
-			cameras.Add(p4Camera); 
-
-			playerToController = new Dictionary<int, PlayerIndex>(); 
-			playerToController.Add(1, PlayerIndex.One); 
-			playerToController.Add(2, PlayerIndex.Two); 
-			playerToController.Add(3, PlayerIndex.Three);
-			playerToController.Add(4, PlayerIndex.Four);
+            playerToController = new Dictionary<int, PlayerIndex>();
+            playerToController.Add(1, PlayerIndex.One);
+            playerToController.Add(2, PlayerIndex.Two);
+            playerToController.Add(3, PlayerIndex.Three);
+            playerToController.Add(4, PlayerIndex.Four);
 
             spawnInitialEntities();
 
             base.Initialize();
-        }
-
-        public void spawnInitialEntities()
-        {
-            for (int i = 0; i < numberOfPlayers; i++)
-            {
-                cameras[i] = new Camera();
-                players[i] = new Player(this, playerToController[i + 1], playerRect, cameras[i]);
-
-                Spawn(players[i], 500, 100 + (i * 40));
-            }
-
-            this.difficulty = 5;
-            this.numberEnemies = 0;
-            currLevel.spawnEnemies(difficulty);
-            this.Wave = 0;
-            WaveBegin();
-
-            base.Initialize();
-
         }
 
         public void initializeVariables()
@@ -195,9 +183,30 @@ namespace GameName1
             currLevel = new Level(this);
 
             paused = false;
-
             this.players = new Player[4];
+
+            initViewports(Static.NUM_PLAYERS);
         }
+
+        public void spawnInitialEntities()
+        {
+            for (int i = 0; i < Static.NUM_PLAYERS; i++)
+            {
+                cameras[i] = new Camera();
+                players[i] = new Player(this, playerToController[i + 1], playerRect, cameras[i]);
+                Spawn(players[i], 500, 100 + (i * 40));
+            }
+
+
+
+            this.difficulty = 5;
+            this.numberEnemies = 0;
+            this.Wave = 0;
+            WaveBegin();
+
+            base.Initialize();
+        }
+
 		void initViewports(int numberOfPlayers) {
 			switch (numberOfPlayers) {
 				case 1: 
@@ -532,13 +541,13 @@ namespace GameName1
 
             spriteBatch.Begin();
 
-            drawSplitscreenDividers();
+            drawSplitscreenDividers(Static.NUM_PLAYERS);
 
             spriteBatch.End();
 
         }
 
-		void drawSplitscreenDividers() {
+		void drawSplitscreenDividers(int numberOfPlayers) {
 
 				Texture2D rect = new Texture2D(GraphicsDevice, 1, 1);
 				rect.SetData(new[] { Color.White });
@@ -718,10 +727,10 @@ namespace GameName1
             {
                 for (int j = getTileIndexFromTopEdgeY(entity.getTopEdgeY()); j <= getTileIndexFromBottomEdgeY(entity.getBottomEdgeY()); j++)
                 {
-                    Tile currTile = currLevel.getTile(i, j);
+					Tile currTile = currLevel.getTileFromIndex(i, j);
                     if (currTile != null) //if within bounds of level
                     {
-                        currLevel.getTile(i, j).BindEntity(entity, bind);
+						currLevel.getTileFromIndex(i, j).BindEntity(entity, bind);
                     }
                 }
             }
@@ -830,7 +839,7 @@ namespace GameName1
             {
                 for (int j = getTileIndexFromTopEdgeY(entity.getTopEdgeY()); j <= getTileIndexFromBottomEdgeY(entity.getBottomEdgeY()); j++)
                 {
-                    Tile tile = currLevel.getTile(i, j);
+					Tile tile = currLevel.getTileFromIndex(i, j);
                     if (tile.isObstacle())
                     {
                         collide = true;
@@ -914,7 +923,7 @@ namespace GameName1
                 {
                     for (int j = topEdgeTile; j <= bottomEdgeTile; j++)
                     {
-                        Tile currTile = currLevel.getTile(rightEdgeTile + i, j);
+						Tile currTile = currLevel.getTileFromIndex(rightEdgeTile + i, j);
                         if (currTile == null)
                         {
                             continue;
@@ -975,7 +984,7 @@ namespace GameName1
                 {
                     for (int j = topEdgeTile; j <= bottomEdgeTile; j++)
                     {
-                        Tile currTile = currLevel.getTile(leftEdgeTile - i, j);
+						Tile currTile = currLevel.getTileFromIndex(leftEdgeTile - i, j);
                         if (currTile == null)
                         {
                             continue;
@@ -1044,7 +1053,7 @@ namespace GameName1
                 {
                     for (int j = leftEdgeTile; j <= rightEdgeTile; j++)
                     {
-                        Tile currTile = currLevel.getTile(j, bottomEdgeTile + i);
+						Tile currTile = currLevel.getTileFromIndex(j, bottomEdgeTile + i);
                         if (currTile == null)
                         {
                             continue;
@@ -1104,7 +1113,7 @@ namespace GameName1
                 {
                     for (int j = leftEdgeTile; j <= rightEdgeTile; j++)
                     {
-                        Tile currTile = currLevel.getTile(j, topEdgeTile - i);
+						Tile currTile = currLevel.getTileFromIndex(j, topEdgeTile - i);
                         if (currTile == null)
                         {
                             continue;
@@ -1178,7 +1187,7 @@ namespace GameName1
             {
                 for (int j = getTileIndexFromTopEdgeY(bounds.Top); j <= getTileIndexFromBottomEdgeY(bounds.Bottom); j++)
                 {
-                    Tile currTile = currLevel.getTile(i, j);
+					Tile currTile = currLevel.getTileFromIndex(i, j);
                     if (currTile != null)
                     {
                         foreach (GameEntity entity in currTile.getEntities())
@@ -1220,7 +1229,7 @@ namespace GameName1
 
         public Tile getTileFromCoordinates(int x, int y)
         {
-            return currLevel.getTile(x, y);
+			return currLevel.getTileFromIndex(x, y);
         }
 
         public void Spawn(Spawnable spawn, int x, int y)

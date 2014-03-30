@@ -22,26 +22,16 @@ namespace GameName1
     {
         #region Fields
 
-        MenuEntry ungulateMenuEntry;
+        MenuEntry numPlayersMenuEntry;
         MenuEntry languageMenuEntry;
-        MenuEntry frobnicateMenuEntry;
         MenuEntry elfMenuEntry;
 
-        enum Ungulate
-        {
-            BactrianCamel,
-            Dromedary,
-            Llama,
-        }
-
-        static Ungulate currentUngulate = Ungulate.Dromedary;
-
-        static string[] languages = { "C#", "French", "Deoxyribonucleic acid" };
+        
+        static int currentNumPlayers = 0;
+        static int[] players = { 1, 2, 3, 4 };
+        
+        static string[] languages = { "English", "French"};
         static int currentLanguage = 0;
-
-        static bool frobnicate = true;
-
-        static int elf = 23;
 
         #endregion
 
@@ -55,27 +45,22 @@ namespace GameName1
             : base("Options")
         {
             // Create our menu entries.
-            ungulateMenuEntry = new MenuEntry(string.Empty);
+            numPlayersMenuEntry = new MenuEntry(string.Empty);
             languageMenuEntry = new MenuEntry(string.Empty);
-            frobnicateMenuEntry = new MenuEntry(string.Empty);
-            elfMenuEntry = new MenuEntry(string.Empty);
 
             SetMenuEntryText();
 
             MenuEntry back = new MenuEntry("Back");
 
             // Hook up menu event handlers.
-            ungulateMenuEntry.Selected += UngulateMenuEntrySelected;
+            numPlayersMenuEntry.Selected += NumPlayersMenuEntrySelected;
             languageMenuEntry.Selected += LanguageMenuEntrySelected;
-            frobnicateMenuEntry.Selected += FrobnicateMenuEntrySelected;
-            elfMenuEntry.Selected += ElfMenuEntrySelected;
+
             back.Selected += OnCancel;
             
             // Add entries to the menu.
-            MenuEntries.Add(ungulateMenuEntry);
+            MenuEntries.Add(numPlayersMenuEntry);
             MenuEntries.Add(languageMenuEntry);
-            MenuEntries.Add(frobnicateMenuEntry);
-            MenuEntries.Add(elfMenuEntry);
             MenuEntries.Add(back);
         }
 
@@ -85,10 +70,10 @@ namespace GameName1
         /// </summary>
         void SetMenuEntryText()
         {
-            ungulateMenuEntry.Text = "Preferred ungulate: " + currentUngulate;
+            numPlayersMenuEntry.Text = "Number of Players: " + (currentNumPlayers+1);
+            Static.NUM_PLAYERS = currentNumPlayers + 1;
             languageMenuEntry.Text = "Language: " + languages[currentLanguage];
-            frobnicateMenuEntry.Text = "Frobnicate: " + (frobnicate ? "on" : "off");
-            elfMenuEntry.Text = "elf: " + elf;
+            
         }
 
 
@@ -100,12 +85,15 @@ namespace GameName1
         /// <summary>
         /// Event handler for when the Ungulate menu entry is selected.
         /// </summary>
-        void UngulateMenuEntrySelected(object sender, PlayerIndexEventArgs e)
+        void NumPlayersMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
-            currentUngulate++;
+/*            currentNumPlayers++;
 
-            if (currentUngulate > Ungulate.Llama)
-                currentUngulate = 0;
+            if (currentNumPlayers > 4)
+                currentNumPlayers = 0;
+            */
+
+            currentNumPlayers = (currentNumPlayers + 1) %  players.Length;
 
             SetMenuEntryText();
         }
@@ -125,23 +113,14 @@ namespace GameName1
         /// <summary>
         /// Event handler for when the Frobnicate menu entry is selected.
         /// </summary>
-        void FrobnicateMenuEntrySelected(object sender, PlayerIndexEventArgs e)
+        /*void FrobnicateMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
             frobnicate = !frobnicate;
 
             SetMenuEntryText();
-        }
+        }*/
 
 
-        /// <summary>
-        /// Event handler for when the Elf menu entry is selected.
-        /// </summary>
-        void ElfMenuEntrySelected(object sender, PlayerIndexEventArgs e)
-        {
-            elf++;
-
-            SetMenuEntryText();
-        }
 
 
         #endregion

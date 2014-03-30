@@ -224,8 +224,8 @@ namespace GameName1
             {
                 if (screen is GameplayScreen)
                     ((GameplayScreen)screen).setGame(game);
-                if (screen is PauseMenuScreen)
-                    ((PauseMenuScreen)screen).setGame(game);
+                if (screen is MainMenuScreen)
+                    ((MainMenuScreen)screen).setGame(game);
                 if (screen.ScreenState == ScreenState.Hidden)
                     continue;
 
