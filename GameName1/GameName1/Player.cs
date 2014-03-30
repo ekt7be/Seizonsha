@@ -52,6 +52,7 @@ namespace GameName1
 
         public override void Update(GameTime gameTime)
         {
+
             foreach (Equipable skill in skillSlots){
                 if (skill != null)
                 {

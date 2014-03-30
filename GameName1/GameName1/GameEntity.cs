@@ -14,38 +14,44 @@ namespace GameName1
     public abstract class GameEntity : Spawnable
     {
 
+        public Vector2 movement;
+
         public int x { get; set; }
         public int y { get; set; }
-        private int xpReward;
+        public float floatx { get; set; }
+        public float floaty { get; set; }
         public float direction { get; set; }
         public int width { get; set; }
         public int height { get; set; }
         public Rectangle hitbox;
         private bool remove;
         private bool collidable;
-        private int targetType;
-        public int maxHealth;
-        public int health;
-        private bool hasHealth;
-        public int velocityX { get; set; }
-        public int velocityY { get; set; }
+        public float velocityX { get; set; }
+        public float velocityY { get; set; }
         public int accelX { get; set; }
         public int accelY { get; set; }
         protected Seizonsha game;
         public Texture2D sprite { get; set; }
         public Color tint { get; set; }
         protected Color defaultTint;
+        private List<Animation> animations;
+        private List<Animation> outgoingAnimations;
+        protected Dictionary<int, Rectangle> FramesToAnimation;
+        protected Rectangle? spriteSource = null;
+        protected float scale = 1.0f;
+
+
+
+        private int xpReward;
+        private int targetType;
+        public int maxHealth;
+        public int health;
+        private bool hasHealth;
         private int frozen; // stop entity from moving for a period of time
         private List<StatusEffect> statusEffects;
         private List<StatusEffect> incomingStatusEffects;
         private List<StatusEffect> outgoingStatusEffects;
 
-        private List<Animation> animations;
-        private List<Animation> outgoingAnimations;
-
-        protected Dictionary<int, Rectangle> FramesToAnimation;
-        protected Rectangle? spriteSource = null;
-        protected float scale = 1.0f;
 
 
 
@@ -118,16 +124,26 @@ namespace GameName1
 
         public void UpdateAll(GameTime gameTime)
         {
+
             Update(gameTime);
+
+            //reset movement
+            movement.X = 0;
+            movement.Y = 0;
+
+
             incVelocityX(accelX);
             incVelocityY(accelY);
-            if (velocityX != 0 || velocityY != 0)
-            {
-                move(velocityX, velocityY);
-            }
+
+
+
             if (frozen > 0)
             {
                 frozen--;
+            }
+            else
+            {
+                this.move(velocityX, velocityY);
             }
         }
 
@@ -181,6 +197,7 @@ namespace GameName1
             this.remove = false;
             this.velocityX = 0;
             this.velocityY = 0;
+            this.movement = new Vector2(0, 0);
             this.game = game;
             this.sprite = sprite;
             this.collidable = true;
@@ -207,6 +224,8 @@ namespace GameName1
         {
             this.x = x;
             this.y = y;
+            this.floatx = x;
+            this.floaty = y;
             this.hitbox = new Rectangle(x, y, width, height);
             this.rotateToAngle(0);
             OnSpawn();
@@ -217,7 +236,7 @@ namespace GameName1
         public abstract void collide(GameEntity entity);
         virtual public bool shouldCollide(GameEntity entity) //if collision flag is on, control over collision can be more specific.  for instance, bullets should not collide with other bullets
         {
-            return true;
+            return collidable;
         }
 
         public void setCollidable(bool collidable)
@@ -310,13 +329,25 @@ namespace GameName1
         {
             return direction;
         }
-        public void move(int dx, int dy)
+        public void move(float dx, float dy)
         {
             if (isFrozen())
             {
                 return;
             }
-            game.moveGameEntity(this, dx, dy);
+
+                movement.X += dx;
+                movement.Y += dy;
+        }
+
+        public void executeMovement(){
+            game.moveGameEntity(this, movement.X, movement.Y);
+
+        }
+
+        public Vector2 getMovementVector()
+        {
+            return movement;
         }
 
         public int getCenterX()
@@ -332,6 +363,10 @@ namespace GameName1
         {
             return hitbox.Left;
         }
+        public float getLeftEdgeFloatX()
+        {
+            return floatx;
+        }
 
 
         public int getRightEdgeX()
@@ -339,14 +374,30 @@ namespace GameName1
             return hitbox.Right;
         }
 
+        public float getRightEdgeFloatX()
+        {
+            return floatx + width;
+        }
+
+
         public int getTopEdgeY()
         {
             return hitbox.Top;
         }
 
+        public float getTopEdgeFloatY()
+        {
+            return floaty;
+        }
+
         public int getBottomEdgeY()
         {
             return hitbox.Bottom;
+        }
+
+        public float getBottomEdgeFloatY()
+        {
+            return floaty + height;
         }
 
         public Rectangle getHitbox()

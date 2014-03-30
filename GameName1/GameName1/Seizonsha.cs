@@ -356,6 +356,7 @@ namespace GameName1
             //update all entities including players
             foreach (GameEntity entity in entities)
             {
+
                 entity.UpdateAll(gameTime);
             }
 
@@ -380,7 +381,11 @@ namespace GameName1
                 ai.AI();
             }
 
-            //TODO: Update movement
+            //execute buffered movement
+            foreach (GameEntity entity in entities)
+            {
+                entity.executeMovement();
+            }
 
             //execute all collisions
             foreach (Collision collision in collisions)
@@ -802,22 +807,24 @@ namespace GameName1
             }
         }
 
-        private void moveGameEntityWithoutCollision(GameEntity entity, int x, int y)
+        private void moveGameEntityWithoutCollision(GameEntity entity, float x, float y)
         {
-            entity.x = x;
-            entity.y = y;
-            entity.hitbox.X = x;
-            entity.hitbox.Y = y;
+            entity.floatx = x;
+            entity.floaty = y;
+            entity.x = (int)entity.floatx;
+            entity.y = (int)entity.floaty;
+            entity.hitbox.X = entity.x;
+            entity.hitbox.Y = entity.y;
         }
 
-        public void moveGameEntity(GameEntity entity, int dx, int dy)
+        public void moveGameEntity(GameEntity entity, float dx, float dy)
         {
 
             BindEntityToTiles(entity, false);
 
             if (!entity.isCollidable()) //skip collision detection
             {
-                moveGameEntityWithoutCollision(entity, entity.x + dx, entity.y + dy);
+                moveGameEntityWithoutCollision(entity, entity.floatx + dx, entity.floaty + dy);
                 BindEntityToTiles(entity, true);
                 return;
             }
@@ -835,8 +842,8 @@ namespace GameName1
             int topEdgeTile = getTileIndexFromTopEdgeY(entity.getTopEdgeY());
             int bottomEdgeTile = getTileIndexFromBottomEdgeY(entity.getBottomEdgeY());
 
-            int distanceToTravelX = dx;
-            int distanceToTravelY = dy;
+            float distanceToTravelX = dx;
+            float distanceToTravelY = dy;
 
             //find distance to level boundary in movement direction and see if it is less move amount
             //figure out how many tiles your movement translates to in each direction
@@ -848,7 +855,7 @@ namespace GameName1
             {
                 //right
 
-                int distanceToBoundary = currLevel.GetTilesHorizontal() * Static.TILE_WIDTH - entity.getRightEdgeX();
+                float distanceToBoundary = currLevel.GetTilesHorizontal() * Static.TILE_WIDTH - entity.getRightEdgeFloatX();
                 if (distanceToBoundary < distanceToTravelX)
                 {
                     distanceToTravelX = distanceToBoundary;
@@ -874,7 +881,7 @@ namespace GameName1
                         }
                         if (currTile.isObstacle())
                         {
-                            int distanceToTile = currTile.x - entity.getRightEdgeX();
+                            float distanceToTile = currTile.x - entity.getRightEdgeFloatX();
                             if (distanceToTile < distanceToTravelX)
                             {
                                 distanceToTravelX = distanceToTile;
@@ -886,11 +893,11 @@ namespace GameName1
                         GameEntity closest = null;
                         foreach (GameEntity tileEntity in currTile.getEntities()) 
                         {
-                            if (tileEntity.getLeftEdgeX() - entity.getRightEdgeX() < distanceToTravelX)
+                            if (tileEntity.getLeftEdgeFloatX() - entity.getRightEdgeFloatX() < distanceToTravelX)
                             {
                                 if (tileEntity.OverlapsY(entity) && entity.shouldCollide(tileEntity) && tileEntity.shouldCollide(entity))
                                 {
-                                    distanceToTravelX = tileEntity.getLeftEdgeX() - entity.getRightEdgeX();
+                                    distanceToTravelX = tileEntity.getLeftEdgeFloatX() - entity.getRightEdgeFloatX();
                                     closest = tileEntity;
                                 }
                             }
@@ -909,7 +916,7 @@ namespace GameName1
                 //left
 
 
-                int distanceToBoundary = -1 * entity.getLeftEdgeX();
+                float distanceToBoundary = -1 * entity.getLeftEdgeFloatX();
                 if (distanceToBoundary > distanceToTravelX)
                 {
                     distanceToTravelX = distanceToBoundary;
@@ -935,7 +942,7 @@ namespace GameName1
                         }
                         if (currTile.isObstacle())
                         {
-                            int distanceToTile = (currTile.x + Static.TILE_WIDTH) - entity.getLeftEdgeX();
+                            float distanceToTile = (currTile.x + Static.TILE_WIDTH) - entity.getLeftEdgeFloatX();
                             if (distanceToTile > distanceToTravelX)
                             {
                                 distanceToTravelX = distanceToTile;
@@ -947,11 +954,11 @@ namespace GameName1
                         GameEntity closest = null;
                         foreach (GameEntity tileEntity in currTile.getEntities())
                         {
-                            if (tileEntity.getRightEdgeX() - entity.getLeftEdgeX() > distanceToTravelX)
+                            if (tileEntity.getRightEdgeFloatX() - entity.getLeftEdgeFloatX() > distanceToTravelX)
                             {
                                 if (tileEntity.OverlapsY(entity) && entity.shouldCollide(tileEntity) && tileEntity.shouldCollide(entity))
                                 {
-                                    distanceToTravelX = tileEntity.getRightEdgeX() - entity.getLeftEdgeX();
+                                    distanceToTravelX = tileEntity.getRightEdgeFloatX() - entity.getLeftEdgeFloatX();
                                     closest = tileEntity;
                                 }
                             }
@@ -966,8 +973,11 @@ namespace GameName1
                 }
             }
 
-            entity.x = entity.x + distanceToTravelX;
-            entity.hitbox.Offset(distanceToTravelX, 0);
+            entity.floatx = entity.floatx + distanceToTravelX;
+            //entity.hitbox.Offset(distanceToTravelX, 0);
+            //entity.hitbox.Offset((int)entity.floatx - entity.x, 0);
+            entity.x = (int)entity.floatx;
+            entity.hitbox.X = entity.x;
             leftEdgeTile = getTileIndexFromLeftEdgeX(entity.getLeftEdgeX());
             rightEdgeTile = getTileIndexFromRightEdgeX(entity.getRightEdgeX());
 
@@ -975,7 +985,7 @@ namespace GameName1
             if (dy > 0)
             { //down
 
-                int distanceToBoundary = currLevel.GetTilesVertical() * Static.TILE_HEIGHT - entity.getBottomEdgeY();
+                float distanceToBoundary = currLevel.GetTilesVertical() * Static.TILE_HEIGHT - entity.getBottomEdgeFloatY();
                 if (distanceToBoundary < distanceToTravelY)
                 {
                     distanceToTravelY = distanceToBoundary;
@@ -1001,7 +1011,7 @@ namespace GameName1
                         }
                         if (currTile.isObstacle())
                         {
-                            int distanceToTile = currTile.y - entity.getBottomEdgeY();
+                            float distanceToTile = currTile.y - entity.getBottomEdgeFloatY();
                             if (distanceToTile < distanceToTravelY)
                             {
                                 distanceToTravelY = distanceToTile;
@@ -1013,11 +1023,11 @@ namespace GameName1
                         GameEntity closest = null;
                         foreach (GameEntity tileEntity in currTile.getEntities())
                         {
-                            if (tileEntity.getTopEdgeY() - entity.getBottomEdgeY() < distanceToTravelY)
+                            if (tileEntity.getTopEdgeFloatY() - entity.getBottomEdgeFloatY() < distanceToTravelY)
                             {
                                 if (tileEntity.OverlapsX(entity) && entity.shouldCollide(tileEntity) && tileEntity.shouldCollide(entity))
                                 {
-                                    distanceToTravelY = tileEntity.getTopEdgeY() - entity.getBottomEdgeY();
+                                    distanceToTravelY = tileEntity.getTopEdgeFloatY() - entity.getBottomEdgeFloatY();
                                     closest = tileEntity;
                                 }
                             }
@@ -1035,7 +1045,7 @@ namespace GameName1
             { //up
 
 
-                int distanceToBoundary = -1 * entity.getTopEdgeY();
+                float distanceToBoundary = -1 * entity.getTopEdgeFloatY();
                 if (distanceToBoundary > distanceToTravelY)
                 {
                     distanceToTravelY = distanceToBoundary;
@@ -1061,7 +1071,7 @@ namespace GameName1
                         }
                         if (currTile.isObstacle())
                         {
-                            int distanceToTile = (currTile.y + Static.TILE_HEIGHT) - entity.getTopEdgeY();
+                            float distanceToTile = (currTile.y + Static.TILE_HEIGHT) - entity.getTopEdgeFloatY();
                             if (distanceToTile > distanceToTravelY)
                             {
                                     distanceToTravelY = distanceToTile;
@@ -1073,11 +1083,11 @@ namespace GameName1
                         GameEntity closest = null;
                         foreach (GameEntity tileEntity in currTile.getEntities())
                         {
-                            if (tileEntity.getBottomEdgeY() - entity.getTopEdgeY() > distanceToTravelY)
+                            if (tileEntity.getBottomEdgeFloatY() - entity.getTopEdgeFloatY() > distanceToTravelY)
                             {
                                 if (tileEntity.OverlapsX(entity) && entity.shouldCollide(tileEntity) && tileEntity.shouldCollide(entity))
                                 {
-                                    distanceToTravelY = tileEntity.getBottomEdgeY() - entity.getTopEdgeY();
+                                    distanceToTravelY = tileEntity.getBottomEdgeFloatY() - entity.getTopEdgeFloatY();
                                     closest = tileEntity;
                                 }
                             }
@@ -1092,8 +1102,11 @@ namespace GameName1
 
             }
 
-            entity.y = entity.y + distanceToTravelY;
-            entity.hitbox.Offset(0, distanceToTravelY);
+
+            entity.floaty = entity.floaty + distanceToTravelY;
+            //entity.hitbox.Offset(0, (int)entity.floaty - entity.y);
+            entity.y = (int)entity.floaty;
+            entity.hitbox.Y = entity.y;
 
             if (wallCollision)
             {

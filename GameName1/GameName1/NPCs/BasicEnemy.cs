@@ -68,13 +68,13 @@ namespace GameName1.NPCs
 
             this.hitbox = new Rectangle(this.x, this.y, this.width, this.height);
             if (closest.x < this.x)
-                this.velocityX = -1;
+                this.move(-1, 0);
             if (closest.x > this.x)
-                this.velocityX = 1;
+                this.move(1, 0);
             if (closest.y < this.y)
-                this.velocityY = -1;
+                this.move(0, -1);
             if (closest.y > this.y)
-                this.velocityY = 1;
+                this.move(0, 1);
 
             float playerDirection = (float)Math.Atan2(closest.y-this.y, closest.x - this.x);
 
