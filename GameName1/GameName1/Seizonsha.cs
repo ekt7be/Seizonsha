@@ -306,6 +306,8 @@ namespace GameName1
                 {
                     AIs.Remove((AI)remEntity);
                 }
+                if (remEntity is Bullet && !(remEntity is ExplodingBullet)) ((Bullet)(remEntity)).removeMe();
+                else if (remEntity is TextEffect) TextEffect.removeInstance((TextEffect)remEntity);
             }
 
 
@@ -697,7 +699,7 @@ namespace GameName1
             if (ShouldHeal(damageType, target.getTargetType())){
                 incEntityHealth(target,amount);
 
-                TextEffect text = new TextEffect(this, amount + "", 10, new Vector2(0,-2),Color.Green);
+                TextEffect text = TextEffect.getInstance(this, amount + "", 10, new Vector2(0,-2),Color.Green);
                 Spawn(text,target.getCenterX(), target.getCenterY() - 60);
             }
         }
@@ -710,7 +712,7 @@ namespace GameName1
             {
 
 
-                TextEffect text = new TextEffect(this, amount + "", 10,new Vector2(0,-2), Color.Red);
+                TextEffect text = TextEffect.getInstance(this, amount + "", 10,new Vector2(0,-2), Color.Red);
                 Spawn(text, target.getCenterX(), target.getCenterY() - 60);
 
                 if (user == null)
