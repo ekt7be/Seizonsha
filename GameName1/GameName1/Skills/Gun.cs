@@ -44,6 +44,7 @@ namespace GameName1.Skills
 
 			game.Spawn(Bullet.getInstance(game, user, game.getTestSprite(bulletBounds, Color.Red), bulletBounds, damage, damageType, 1, bulletSpeed, user.vectorDirection), bulletBounds.Left, bulletBounds.Top);
 
+
 		}
 
         public override void affect(GameEntity affected)

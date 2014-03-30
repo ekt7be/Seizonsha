@@ -7,15 +7,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using GameName1.Effects;
+using GameName1.AnimationTesting;
 
 namespace GameName1
 {
     public abstract class GameEntity : Spawnable
     {
 
+        public Vector2 movement;
+
         public int x { get; set; }
         public int y { get; set; }
         protected int xpReward;
+        public float floatx { get; set; }
+        public float floaty { get; set; }
         public float direction { get; set; }
         public int width { get; set; }
         public int height { get; set; }
@@ -26,18 +31,23 @@ namespace GameName1
         public int maxHealth;
         public int health;
         protected bool hasHealth;
-        public int velocityX { get; set; }
-        public int velocityY { get; set; }
+        public float velocityX { get; set; }
+        public float velocityY { get; set; }
         public int accelX { get; set; }
         public int accelY { get; set; }
         protected Seizonsha game;
         public Texture2D sprite { get; set; }
+
         public Color color { get; set; } //delete when we have actual sprites
         protected int frozen; // stop entity from moving for a period of time
         protected List<StatusEffect> statusEffects;
         protected List<StatusEffect> incomingStatusEffects;
         protected List<StatusEffect> outgoingStatusEffects;
 
+        public Color tint { get; set; }
+        protected Color defaultTint;
+        private List<Animation> animations;
+        private List<Animation> outgoingAnimations;
         protected Dictionary<int, Rectangle> FramesToAnimation;
         protected Rectangle? spriteSource = null;
         protected float scale = 1.0f;
@@ -74,13 +84,23 @@ namespace GameName1
 
             if (spriteSource == null)
             {
-                spriteBatch.Draw(sprite, this.hitbox, spriteSource, color, this.direction, new Vector2(0, 0), SpriteEffects.None, 1);
+                spriteBatch.Draw(sprite, this.hitbox, spriteSource, tint, this.direction, new Vector2(0, 0), SpriteEffects.None, 1);
             }
             else
             {
-                spriteBatch.Draw(sprite, this.hitbox, spriteSource, color, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+                spriteBatch.Draw(sprite, this.hitbox, spriteSource, tint, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
             }
 
+        }
+
+        public void setTint(Color tint)
+        {
+            this.tint = tint;
+        }
+
+        public void setDefaultTint()
+        {
+            this.tint = defaultTint;
         }
 
         public virtual void Update(GameTime gameTime)
@@ -103,18 +123,62 @@ namespace GameName1
 
         public void UpdateAll(GameTime gameTime)
         {
+
             Update(gameTime);
+
+            //reset movement
+            movement.X = 0;
+            movement.Y = 0;
+
+
             incVelocityX(accelX);
             incVelocityY(accelY);
-            if (velocityX != 0 || velocityY != 0)
-            {
-                move(velocityX, velocityY);
-            }
+
+
+
             if (frozen > 0)
             {
                 frozen--;
             }
+            else
+            {
+                this.move(velocityX, velocityY);
+            }
         }
+
+        public void UpdateAnimations()
+        {
+            foreach (Animation animation in animations)
+            {
+                animation.Update();
+                if (animation.shouldRemove())
+                {
+                    RemoveAnimation(animation);
+                }
+            }
+        }
+
+        public void AddAnimation(Animation animation)
+        {
+            animations.Add(animation);
+        }
+
+        public void RemoveAnimation(Animation animation)
+        {
+            outgoingAnimations.Add(animation);
+        }
+
+        public void ClearAnimations()
+        {
+            foreach (Animation animation in outgoingAnimations)
+            {
+                animation.OnRemove(this);
+                animations.Remove(animation);
+            }
+
+            outgoingAnimations.Clear();
+        }
+
 
 
         public GameEntity(Seizonsha game, Texture2D sprite, int width, int height, int targetType, int maxHealth)
@@ -132,15 +196,20 @@ namespace GameName1
             this.remove = false;
             this.velocityX = 0;
             this.velocityY = 0;
+            this.movement = new Vector2(0, 0);
             this.game = game;
             this.sprite = sprite;
             this.collidable = true;
-            this.color = Color.White;
+            this.tint = Color.White;
+            this.defaultTint = tint;
             this.frozen = 0;
             this.xpReward = 0;
             this.statusEffects = new List<StatusEffect>();
             this.incomingStatusEffects = new List<StatusEffect>();
             this.outgoingStatusEffects = new List<StatusEffect>();
+
+            this.animations = new List<Animation>();
+            this.outgoingAnimations = new List<Animation>();
 
 
             this.FramesToAnimation = new Dictionary<int, Rectangle>(); //for animations
@@ -182,6 +251,8 @@ namespace GameName1
         {
             this.x = x;
             this.y = y;
+            this.floatx = x;
+            this.floaty = y;
             this.hitbox = new Rectangle(x, y, width, height);
             this.rotateToAngle(0);
             OnSpawn();
@@ -192,7 +263,7 @@ namespace GameName1
         public abstract void collide(GameEntity entity);
         virtual public bool shouldCollide(GameEntity entity) //if collision flag is on, control over collision can be more specific.  for instance, bullets should not collide with other bullets
         {
-            return true;
+            return collidable;
         }
 
         public void setCollidable(bool collidable)
@@ -285,13 +356,25 @@ namespace GameName1
         {
             return direction;
         }
-        public void move(int dx, int dy)
+        public void move(float dx, float dy)
         {
             if (isFrozen())
             {
                 return;
             }
-            game.moveGameEntity(this, dx, dy);
+
+                movement.X += dx;
+                movement.Y += dy;
+        }
+
+        public void executeMovement(){
+            game.moveGameEntity(this, movement.X, movement.Y);
+
+        }
+
+        public Vector2 getMovementVector()
+        {
+            return movement;
         }
 
         public int getCenterX()
@@ -307,6 +390,10 @@ namespace GameName1
         {
             return hitbox.Left;
         }
+        public float getLeftEdgeFloatX()
+        {
+            return floatx;
+        }
 
 
         public int getRightEdgeX()
@@ -314,14 +401,30 @@ namespace GameName1
             return hitbox.Right;
         }
 
+        public float getRightEdgeFloatX()
+        {
+            return floatx + width;
+        }
+
+
         public int getTopEdgeY()
         {
             return hitbox.Top;
         }
 
+        public float getTopEdgeFloatY()
+        {
+            return floaty;
+        }
+
         public int getBottomEdgeY()
         {
             return hitbox.Bottom;
+        }
+
+        public float getBottomEdgeFloatY()
+        {
+            return floaty + height;
         }
 
         public Rectangle getHitbox()
@@ -339,41 +442,6 @@ namespace GameName1
             return targetType;
         }
 
-        /*
-        public bool damage(int amount, int damageType) // true if killed
-        {
-            if (game.ShouldDamage(damageType, targetType))
-            {
-                TextEffect text = new TextEffect(this.game, amount +"", 10, this.getCenterX(), this.getCenterY()-60, Color.Red );
-                game.Spawn(text);
-                return incHealth(-1 * amount);
-            }
-            return false;
-        }
-
-        public void heal(int amount)
-        {
-            
-            incHealth(amount);
-            TextEffect text = new TextEffect(this.game, amount + "", 10, this.getCenterX(), this.getCenterY() - 60, Color.Green);
-            game.Spawn(text);
-        }
-
-        public bool incHealth(int amount){ //true if dead
-            health += amount;
-            if (health > maxHealth){
-                health = maxHealth;
-            }
-            if (health < 0)
-            {
-                health = 0;
-                die();
-                return true;
-            }
-            return false;
-        }
-         * 
-         */
 
         public void die()
         {

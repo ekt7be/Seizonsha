@@ -22,14 +22,17 @@ namespace GameName1
         public static readonly int PLAYER_R2_SKILL_INDEX = 3;
 		public static readonly int PLAYER_LEFTCLICK_SKILL_INDEX = 0; 
 
-        //enemy
+        //basic enemy
         public static readonly int BASIC_ENEMY_HEIGHT = 45;
         public static readonly int BASIC_ENEMY_WIDTH = 45;
+        public static readonly int BASIC_ENEMY_DAMAGE = 5;
+        public static readonly float BASIC_ENEMY_SPEED = 5f;
 
 
         //dimensions
 		public static int SCREEN_WIDTH = 1280; // 640 x 480, 1280 x 640
 		public static int SCREEN_HEIGHT = 720;
+
 		// these values are read in through the map.txt file
 		public static int TILES_ON_SCREEN_X = 0;
 		public static int TILES_ON_SCREEN_Y = 0;//(int)((float)SCREEN_HEIGHT / (float)SCREEN_WIDTH * TILES_ON_SCREEN_X);
@@ -99,6 +102,8 @@ namespace GameName1
         //static pixel for drawing rectangles
         public static Texture2D PIXEL_THIN = null;
         public static Texture2D PIXEL_THICK = null;
+
+
 
         public static void DrawLine(SpriteBatch spriteBatch, Texture2D sprite, Vector2 start, Vector2 end, Color color)
         {

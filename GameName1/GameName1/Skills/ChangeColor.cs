@@ -25,7 +25,7 @@ namespace GameName1.Skills
 
         protected override void UseSkill()
         {
-            user.color = color;
+            user.setTint(color);
         }
 
         public override void affect(GameEntity affected)

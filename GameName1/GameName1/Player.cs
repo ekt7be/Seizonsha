@@ -52,6 +52,7 @@ namespace GameName1
 
         public override void Update(GameTime gameTime)
         {
+
             foreach (Equipable skill in skillSlots){
                 if (skill != null)
                 {
@@ -68,8 +69,8 @@ namespace GameName1
             base.Update(gameTime);
             //base.source = new Rectangle(sprite.Width / 4 * currentAnimationFrame, 0, sprite.Width / 4, sprite.Height);
 
-
-                        elapsed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            // Animation stuff
+            elapsed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
 
             if (elapsed > delay)
             {
@@ -142,12 +143,12 @@ namespace GameName1
                 }
             }
             //draw armor and weapons equipped etc
-            spriteBatch.Draw(Seizonsha.spriteMappings[3], this.hitbox, base.spriteSource, color, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
-            spriteBatch.Draw(Seizonsha.spriteMappings[5], this.hitbox, base.spriteSource, color, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
-            spriteBatch.Draw(Seizonsha.spriteMappings[4], this.hitbox, base.spriteSource, color, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
-            spriteBatch.Draw(Seizonsha.spriteMappings[6], this.hitbox, base.spriteSource, color, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
-            spriteBatch.Draw(Seizonsha.spriteMappings[7], this.hitbox, base.spriteSource, color, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
-            spriteBatch.Draw(Seizonsha.spriteMappings[2], this.hitbox, base.spriteSource, color, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+            spriteBatch.Draw(Seizonsha.spriteMappings[3], this.hitbox, base.spriteSource, tint, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+            spriteBatch.Draw(Seizonsha.spriteMappings[5], this.hitbox, base.spriteSource, tint, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+            spriteBatch.Draw(Seizonsha.spriteMappings[4], this.hitbox, base.spriteSource, tint, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+            spriteBatch.Draw(Seizonsha.spriteMappings[6], this.hitbox, base.spriteSource, tint, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+            spriteBatch.Draw(Seizonsha.spriteMappings[7], this.hitbox, base.spriteSource, tint, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+            spriteBatch.Draw(Seizonsha.spriteMappings[2], this.hitbox, base.spriteSource, tint, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
         }
 
 
@@ -270,6 +271,10 @@ namespace GameName1
 				"R2: " + this.getSkill(Static.PLAYER_R2_SKILL_INDEX).getName() + "\n" +
                 "P:  Pause/Quit Menu (temp)" ;
 			spriteBatch.DrawString(game.getSpriteFont(), displaySkills, new Vector2(20, 100), Color.White);
+
+
+            //draw Wave number
+            spriteBatch.DrawString(game.getSpriteFont(), "WAVE: " + game.Wave, new Vector2(20, screenPortion.Height-100), Color.White);
         }
 
 

@@ -65,7 +65,16 @@ namespace GameName1.Skills
 
         public virtual bool Available()
         {
-            return (recharged >= rechargeTime && (user is Player ? ((Player)user).hasEnoughMana(this.manaCost) : true));
+            bool available = true;
+
+            if (recharged < rechargeTime){
+                available = false;
+            }
+
+            if (user is Player && !(((Player)user).hasEnoughMana(this.manaCost))){
+                available = false;
+            }
+            return available;
         }
 
         public double percentCasted()
