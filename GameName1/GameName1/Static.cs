@@ -11,6 +11,7 @@ namespace GameName1
     {
 
         //player stuff
+        public static int NUM_PLAYERS = 2;
         public static readonly int PLAYER_HEIGHT = 45;
         public static readonly int PLAYER_WIDTH = 45;
 		public static readonly int PLAYER_MOVE_SPEED = 4;

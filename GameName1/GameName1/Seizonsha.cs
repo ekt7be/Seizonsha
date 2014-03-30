@@ -19,8 +19,6 @@ namespace GameName1
 {
     public class Seizonsha : Game
     {
-		int numberOfPlayers = 2;
-
         GraphicsDeviceManager graphics;
         ScreenManager screenManager;
         SpriteBatch spriteBatch;
@@ -65,6 +63,8 @@ namespace GameName1
         public int numberEnemies;
         private int difficulty;
 
+
+
         public Seizonsha() : base()
         {
 
@@ -101,17 +101,17 @@ namespace GameName1
         {
             initializeVariables();
 
-			graphics.PreferredBackBufferHeight = Static.SCREEN_HEIGHT;
-			graphics.PreferredBackBufferWidth = Static.SCREEN_WIDTH;
+            graphics.PreferredBackBufferHeight = Static.SCREEN_HEIGHT;
+            graphics.PreferredBackBufferWidth = Static.SCREEN_WIDTH;
 
             //just for testing -- makes a rectangle
-			//Texture2D playerRect = new Texture2D(GraphicsDevice, Static.PLAYER_HEIGHT, Static.PLAYER_WIDTH);
+            //Texture2D playerRect = new Texture2D(GraphicsDevice, Static.PLAYER_HEIGHT, Static.PLAYER_WIDTH);
 
             playerRect = Content.Load<Texture2D>("Sprites/humanfullspritesheet");
             Texture2D npcRect = Content.Load<Texture2D>("Sprites/player");
-			Texture2D basicEnemyRect = Content.Load<Texture2D>("Sprites/SkeletonWalkingSpritesheet");
+            Texture2D basicEnemyRect = Content.Load<Texture2D>("Sprites/SkeletonWalkingSpritesheet");
             Texture2D nodeRect = Content.Load<Texture2D>("Sprites/SkillNode");
-            
+
             Texture2D plateArmorHead = Content.Load<Texture2D>("Sprites/PlateArmorHeadSpritesheet");
             Texture2D plateArmorFeet = Content.Load<Texture2D>("Sprites/PlateArmorFeetSpritesheet");
             Texture2D plateArmorGloves = Content.Load<Texture2D>("Sprites/PlateArmorGlovesSpritesheet");
@@ -121,7 +121,7 @@ namespace GameName1
 
             SkillTree.SkillTree.nodeTextures.Add(Static.SKILL_TREE_NODE_ANY, nodeRect);
 
-			initTileSprites();
+            initTileSprites();
 
             spriteMappings.Add(Static.BASIC_ENEMY_INT, basicEnemyRect);
             spriteMappings.Add(Static.PLAYER_INT, playerRect);
@@ -132,48 +132,26 @@ namespace GameName1
             spriteMappings.Add(Static.PLATE_ARMOR_ARMS_SHOULDER, plateArmorArmsShoulder);
             spriteMappings.Add(Static.PLATE_ARMOR_TORSO, plateArmorTorso);
 
-			initViewports(numberOfPlayers);
+            Static.SCREEN_HEIGHT = defaultView.Height;
+            Static.SCREEN_WIDTH = defaultView.Width;
 
-			Static.SCREEN_HEIGHT = defaultView.Height;
-			Static.SCREEN_WIDTH = defaultView.Width;
+            initSplitscreenDividers();
 
-			initSplitscreenDividers(); 
+            cameras = new List<Camera>();
+            cameras.Add(p1Camera);
+            cameras.Add(p2Camera);
+            cameras.Add(p3Camera);
+            cameras.Add(p4Camera);
 
-			cameras = new List<Camera>();
-			cameras.Add(p1Camera);
-			cameras.Add(p2Camera); 
-			cameras.Add(p3Camera); 
-			cameras.Add(p4Camera); 
-
-			playerToController = new Dictionary<int, PlayerIndex>(); 
-			playerToController.Add(1, PlayerIndex.One); 
-			playerToController.Add(2, PlayerIndex.Two); 
-			playerToController.Add(3, PlayerIndex.Three);
-			playerToController.Add(4, PlayerIndex.Four);
+            playerToController = new Dictionary<int, PlayerIndex>();
+            playerToController.Add(1, PlayerIndex.One);
+            playerToController.Add(2, PlayerIndex.Two);
+            playerToController.Add(3, PlayerIndex.Three);
+            playerToController.Add(4, PlayerIndex.Four);
 
             spawnInitialEntities();
 
             base.Initialize();
-        }
-
-        public void spawnInitialEntities()
-        {
-            for (int i = 0; i < numberOfPlayers; i++)
-            {
-                cameras[i] = new Camera();
-                players[i] = new Player(this, playerToController[i + 1], playerRect, cameras[i]);
-
-                Spawn(players[i], 500, 100 + (i * 40));
-            }
-
-            this.difficulty = 5;
-            this.numberEnemies = 0;
-            currLevel.spawnEnemies(difficulty);
-            this.Wave = 0;
-            WaveBegin();
-
-            base.Initialize();
-
         }
 
         public void initializeVariables()
@@ -187,9 +165,32 @@ namespace GameName1
             currLevel = new Level(this);
 
             paused = false;
-
             this.players = new Player[4];
+
+            initViewports(Static.NUM_PLAYERS);
         }
+
+        public void spawnInitialEntities()
+        {
+            for (int i = 0; i < Static.NUM_PLAYERS; i++)
+            {
+                Static.Debug("STATIC NUBMER OF PLAYERS:" + Static.NUM_PLAYERS);
+                cameras[i] = new Camera();
+                players[i] = new Player(this, playerToController[i + 1], playerRect, cameras[i]);
+                Spawn(players[i], 500, 100 + (i * 40));
+            }
+
+
+
+            this.difficulty = 5;
+            this.numberEnemies = 0;
+            currLevel.spawnEnemies(difficulty);
+            this.Wave = 0;
+            WaveBegin();
+
+            base.Initialize();
+        }
+
 		void initViewports(int numberOfPlayers) {
 			switch (numberOfPlayers) {
 				case 1: 
@@ -524,13 +525,13 @@ namespace GameName1
 
             spriteBatch.Begin();
 
-            drawSplitscreenDividers();
+            drawSplitscreenDividers(Static.NUM_PLAYERS);
 
             spriteBatch.End();
 
         }
 
-		void drawSplitscreenDividers() {
+		void drawSplitscreenDividers(int numberOfPlayers) {
 
 				Texture2D rect = new Texture2D(GraphicsDevice, 1, 1);
 				rect.SetData(new[] { Color.White });
