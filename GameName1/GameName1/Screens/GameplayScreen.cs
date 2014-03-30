@@ -66,12 +66,8 @@ namespace GameName1
             if (Content == null)
                 Content = new ContentManager(ScreenManager.Game.Services, "Content");
 
-           
-
-            // A real game would probably have more content than this sample, so
-            // it would take longer to load. We simulate that by delaying for a
-            // while, giving you a chance to admire the beautiful loading screen.
-            Thread.Sleep(1000);
+            //simulate loading content
+            Thread.Sleep(0);
 
             // once the load has finished, we use ResetElapsedTime to tell the game's
             // timing mechanism that we have just finished a very long frame, and that
@@ -85,7 +81,6 @@ namespace GameName1
         /// </summary>
         public override void UnloadContent()
         {
-            Content.Unload();
         }
 
 

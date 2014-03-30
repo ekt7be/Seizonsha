@@ -19,6 +19,7 @@ namespace GameName1
     /// </summary>
     class PauseMenuScreen : MenuScreen
     {
+        Seizonsha game;
         #region Initialization
 
 
@@ -41,6 +42,10 @@ namespace GameName1
             MenuEntries.Add(quitGameMenuEntry);
         }
 
+        public void setGame(Seizonsha game)
+        {
+            this.game = game;
+        }
 
         #endregion
 
@@ -71,6 +76,8 @@ namespace GameName1
         {
             LoadingScreen.Load(ScreenManager, false, null, new BackgroundScreen(),
                                                            new MainMenuScreen());
+            game.initializeVariables();
+            game.spawnInitialEntities();
         }
 
 
