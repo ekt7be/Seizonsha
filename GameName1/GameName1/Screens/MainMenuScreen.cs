@@ -43,11 +43,15 @@ namespace GameName1
             MenuEntries.Add(exitMenuEntry);
         }
 
-
+        Seizonsha game;
         #endregion
 
         #region Handle Input
 
+        public void setGame(Seizonsha game)
+        {
+            this.game = game;
+        }
 
         /// <summary>
         /// Event handler for when the Play Game menu entry is selected.
@@ -56,6 +60,8 @@ namespace GameName1
         {
             LoadingScreen.Load(ScreenManager, true, e.PlayerIndex,
                                new GameplayScreen());
+            game.initializeVariables();
+            game.spawnInitialEntities();
         }
 
 
