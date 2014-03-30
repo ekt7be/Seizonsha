@@ -59,7 +59,9 @@ namespace GameName1
 		List<Rectangle> dividers; 
 
 		Dictionary<int, PlayerIndex> playerToController;
-		//-
+
+
+        public int Wave { get; set; }
         public int numberEnemies;
         private int difficulty;
 
@@ -166,8 +168,12 @@ namespace GameName1
 
             this.difficulty = 5;
             this.numberEnemies = 0;
-
             currLevel.spawnEnemies(difficulty);
+            this.Wave = 0;
+            WaveBegin();
+
+            base.Initialize();
+
         }
 
         public void initializeVariables()
@@ -282,12 +288,6 @@ namespace GameName1
         }
 
 
-
-        /*protected override void Update(GameTime gameTime)
-        {
-            
-        }*/
-
         /// <summary>
         /// Allows the game to run logic such as updating the world,
         /// checking for collisions, gathering input, and playing audio.
@@ -295,9 +295,6 @@ namespace GameName1
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public void UpdateGame(GameTime gameTime)
         {
-			// ALEX
-			IsMouseVisible = true; 
-			//-ALEX
 
 
             //flag entities to be removed
@@ -323,6 +320,8 @@ namespace GameName1
                 {
                     AIs.Remove((AI)remEntity);
                 }
+                if (remEntity is Bullet && !(remEntity is ExplodingBullet)) ((Bullet)(remEntity)).removeMe();
+                else if (remEntity is TextEffect) TextEffect.removeInstance((TextEffect)remEntity);
             }
 
             //remove animations flagged for removal
@@ -366,6 +365,13 @@ namespace GameName1
 
             }
 
+            //check for wave completion
+            if (numberEnemies <= 0)
+            {
+                WaveCleared();
+                //pause and do other stuff, maybe set timer
+                WaveBegin();
+            }
 
 
             //update all entities including players
@@ -385,9 +391,7 @@ namespace GameName1
 
 				handlePlayerInput(player);
 
-				// AlexAlpha
 				player.camera.Update(this.getPlayers().Count, player, this.getLevelBounds()); 
-				//-
             }
 
             //run AI
@@ -753,7 +757,7 @@ namespace GameName1
             if (ShouldHeal(damageType, target.getTargetType())){
                 incEntityHealth(target,amount);
 
-                TextEffect text = new TextEffect(this, amount + "", 10, new Vector2(0,-2),Color.Green);
+                TextEffect text = TextEffect.getInstance(this, amount + "", 10, new Vector2(0,-2),Color.Green);
                 Spawn(text,target.getCenterX(), target.getCenterY() - 60);
             }
         }
@@ -766,7 +770,7 @@ namespace GameName1
             {
 
 
-                TextEffect text = new TextEffect(this, amount + "", 10,new Vector2(0,-2), Color.Red);
+                TextEffect text = TextEffect.getInstance(this, amount + "", 10,new Vector2(0,-2), Color.Red);
                 Spawn(text, target.getCenterX(), target.getCenterY() - 60);
 
                 if (user == null)
@@ -1170,10 +1174,6 @@ namespace GameName1
         public void decreaseNumberEnemies()
         {
             numberEnemies--;
-            if (numberEnemies <= 0)
-            {
-                currLevel.spawnEnemies(difficulty);
-            }
 
         }
 
@@ -1276,6 +1276,19 @@ namespace GameName1
             }
 
             return list;
+        }
+
+
+        public void WaveCleared()
+        {
+
+        }
+
+        public void WaveBegin()
+        {
+            Wave++;
+            currLevel.spawnEnemies(difficulty);
+
         }
 
         public int getEnemyCount()

@@ -28,6 +28,13 @@ namespace GameName1.Effects
             }
         }
 
+        protected void set(Seizonsha game, Texture2D sprite, int width, int height, int duration)
+        {
+            base.set(game, sprite, width, height, Static.TARGET_TYPE_NOT_DAMAGEABLE, 0);
+            this.duration = duration;
+            setCollidable(false);
+        }
+
         abstract protected override void OnDie();
 
         abstract public override void OnSpawn();

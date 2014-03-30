@@ -18,20 +18,32 @@ namespace GameName1
 
         public int x { get; set; }
         public int y { get; set; }
+        protected int xpReward;
         public float floatx { get; set; }
         public float floaty { get; set; }
         public float direction { get; set; }
         public int width { get; set; }
         public int height { get; set; }
         public Rectangle hitbox;
-        private bool remove;
-        private bool collidable;
+        protected bool remove;
+        protected bool collidable;
+        protected int targetType;
+        public int maxHealth;
+        public int health;
+        protected bool hasHealth;
         public float velocityX { get; set; }
         public float velocityY { get; set; }
         public int accelX { get; set; }
         public int accelY { get; set; }
         protected Seizonsha game;
         public Texture2D sprite { get; set; }
+
+        public Color color { get; set; } //delete when we have actual sprites
+        protected int frozen; // stop entity from moving for a period of time
+        protected List<StatusEffect> statusEffects;
+        protected List<StatusEffect> incomingStatusEffects;
+        protected List<StatusEffect> outgoingStatusEffects;
+
         public Color tint { get; set; }
         protected Color defaultTint;
         private List<Animation> animations;
@@ -39,19 +51,6 @@ namespace GameName1
         protected Dictionary<int, Rectangle> FramesToAnimation;
         protected Rectangle? spriteSource = null;
         protected float scale = 1.0f;
-
-
-
-        private int xpReward;
-        private int targetType;
-        public int maxHealth;
-        public int health;
-        private bool hasHealth;
-        private int frozen; // stop entity from moving for a period of time
-        private List<StatusEffect> statusEffects;
-        private List<StatusEffect> incomingStatusEffects;
-        private List<StatusEffect> outgoingStatusEffects;
-
 
 
 
@@ -216,6 +215,34 @@ namespace GameName1
             this.FramesToAnimation = new Dictionary<int, Rectangle>(); //for animations
 
 
+        }
+
+        protected void set(Seizonsha game, Texture2D sprite, int width, int height, int targetType, int maxHealth)
+        {
+            this.width = width;
+            this.height = height;
+            this.targetType = targetType;
+            this.maxHealth = maxHealth;
+            this.health = maxHealth;
+            if (targetType != Static.TARGET_TYPE_NOT_DAMAGEABLE)
+            {
+                this.hasHealth = true;
+            }
+            this.remove = false;
+            this.velocityX = 0;
+            this.velocityY = 0;
+            this.game = game;
+            this.sprite = sprite;
+            this.collidable = true;
+            this.color = Color.White;
+            this.frozen = 0;
+            this.xpReward = 0;
+            this.statusEffects = new List<StatusEffect>();
+            this.incomingStatusEffects = new List<StatusEffect>();
+            this.outgoingStatusEffects = new List<StatusEffect>();
+
+
+            this.FramesToAnimation = new Dictionary<int, Rectangle>(); //for animations
         }
 
         protected abstract void OnDie();
