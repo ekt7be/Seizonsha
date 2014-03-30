@@ -57,7 +57,9 @@ namespace GameName1
 		List<Rectangle> dividers; 
 
 		Dictionary<int, PlayerIndex> playerToController;
-		//-
+
+
+        public int Wave { get; set; }
         public int numberEnemies;
         private int difficulty;
 
@@ -167,8 +169,8 @@ namespace GameName1
 
             this.difficulty = 5;
             this.numberEnemies = 0;
-
-            currLevel.spawnEnemies(difficulty);
+            this.Wave = 0;
+            WaveBegin();
 
             base.Initialize();
         }
@@ -271,12 +273,6 @@ namespace GameName1
         }
 
 
-
-        /*protected override void Update(GameTime gameTime)
-        {
-            
-        }*/
-
         /// <summary>
         /// Allows the game to run logic such as updating the world,
         /// checking for collisions, gathering input, and playing audio.
@@ -284,9 +280,6 @@ namespace GameName1
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public void UpdateGame(GameTime gameTime)
         {
-			// ALEX
-			IsMouseVisible = true; 
-			//-ALEX
 
 
             //flag entities to be removed
@@ -355,6 +348,13 @@ namespace GameName1
 
             }
 
+            //check for wave completion
+            if (numberEnemies <= 0)
+            {
+                WaveCleared();
+                //pause and do other stuff, maybe set timer
+                WaveBegin();
+            }
 
 
             //update all entities including players
@@ -374,9 +374,7 @@ namespace GameName1
 
 				handlePlayerInput(player);
 
-				// AlexAlpha
 				player.camera.Update(this.getPlayers().Count, player, this.getLevelBounds()); 
-				//-
             }
 
             //run AI
@@ -1159,10 +1157,6 @@ namespace GameName1
         public void decreaseNumberEnemies()
         {
             numberEnemies--;
-            if (numberEnemies <= 0)
-            {
-                currLevel.spawnEnemies(difficulty);
-            }
 
         }
 
@@ -1265,6 +1259,19 @@ namespace GameName1
             }
 
             return list;
+        }
+
+
+        public void WaveCleared()
+        {
+
+        }
+
+        public void WaveBegin()
+        {
+            Wave++;
+            currLevel.spawnEnemies(difficulty);
+
         }
 
         public int getEnemyCount()
