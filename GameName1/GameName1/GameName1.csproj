@@ -50,12 +50,14 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AnimationTesting\Animation.cs" />
     <Compile Include="AnimationTesting\AnimationHelper.cs" />
+    <Compile Include="AnimationTesting\DamageAnimation.cs" />
     <Compile Include="AnimationTesting\FrameAnimation.cs" />
     <Compile Include="AnimationTesting\MobileSprite.cs" />
     <Compile Include="AnimationTesting\SpriteAnimation.cs" />
     <Compile Include="Collision.cs" />
-    <Compile Include="Effects\Burning.cs" />
+    <Compile Include="Skills\Burning.cs" />
     <Compile Include="Effects\Effect.cs" />
     <Compile Include="Interfaces\StatusEffect.cs" />
     <Compile Include="Effects\TextEffect.cs" />

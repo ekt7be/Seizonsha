@@ -12,6 +12,7 @@ using GameName1.Interfaces;
 using GameName1.NPCs;
 using GameName1.Skills;
 using GameName1.Effects;
+using GameName1.AnimationTesting;
 #endregion
 
 namespace GameName1
@@ -284,7 +285,7 @@ namespace GameName1
 			//-ALEX
 
 
-            //update all entities including players
+            //flag entities to be removed
             foreach (GameEntity entity in entities)
             {
                 if (entity.shouldRemove())
@@ -298,7 +299,6 @@ namespace GameName1
 
             }
 
-
             //remove entities flagged for removal
             while (removalQueue.Count > 0)
             {
@@ -308,6 +308,12 @@ namespace GameName1
                 {
                     AIs.Remove((AI)remEntity);
                 }
+            }
+
+            //remove animations flagged for removal
+            foreach (GameEntity entity in entities)
+            {
+                entity.ClearAnimations();
             }
 
 
@@ -374,12 +380,21 @@ namespace GameName1
                 ai.AI();
             }
 
+            //TODO: Update movement
+
             //execute all collisions
             foreach (Collision collision in collisions)
             {
                 collision.execute();
             }
             collisions.Clear();
+
+
+            //update animations
+            foreach (GameEntity entity in entities)
+            {
+                entity.UpdateAnimations();
+            }
         }
 
 
@@ -736,10 +751,12 @@ namespace GameName1
                 if (user == null)
                 {
                     incEntityHealth(target, -1 * amount);
+                    target.AddAnimation(new DamageAnimation(target));
                     return;
                 }
 
                 user.OnDamageOther(target, amount); // if damage goes through
+                target.AddAnimation(new DamageAnimation(target));
                 if (incEntityHealth(target, -1 * amount))
                 {
                     user.OnKillOther(target); //if kills target

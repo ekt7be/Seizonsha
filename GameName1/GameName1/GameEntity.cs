@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using GameName1.Effects;
+using GameName1.AnimationTesting;
 
 namespace GameName1
 {
@@ -32,11 +33,15 @@ namespace GameName1
         public int accelY { get; set; }
         protected Seizonsha game;
         public Texture2D sprite { get; set; }
-        public Color color { get; set; } //delete when we have actual sprites
+        public Color tint { get; set; }
+        protected Color defaultTint;
         private int frozen; // stop entity from moving for a period of time
         private List<StatusEffect> statusEffects;
         private List<StatusEffect> incomingStatusEffects;
         private List<StatusEffect> outgoingStatusEffects;
+
+        private List<Animation> animations;
+        private List<Animation> outgoingAnimations;
 
         protected Dictionary<int, Rectangle> FramesToAnimation;
         protected Rectangle? spriteSource = null;
@@ -74,13 +79,23 @@ namespace GameName1
 
             if (spriteSource == null)
             {
-                spriteBatch.Draw(sprite, this.hitbox, spriteSource, color, this.direction, new Vector2(0, 0), SpriteEffects.None, 1);
+                spriteBatch.Draw(sprite, this.hitbox, spriteSource, tint, this.direction, new Vector2(0, 0), SpriteEffects.None, 1);
             }
             else
             {
-                spriteBatch.Draw(sprite, this.hitbox, spriteSource, color, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+                spriteBatch.Draw(sprite, this.hitbox, spriteSource, tint, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
             }
 
+        }
+
+        public void setTint(Color tint)
+        {
+            this.tint = tint;
+        }
+
+        public void setDefaultTint()
+        {
+            this.tint = defaultTint;
         }
 
         public virtual void Update(GameTime gameTime)
@@ -116,6 +131,40 @@ namespace GameName1
             }
         }
 
+        public void UpdateAnimations()
+        {
+            foreach (Animation animation in animations)
+            {
+                animation.Update();
+                if (animation.shouldRemove())
+                {
+                    RemoveAnimation(animation);
+                }
+            }
+        }
+
+        public void AddAnimation(Animation animation)
+        {
+            animations.Add(animation);
+        }
+
+        public void RemoveAnimation(Animation animation)
+        {
+            outgoingAnimations.Add(animation);
+        }
+
+        public void ClearAnimations()
+        {
+            foreach (Animation animation in outgoingAnimations)
+            {
+                animation.OnRemove(this);
+                animations.Remove(animation);
+            }
+
+            outgoingAnimations.Clear();
+        }
+
+
 
         public GameEntity(Seizonsha game, Texture2D sprite, int width, int height, int targetType, int maxHealth)
         {
@@ -135,12 +184,16 @@ namespace GameName1
             this.game = game;
             this.sprite = sprite;
             this.collidable = true;
-            this.color = Color.White;
+            this.tint = Color.White;
+            this.defaultTint = tint;
             this.frozen = 0;
             this.xpReward = 0;
             this.statusEffects = new List<StatusEffect>();
             this.incomingStatusEffects = new List<StatusEffect>();
             this.outgoingStatusEffects = new List<StatusEffect>();
+
+            this.animations = new List<Animation>();
+            this.outgoingAnimations = new List<Animation>();
 
 
             this.FramesToAnimation = new Dictionary<int, Rectangle>(); //for animations
@@ -311,41 +364,6 @@ namespace GameName1
             return targetType;
         }
 
-        /*
-        public bool damage(int amount, int damageType) // true if killed
-        {
-            if (game.ShouldDamage(damageType, targetType))
-            {
-                TextEffect text = new TextEffect(this.game, amount +"", 10, this.getCenterX(), this.getCenterY()-60, Color.Red );
-                game.Spawn(text);
-                return incHealth(-1 * amount);
-            }
-            return false;
-        }
-
-        public void heal(int amount)
-        {
-            
-            incHealth(amount);
-            TextEffect text = new TextEffect(this.game, amount + "", 10, this.getCenterX(), this.getCenterY() - 60, Color.Green);
-            game.Spawn(text);
-        }
-
-        public bool incHealth(int amount){ //true if dead
-            health += amount;
-            if (health > maxHealth){
-                health = maxHealth;
-            }
-            if (health < 0)
-            {
-                health = 0;
-                die();
-                return true;
-            }
-            return false;
-        }
-         * 
-         */
 
         public void die()
         {
