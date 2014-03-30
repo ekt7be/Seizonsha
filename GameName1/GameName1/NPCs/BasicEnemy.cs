@@ -16,12 +16,10 @@ namespace GameName1.NPCs
 		Tile playerTile; 
 		List<Tile> path;
 
-		bool drawPath = false; 
+		bool drawPath = true; 
 
 		bool reachedDest; 
 		Tile currentDest; 
-
-
 
 		private static float elapsed;
 		private static readonly float delay = 200f;
@@ -357,6 +355,7 @@ namespace GameName1.NPCs
 
 		public override void collideWithWall()
 		{
+			findPath(0, playerTile);
 		}
 
 		public override void OnSpawn()
