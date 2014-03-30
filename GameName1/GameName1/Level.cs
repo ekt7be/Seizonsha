@@ -95,7 +95,7 @@ namespace GameName1
             }
         }
 
-        public Tile getTile(int horz, int vert)
+		public Tile getTileFromIndex(int horz, int vert)
         {
             if (horz < 0 || horz > map.GetTilesHorizontal() - 1 || vert < 0 || vert > map.GetTilesVertical() - 1){
                 return null;

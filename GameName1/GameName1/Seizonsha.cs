@@ -83,6 +83,16 @@ namespace GameName1
             screenManager.AddScreen(new MainMenuScreen(), null);
         }
 			
+	
+		// for pathfinding 
+		public Tile getTileFromCoord(int x, int y) {
+			return currLevel.getTileFromIndex(getTileIndexFromLeftEdgeX(x), getTileIndexFromTopEdgeY(y)); 
+		}
+
+		public Tile getTileFromIndex(int x, int y) {
+			return currLevel.getTileFromIndex(x, y); 
+		}
+
 		void initTileSprites() {
 			Texture2D floor_grass = Content.Load<Texture2D>("tiles/dc_tiles/dc-dngn/floor/grass/grass0");
 			Texture2D floor_nerves = Content.Load<Texture2D>("tiles/dc_tiles/dc-dngn/floor/floor_nerves1");
@@ -184,7 +194,6 @@ namespace GameName1
 
             this.difficulty = 5;
             this.numberEnemies = 0;
-            currLevel.spawnEnemies(difficulty);
             this.Wave = 0;
             WaveBegin();
 
@@ -711,10 +720,10 @@ namespace GameName1
             {
                 for (int j = getTileIndexFromTopEdgeY(entity.getTopEdgeY()); j <= getTileIndexFromBottomEdgeY(entity.getBottomEdgeY()); j++)
                 {
-                    Tile currTile = currLevel.getTile(i, j);
+					Tile currTile = currLevel.getTileFromIndex(i, j);
                     if (currTile != null) //if within bounds of level
                     {
-                        currLevel.getTile(i, j).BindEntity(entity, bind);
+						currLevel.getTileFromIndex(i, j).BindEntity(entity, bind);
                     }
                 }
             }
@@ -839,7 +848,7 @@ namespace GameName1
             {
                 for (int j = getTileIndexFromTopEdgeY(entity.getTopEdgeY()); j <= getTileIndexFromBottomEdgeY(entity.getBottomEdgeY()); j++)
                 {
-                    Tile tile = currLevel.getTile(i, j);
+					Tile tile = currLevel.getTileFromIndex(i, j);
                     if (tile.isObstacle())
                     {
                         collide = true;
@@ -923,7 +932,7 @@ namespace GameName1
                 {
                     for (int j = topEdgeTile; j <= bottomEdgeTile; j++)
                     {
-                        Tile currTile = currLevel.getTile(rightEdgeTile + i, j);
+						Tile currTile = currLevel.getTileFromIndex(rightEdgeTile + i, j);
                         if (currTile == null)
                         {
                             continue;
@@ -984,7 +993,7 @@ namespace GameName1
                 {
                     for (int j = topEdgeTile; j <= bottomEdgeTile; j++)
                     {
-                        Tile currTile = currLevel.getTile(leftEdgeTile - i, j);
+						Tile currTile = currLevel.getTileFromIndex(leftEdgeTile - i, j);
                         if (currTile == null)
                         {
                             continue;
@@ -1053,7 +1062,7 @@ namespace GameName1
                 {
                     for (int j = leftEdgeTile; j <= rightEdgeTile; j++)
                     {
-                        Tile currTile = currLevel.getTile(j, bottomEdgeTile + i);
+						Tile currTile = currLevel.getTileFromIndex(j, bottomEdgeTile + i);
                         if (currTile == null)
                         {
                             continue;
@@ -1113,7 +1122,7 @@ namespace GameName1
                 {
                     for (int j = leftEdgeTile; j <= rightEdgeTile; j++)
                     {
-                        Tile currTile = currLevel.getTile(j, topEdgeTile - i);
+						Tile currTile = currLevel.getTileFromIndex(j, topEdgeTile - i);
                         if (currTile == null)
                         {
                             continue;
@@ -1187,7 +1196,7 @@ namespace GameName1
             {
                 for (int j = getTileIndexFromTopEdgeY(bounds.Top); j <= getTileIndexFromBottomEdgeY(bounds.Bottom); j++)
                 {
-                    Tile currTile = currLevel.getTile(i, j);
+					Tile currTile = currLevel.getTileFromIndex(i, j);
                     if (currTile != null)
                     {
                         foreach (GameEntity entity in currTile.getEntities())
@@ -1229,7 +1238,7 @@ namespace GameName1
 
         public Tile getTileFromCoordinates(int x, int y)
         {
-            return currLevel.getTile(x, y);
+			return currLevel.getTileFromIndex(x, y);
         }
 
         public void Spawn(Spawnable spawn, int x, int y)
