@@ -118,19 +118,27 @@ namespace GameName1
             Texture2D plateArmorPants = Content.Load<Texture2D>("Sprites/PlateArmorPantsSpritesheet");
             Texture2D plateArmorArmsShoulder = Content.Load<Texture2D>("Sprites/PlateArmorArmsShoulderSpriteSheet");
             Texture2D plateArmorTorso = Content.Load<Texture2D>("Sprites/PlateArmorTorsoSpritesheet");
+            Texture2D fireball = Content.Load<Texture2D>("Sprites/fireballsprite");
+            Texture2D heal = Content.Load<Texture2D>("Sprites/healsprite");
+            Texture2D bullet = Content.Load<Texture2D>("Sprites/bulletsprite");
 
             SkillTree.SkillTree.nodeTextures.Add(Static.SKILL_TREE_NODE_ANY, nodeRect);
 
 			initTileSprites();
 
-            spriteMappings.Add(Static.BASIC_ENEMY_INT, basicEnemyRect);
-            spriteMappings.Add(Static.PLAYER_INT, playerRect);
-            spriteMappings.Add(Static.PLATE_ARMOR_HEAD, plateArmorHead);
-            spriteMappings.Add(Static.PLATE_ARMOR_FEET, plateArmorFeet);
-            spriteMappings.Add(Static.PLATE_ARMOR_GLOVES, plateArmorGloves);
-            spriteMappings.Add(Static.PLATE_ARMOR_PANTS, plateArmorPants);
-            spriteMappings.Add(Static.PLATE_ARMOR_ARMS_SHOULDER, plateArmorArmsShoulder);
-            spriteMappings.Add(Static.PLATE_ARMOR_TORSO, plateArmorTorso);
+            spriteMappings.Add(Static.SPRITE_BASIC_ENEMY_INT, basicEnemyRect);
+            spriteMappings.Add(Static.SPRITE_PLAYER_INT, playerRect);
+            spriteMappings.Add(Static.SPRITE_PLATE_ARMOR_HEAD, plateArmorHead);
+            spriteMappings.Add(Static.SPRITE_PLATE_ARMOR_FEET, plateArmorFeet);
+            spriteMappings.Add(Static.SPRITE_PLATE_ARMOR_GLOVES, plateArmorGloves);
+            spriteMappings.Add(Static.SPRITE_PLATE_ARMOR_PANTS, plateArmorPants);
+            spriteMappings.Add(Static.SPRITE_PLATE_ARMOR_ARMS_SHOULDER, plateArmorArmsShoulder);
+            spriteMappings.Add(Static.SPRITE_PLATE_ARMOR_TORSO, plateArmorTorso);
+            spriteMappings.Add(Static.SPRITE_FIREBALL, fireball);
+            spriteMappings.Add(Static.SPRITE_HEAL, heal);
+            spriteMappings.Add(Static.SPRITE_BULLET, bullet);
+
+
 
 			initViewports(numberOfPlayers);
 
@@ -733,23 +741,7 @@ namespace GameName1
             return testRect;
         }
 
-        public Texture2D getFireballSprite()
-        {
-            Texture2D fireballTexture = Content.Load<Texture2D>("Sprites/fireballsprite");
-            return fireballTexture;
-        }
 
-        public Texture2D getBulletSprite()
-        {
-            Texture2D bulletTexture = Content.Load<Texture2D>("Sprites/bulletsprite");
-            return bulletTexture;
-        }
-
-        public Texture2D getHealSprite()
-        {
-            Texture2D healTexture = Content.Load<Texture2D>("Sprites/healsprite");
-            return healTexture;
-        }
 
 
         public void healEntity(GameEntity user, GameEntity target, int amount, int damageType)

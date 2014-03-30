@@ -50,7 +50,7 @@ namespace GameName1.Skills
         protected override void UseSkill()
         {
             Rectangle slashBounds = new Rectangle((int)(user.getCenterX() + user.vectorDirection.X * user.width / 2 - user.width / 4), (int)(user.getCenterY() + user.vectorDirection.Y * user.height / 2 - user.height / 4), user.width / 2, user.height / 2);
-            game.Spawn(new SwordSlash(game, user, game.getTestSprite(slashBounds, Color.Green), slashBounds, damage, damageType, 10, user.vectorDirection), slashBounds.Left, slashBounds.Top);
+            game.Spawn(new SwordSlash(game, user, Static.PIXEL_THIN, slashBounds, damage, damageType, 10, user.vectorDirection), slashBounds.Left, slashBounds.Top);
         }
 
     }

@@ -31,7 +31,7 @@ namespace GameName1.NPCs
         private bool right;
 
         public BasicEnemy(Seizonsha game)
-            : base(game, Seizonsha.spriteMappings[Static.BASIC_ENEMY_INT], Static.BASIC_ENEMY_WIDTH, Static.BASIC_ENEMY_HEIGHT, Static.DAMAGE_TYPE_ENEMY, 200)
+            : base(game, Seizonsha.spriteMappings[Static.SPRITE_BASIC_ENEMY_INT], Static.BASIC_ENEMY_WIDTH, Static.BASIC_ENEMY_HEIGHT, Static.DAMAGE_TYPE_ENEMY, 200)
         {
             base.scale = 1.0f;
             setXPReward(50);
@@ -88,12 +88,7 @@ namespace GameName1.NPCs
 
         public override void collide(GameEntity entity)
         {
-          //  Static.Debug("NPC collision with entity");
-            /*
-			if(entity.getTargetType() == Static.TARGET_TYPE_FRIENDLY){
-				game.damageEntity(this, entity, 2, Static.DAMAGE_TYPE_ENEMY);
-			}
-             * */
+
         }
 
         public override void collideWithWall()

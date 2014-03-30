@@ -74,15 +74,18 @@ namespace GameName1
         public static readonly Color UI_HEAL_COLOR = Color.Green;
 
         //Int to Sprite Mappings
-        public static readonly int BASIC_ENEMY_INT = 0;
-        public static readonly int PLAYER_INT = 1;
+        public static readonly int SPRITE_BASIC_ENEMY_INT = 0;
+        public static readonly int SPRITE_PLAYER_INT = 1;
 
-        public static readonly int PLATE_ARMOR_HEAD = 2;
-        public static readonly int PLATE_ARMOR_FEET = 3;
-        public static readonly int PLATE_ARMOR_GLOVES = 4;
-        public static readonly int PLATE_ARMOR_PANTS = 5;
-        public static readonly int PLATE_ARMOR_ARMS_SHOULDER = 6;
-        public static readonly int PLATE_ARMOR_TORSO = 7;
+        public static readonly int SPRITE_PLATE_ARMOR_HEAD = 2;
+        public static readonly int SPRITE_PLATE_ARMOR_FEET = 3;
+        public static readonly int SPRITE_PLATE_ARMOR_GLOVES = 4;
+        public static readonly int SPRITE_PLATE_ARMOR_PANTS = 5;
+        public static readonly int SPRITE_PLATE_ARMOR_ARMS_SHOULDER = 6;
+        public static readonly int SPRITE_PLATE_ARMOR_TORSO = 7;
+        public static readonly int SPRITE_FIREBALL = 8;
+        public static readonly int SPRITE_BULLET = 9;
+        public static readonly int SPRITE_HEAL = 10;
 
         //Skilltree
         public static readonly int SKILL_TREE_WEIGHT_UNLOCKED = 1;
