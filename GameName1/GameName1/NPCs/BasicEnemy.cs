@@ -335,11 +335,11 @@ namespace GameName1.NPCs
 				case 8: rx = 1; ry = 1; break; 
 			} 
 
-			int withinAdjacent = 1;	// gets a random tile within this many squares out
+			int withinAdjacent = 3;	// gets a random tile within this many squares out
 
 			r = random.Next(1, withinAdjacent+1); 
 
-			tileAtThisDir = game.getTileFromIndex(enemyTile.xIndex + rx * r, enemyTile.yIndex + ry * r); 
+			tileAtThisDir = game.getTileFromIndex(playerTile.xIndex + rx * r, playerTile.yIndex + ry * r); 
 
 			if(tileAtThisDir == null) 
 				return null; 
