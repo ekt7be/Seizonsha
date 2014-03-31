@@ -1023,6 +1023,7 @@ namespace GameName1
             }
 
             entity.floatx = entity.floatx + distanceToTravelX;
+            entity.lastMovement.X = distanceToTravelX;
             //entity.hitbox.Offset(distanceToTravelX, 0);
             //entity.hitbox.Offset((int)entity.floatx - entity.x, 0);
             entity.x = (int)entity.floatx;
@@ -1153,6 +1154,7 @@ namespace GameName1
 
 
             entity.floaty = entity.floaty + distanceToTravelY;
+            entity.lastMovement.Y = distanceToTravelY;
             //entity.hitbox.Offset(0, (int)entity.floaty - entity.y);
             entity.y = (int)entity.floaty;
             entity.hitbox.Y = entity.y;

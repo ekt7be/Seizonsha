@@ -15,6 +15,7 @@ namespace GameName1
     {
 
         public Vector2 movement;
+        public Vector2 lastMovement;
 
         public int x { get; set; }
         public int y { get; set; }
@@ -197,6 +198,7 @@ namespace GameName1
             this.velocityX = 0;
             this.velocityY = 0;
             this.movement = new Vector2(0, 0);
+            this.lastMovement = new Vector2(0, 0);
             this.game = game;
             this.sprite = sprite;
             this.collidable = true;
@@ -372,9 +374,9 @@ namespace GameName1
 
         }
 
-        public Vector2 getMovementVector()
+        public Vector2 getLastMovement()
         {
-            return movement;
+            return lastMovement;
         }
 
         public int getCenterX()
@@ -473,6 +475,8 @@ namespace GameName1
             return xpReward;
         }
 
+
+       // abstract String getName();
 
 
     }

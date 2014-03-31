@@ -52,9 +52,9 @@ namespace GameName1
         /*
         public static void removeFromActive(GameEntity entity)
         {
-            createLists(entity.GetType());
-            active[entity.GetType()].Remove(entity);
-            dead[entity.GetType()].Add(entity);
+            createLists(entity.GetName());
+            active[entity.GetName()].Remove(entity);
+            dead[entity.GetName()].Add(entity);
         }
 
 
