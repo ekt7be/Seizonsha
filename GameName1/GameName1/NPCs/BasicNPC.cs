@@ -8,7 +8,7 @@ using System.Text;
 
 namespace GameName1.NPCs
 {
-    class BasicNPC : GameEntity, AI
+    abstract class BasicNPC : GameEntity, AI
     {
         private int count = 0;
 

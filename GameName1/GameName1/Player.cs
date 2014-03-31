@@ -508,7 +508,7 @@ namespace GameName1
 
         public override void OnKillOther(GameEntity entity)
         {
-            XPEffect xpEffect = new XPEffect(game,entity.getXPReward(), 30);
+            TextEffect xpEffect = EntityFactory.getXPEffect(game,entity.getXPReward());
             game.Spawn(xpEffect,getCenterX(), getCenterY());
             incXP(entity.getXPReward());
         }
@@ -556,6 +556,11 @@ namespace GameName1
                 left = true;
                 up = right = down = false;
             }
+        }
+
+        public override string getName()
+        {
+            return Static.TYPE_PLAYER;
         }
     }
 }

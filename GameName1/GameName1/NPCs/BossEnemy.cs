@@ -8,7 +8,7 @@ using System.Text;
 
 namespace GameName1.NPCs
 {
-    class BossEnemy : GameEntity
+    abstract class BossEnemy : GameEntity
     {
         public BossEnemy(Seizonsha game, Texture2D sprite, int width, int height)
             : base(game, sprite, width, height, Static.DAMAGE_TYPE_ENEMY, 20)

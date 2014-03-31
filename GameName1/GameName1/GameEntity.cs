@@ -39,7 +39,6 @@ namespace GameName1
         protected Seizonsha game;
         public Texture2D sprite { get; set; }
 
-        public Color color { get; set; } //delete when we have actual sprites
         protected int frozen; // stop entity from moving for a period of time
         protected List<StatusEffect> statusEffects;
         protected List<StatusEffect> incomingStatusEffects;
@@ -147,7 +146,7 @@ namespace GameName1
             }
         }
 
-        public void UpdateAnimations()
+        public virtual void UpdateAnimation()
         {
             foreach (Animation animation in animations)
             {
@@ -217,34 +216,6 @@ namespace GameName1
             this.FramesToAnimation = new Dictionary<int, Rectangle>(); //for animations
 
 
-        }
-
-        protected void set(Seizonsha game, Texture2D sprite, int width, int height, int targetType, int maxHealth)
-        {
-            this.width = width;
-            this.height = height;
-            this.targetType = targetType;
-            this.maxHealth = maxHealth;
-            this.health = maxHealth;
-            if (targetType != Static.TARGET_TYPE_NOT_DAMAGEABLE)
-            {
-                this.hasHealth = true;
-            }
-            this.remove = false;
-            this.velocityX = 0;
-            this.velocityY = 0;
-            this.game = game;
-            this.sprite = sprite;
-            this.collidable = true;
-            this.color = Color.White;
-            this.frozen = 0;
-            this.xpReward = 0;
-            this.statusEffects = new List<StatusEffect>();
-            this.incomingStatusEffects = new List<StatusEffect>();
-            this.outgoingStatusEffects = new List<StatusEffect>();
-
-
-            this.FramesToAnimation = new Dictionary<int, Rectangle>(); //for animations
         }
 
         protected abstract void OnDie();
@@ -475,8 +446,31 @@ namespace GameName1
             return xpReward;
         }
 
+        virtual public void reset()
+        {
 
-       // abstract String getName();
+            this.health = maxHealth;
+            this.remove = false;
+            this.velocityX = 0;
+            this.velocityY = 0;
+            this.collidable = true;
+            this.tint = Color.White;
+            this.frozen = 0;
+            this.xpReward = 0;
+            this.statusEffects.Clear();
+            this.incomingStatusEffects.Clear();
+            this.outgoingStatusEffects.Clear();
+            this.outgoingAnimations.Clear();
+            this.animations.Clear();
+            this.scale = 1.0f;
+        }
+
+        public void setSprite(Texture2D sprite)
+        {
+            this.sprite = sprite;
+        }
+
+       public abstract String getName();
 
 
     }

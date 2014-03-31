@@ -10,6 +10,25 @@ namespace GameName1
     class Static
     {
 
+
+        //entity type names
+
+        public static readonly string TYPE_BULLET = "Bullet";
+        public static readonly string TYPE_EXPLODING_BULLET = "Exploding Bullet";
+        public static readonly string TYPE_EFFECT = "Effect";
+        public static readonly string TYPE_TEXT_EFFECT = "Text Effect";
+        public static readonly string TYPE_BASIC_ENEMY = "Basic Enemy";
+        public static readonly string TYPE_AOE_CIRCLE = "AOE Circle";
+        public static readonly string TYPE_AOE_CONE = "AOE Cone";
+        public static readonly string TYPE_SWORD_SLASH= "Sword Slash";
+        public static readonly string TYPE_PLAYER = "Player";
+
+
+
+
+
+
+
         //player stuff
         public static int NUM_PLAYERS = 1;
         public static readonly int PLAYER_HEIGHT = 45;

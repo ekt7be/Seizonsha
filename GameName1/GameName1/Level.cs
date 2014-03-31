@@ -60,7 +60,7 @@ namespace GameName1
             for (int i = 0; i < totalDifficulty; i++)
             {
                 SpawnTile spawn = getRandomSpawnPoint();
-                GameEntity enemy = new BasicEnemy(game);
+                BasicEnemy enemy = EntityFactory.getBasicEnemy(game);
                 Vector2 spawnPoint = spawn.getSpawnPosition(enemy);
                 game.Spawn(enemy, (int)spawnPoint.X, (int)spawnPoint.Y);
                 game.increaseNumberEnemies();

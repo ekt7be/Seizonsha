@@ -39,5 +39,32 @@ namespace GameName1.Skills
             }
         }
 
+
+        public override string getName()
+        {
+            return Static.TYPE_AOE_CIRCLE;
+
+        }
+
+        public void setAmount(int amount)
+        {
+            this.amount = amount;
+        }
+
+        public void setUser(GameEntity user)
+        {
+            this.user = user;
+        }
+
+        public void setDamageType(int damageType)
+        {
+            this.damageType = damageType;
+        }
+
+        public override void reset()
+        {
+            base.reset();
+        }
+
     }
 }

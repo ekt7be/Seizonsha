@@ -42,10 +42,10 @@ namespace GameName1.Skills
             int bulletWidth = 20;
             int bulletHeight = 20;
          
-            Rectangle slashBounds = new Rectangle((int)(user.getCenterX()), (int)(user.getCenterY()), bulletWidth, bulletHeight);
-            game.Spawn(new ExplodingBullet(game, user, Seizonsha.spriteMappings[Static.SPRITE_FIREBALL], this,slashBounds, damage, damageType, 1, bulletSpeed, user.vectorDirection), slashBounds.Left, slashBounds.Top);
+            Rectangle fireballBounds = new Rectangle((int)(user.getCenterX()), (int)(user.getCenterY()), bulletWidth, bulletHeight);
+            ExplodingBullet fireball = EntityFactory.getExplodingBullet(game, user, Seizonsha.spriteMappings[Static.SPRITE_FIREBALL], this, fireballBounds, damage, damageType, bulletSpeed, user.direction);
+            game.Spawn(fireball, fireballBounds.Left, fireballBounds.Top);
 
-            // game sprite bounds amount dmgAmount dmgType duration bulletSpeed
         }
 
 

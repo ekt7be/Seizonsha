@@ -42,7 +42,7 @@ namespace GameName1.Skills
             
             Rectangle bulletBounds = new Rectangle((int)(user.getCenterX()), (int)(user.getCenterY() + user.vectorDirection.Y), bulletWidth, bulletHeight);
 
-			game.Spawn(Bullet.getInstance(game, user, Seizonsha.spriteMappings[Static.SPRITE_BULLET], bulletBounds, damage, damageType, 1, bulletSpeed, user.vectorDirection), bulletBounds.Left, bulletBounds.Top);
+			game.Spawn(EntityFactory.getBullet(game, user, Seizonsha.spriteMappings[Static.SPRITE_BULLET], bulletBounds, damage, damageType, bulletSpeed, user.direction), bulletBounds.Left, bulletBounds.Top);
 
 
 		}

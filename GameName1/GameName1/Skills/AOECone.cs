@@ -16,7 +16,7 @@ namespace GameName1.Skills
         private Skill origin;
 
 
-        public AOECone(Seizonsha game, GameEntity user, Texture2D sprite, Skill origin, Rectangle bounds, int amount, int damageType, int duration, Vector2 direction)
+        public AOECone(Seizonsha game, GameEntity user, Texture2D sprite, Skill origin, Rectangle bounds, int amount, int damageType, int duration)
             : base(game, sprite, bounds.Width, bounds.Height, duration)
         {
             this.amount = amount;
@@ -45,6 +45,30 @@ namespace GameName1.Skills
                 }
             }
         }
+
+
+        public override string getName()
+        {
+            return Static.TYPE_AOE_CONE;
+        }
+
+
+        public void reset(GameEntity user, Texture2D sprite, Skill origin, Rectangle bounds, int amount, int damageType, int duration)
+        {
+            base.reset(duration);
+            this.user = user;
+            setSprite(sprite);
+            this.origin = origin;
+            this.width = bounds.Width;
+            this.height = bounds.Height;
+            this.damageType = damageType;
+            this.amount = amount;
+
+
+        }
+
+
+
 
     }
 }

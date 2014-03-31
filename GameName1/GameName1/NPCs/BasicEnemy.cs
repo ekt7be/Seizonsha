@@ -25,22 +25,15 @@ namespace GameName1.NPCs
 
 		private static float elapsed;
 		private static readonly float delay = 200f;
-		private static int currentFrame = 0;
+		private int currentFrame = 0;
 		private Sword sword;
 
-		private static readonly int UP_ANIMATION = 2;
-		private static readonly int DOWN_ANIMATION = 0;
+		private static readonly int UP_ANIMATION = 0;
+		private static readonly int DOWN_ANIMATION = 2;
 		private static readonly int LEFT_ANIMATION = 1;
 		private static readonly int RIGHT_ANIMATION = 3;
 		private static readonly int WALK_ANIMATION_FRAMES = 9;
 
-		// This states that they are always going to be walking... which is true for now. But when we add things such as attacks for enemies, we need to change it so that it sets this to false and sets isAttacking, or something, to true
-		private bool isWalking = true;
-
-		private bool up;
-		private bool down;
-		private bool left;
-		private bool right;
 
 		public BasicEnemy(Seizonsha game)
 			: base(game, Seizonsha.spriteMappings[Static.SPRITE_BASIC_ENEMY_INT], Static.BASIC_ENEMY_WIDTH, Static.BASIC_ENEMY_HEIGHT, Static.DAMAGE_TYPE_ENEMY, 200)
@@ -60,6 +53,7 @@ namespace GameName1.NPCs
 
 		public void AI()
 		{
+
 			List<Player> players = game.getPlayers();
 
 			Player closest = null;
@@ -374,6 +368,70 @@ namespace GameName1.NPCs
 			}
 		}
 
+
+        public override void UpdateAnimation()
+        {
+            base.UpdateAnimation();
+
+            if (this.getLastMovement().X!=0 && this.getLastMovement().Y!=0)
+            {
+
+
+                if (Math.Cos(this.direction) > .5)
+                {
+                    //spriteSource = FramesToAnimation[RIGHT_ANIMATION];
+                    base.spriteSource = new Rectangle(64 * currentFrame, RIGHT_ANIMATION * 64, 64, 64);
+
+                }
+                else if (Math.Sin(this.direction) > .5)
+                {
+                      base.spriteSource = new Rectangle(64 * currentFrame, DOWN_ANIMATION * 64, 64, 64);
+
+                }
+                else if (Math.Sin(direction) < -.5)
+                {
+                    //spriteSource = FramesToAnimation[UP_ANIMATION];
+                    base.spriteSource = new Rectangle(64 * currentFrame, UP_ANIMATION * 64, 64, 64);
+
+                }
+                else if (Math.Cos(direction) < -.5)
+                {
+                    //spriteSource = FramesToAnimation[LEFT_ANIMATION];
+                    base.spriteSource = new Rectangle(64 * currentFrame, LEFT_ANIMATION * 64, 64, 64);      
+                }
+
+
+            }
+
+            else
+            {
+
+                if (Math.Cos(this.direction) > .5)
+                {
+                    //spriteSource = FramesToAnimation[RIGHT_ANIMATION];
+                    base.spriteSource = new Rectangle(64 * 0, RIGHT_ANIMATION * 64, 64, 64);
+
+                }
+                else if (Math.Sin(this.direction) > .5)
+                {
+                    base.spriteSource = new Rectangle(64 * 0, DOWN_ANIMATION * 64, 64, 64);
+
+                }
+                else if (Math.Sin(direction) < -.5)
+                {
+                    //spriteSource = FramesToAnimation[UP_ANIMATION];
+                    base.spriteSource = new Rectangle(64 * 0, UP_ANIMATION * 64, 64, 64);
+
+                }
+                else if (Math.Cos(direction) < -.5)
+                {
+                    //spriteSource = FramesToAnimation[LEFT_ANIMATION];
+                    base.spriteSource = new Rectangle(64 * 0, LEFT_ANIMATION * 64, 64, 64);
+                }
+
+            }
+
+        }
 		public override void collideWithWall()
 		{
 			//findPath(0, playerTile);
@@ -429,28 +487,7 @@ namespace GameName1.NPCs
 				elapsed = 0;
 			}
 
-			if (isWalking)
-			{
-				if (up)
-					base.spriteSource = new Rectangle(64 * currentFrame, DOWN_ANIMATION * 64, 64, 64);
-				else if (left)
-					base.spriteSource = new Rectangle(64 * currentFrame, LEFT_ANIMATION * 64, 64, 64);
-				else if (down)
-					base.spriteSource = new Rectangle(64 * currentFrame, UP_ANIMATION * 64, 64, 64);
-				else if (right)
-					base.spriteSource = new Rectangle(64 * currentFrame, RIGHT_ANIMATION * 64, 64, 64);
-			}
-			else
-			{
-				if (up)
-					base.spriteSource = new Rectangle(64 * 0, DOWN_ANIMATION * 64, 64, 64);
-				else if (left)
-					base.spriteSource = new Rectangle(64 * 0, LEFT_ANIMATION * 64, 64, 64);
-				else if (down)
-					base.spriteSource = new Rectangle(64 * 0, UP_ANIMATION * 64, 64, 64);
-				else if (right)
-					base.spriteSource = new Rectangle(64 * 0, RIGHT_ANIMATION * 64, 64, 64);
-			}
+
 		}
 
 		protected override void OnDie()
@@ -468,33 +505,22 @@ namespace GameName1.NPCs
 				return;
 			}
 
-			if (Math.Cos(angle) > .5)
-			{
-				//base.spriteSource = FramesToAnimation[RIGHT_ANIMATION];
-				right = true;
-				up = left = down = false;
-			}
-			else if (Math.Sin(angle) > .5)
-			{
-				//base.spriteSource = FramesToAnimation[DOWN_ANIMATION];
-				down = true;
-				up = left = right = false;
-			}
-			else if (Math.Sin(angle) < -.5)
-			{
-				//base.spriteSource = FramesToAnimation[UP_ANIMATION];
-				up = true;
-				right = left = down = false;
-			}
-			else if (Math.Cos(angle) < -.5)
-			{
-				//base.spriteSource = FramesToAnimation[LEFT_ANIMATION];
-				left = true;
-				up = right = down = false;
-			}
 		}
 
-	}
+
+        public override string getName()
+        {
+            return Static.TYPE_BASIC_ENEMY;
+
+        }
+
+        public override void reset()
+        {
+           base.reset();
+           setXPReward(50);
+           reachedDest = true;
+        }
+    }
 }
 
 

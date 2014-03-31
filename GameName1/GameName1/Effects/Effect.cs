@@ -7,7 +7,7 @@ using System.Text;
 
 namespace GameName1.Effects
 {
-    abstract public class Effect : GameEntity
+    public class Effect : GameEntity
     {
 
         protected int duration;
@@ -28,16 +28,16 @@ namespace GameName1.Effects
             }
         }
 
-        protected void set(Seizonsha game, Texture2D sprite, int width, int height, int duration)
+
+        protected override void OnDie()
         {
-            base.set(game, sprite, width, height, Static.TARGET_TYPE_NOT_DAMAGEABLE, 0);
-            this.duration = duration;
-            setCollidable(false);
+
         }
 
-        abstract protected override void OnDie();
+        public override void OnSpawn()
+        {
 
-        abstract public override void OnSpawn();
+        }
 
         public override void collideWithWall()
         {
@@ -47,6 +47,22 @@ namespace GameName1.Effects
         public override void collide(GameEntity entity)
         {
             //no collisions..
+        }
+
+        public void reset(int duration)
+        {
+            base.reset();
+            this.duration = duration;
+        }
+
+        public override void reset()
+        {
+            base.reset();
+        }
+
+        public override String getName()
+        {
+            return Static.TYPE_BULLET;
         }
     }
 }

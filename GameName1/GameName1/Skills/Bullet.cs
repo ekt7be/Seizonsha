@@ -16,57 +16,22 @@ namespace GameName1.Skills
 		private float bulletSpeed; 
         protected GameEntity user;
 
-        static List<Bullet> liveBullets = new List<Bullet>();
-        static List<Bullet> deadBullets = new List<Bullet>();
 
-        public static Bullet getInstance(Seizonsha game, GameEntity user, Texture2D sprite, Rectangle bounds, int amount, int damageType, int duration, float bulletSpeed, Vector2 alexDirection)
-        {
-            if (deadBullets.Count == 0)
-                return new Bullet(game, user, sprite, bounds, amount, damageType, duration, bulletSpeed, alexDirection);
-            else
-            {
-                Bullet te = deadBullets[0];
-                deadBullets.Remove(te);
-                liveBullets.Add(te);
-                te.set(game, user, sprite, bounds, amount, damageType, duration, bulletSpeed, alexDirection);
-                return te;
-            }
 
-        }
 
-        public static void removeInstance(Bullet te)
-        {
-            liveBullets.Remove(te);
-            deadBullets.Add(te);
-        }
-
-        public void removeMe()
-        {
-            removeInstance(this);
-        }
-
-		protected Bullet(Seizonsha game, GameEntity user, Texture2D sprite, Rectangle bounds, int amount, int damageType, int duration, float bulletSpeed, Vector2 alexDirection)
+		public Bullet(Seizonsha game, GameEntity user, Texture2D sprite, Rectangle bounds, int amount, int damageType, float bulletSpeed, float directionAngle)
 			: base(game, sprite, bounds.Width, bounds.Height, Static.TARGET_TYPE_NOT_DAMAGEABLE, 30)
 		{
 			this.amount = amount;
 			this.damageType = damageType;
 			this.bulletSpeed = bulletSpeed;
-            this.velocityX = (int)(bulletSpeed * alexDirection.X);
-            this.velocityY = (int)(bulletSpeed * alexDirection.Y);
+            this.rotateToAngle(directionAngle);
+            this.velocityX = (int)(bulletSpeed * vectorDirection.X);
+            this.velocityY = (int)(bulletSpeed * vectorDirection.Y);
             this.user = user;
 		}
 
-        protected void set(Seizonsha game, GameEntity user, Texture2D sprite, Rectangle bounds, int amount, int damageType, int duration, float bulletSpeed, Vector2 alexDirection)
-        {
-            base.set(game, sprite, bounds.Width, bounds.Height, Static.TARGET_TYPE_NOT_DAMAGEABLE, 30);
 
-            this.amount = amount;
-            this.damageType = damageType;
-            this.bulletSpeed = bulletSpeed;
-            this.velocityX = (int)(bulletSpeed * alexDirection.X);
-            this.velocityY = (int)(bulletSpeed * alexDirection.Y);
-            this.user = user;
-        }
 
 
 		public override void OnSpawn()
@@ -102,6 +67,20 @@ namespace GameName1.Skills
             return true;
         }
 
+        public void reset(GameEntity user, Texture2D sprite, Rectangle bounds, int amount, int damageType, float bulletSpeed, float directionAngle)
+        {
+            base.reset();
+            this.amount = amount;
+            this.damageType = damageType;
+            this.bulletSpeed = bulletSpeed;
+            rotateToAngle(directionAngle);
+            velocityX = (int)(bulletSpeed * vectorDirection.X);
+            velocityY = (int)(bulletSpeed * vectorDirection.Y);
+            setSprite(sprite);
+            width = bounds.Width;
+            height = bounds.Height;
+        }
+
         public override void collideWithWall()
         {
             setRemove(true);
@@ -111,5 +90,14 @@ namespace GameName1.Skills
 		protected override void OnDie()
 		{
 		}
+
+
+        public override string getName()
+        {
+            return Static.TYPE_BULLET;
+
+        }
+
+
 	}
 }
