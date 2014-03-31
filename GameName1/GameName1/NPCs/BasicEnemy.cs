@@ -16,7 +16,7 @@ namespace GameName1.NPCs
 		Tile playerTile; 
 		List<Tile> path;
 
-		bool drawPath = true; 
+		bool drawPath = false; 
 
 		bool reachedDest; 
 		Tile currentDest; 
@@ -116,6 +116,9 @@ namespace GameName1.NPCs
 				float speedX = 0;
 				float speedY = 0; 
 
+				if (path.Count < 1) 
+					findPath(1, playerTile); 
+
 				// move along a path
 				for (int x = -1; x <= 1; x++) {
 					for (int y = -1; y <= 1; y++) {
@@ -131,18 +134,26 @@ namespace GameName1.NPCs
 								if (path [0].getCenterX() > this.getCenterX())	{// move right
 									speedX = speed; 
 									speedY = 0;
+									this.move(speedX, speedY);
+
 								}
 								if (path [0].getCenterX() < this.getCenterX())	{// move left
 									speedX = -speed; 
 									speedY = 0; 
+									this.move(speedX, speedY);
+
 								}
 								if (path [0].getCenterY() > this.getCenterY()) {	// move up
 									speedX = 0; 
 									speedY = speed; 
+									this.move(speedX, speedY);
+
 								}
 								if (path [0].getCenterY() < this.getCenterY())	{// move down
 									speedX = 0; 
 									speedY = -speed; 
+									this.move(speedX, speedY);
+
 								}
 							}
 						}
@@ -150,7 +161,7 @@ namespace GameName1.NPCs
 					}
 				}
 
-				this.move(speedX, speedY);
+
 			}
 			else {
 				// System.Console.WriteLine("finding path...");
@@ -303,7 +314,7 @@ namespace GameName1.NPCs
 			 * path[path.Count-1] means travel the whole path before recalculating = dumber AI
 			 * */
 
-			this.currentDest = path[path.Count/2];
+			this.currentDest = path[path.Count-1];
 		}
 
 		public Tile randomTile() {
@@ -343,10 +354,6 @@ namespace GameName1.NPCs
 
 		public override void collide(GameEntity entity)
 		{
-			if(entity.getTargetType() == Static.TARGET_TYPE_FRIENDLY){
-				sword.Use();
-			}
-
 			if (entity.getTargetType() == Static.TARGET_TYPE_ENEMY) {
 				findPath(1, randomTile());
 			}
@@ -355,7 +362,7 @@ namespace GameName1.NPCs
 
 		public override void collideWithWall()
 		{
-			findPath(0, playerTile);
+			//findPath(0, playerTile);
 		}
 
 		public override void OnSpawn()

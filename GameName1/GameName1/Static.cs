@@ -14,7 +14,7 @@ namespace GameName1
         public static int NUM_PLAYERS = 1;
         public static readonly int PLAYER_HEIGHT = 45;
         public static readonly int PLAYER_WIDTH = 45;
-		public static readonly int PLAYER_MOVE_SPEED = 4;
+		public static readonly int PLAYER_MOVE_SPEED = 5;
         public static readonly int PLAYER_MAX_HEALTH = 100;
         public static readonly int PLAYER_MAX_MANA = 100;
         public static readonly int PLAYER_L1_SKILL_INDEX = 0;
@@ -27,7 +27,7 @@ namespace GameName1
 		public static readonly int BASIC_ENEMY_HEIGHT = 32;
 		public static readonly int BASIC_ENEMY_WIDTH = 32;
         public static readonly int BASIC_ENEMY_DAMAGE = 5;
-		public static readonly float BASIC_ENEMY_SPEED = 2f;
+		public static readonly float BASIC_ENEMY_SPEED = 0.5f;
 
         //dimensions
 		public static int SCREEN_WIDTH = 1280; // 640 x 480, 1280 x 640
