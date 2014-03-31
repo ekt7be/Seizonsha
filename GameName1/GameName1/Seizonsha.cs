@@ -859,7 +859,7 @@ namespace GameName1
             return collide;
         }
 
-        private void moveGameEntityWithoutCollision(GameEntity entity, float x, float y)
+		public void moveGameEntityWithoutCollision(GameEntity entity, float x, float y)
         {
             entity.floatx = x;
             entity.floaty = y;

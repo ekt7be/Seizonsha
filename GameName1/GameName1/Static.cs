@@ -23,12 +23,6 @@ namespace GameName1
         public static readonly string TYPE_SWORD_SLASH= "Sword Slash";
         public static readonly string TYPE_PLAYER = "Player";
 
-
-
-
-
-
-
         //player stuff
         public static int NUM_PLAYERS = 1;
         public static readonly int PLAYER_HEIGHT = 45;
@@ -46,7 +40,7 @@ namespace GameName1
 		public static readonly int BASIC_ENEMY_HEIGHT = 32;
 		public static readonly int BASIC_ENEMY_WIDTH = 32;
         public static readonly int BASIC_ENEMY_DAMAGE = 5;
-		public static readonly float BASIC_ENEMY_SPEED = 0.5f;
+		public static readonly float BASIC_ENEMY_SPEED = 0.3f;
 
         //dimensions
 		public static int SCREEN_WIDTH = 1280; // 640 x 480, 1280 x 640

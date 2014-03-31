@@ -16,14 +16,14 @@ namespace GameName1.NPCs
 		Tile playerTile; 
 		List<Tile> path;
 
-		double cd; 
+		double closestDistance; 
 
 		bool drawPath = false; 
 
 		bool reachedDest; 
 		Tile currentDest; 
 
-		private static float elapsed;
+		private static float elapsed, elapsed2;
 		private static readonly float delay = 200f;
 		private int currentFrame = 0;
 		private Sword sword;
@@ -54,11 +54,11 @@ namespace GameName1.NPCs
 		public void AI()
 		{
 
+			// find closest player
 			List<Player> players = game.getPlayers();
 
 			Player closest = null;
-			double closestDistance = Double.PositiveInfinity;
-			this.cd = closestDistance; 
+			closestDistance = Double.PositiveInfinity;
 
 			foreach (Player p in players)
 			{
@@ -78,16 +78,13 @@ namespace GameName1.NPCs
 			float playerDirection = (float)Math.Atan2(closest.y-this.y, closest.x - this.x);
 			rotateToAngle(playerDirection);
 
-			if (closestDistance < this.width*2)
+			// attack with sword if close enough
+			if (closestDistance < this.width*1.7)
 			{
 				sword.Use();
 			} 
-			else {
 
-			
-
-
-			// pathfinding 
+			//**PATHFINDING** 
 			playerTile = game.getTileFromCoord(closest.getCenterX(), closest.getCenterY());
 			enemyTile = game.getTileFromCoord(this.getCenterX(), this.getCenterY());
 
@@ -106,7 +103,10 @@ namespace GameName1.NPCs
 				// System.Console.Write ("time to move!");
 				Tile tileAtThisDir;
 
-				if (path.Count > 0 && path != null) {	// like pacman gobbling up nodes
+				if (path == null)
+					return;
+
+				if (path.Count > 0) {	// like pacman gobbling up nodes
 					if (path[0].xIndex == enemyTile.xIndex && path[0].yIndex == enemyTile.yIndex) {
 						// System.Console.WriteLine("removed a node!"); 
 						path.RemoveAt(0);							
@@ -116,45 +116,44 @@ namespace GameName1.NPCs
 				float speedX = 0;
 				float speedY = 0; 
 
-				if (path.Count < 1) 
-					findPath(1, playerTile); 
-
 				// move along a path
 				for (int x = -1; x <= 1; x++) {
 					for (int y = -1; y <= 1; y++) {
 
-						bool thisTile = (x == 0 && y == 0);
+						bool currentTile = (x == 0 && y == 0);
 						bool isHorVert = (x == 0) || (y == 0); 
 						bool isDiagonal = (x != 0 && y != 0);
 
-						if (!thisTile) {
+						if (!currentTile) {
+
 							tileAtThisDir = game.getTileFromIndex (enemyTile.xIndex + x, enemyTile.yIndex + y);
+
 							if (path.Count > 0 && path != null) {
-								// System.Console.WriteLine("HELLO"); 
-								if (path [0].getCenterX() > this.getCenterX())	{// move right
+
+								// movement
+								if (path [0].getCenterX() > this.getCenterX()) { // move right
 									speedX = speed; 
 									speedY = 0;
 									this.move(speedX, speedY);
-
 								}
-								if (path [0].getCenterX() < this.getCenterX())	{// move left
+								if (path [0].getCenterX() < this.getCenterX()) { // move left
 									speedX = -speed; 
 									speedY = 0; 
 									this.move(speedX, speedY);
 
 								}
-								if (path [0].getCenterY() > this.getCenterY()) {	// move up
+								if (path [0].getCenterY() > this.getCenterY()) { // move up
 									speedX = 0; 
 									speedY = speed; 
 									this.move(speedX, speedY);
 
 								}
-								if (path [0].getCenterY() < this.getCenterY())	{// move down
+								if (path [0].getCenterY() < this.getCenterY()) { // move down
 									speedX = 0; 
 									speedY = -speed; 
 									this.move(speedX, speedY);
-
 								}
+
 							}
 						}
 
@@ -170,8 +169,6 @@ namespace GameName1.NPCs
 
 			if (currentDest == null)
 				return;
-
-			}
 		}
 
 		public void findPath(int searchMethod, Tile target) {
@@ -201,44 +198,44 @@ namespace GameName1.NPCs
 				Tile tileAtThisDir;
 				for (int x = -1; x <= 1; x++) {
 					for (int y = -1; y <= 1; y++) {
-						bool thisTile = (x == 0 && y == 0);
+						bool currentTile = (x == 0 && y == 0);
 						bool isDiagonal = (x != 0 && y != 0);
-						bool search = !thisTile && !isDiagonal; 
+						bool search = !currentTile && !isDiagonal; 
 
 						tileAtThisDir = game.getTileFromIndex(selected.xIndex + x, selected.yIndex + y); 
 						if (tileAtThisDir == null)
 							return;
 
 						switch (searchMethod) {
-						case 0: 
-							search = !thisTile && !isDiagonal; 
-							break;
-						case 1: 
-							search = !thisTile; 
-							break;
+							case 0: 
+								search = !currentTile && !isDiagonal; 
+								break;
+							case 1: 
+								search = !currentTile; 
+								break;
 						}
 
 						if (search) {
-						int addG = 0; 
-						if (!(y != 0) && (x != 0))	
-							addG = 10;	// up, down, left, right
-						else
-							addG = 14;	// diagonal
+							int addG = 0;
 
-						if (open.Contains(tileAtThisDir)) {
-							if (tileAtThisDir.G < (selected.G + addG)) {	// try to find better path with smaller G
-								tileAtThisDir.parent = selected; 
+							if (!(y != 0) && (x != 0))	
+								addG = 10;	// up, down, left, right
+							else
+								addG = 14;	// diagonal
+
+							if (open.Contains(tileAtThisDir)) {
+								if (tileAtThisDir.G < (selected.G + addG)) {	// try to find better path with smaller G
+									tileAtThisDir.parent = selected; 
+								}
 							}
-						}
 
-						if (!(tileAtThisDir.isObstacle()) && !(closed.Contains(tileAtThisDir))) {
-							tileAtThisDir.parent = selected; 
-							tileAtThisDir.G = tileAtThisDir.parent.G + addG;
-							open.Add(tileAtThisDir);
-						} 
-						else {	// ignore obstacles
-							// System.Console.WriteLine ("obs: " + checkTileAtDir.xIndex + ", " + checkTileAtDir.yIndex); 
-						}
+							if (!(tileAtThisDir.isObstacle()) && !(closed.Contains(tileAtThisDir))) {
+								tileAtThisDir.parent = selected; 
+								tileAtThisDir.G = tileAtThisDir.parent.G + addG;
+								open.Add(tileAtThisDir);
+							}
+							else {}	// ignore obstacles
+									// System.Console.WriteLine ("obs: " + checkTileAtDir.xIndex + ", " + checkTileAtDir.yIndex); 
 						}
 					}
 				}
@@ -316,7 +313,9 @@ namespace GameName1.NPCs
 			 * path[path.Count-1] means travel the whole path before recalculating = dumber AI
 			 * */
 
-			this.currentDest = path[path.Count-1];
+			//this.currentDest = path[path.Count-1];
+			this.currentDest = path[path.Count/2];
+
 		}
 
 		public Tile randomTile(Tile target, int within) {
@@ -336,8 +335,9 @@ namespace GameName1.NPCs
 				case 7: rx = 0; ry = 1; break;
 				case 8: rx = 1; ry = 1; break; 
 			} 
-				
-			r = random.Next(1, within+1); 
+
+			r = random.Next(1, within+1);		// clump together more, but more aggressive
+			//r = r * within;						// makes them much less predictable
 
 			tileAtThisDir = game.getTileFromIndex(target.xIndex + rx * r, target.yIndex + ry * r); 
 
@@ -356,18 +356,19 @@ namespace GameName1.NPCs
 		{
 			if (entity.getTargetType() == Static.TARGET_TYPE_ENEMY) {
 
-				if (cd >= this.width*2)
-				{
-					findPath(1, randomTile(playerTile, 3));
-				} 
-				else {
-					findPath(1, randomTile(enemyTile, 5));
-					//findPath(1, randomTile(playerTile, 3));
+				if (elapsed2 >= 1000) {
+					findPath(1, randomTile(enemyTile, 3)); 
+					elapsed2 = 0;
 				}
-
+				else {
+					// if close enough, try to surround the player
+					if (closestDistance < this.width*1.7*2)
+						findPath(1, playerTile);
+					else
+						findPath(1, randomTile(playerTile, 3));
+				}
 			}
 		}
-
 
         public override void UpdateAnimation()
         {
@@ -434,7 +435,6 @@ namespace GameName1.NPCs
         }
 		public override void collideWithWall()
 		{
-			//findPath(0, playerTile);
 		}
 
 		public override void OnSpawn()
@@ -473,6 +473,7 @@ namespace GameName1.NPCs
 			sword.Update();
 
 			elapsed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+			elapsed2 += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
 
 			if (elapsed > delay)
 			{
@@ -486,8 +487,7 @@ namespace GameName1.NPCs
 				}
 				elapsed = 0;
 			}
-
-
+				
 		}
 
 		protected override void OnDie()
