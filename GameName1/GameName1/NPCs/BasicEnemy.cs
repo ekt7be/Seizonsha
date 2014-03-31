@@ -16,6 +16,8 @@ namespace GameName1.NPCs
 		Tile playerTile; 
 		List<Tile> path;
 
+		double cd; 
+
 		bool drawPath = false; 
 
 		bool reachedDest; 
@@ -62,6 +64,7 @@ namespace GameName1.NPCs
 
 			Player closest = null;
 			double closestDistance = Double.PositiveInfinity;
+			this.cd = closestDistance; 
 
 			foreach (Player p in players)
 			{
@@ -84,7 +87,10 @@ namespace GameName1.NPCs
 			if (closestDistance < this.width*2)
 			{
 				sword.Use();
-			}
+			} 
+			else {
+
+			
 
 
 			// pathfinding 
@@ -170,6 +176,8 @@ namespace GameName1.NPCs
 
 			if (currentDest == null)
 				return;
+
+			}
 		}
 
 		public void findPath(int searchMethod, Tile target) {
@@ -317,7 +325,7 @@ namespace GameName1.NPCs
 			this.currentDest = path[path.Count-1];
 		}
 
-		public Tile randomTile() {
+		public Tile randomTile(Tile target, int within) {
 			Random random = new Random(); 
 			int r = random.Next(1, 9);
 			int rx = 0; int ry = 0; 
@@ -334,12 +342,10 @@ namespace GameName1.NPCs
 				case 7: rx = 0; ry = 1; break;
 				case 8: rx = 1; ry = 1; break; 
 			} 
+				
+			r = random.Next(1, within+1); 
 
-			int withinAdjacent = 3;	// gets a random tile within this many squares out
-
-			r = random.Next(1, withinAdjacent+1); 
-
-			tileAtThisDir = game.getTileFromIndex(playerTile.xIndex + rx * r, playerTile.yIndex + ry * r); 
+			tileAtThisDir = game.getTileFromIndex(target.xIndex + rx * r, target.yIndex + ry * r); 
 
 			if(tileAtThisDir == null) 
 				return null; 
@@ -355,9 +361,17 @@ namespace GameName1.NPCs
 		public override void collide(GameEntity entity)
 		{
 			if (entity.getTargetType() == Static.TARGET_TYPE_ENEMY) {
-				findPath(1, randomTile());
-			}
 
+				if (cd >= this.width*2)
+				{
+					findPath(1, randomTile(playerTile, 3));
+				} 
+				else {
+					findPath(1, randomTile(enemyTile, 5));
+					//findPath(1, randomTile(playerTile, 3));
+				}
+
+			}
 		}
 
 		public override void collideWithWall()
