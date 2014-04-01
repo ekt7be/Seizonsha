@@ -131,6 +131,7 @@ namespace GameName1
             Texture2D fireball = Content.Load<Texture2D>("Sprites/fireballsprite");
             Texture2D heal = Content.Load<Texture2D>("Sprites/healsprite");
             Texture2D bullet = Content.Load<Texture2D>("Sprites/bulletsprite");
+            Texture2D sword = Content.Load<Texture2D>("Sprites/swordspritesheetfull");
 
             SkillTree.SkillTree.nodeTextures.Add(Static.SKILL_TREE_NODE_ANY, nodeRect);
 
@@ -147,6 +148,7 @@ namespace GameName1
             spriteMappings.Add(Static.SPRITE_FIREBALL, fireball);
             spriteMappings.Add(Static.SPRITE_HEAL, heal);
             spriteMappings.Add(Static.SPRITE_BULLET, bullet);
+            spriteMappings.Add(Static.SPRITE_SWORD, sword);
 
 
 

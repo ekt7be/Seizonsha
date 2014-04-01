@@ -12,11 +12,12 @@ namespace GameName1.Skills
 
         private int damage;
         private int damageType;
+        GameEntity entity;
 
 
         public Sword(Seizonsha game, GameEntity user,int damage, int recharge_time) : base(game, user, 0, recharge_time, 0, 10)
         {
-
+            entity = user;
             this.damage = damage;
             this.damageType = Static.DAMAGE_TYPE_NO_DAMAGE;
             if (user.getTargetType() == Static.TARGET_TYPE_FRIENDLY)
@@ -49,9 +50,10 @@ namespace GameName1.Skills
 
         protected override void UseSkill()
         {
+            entity.setSlashing(true);
             Rectangle slashBounds = new Rectangle((int)(user.getCenterX() + user.vectorDirection.X * user.width / 2 - user.width / 4), (int)(user.getCenterY() + user.vectorDirection.Y * user.height / 2 - user.height / 4), user.width / 2, user.height / 2);
             //game.Spawn(new SwordSlash(game, user, Static.PIXEL_THIN, slashBounds, damage, damageType, 10, user.vectorDirection), slashBounds.Left, slashBounds.Top);
-            AOECone attack = EntityFactory.getAOECone(game, user, Static.PIXEL_THIN, this, slashBounds, damage, damageType, 10);
+            AOECone attack = EntityFactory.getAOECone(game, user, null, this, slashBounds, damage, damageType, 10);
             game.Spawn(attack, slashBounds.Left, slashBounds.Top);
         }
 

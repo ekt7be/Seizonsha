@@ -533,6 +533,15 @@
     <Content Include="Content\Sprites\healsprite.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Sprites\swordspritesheet.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sprites\swordspritesheetfull3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sprites\swordspritesheetfull.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="obj\x86\Debug\GameName1.csproj.FileListAbsolute.txt" />
     <Content Include="obj\x86\Debug\GameName1.exe" />
     <Content Include="obj\x86\Debug\GameName1.pdb" />

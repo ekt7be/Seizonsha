@@ -51,6 +51,7 @@ namespace GameName1
         protected Dictionary<int, Rectangle> FramesToAnimation;
         protected Rectangle? spriteSource = null;
         protected float scale = 1.0f;
+        protected bool isSlashing;
 
 
 
@@ -472,6 +473,13 @@ namespace GameName1
 
        public abstract String getName();
 
+       public void setSlashing(bool slashing)
+       {
+           if (slashing)
+               isSlashing = true;
+           else
+               isSlashing = false;
+       }
 
     }
 }
