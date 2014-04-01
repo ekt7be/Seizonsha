@@ -50,7 +50,8 @@ namespace GameName1.Skills
 
         protected override void UseSkill()
         {
-            entity.setSlashing(true);
+            if(entity is Player)
+                ((Player)entity).setSlashing(true);
             Rectangle slashBounds = new Rectangle((int)(user.getCenterX() + user.vectorDirection.X * user.width / 2 - user.width / 4), (int)(user.getCenterY() + user.vectorDirection.Y * user.height / 2 - user.height / 4), user.width / 2, user.height / 2);
             //game.Spawn(new SwordSlash(game, user, Static.PIXEL_THIN, slashBounds, damage, damageType, 10, user.vectorDirection), slashBounds.Left, slashBounds.Top);
             AOECone attack = EntityFactory.getAOECone(game, user, null, this, slashBounds, damage, damageType, 10);

@@ -32,7 +32,7 @@ namespace GameName1
         private static float elapsed;
         private static float swordElapsed;
         private static readonly float delay = 200f;
-        private static readonly float swordDelay = 40f;
+        private static readonly float swordDelay = 50f;
         private static int walkFrame = 0;
         private static int swordFrame = 0;
 
@@ -51,8 +51,8 @@ namespace GameName1
         private bool right;
 
 		public Camera camera;
-        bool isSlashing;
         protected Rectangle? swordSource = null;
+        private bool isSlashing = false;
 
 
         public override void Update(GameTime gameTime)
@@ -92,22 +92,31 @@ namespace GameName1
                 elapsed = 0;
             }
 
-            if (swordElapsed > swordDelay)
+
+            if (swordElapsed > swordDelay && isSlashing)
             {
                 if (swordFrame >= SLASH_ANIMATION_FRAMES - 1)
                 {
                     swordFrame = 0;
-                    base.isSlashing = false;
+                    isSlashing = false;
                     if (up)
+                    {
                         swordSource = new Rectangle(64 * swordFrame, UP_ANIMATION * 64, 64, 64);
+                    }
                     else if (left)
+                    {
                         swordSource = new Rectangle(64 * swordFrame, LEFT_ANIMATION * 64, 64, 64);
+                    }
                     else if (down)
+                    {
                         swordSource = new Rectangle(64 * swordFrame, DOWN_ANIMATION * 64, 64, 64);
-                    else if (right)
+                    }
+                    else
+                    {
                         swordSource = new Rectangle(64 * swordFrame, RIGHT_ANIMATION * 64, 64, 64);
+                    }
                 }
-                else
+                else 
                 {
                     swordFrame++;
                 }
@@ -137,8 +146,7 @@ namespace GameName1
                     base.spriteSource = new Rectangle(64 * 0, RIGHT_ANIMATION * 64, 64, 64);
             }
 
-            this.isSlashing = base.isSlashing;
-            if (this.isSlashing)
+            if (isSlashing)
             {
                 if (up)
                     swordSource = new Rectangle(64 * swordFrame, UP_ANIMATION * 64, 64, 64);
@@ -611,6 +619,14 @@ namespace GameName1
         public override string getName()
         {
             return Static.TYPE_PLAYER;
+        }
+
+        public void setSlashing(bool slash)
+        {
+            if (slash)
+                isSlashing = true;
+            else
+                isSlashing = false;
         }
 
 
