@@ -79,6 +79,7 @@ namespace GameName1.Skills
             setSprite(sprite);
             width = bounds.Width;
             height = bounds.Height;
+
         }
 
         public override void collideWithWall()

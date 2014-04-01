@@ -55,7 +55,7 @@ namespace GameName1.Skills
 
             Rectangle healBounds = new Rectangle((int)(user.getCenterX() + user.vectorDirection.X * user.width / 2 - Static.PLAYER_WIDTH / 4), (int)(user.getCenterY() + user.vectorDirection.Y * user.height / 2 - Static.PLAYER_WIDTH / 4), Static.PLAYER_WIDTH / 2, Static.PLAYER_HEIGHT / 2);
 
-            game.Spawn(EntityFactory.getAOECone(game, user, game.getTestSprite(healBounds, Color.Green), this, healBounds, damage, damageType, 10), healBounds.Left, healBounds.Top);
+            game.Spawn(EntityFactory.getAOECone(game, user, Static.PIXEL_THIN, this, healBounds, damage, damageType, 10), healBounds.Left, healBounds.Top);
         }
 
     }

@@ -343,7 +343,10 @@ namespace GameName1
                     AIs.Remove((AI)remEntity);
                 }
 
-                EntityFactory.removeFromActive(remEntity);
+                //this causes memory leak if factory is not recycling particular class
+                if (EntityFactory.isRecycling(remEntity.getName())){
+                    EntityFactory.removeFromActive(remEntity);
+                }
 
             }
 
@@ -748,21 +751,6 @@ namespace GameName1
             }
         }
 
-        public Texture2D getTestSprite(Rectangle bounds, Color color)
-        {
-            Texture2D testRect = new Texture2D(GraphicsDevice, bounds.Height, bounds.Width);
-
-            Color[] data = new Color[bounds.Height * bounds.Width];
-            for (int i = 0; i < data.Length; ++i)
-            {
-                data[i] = color;
-            }
-
-            testRect.SetData(data);
-            return testRect;
-        }
-
-
 
 
         public void healEntity(GameEntity user, GameEntity target, int amount, int damageType)
@@ -770,7 +758,6 @@ namespace GameName1
             if (ShouldHeal(damageType, target.getTargetType())){
                 incEntityHealth(target,amount);
 
-                //TextEffect text = TextEffect.getInstance(this, amount + "", 10, new Vector2(0,-2),Color.Green);
                 TextEffect text = EntityFactory.getTextEffect(this, amount + "", 10, new Vector2(0, -2), Color.Green); //new TextEffect(this, amount + "", 10, new Vector2(0, -2), Color.Green);
                 Spawn(text,target.getCenterX(), target.getCenterY() - 60);
             }
@@ -784,7 +771,6 @@ namespace GameName1
             {
 
 
-               // TextEffect text = TextEffect.getInstance(this, amount + "", 10,new Vector2(0,-2), Color.Red);
                 TextEffect text = EntityFactory.getTextEffect(this, amount + "", 10, new Vector2(0, -2), Color.Red);
                 Spawn(text, target.getCenterX(), target.getCenterY() - 60);
 
@@ -862,7 +848,7 @@ namespace GameName1
             }
 
             foreach (GameEntity tileEntity in getEntitiesInBounds(bounds)){
-                if (entity.shouldCollide(tileEntity)){
+                if (entity.shouldCollide(tileEntity) && tileEntity.shouldCollide(tileEntity)){
                     collide = true;
                 }
             }

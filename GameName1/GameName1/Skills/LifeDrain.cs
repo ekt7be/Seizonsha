@@ -76,7 +76,7 @@ namespace GameName1.Skills
                 int bulletWidth = 15;
                 int bulletHeight = 15;
                 Rectangle slashBounds = new Rectangle((int)(user.getCenterX()), (int)(user.getCenterY()), bulletWidth, bulletHeight);
-                ability = new TargetedAbility(game, user, game.getTestSprite(slashBounds, Color.Red), t, damage, damageType, 5, user.vectorDirection);
+                ability = new TargetedAbility(game, user, Static.PIXEL_THIN, t, damage, damageType, 5, user.vectorDirection);
                 game.Spawn(ability, slashBounds.Left, slashBounds.Top);
             }
             

@@ -11,7 +11,6 @@ namespace GameName1.AnimationTesting
 
         private GameEntity target;
         private int duration;
-        private float lifetime;
         private bool remove;
 
         public Animation(GameEntity target, int duration)
@@ -19,19 +18,18 @@ namespace GameName1.AnimationTesting
             this.duration = duration;
             this.target = target;
             this.remove = false;
-            this.lifetime = 0;
         }
 
 
         public void Update()
         {
-            if (lifetime >= duration)
+            if (duration <= 0)
             {
                 remove = true;
             }
 
             UpdateAnimation(target);
-            lifetime++;
+            duration--;
 
         }
 
@@ -42,6 +40,13 @@ namespace GameName1.AnimationTesting
         protected abstract void UpdateAnimation(GameEntity target);
 
         public abstract void OnRemove(GameEntity target);
+
+        virtual public void reset(GameEntity target, int duration)
+        {
+            this.remove = false;
+            this.target = target;
+            this.duration = duration;
+        }
 
     }
 }

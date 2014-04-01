@@ -51,15 +51,12 @@ namespace GameName1
         protected Dictionary<int, Rectangle> FramesToAnimation;
         protected Rectangle? spriteSource = null;
         protected float scale = 1.0f;
-       // protected bool isSlashing = false;
 
 
 
         //TODO: create depth variable that Game object can sort entities by to determine which to draw first (so effects can go on top etc)
 
-		// ALEX: new variables for mouse aim bullets and sprite rotation
 		public Vector2 vectorDirection {get ; set; }
-		//-ALEX
 
 
         virtual public void Draw(SpriteBatch spriteBatch)
@@ -77,10 +74,9 @@ namespace GameName1
                 Rectangle greenCoordinates = new Rectangle(this.getCenterX() - (barWidth/2), this.y - 20, (int)green, 5);
                 Rectangle redCoordinates = new Rectangle(this.getCenterX() - (barWidth/2), this.y - 20, barWidth, 5);
 			    // spriteBatch.Draw(sprite, hitbox, color);
-                Texture2D whiteRectangle = new Texture2D(game.GraphicsDevice, 1, 1);
-                whiteRectangle.SetData(new[] { Color.White });
-                spriteBatch.Draw(whiteRectangle, redCoordinates, Color.Red);
-                spriteBatch.Draw(whiteRectangle, greenCoordinates, Color.Green);
+
+                spriteBatch.Draw(Static.PIXEL_THIN, redCoordinates, Color.Red);
+                spriteBatch.Draw(Static.PIXEL_THIN, greenCoordinates, Color.Green);
             }
 
             if (spriteSource == null)
@@ -473,13 +469,6 @@ namespace GameName1
 
        public abstract String getName();
 
-       /*public virtual void setSlashing(bool slashing)
-       {
-           if (slashing)
-               isSlashing = true;
-           else
-               isSlashing = false;
-       }*/
 
     }
 }

@@ -22,6 +22,7 @@ namespace GameName1.Skills
             this.damageType = damageType;
             this.user = user;
             this.target = target;
+            this.tint = Color.Black;
         }
 
         protected override void OnDie()
@@ -52,7 +53,7 @@ namespace GameName1.Skills
             base.Update(gameTime);
             Rectangle slashBounds = new Rectangle((int)(user.getCenterX()), (int)(user.getCenterY()), (int)this.getDistanceToTarget(), 5);
             //this.hitbox = new Rectangle(this.x, this.y, this.width, this.height);
-            this.sprite = game.getTestSprite(slashBounds, Color.Black);
+            this.sprite = Static.PIXEL_THIN;
             this.hitbox = new Rectangle((int)(user.getCenterX()), (int)(user.getCenterY()), (int)this.getDistanceToTarget(), 5);
             if (!target.shouldRemove()) game.damageEntity(user, target, amount, damageType);
             else setRemove(true);

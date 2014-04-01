@@ -51,8 +51,6 @@ namespace GameName1
         private bool right;
 
 		public Camera camera;
-        protected Rectangle? swordSource = null;
-        private bool isSlashing = false;
 
 
         public override void Update(GameTime gameTime)
@@ -93,35 +91,6 @@ namespace GameName1
             }
 
 
-            if (swordElapsed > swordDelay && isSlashing)
-            {
-                if (swordFrame >= SLASH_ANIMATION_FRAMES - 1)
-                {
-                    swordFrame = 0;
-                    isSlashing = false;
-                    if (up)
-                    {
-                        swordSource = new Rectangle(64 * swordFrame, UP_ANIMATION * 64, 64, 64);
-                    }
-                    else if (left)
-                    {
-                        swordSource = new Rectangle(64 * swordFrame, LEFT_ANIMATION * 64, 64, 64);
-                    }
-                    else if (down)
-                    {
-                        swordSource = new Rectangle(64 * swordFrame, DOWN_ANIMATION * 64, 64, 64);
-                    }
-                    else
-                    {
-                        swordSource = new Rectangle(64 * swordFrame, RIGHT_ANIMATION * 64, 64, 64);
-                    }
-                }
-                else 
-                {
-                    swordFrame++;
-                }
-                swordElapsed = 0;
-            }
 
             if (isWalking)
             {
@@ -146,17 +115,6 @@ namespace GameName1
                     base.spriteSource = new Rectangle(64 * 0, RIGHT_ANIMATION * 64, 64, 64);
             }
 
-            if (isSlashing)
-            {
-                if (up)
-                    swordSource = new Rectangle(64 * swordFrame, UP_ANIMATION * 64, 64, 64);
-                else if (left)
-                    swordSource = new Rectangle(64 * swordFrame, LEFT_ANIMATION * 64, 64, 64);
-                else if (down)
-                    swordSource = new Rectangle(64 * swordFrame, DOWN_ANIMATION * 64, 64, 64);
-                else if (right)
-                    swordSource = new Rectangle(64 * swordFrame, RIGHT_ANIMATION * 64, 64, 64);
-            }
         }
 
 
@@ -187,8 +145,8 @@ namespace GameName1
                         Rectangle cBounds = new Rectangle(this.getCenterX() - 30, this.hitbox.Y + this.hitbox.Height + 30, (int)(skill.percentCasted()*60), 5);
                         Rectangle tBounds = new Rectangle(this.getCenterX() - 30, this.hitbox.Y + this.hitbox.Height + 30, 60, 5);
                         
-                        spriteBatch.Draw(game.getTestSprite(tBounds, Color.White), tBounds, Color.White);
-                        spriteBatch.Draw(game.getTestSprite(cBounds, Color.Blue), cBounds, Color.Blue);
+                        spriteBatch.Draw(Static.PIXEL_THIN, tBounds, Color.White);
+                        spriteBatch.Draw(Static.PIXEL_THIN, cBounds, Color.Blue);
                     }
                 }
             }
@@ -199,23 +157,7 @@ namespace GameName1
             spriteBatch.Draw(Seizonsha.spriteMappings[6], this.hitbox, base.spriteSource, tint, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
             spriteBatch.Draw(Seizonsha.spriteMappings[7], this.hitbox, base.spriteSource, tint, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
             spriteBatch.Draw(Seizonsha.spriteMappings[2], this.hitbox, base.spriteSource, tint, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
-            if (swordSource == null)
-            {
-                Rectangle? tempRect;
-                if (up)
-                    tempRect = new Rectangle(64 * 0, UP_ANIMATION * 64, 64, 64);
-                else if (left)
-                    tempRect = new Rectangle(64 * 0, LEFT_ANIMATION * 64, 64, 64);
-                else if (down)
-                    tempRect = new Rectangle(64 * 0, DOWN_ANIMATION * 64, 64, 64);
-                else
-                    tempRect = new Rectangle(64 * 0, RIGHT_ANIMATION * 64, 64, 64);
-                spriteBatch.Draw(Seizonsha.spriteMappings[11], this.hitbox, tempRect, tint, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
-            }
-            else
-            {
-                spriteBatch.Draw(Seizonsha.spriteMappings[11], this.hitbox, this.swordSource, tint, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
-            }
+
         }
 
 
@@ -245,7 +187,7 @@ namespace GameName1
 
 			this.skillSlots = new Equipable[4]; //each slot is different skill, weapon, or item
             this.inventory = new List<Equipable>();
-            this.skilltree = new SkillTree.SkillTree(game, this, game.getTestSprite(new Rectangle(0, 0, Static.SCREEN_WIDTH, Static.SCREEN_HEIGHT), Color.Black));
+            this.skilltree = new SkillTree.SkillTree(game, this, Static.PIXEL_THIN);
             Equip(new Gun(game, this, 30, 10, 10f), Static.PLAYER_L1_SKILL_INDEX);
             Equip(new Fireball(game, this, 120, 100, 5f), Static.PLAYER_L2_SKILL_INDEX);
             //Equip(new LifeDrain(game, this, 2, 2, 40), Static.PLAYER_L2_SKILL_INDEX);
@@ -309,6 +251,7 @@ namespace GameName1
 			// draw XP bar
 			spriteBatch.Draw(texture, xp, Color.Yellow); 
 
+            
 			// draw HP text
 			spriteBatch.DrawString(
 				game.getSpriteFont(), 
@@ -342,6 +285,7 @@ namespace GameName1
 
             //draw Wave number
             spriteBatch.DrawString(game.getSpriteFont(), "WAVE: " + game.Wave, new Vector2(20, screenPortion.Height-100), Color.White);
+           
         }
 
 
@@ -630,13 +574,6 @@ namespace GameName1
             return Static.TYPE_PLAYER;
         }
 
-        public void setSlashing(bool slash)
-        {
-            if (slash)
-                isSlashing = true;
-            else
-                isSlashing = false;
-        }
 
 
     }

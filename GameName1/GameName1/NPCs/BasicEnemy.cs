@@ -16,6 +16,9 @@ namespace GameName1.NPCs
 		Tile playerTile; 
 		List<Tile> path;
 
+        HashSet<Tile> closed;
+        HashSet<Tile> open;
+
 		double closestDistance; 
 
 		bool drawPath = false; 
@@ -27,6 +30,10 @@ namespace GameName1.NPCs
 		private static readonly float delay = 200f;
 		private int currentFrame = 0;
 		private Sword sword;
+
+
+        Random random; 
+
 
 		private static readonly int UP_ANIMATION = 0;
 		private static readonly int DOWN_ANIMATION = 2;
@@ -49,10 +56,16 @@ namespace GameName1.NPCs
 			FramesToAnimation.Add(RIGHT_ANIMATION, new Rectangle(sprite.Width / 4 * RIGHT_ANIMATION, 0, sprite.Width / 4, sprite.Height));
 			sword = new Sword(game, this, 5, 20);
 			sword.OnEquip();
+
+            path = new List<Tile>();
+            closed = new HashSet<Tile>();
+            open = new HashSet<Tile>();
+            random = new Random();
 		}
 
 		public void AI()
 		{
+
 
 			// find closest player
 			List<Player> players = game.getPlayers();
@@ -285,7 +298,7 @@ namespace GameName1.NPCs
 			Tile end = target;
 			Tile current = end; 
 
-			path = new List<Tile>(); 
+			path.Clear(); 
 
 			while (current != start) {
 				//System.Console.WriteLine ("debug3");
@@ -319,7 +332,6 @@ namespace GameName1.NPCs
 		}
 
 		public Tile randomTile(Tile target, int within) {
-			Random random = new Random(); 
 			int r = random.Next(1, 9);
 			int rx = 0; int ry = 0; 
 
@@ -444,8 +456,7 @@ namespace GameName1.NPCs
 		}
 
 		void DrawPath(SpriteBatch spriteBatch) {
-			Texture2D texture = new Texture2D(game.GraphicsDevice, 1, 1);
-			texture.SetData(new[] { Color.White });
+
 
 			int dotSize = 6; 
 
@@ -454,7 +465,7 @@ namespace GameName1.NPCs
 					Rectangle rect = new Rectangle (t.x+Static.TILE_WIDTH/2-dotSize/2, 
 						t.y+Static.TILE_HEIGHT/2-dotSize/2, 
 						dotSize, dotSize); 
-					spriteBatch.Draw(texture, rect, Color.LightPink);
+					spriteBatch.Draw(Static.PIXEL_THIN, rect, Color.LightPink);
 				}
 			}
 
@@ -519,6 +530,9 @@ namespace GameName1.NPCs
            base.reset();
            setXPReward(50);
            reachedDest = true;
+           path.Clear();
+           open.Clear();
+           closed.Clear(); 
         }
     }
 }

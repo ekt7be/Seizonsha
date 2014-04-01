@@ -46,13 +46,14 @@ namespace GameName1.Effects
 
         public override void collide(GameEntity entity)
         {
-            //no collisions..
+            Static.Debug("COLLIDE");
         }
 
         public void reset(int duration)
         {
             base.reset();
             this.duration = duration;
+            setCollidable(false);
         }
 
         public override void reset()

@@ -29,6 +29,16 @@ namespace GameName1
             }
         }
 
+        public static bool isRecycling(String type)
+        {
+            if (active[type] != null)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
 
         //call this to check if there is a recyclable instance.  returns null if not
         public static GameEntity tryRecycleInstance(String type)
@@ -41,7 +51,7 @@ namespace GameName1
                 GameEntity recycled = dead[type][0];
                 active[type].Add(recycled);
                 dead[type].Remove(recycled);
-                Static.Debug("RECYCLING" + type + "DEAD COUNT: " + dead[type].Count);
+                //Static.Debug("RECYCLING" + type + "DEAD COUNT: " + dead[type].Count);
 
                 return recycled;
 
@@ -60,7 +70,7 @@ namespace GameName1
             createLists(entity.getName());
             active[entity.getName()].Add(entity);
 
-            Static.Debug("ADDING " + entity.getName() + "TO ACTIVE.. ACTIVE COUNT: " + active[entity.getName()].Count);
+            //Static.Debug("ADDING " + entity.getName() + "TO ACTIVE.. ACTIVE COUNT: " + active[entity.getName()].Count);
 
         }
 
@@ -70,10 +80,10 @@ namespace GameName1
         {
             createLists(entity.getName());
             active[entity.getName()].Remove(entity);
-            Static.Debug("REmoving " +entity.getName() +"FROM ACTIVE.. ACTIVE COUNT: " + active[entity.getName()].Count);
+            //Static.Debug("REmoving " +entity.getName() +"FROM ACTIVE.. ACTIVE COUNT: " + active[entity.getName()].Count);
 
             dead[entity.getName()].Add(entity);
-            Static.Debug("ADDING " + entity.getName() + "TO DEAD.. DEAD COUNT: " + dead[entity.getName()].Count);
+            //Static.Debug("ADDING " + entity.getName() + "TO DEAD.. DEAD COUNT: " + dead[entity.getName()].Count);
 
 
         }
