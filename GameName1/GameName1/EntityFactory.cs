@@ -31,7 +31,7 @@ namespace GameName1
 
         public static bool isRecycling(String type)
         {
-            if (active[type] != null)
+            if (active.ContainsKey(type))
             {
                 return true;
             }
