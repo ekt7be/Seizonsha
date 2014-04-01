@@ -36,9 +36,9 @@ namespace GameName1
         private Level currLevel;
 
         private bool paused;
-
-
-
+		FPSCounterComponent fps;
+		private bool showFPS = true; 
+	
         // By preloading any assets used by UI rendering, we avoid framerate glitches
         // when they suddenly need to be loaded in the middle of a menu transition.
         static readonly string[] preloadAssets =
@@ -188,6 +188,9 @@ namespace GameName1
             this.players = new Player[4];
 
             initViewports(Static.NUM_PLAYERS);
+
+			fps = new FPSCounterComponent(this, spriteBatch, spriteFont); 
+
         }
 
         public void spawnInitialEntities()
@@ -439,6 +442,8 @@ namespace GameName1
             {
                 entity.UpdateAnimation();
             }
+
+			fps.Update(gameTime); 
         }
 
 
@@ -544,10 +549,14 @@ namespace GameName1
 
             spriteBatch.Begin();
 
+
             drawSplitscreenDividers(Static.NUM_PLAYERS);
+
 
             spriteBatch.End();
 
+			if (showFPS)
+				fps.Draw(gameTime); 
         }
 
 		void drawSplitscreenDividers(int numberOfPlayers) {
