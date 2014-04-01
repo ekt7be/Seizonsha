@@ -201,7 +201,16 @@ namespace GameName1
             spriteBatch.Draw(Seizonsha.spriteMappings[2], this.hitbox, base.spriteSource, tint, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
             if (swordSource == null)
             {
-                spriteBatch.Draw(Seizonsha.spriteMappings[11], this.hitbox, spriteSource, tint, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+                Rectangle? tempRect;
+                if (up)
+                    tempRect = new Rectangle(64 * 0, UP_ANIMATION * 64, 64, 64);
+                else if (left)
+                    tempRect = new Rectangle(64 * 0, LEFT_ANIMATION * 64, 64, 64);
+                else if (down)
+                    tempRect = new Rectangle(64 * 0, DOWN_ANIMATION * 64, 64, 64);
+                else
+                    tempRect = new Rectangle(64 * 0, RIGHT_ANIMATION * 64, 64, 64);
+                spriteBatch.Draw(Seizonsha.spriteMappings[11], this.hitbox, tempRect, tint, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
             }
             else
             {
