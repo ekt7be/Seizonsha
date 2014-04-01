@@ -109,6 +109,7 @@
     <Compile Include="Skills\Bullet.cs" />
     <Compile Include="Skills\Gun.cs" />
     <Compile Include="Camera.cs" />
+    <Compile Include="FPSCounterComponent.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="OpenTK">
