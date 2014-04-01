@@ -50,10 +50,6 @@ namespace GameName1.NPCs
 
 			reachedDest = true;
 
-			FramesToAnimation.Add(UP_ANIMATION, new Rectangle(sprite.Width / 4 * UP_ANIMATION, 0, sprite.Width / 4, sprite.Height));
-			FramesToAnimation.Add(DOWN_ANIMATION, new Rectangle(sprite.Width / 4 * DOWN_ANIMATION, 0, sprite.Width / 4, sprite.Height));
-			FramesToAnimation.Add(LEFT_ANIMATION, new Rectangle(sprite.Width / 4 * LEFT_ANIMATION, 0, sprite.Width / 4, sprite.Height));
-			FramesToAnimation.Add(RIGHT_ANIMATION, new Rectangle(sprite.Width / 4 * RIGHT_ANIMATION, 0, sprite.Width / 4, sprite.Height));
 			sword = new Sword(game, this, 5, 20);
 			sword.OnEquip();
 
@@ -193,8 +189,8 @@ namespace GameName1.NPCs
 
 			reachedDest = false; 
 
-			HashSet<Tile> open = new HashSet<Tile>(); 
-			HashSet<Tile> closed = new HashSet<Tile>(); 
+			//HashSet<Tile> open = new HashSet<Tile>(); 
+			//HashSet<Tile> closed = new HashSet<Tile>(); 
 
 			Tile selected = enemyTile;	// start at enemy's current tile 
 			Tile start = selected;
@@ -382,11 +378,11 @@ namespace GameName1.NPCs
 			}
 		}
 
-        public override void UpdateAnimation()
+        public override void UpdateAnimation(GameTime gameTime)
         {
-            base.UpdateAnimation();
+            base.UpdateAnimation(gameTime);
 
-            if (this.getLastMovement().X!=0 && this.getLastMovement().Y!=0)
+            if (this.getLastMovement().X!=0 || this.getLastMovement().Y!=0)
             {
 
 
@@ -511,10 +507,6 @@ namespace GameName1.NPCs
 		{
 			base.rotateToAngle(angle);
 
-			if (FramesToAnimation == null) //gameentity class calls this during initialization too
-			{
-				return;
-			}
 
 		}
 

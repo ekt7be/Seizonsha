@@ -443,7 +443,7 @@ namespace GameName1
             //update animations
             foreach (GameEntity entity in entities)
             {
-                entity.UpdateAnimation();
+                entity.UpdateAnimation(gameTime);
             }
 
 			fps.Update(gameTime); 

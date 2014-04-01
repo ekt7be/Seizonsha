@@ -48,7 +48,6 @@ namespace GameName1
         protected Color defaultTint;
         private List<Animation> animations;
         private List<Animation> outgoingAnimations;
-        protected Dictionary<int, Rectangle> FramesToAnimation;
         protected Rectangle? spriteSource = null;
         protected float scale = 1.0f;
 
@@ -143,7 +142,7 @@ namespace GameName1
             }
         }
 
-        public virtual void UpdateAnimation()
+        public virtual void UpdateAnimation(GameTime gameTime)
         {
             foreach (Animation animation in animations)
             {
@@ -209,8 +208,6 @@ namespace GameName1
             this.animations = new List<Animation>();
             this.outgoingAnimations = new List<Animation>();
 
-
-            this.FramesToAnimation = new Dictionary<int, Rectangle>(); //for animations
 
 
         }

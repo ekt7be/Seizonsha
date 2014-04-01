@@ -72,49 +72,7 @@ namespace GameName1
             base.Update(gameTime);
             //base.source = new Rectangle(sprite.Width / 4 * currentAnimationFrame, 0, sprite.Width / 4, sprite.Height);
 
-            // Animation stuff
-            elapsed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-            swordElapsed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-
-            if (elapsed > delay)
-            {
-                if (walkFrame >= WALK_ANIMATION_FRAMES - 1)
-                {
-                    walkFrame = 0;
-                }
-
-                else
-                {
-                    walkFrame++;
-                }
-                elapsed = 0;
-            }
-
-
-
-            if (isWalking)
-            {
-                if (up)
-                    base.spriteSource = new Rectangle(64 * walkFrame, UP_ANIMATION * 64, 64, 64);
-                else if (left)
-                    base.spriteSource = new Rectangle(64 * walkFrame, LEFT_ANIMATION * 64, 64, 64);
-                else if (down)
-                    base.spriteSource = new Rectangle(64 * walkFrame, DOWN_ANIMATION * 64, 64, 64);
-                else if (right)
-                    base.spriteSource = new Rectangle(64 * walkFrame, RIGHT_ANIMATION * 64, 64, 64);
-            }
-            else
-            {
-                if (up)
-                    base.spriteSource = new Rectangle(64 * 0, UP_ANIMATION * 64, 64, 64);
-                else if (left)
-                    base.spriteSource = new Rectangle(64 * 0, LEFT_ANIMATION * 64, 64, 64);
-                else if (down)
-                    base.spriteSource = new Rectangle(64 * 0, DOWN_ANIMATION * 64, 64, 64);
-                else if (right)
-                    base.spriteSource = new Rectangle(64 * 0, RIGHT_ANIMATION * 64, 64, 64);
-            }
-
+         
         }
 
 
@@ -205,10 +163,6 @@ namespace GameName1
 
 
             base.scale = 1.0f;
-            FramesToAnimation.Add(UP_ANIMATION, new Rectangle(0, 64 * UP_ANIMATION, 64, 64));
-            FramesToAnimation.Add(DOWN_ANIMATION, new Rectangle(0, 64 * DOWN_ANIMATION, 64, 64));
-            FramesToAnimation.Add(LEFT_ANIMATION, new Rectangle(0, 64 * LEFT_ANIMATION, 64, 64));
-            FramesToAnimation.Add(RIGHT_ANIMATION, new Rectangle(0, 64 * RIGHT_ANIMATION, 64, 64));
 
             this.rotateToAngle(0f); //sets correct animation
 
@@ -538,11 +492,6 @@ namespace GameName1
 
             base.rotateToAngle(angle);
 
-            if (FramesToAnimation == null) //gameentity class calls this during initialization too
-            {
-                return;
-            }
-
             if (Math.Cos(angle) > .5)
             {
                 //spriteSource = FramesToAnimation[RIGHT_ANIMATION];
@@ -566,6 +515,89 @@ namespace GameName1
                 //spriteSource = FramesToAnimation[LEFT_ANIMATION];
                 left = true;
                 up = right = down = false;
+            }
+        }
+
+        public override void UpdateAnimation(GameTime gameTime)
+        {
+
+            base.UpdateAnimation(gameTime);
+            // Animation stuff
+            elapsed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            swordElapsed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+
+            if (elapsed > delay)
+            {
+                if (walkFrame >= WALK_ANIMATION_FRAMES - 1)
+                {
+                    walkFrame = 0;
+                }
+
+                else
+                {
+                    walkFrame++;
+                }
+                elapsed = 0;
+            }
+
+
+
+
+            if (this.getLastMovement().X != 0 || this.getLastMovement().Y != 0)
+            {
+
+
+                if (Math.Cos(this.direction) > .5)
+                {
+                    base.spriteSource = new Rectangle(64 * walkFrame, RIGHT_ANIMATION * 64, 64, 64);
+
+                }
+                else if (Math.Sin(this.direction) > .5)
+                {
+                    base.spriteSource = new Rectangle(64 * walkFrame, DOWN_ANIMATION * 64, 64, 64);
+
+                }
+                else if (Math.Sin(direction) < -.5)
+                {
+                    //spriteSource = FramesToAnimation[UP_ANIMATION];
+                    base.spriteSource = new Rectangle(64 * walkFrame, UP_ANIMATION * 64, 64, 64);
+
+                }
+                else if (Math.Cos(direction) < -.5)
+                {
+                    //spriteSource = FramesToAnimation[LEFT_ANIMATION];
+                    base.spriteSource = new Rectangle(64 * walkFrame, LEFT_ANIMATION * 64, 64, 64);
+                }
+
+
+            }
+
+            else
+            {
+
+                if (Math.Cos(this.direction) > .5)
+                {
+                    //spriteSource = FramesToAnimation[RIGHT_ANIMATION];
+                    base.spriteSource = new Rectangle(64 * 0, RIGHT_ANIMATION * 64, 64, 64);
+
+                }
+                else if (Math.Sin(this.direction) > .5)
+                {
+                    base.spriteSource = new Rectangle(64 * 0, DOWN_ANIMATION * 64, 64, 64);
+
+                }
+                else if (Math.Sin(direction) < -.5)
+                {
+                    //spriteSource = FramesToAnimation[UP_ANIMATION];
+                    base.spriteSource = new Rectangle(64 * 0, UP_ANIMATION * 64, 64, 64);
+
+                }
+                else if (Math.Cos(direction) < -.5)
+                {
+                    //spriteSource = FramesToAnimation[LEFT_ANIMATION];
+                    base.spriteSource = new Rectangle(64 * 0, LEFT_ANIMATION * 64, 64, 64);
+                }
+
             }
         }
 
