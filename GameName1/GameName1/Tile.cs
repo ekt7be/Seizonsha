@@ -94,5 +94,10 @@ namespace GameName1
 			return y + Static.TILE_HEIGHT / 2;
 		}
 
+
+        public bool isTouching(GameEntity entity)
+        {
+            return touching.Contains(entity);
+        }
 	}
 }
