@@ -147,8 +147,9 @@ namespace GameName1
             this.inventory = new List<Equipable>();
             this.skilltree = new SkillTree.SkillTree(game, this, Static.PIXEL_THIN);
             Equip(new Gun(game, this, 30, 10, 10f), Static.PLAYER_L1_SKILL_INDEX);
-            Equip(new Fireball(game, this, 120, 100, 5f), Static.PLAYER_L2_SKILL_INDEX);
+            //Equip(new Fireball(game, this, 120, 100, 5f), Static.PLAYER_L2_SKILL_INDEX);
             //Equip(new LifeDrain(game, this, 2, 2, 40), Static.PLAYER_L2_SKILL_INDEX);
+            Equip(new Teleport(game, this, 180, 3, 1), Static.PLAYER_L2_SKILL_INDEX);
             Equip(new HealingTouch(game, this, -50, 100), Static.PLAYER_R1_SKILL_INDEX);
             Equip(new Sword(game, this, 300, 10), Static.PLAYER_R2_SKILL_INDEX);
 

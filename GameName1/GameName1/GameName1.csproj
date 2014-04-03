@@ -91,6 +91,7 @@
     <Compile Include="Skills\LifeDrain.cs" />
     <Compile Include="Skills\Skill.cs" />
     <Compile Include="Skills\Sword.cs" />
+    <Compile Include="Skills\Teleport.cs" />
     <Compile Include="SkillTree\BlankNode.cs" />
     <Compile Include="SkillTree\HealthPlusUnlockable.cs" />
     <Compile Include="Skills\TargetedAbility.cs" />
