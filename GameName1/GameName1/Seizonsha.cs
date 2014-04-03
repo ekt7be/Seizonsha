@@ -320,7 +320,6 @@ namespace GameName1
         public void UpdateGame(GameTime gameTime)
         {
 
-
             //flag entities to be removed
             foreach (GameEntity entity in entities)
             {
@@ -771,7 +770,6 @@ namespace GameName1
 
             if (ShouldDamage(damageType, target.getTargetType()))
             {
-
 
                 TextEffect text = EntityFactory.getTextEffect(this, amount + "", 10, new Vector2(0, -2), Color.Red);
                 Spawn(text, target.getCenterX(), target.getCenterY() - 60);

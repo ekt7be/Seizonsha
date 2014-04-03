@@ -29,8 +29,9 @@ namespace GameName1
         protected bool remove;
         protected bool collidable;
         protected int targetType;
-        public int maxHealth;
-        public int health;
+        public float maxHealth;
+        public float health;
+        public float shield;
         protected bool hasHealth;
         public float velocityX { get; set; }
         public float velocityY { get; set; }
@@ -142,6 +143,11 @@ namespace GameName1
             }
         }
 
+        public void addShield(float amount)
+        {
+            this.shield += amount;
+        }
+
         public virtual void UpdateAnimation(GameTime gameTime)
         {
             foreach (Animation animation in animations)
@@ -204,6 +210,7 @@ namespace GameName1
             this.statusEffects = new List<StatusEffect>();
             this.incomingStatusEffects = new List<StatusEffect>();
             this.outgoingStatusEffects = new List<StatusEffect>();
+            this.shield = 0;
 
             this.animations = new List<Animation>();
             this.outgoingAnimations = new List<Animation>();
@@ -399,7 +406,7 @@ namespace GameName1
             return hitbox;
         }
 
-        public int getHealth()
+        public float getHealth()
         {
             return health;
         }

@@ -42,8 +42,9 @@ namespace GameName1.Skills
                 Vector2 unitV = Vector2.Normalize(user.vectorDirection);
                 float dist = 200f;
                 game.moveGameEntity(user,unitV.X*dist, unitV.Y*dist);
-                
-                Rectangle slashBounds = new Rectangle((int)(user.getCenterX()), (int)(user.getCenterY()), 500, 500);
+                int width = 100;
+                int height = 100;
+                Rectangle slashBounds = new Rectangle((int)(user.getCenterX())-(int)((double)width/2.0), (int)(user.getCenterY())-(int)((double)height/2.0), width, height);
                 ability = EntityFactory.getAOECone(game, user, Static.PIXEL_THIN, this, slashBounds, damage, damageType, 1);
                 game.Spawn(ability, slashBounds.Left, slashBounds.Top);
 
