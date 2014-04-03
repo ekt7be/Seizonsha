@@ -16,12 +16,16 @@ namespace GameName1
         private int tilesHorz;
         private int tilesVert;
 		List<int> wallTiles; 
+		List<Tile> wallTiles2; 
+		Seizonsha game;
 
-        public TileMap(Level level)
+		public TileMap(Level level, Seizonsha game)
         {
             this.level = level;
+			this.game = game; 
 
 			wallTiles = new List<int>(new int[] {1033, 1157});	// look at map.txt and set the wall tile numbers
+			wallTiles2 = new List<Tile>(); 
 
 			using (StreamReader reader = new StreamReader(@"Content/maps/map5.txt"))
             {
@@ -69,14 +73,21 @@ namespace GameName1
 
                             if (tileType == Static.TILE_SPAWN)
                             {
-                                SpawnTile spawnTile = new SpawnTile(0,i * Static.TILE_WIDTH, j * Static.TILE_HEIGHT);
-                                level.AddSpawnPoint(spawnTile);
+								SpawnTile spawnTile = new SpawnTile(0,i * Static.TILE_WIDTH, j * Static.TILE_HEIGHT);
+								spawnTile.capacity = 0; 
+								level.AddSpawnPoint(spawnTile);
                                 tiles[i, j] = spawnTile;
                             }
-                            else if (wallTiles.Contains(tileType))
+							else if (wallTiles.Contains(tileType)) {
                                 tiles[i, j] = new Tile(i * Static.TILE_WIDTH, j * Static.TILE_HEIGHT, true, tileType);
-                            else
+								tiles[i, j].capacity = 0; 
+								wallTiles2.Add(tiles[i, j]);
+								}
+							else {
                                 tiles[i, j] = new Tile(i * Static.TILE_WIDTH, j * Static.TILE_HEIGHT, false, tileType);
+								tiles[i, j].capacity = 0; 
+								tiles[i, j].capacityBounds = tiles[i, j].bounds; 
+							}
 						}
                     }
 					//System.Console.Write("\n");
@@ -87,8 +98,34 @@ namespace GameName1
 
         private void readMap()
         {
-            
-        }
+			for (int j = 0; j < this.tilesVert; j++)
+			{
+				for (int i = 0; i < tilesHorz; i++) 
+				{
+					Tile tile = tiles[i,j]; 
+					if (!tile.isObstacle()) {
+
+						bool hitWall = false; 
+
+						while(!hitWall) {
+							tile.capacity += 1; 
+							tile.capacityBounds.Width += 32; 
+							tile.capacityBounds.Height += 32; 
+
+							foreach(Tile wallTile in wallTiles2) {
+								if (tile.capacityBounds.Intersects(wallTile.bounds)) {
+									hitWall = true; 
+								}
+							}
+						}
+
+				
+					}
+				}
+
+			}
+
+		}
 
         public void Draw(SpriteBatch spriteBatch, int cameraX, int cameraY)
         {

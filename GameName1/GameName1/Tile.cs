@@ -18,6 +18,8 @@ namespace GameName1
 		public Rectangle bounds;
 		public int tileType;
 
+		private bool drawCapacity = false;
+
 		// used in pathfinding
 		public int xIndex;
 		public int yIndex; 
@@ -25,6 +27,8 @@ namespace GameName1
 		public int F = 0; 
 		public int G = 0; 
 		public int H = 0; 
+		public int capacity; 
+		public Rectangle capacityBounds; 
 
 		public Tile (int x, int y, bool obstacle, int tileType){
 			this.x = x;
@@ -46,6 +50,15 @@ namespace GameName1
 				return;
 			}
 			spriteBatch.Draw(sprite, new Rectangle(x - cameraX, y - cameraY, Static.TILE_WIDTH, Static.TILE_HEIGHT), Color.White);
+
+			if (drawCapacity) {
+				spriteBatch.DrawString(
+					Static.SPRITE_FONT, 
+					this.capacity+"", 
+					new Vector2(this.x+2, this.y), 
+					Color.LightGreen
+				);
+			}
 		}
 
 		public void BindEntity(GameEntity entity, bool bind)
@@ -94,5 +107,10 @@ namespace GameName1
 			return y + Static.TILE_HEIGHT / 2;
 		}
 
+
+        public bool isTouching(GameEntity entity)
+        {
+            return touching.Contains(entity);
+        }
 	}
 }

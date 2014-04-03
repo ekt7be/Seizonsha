@@ -22,7 +22,7 @@ namespace GameName1
         {
             this.game = game;
             this.spawnPoints = new List<SpawnTile>();
-            this.map = new TileMap(this);
+			this.map = new TileMap(this, game);
 
             initialize();
         }

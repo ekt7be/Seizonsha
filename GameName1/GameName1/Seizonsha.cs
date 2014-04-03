@@ -207,7 +207,9 @@ namespace GameName1
             this.difficulty = 5;
             this.numberEnemies = 0;
             this.Wave = 0;
-            WaveBegin();
+			//WaveBegin();
+
+			Spawn(new BasicEnemy(this), 500, 600);
 
             base.Initialize();
         }
@@ -396,7 +398,7 @@ namespace GameName1
             {
                 WaveCleared();
                 //pause and do other stuff, maybe set timer
-                WaveBegin();
+				// WaveBegin();
             }
 
 
@@ -835,11 +837,16 @@ namespace GameName1
             Rectangle bounds = new Rectangle(x, y, entity.width, entity.height);
             bool collide = false;
 
-            for (int i = getTileIndexFromLeftEdgeX(entity.getLeftEdgeX()); i <= getTileIndexFromRightEdgeX(entity.getRightEdgeX()); i++)
+            for (int i = getTileIndexFromLeftEdgeX(bounds.Left); i <= getTileIndexFromRightEdgeX(bounds.Right); i++)
             {
-                for (int j = getTileIndexFromTopEdgeY(entity.getTopEdgeY()); j <= getTileIndexFromBottomEdgeY(entity.getBottomEdgeY()); j++)
+                for (int j = getTileIndexFromTopEdgeY(bounds.Top); j <= getTileIndexFromBottomEdgeY(bounds.Bottom); j++)
                 {
 					Tile tile = currLevel.getTileFromIndex(i, j);
+                    if (tile == null)
+                    {
+                        collide = true;
+                        continue;
+                    }
                     if (tile.isObstacle())
                     {
                         collide = true;
@@ -1178,6 +1185,21 @@ namespace GameName1
         {
             numberEnemies--;
 
+        }
+
+        public List<Tile> getTilesInBounds(Rectangle bounds)
+        {
+            List<Tile> returnList = new List<Tile>();
+
+            for (int i = getTileIndexFromLeftEdgeX(bounds.Left); i <= getTileIndexFromRightEdgeX(bounds.Right); i++)
+            {
+                for (int j = getTileIndexFromTopEdgeY(bounds.Top); j <= getTileIndexFromBottomEdgeY(bounds.Bottom); j++)
+                {
+                    returnList.Add(currLevel.getTileFromIndex(i, j));
+                }
+            }
+
+            return returnList;
         }
 
         public List<GameEntity> getEntitiesInBounds(Rectangle bounds)

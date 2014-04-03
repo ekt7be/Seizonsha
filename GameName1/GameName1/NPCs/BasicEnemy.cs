@@ -19,7 +19,9 @@ namespace GameName1.NPCs
         HashSet<Tile> closed;
         HashSet<Tile> open;
 
-		double closestDistance; 
+		double closestDistance;
+        int tilesWide;
+        int tilesHigh;
 
 		bool drawPath = false; 
 
@@ -57,6 +59,9 @@ namespace GameName1.NPCs
             closed = new HashSet<Tile>();
             open = new HashSet<Tile>();
             random = new Random();
+
+            tilesWide = (int)Math.Floor((double)(width / Static.TILE_WIDTH)) + 1;
+            tilesHigh = (int)Math.Floor((double)(height / Static.TILE_HEIGHT)) + 1;
 		}
 
 		public void AI()
@@ -102,11 +107,16 @@ namespace GameName1.NPCs
 			// findPath(1, playerTile);
 			// System.Console.WriteLine(timer + ": " + this.x + " " + this.y + " " + this.velocityX + " " + this.velocityY + " " + this.lastX + " " + " " + this.isMoving());
 
-			if (enemyTile == this.currentDest) {
-				// System.Console.WriteLine("reached destination!");
-				this.reachedDest = true; 
-				path.Clear();
-			}
+            if (currentDest != null)
+            {
+                if (currentDest.isTouching(this))
+                {
+                    // System.Console.WriteLine("reached destination!");
+                    this.reachedDest = true;
+                    path.Clear();
+                }
+            }
+
 
 			if (!reachedDest) {
 				// System.Console.Write ("time to move!");
@@ -116,7 +126,7 @@ namespace GameName1.NPCs
 					return;
 
 				if (path.Count > 0) {	// like pacman gobbling up nodes
-					if (path[0].xIndex == enemyTile.xIndex && path[0].yIndex == enemyTile.yIndex) {
+					if (path[0].isTouching(this)) {
 						// System.Console.WriteLine("removed a node!"); 
 						path.RemoveAt(0);							
 					}
@@ -238,13 +248,15 @@ namespace GameName1.NPCs
 								}
 							}
 
-							if (!(tileAtThisDir.isObstacle()) && !(closed.Contains(tileAtThisDir))) {
-								tileAtThisDir.parent = selected; 
-								tileAtThisDir.G = tileAtThisDir.parent.G + addG;
-								open.Add(tileAtThisDir);
-							}
-							else {}	// ignore obstacles
-									// System.Console.WriteLine ("obs: " + checkTileAtDir.xIndex + ", " + checkTileAtDir.yIndex); 
+
+
+
+                            if (!(tileAtThisDir.isObstacle()) && !(closed.Contains(tileAtThisDir)))
+                            {
+                                tileAtThisDir.parent = selected;
+                                tileAtThisDir.G = tileAtThisDir.parent.G + addG;
+                                open.Add(tileAtThisDir);
+                            }
 						}
 					}
 				}
