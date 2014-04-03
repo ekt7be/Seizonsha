@@ -41,10 +41,10 @@ namespace GameName1
 		public static readonly int PLAYER_LEFTCLICK_SKILL_INDEX = 0; 
 
         //basic enemy
-		public static readonly int BASIC_ENEMY_HEIGHT = 32*3;
-		public static readonly int BASIC_ENEMY_WIDTH = 32*3;
+		public static readonly int BASIC_ENEMY_HEIGHT = 32*1;
+		public static readonly int BASIC_ENEMY_WIDTH = 32*1;
         public static readonly int BASIC_ENEMY_DAMAGE = 5;
-		public static readonly float BASIC_ENEMY_SPEED = 2f;
+		public static readonly float BASIC_ENEMY_SPEED = 0.4f;
 
         //dimensions
 		public static int SCREEN_WIDTH = 1280; // 640 x 480, 1280 x 640

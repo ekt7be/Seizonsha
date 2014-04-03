@@ -25,9 +25,10 @@ namespace GameName1.Skills
 			this.amount = amount;
 			this.damageType = damageType;
 			this.bulletSpeed = bulletSpeed;
+            this.bulletSpeed = 0.3f;
             this.rotateToAngle(directionAngle);
-            this.velocityX = (int)(bulletSpeed * vectorDirection.X);
-            this.velocityY = (int)(bulletSpeed * vectorDirection.Y);
+            this.velocityX = (bulletSpeed * vectorDirection.X);
+            this.velocityY = (bulletSpeed * vectorDirection.Y);
             this.user = user;
 		}
 
@@ -39,11 +40,6 @@ namespace GameName1.Skills
 
 		}
 
-		public override void Update(GameTime gameTime)
-		{
-			this.hitbox = new Rectangle(this.x, this.y, this.width, this.height); 
-		}
-
         public override void collide(GameEntity entity)
         {
 
@@ -52,6 +48,11 @@ namespace GameName1.Skills
             setRemove(true);
 
 
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
         }
 
         public override bool shouldCollide(GameEntity entity)
@@ -74,8 +75,8 @@ namespace GameName1.Skills
             this.damageType = damageType;
             this.bulletSpeed = bulletSpeed;
             rotateToAngle(directionAngle);
-            velocityX = (int)(bulletSpeed * vectorDirection.X);
-            velocityY = (int)(bulletSpeed * vectorDirection.Y);
+            velocityX = (bulletSpeed * vectorDirection.X);
+            velocityY = (bulletSpeed * vectorDirection.Y);
             setSprite(sprite);
             width = bounds.Width;
             height = bounds.Height;

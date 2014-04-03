@@ -582,7 +582,7 @@ namespace GameName1
         {
             if (player.playerIndex == PlayerIndex.One)
             {
-
+                
                 if (GamePad.GetState(player.playerIndex).Buttons.Start == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Space))
                 {
                     player.SkillTreeButtonDown();
@@ -651,8 +651,10 @@ namespace GameName1
 
                 Vector2 playerMouseDistance; // distance between player and mouse
 
-				playerMouseDistance.X = player.camera.getWorldPositionX(mouse.X) - player.x;
-				playerMouseDistance.Y = player.camera.getWorldPositionY(mouse.Y) - player.y;
+				playerMouseDistance.X = player.camera.getWorldPositionX((float)mouse.X) - player.floatx;
+				playerMouseDistance.Y = player.camera.getWorldPositionY((float)mouse.Y) - player.floaty;
+
+                //Static.Debug("" + (float)Math.Atan2(playerMouseDistance.Y, playerMouseDistance.X));
 
 				player.rotateToAngle((float)Math.Atan2(playerMouseDistance.Y, playerMouseDistance.X)); // angle to point at					
 
