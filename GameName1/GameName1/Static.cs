@@ -23,8 +23,12 @@ namespace GameName1
         public static readonly string TYPE_SWORD_SLASH= "Sword Slash";
         public static readonly string TYPE_PLAYER = "Player";
 
+
+        public static int NUM_PLAYERS = 1;
+
+
         //player stuff
-		public static int NUM_PLAYERS = 1;
+        public static readonly int PLAYER_INTERACTION_RANGE = 4;
         public static readonly int PLAYER_HEIGHT = 45;
         public static readonly int PLAYER_WIDTH = 45;
 		public static readonly int PLAYER_MOVE_SPEED = 5;

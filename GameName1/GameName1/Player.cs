@@ -29,6 +29,8 @@ namespace GameName1
         private bool skilltreebuttondown;
         private bool skilltreescreen;
 
+        private Interactable currentInteractable;
+
         private static float elapsed;
         private static float swordElapsed;
         private static readonly float delay = 200f;
@@ -43,12 +45,6 @@ namespace GameName1
         private static readonly int WALK_ANIMATION_FRAMES = 9;
         private static readonly int SLASH_ANIMATION_FRAMES = 6;
 
-        // This is messy. Make this more efficient.
-        private bool isWalking = false;
-        private bool up;
-        private bool down;
-        private bool left;
-        private bool right;
 
 		public Camera camera;
 
@@ -158,6 +154,7 @@ namespace GameName1
             this.manaRegen = 0.2f;
             this.skilltreescreen = false;
             this.skilltreebuttondown = false;
+            this.currentInteractable = null;
 
 			this.camera = camera;
 
@@ -169,6 +166,51 @@ namespace GameName1
 
 
 
+        }
+
+        public Interactable findInteraction()
+        {
+            if (Math.Cos(this.direction) > .5) // right
+            {
+                for (int i = game.getTileIndexFromTopEdgeY(getTopEdgeY()); i <= game.getTileIndexFromBottomEdgeY(getBottomEdgeY()); i++){
+                    for (int j = 0; j <= Static.PLAYER_INTERACTION_RANGE; j++)
+                    {
+                        Tile currTile = game.getTileFromIndex(i, game.getTileIndexFromRightEdgeX(getRightEdgeX()) + j);
+
+                        if (currTile is Interactable)
+                        {
+                            return (Interactable)currTile;
+                        }
+                        else
+                        {
+                            foreach (GameEntity entity in currTile.getEntities())
+                            {
+                                if (entity is Interactable)
+                                {
+                                    return (Interactable)entity;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            else if (Math.Sin(this.direction) > .5) // down
+            {
+                base.spriteSource = new Rectangle(64 * walkFrame, DOWN_ANIMATION * 64, 64, 64);
+
+            }
+            else if (Math.Sin(direction) < -.5) //up
+            {
+                //spriteSource = FramesToAnimation[UP_ANIMATION];
+                base.spriteSource = new Rectangle(64 * walkFrame, UP_ANIMATION * 64, 64, 64);
+
+            }
+            else if (Math.Cos(direction) < -.5) //left
+            {
+                //spriteSource = FramesToAnimation[LEFT_ANIMATION];
+                base.spriteSource = new Rectangle(64 * walkFrame, LEFT_ANIMATION * 64, 64, 64);
+            }
+            return null;
         }
 
         public void DrawScreen(Rectangle screenPortion, SpriteBatch spriteBatch)
@@ -436,28 +478,23 @@ namespace GameName1
 
         private void MoveUp()
         {
-            isWalking = true;
             this.move(0, -Static.PLAYER_MOVE_SPEED);
         }
         private void MoveDown()
         {
-            isWalking = true;
             this.move(0, Static.PLAYER_MOVE_SPEED);
         }
         private void MoveLeft()
         {
-            isWalking = true;
             this.move(-Static.PLAYER_MOVE_SPEED, 0);
         }
         private void MoveRight()
         {
-            isWalking = true;
             this.move(Static.PLAYER_MOVE_SPEED, 0);
         }
 
         public void noMovement()
         {
-            isWalking = false;
         }
 
         protected override void OnDie()
@@ -492,30 +529,6 @@ namespace GameName1
 
             base.rotateToAngle(angle);
 
-            if (Math.Cos(angle) > .5)
-            {
-                //spriteSource = FramesToAnimation[RIGHT_ANIMATION];
-                right = true;
-                up = left = down = false;
-            }
-            else if (Math.Sin(angle) > .5)
-            {
-                //spriteSource = FramesToAnimation[DOWN_ANIMATION];
-                down = true;
-                up = left = right = false;
-            }
-            else if (Math.Sin(angle) < -.5)
-            {
-                //spriteSource = FramesToAnimation[UP_ANIMATION];
-                up = true;
-                right = left = down = false;
-            }
-            else if (Math.Cos(angle) < -.5)
-            {
-                //spriteSource = FramesToAnimation[LEFT_ANIMATION];
-                left = true;
-                up = right = down = false;
-            }
         }
 
         public override void UpdateAnimation(GameTime gameTime)

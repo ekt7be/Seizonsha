@@ -58,6 +58,7 @@
     <Compile Include="AnimationTesting\SpriteAnimation.cs" />
     <Compile Include="Collision.cs" />
     <Compile Include="EntityFactory.cs" />
+    <Compile Include="Interfaces\Interactable.cs" />
     <Compile Include="Skills\Burning.cs" />
     <Compile Include="Effects\Effect.cs" />
     <Compile Include="Interfaces\StatusEffect.cs" />
