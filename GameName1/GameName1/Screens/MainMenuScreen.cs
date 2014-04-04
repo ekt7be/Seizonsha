@@ -60,7 +60,9 @@ namespace GameName1
         {
             LoadingScreen.Load(ScreenManager, true, e.PlayerIndex,
                                new GameplayScreen());
-            game.initializeVariables();
+
+
+			game.initializeVariables();
             game.spawnInitialEntities();
         }
 

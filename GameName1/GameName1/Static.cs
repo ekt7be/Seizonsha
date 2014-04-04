@@ -51,6 +51,7 @@ namespace GameName1
 		public static readonly int BASIC_ENEMY_WIDTH = 32*1;
         public static readonly int BASIC_ENEMY_DAMAGE = 5;
 		public static readonly float BASIC_ENEMY_SPEED = 0.5f;
+		public static readonly float BASIC_ENEMY_PATH_REFRESH = 500f;
 
         //dimensions
 		public static int SCREEN_WIDTH = 1280; // 640 x 480, 1280 x 640
@@ -58,11 +59,8 @@ namespace GameName1
 
 		// these values are read in through the map.txt file
 		public static int TILES_ON_SCREEN_X = 0;
-		public static int TILES_ON_SCREEN_Y = 0;//(int)((float)SCREEN_HEIGHT / (float)SCREEN_WIDTH * TILES_ON_SCREEN_X);
-		public static int TILE_WIDTH = 0; //SCREEN_WIDTH / TILES_ON_SCREEN_X;
-
-		public static readonly int SCREEN_WIDTH_FIX1 = 0;//SCREEN_WIDTH / 4;	// 640 / 4 = 160
-		public static readonly int SCREEN_WIDTH_FIX2 = 0;//SCREEN_WIDTH / 8;	// 640 / 8 = 80 
+		public static int TILES_ON_SCREEN_Y = 0;
+		public static int TILE_WIDTH = 0;
 
         //tile stuff
         public static readonly int TILE_GRASS = 961;

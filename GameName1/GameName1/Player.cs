@@ -340,10 +340,9 @@ namespace GameName1
 			spriteBatch.Draw(texture, hpRemaining, Color.Green); 
 			// draw Mana bar
 			spriteBatch.Draw(texture, manaMax, Color.LightBlue);
-            spriteBatch.Draw(texture, manaRemaining, Color.Blue);
+			spriteBatch.Draw(texture, manaRemaining, Color.Blue);
 			// draw XP bar
 			spriteBatch.Draw(texture, xp, Color.Yellow); 
-
             
 			// draw HP text
 			spriteBatch.DrawString(

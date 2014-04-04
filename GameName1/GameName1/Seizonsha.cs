@@ -210,7 +210,14 @@ namespace GameName1
 			WaveBegin();
 
             Spawn(new Food(this), 500, 600);
-			Spawn(new BasicEnemy(this), 500, 600);
+
+			//Spawn(new BasicEnemy(this), 500, 800);
+			//Spawn(new BasicEnemy(this), 500, 800);
+
+			//Spawn(new BasicEnemy(this), 500, 800);
+
+			//Spawn(new BasicEnemy(this), 600, 800);
+
 
             base.Initialize();
         }
@@ -285,7 +292,7 @@ namespace GameName1
 			dividers = new List<Rectangle>();
 			int divWidth = 3;	// width of dividing lines
 
-			yDivider = new Rectangle(Static.SCREEN_WIDTH/2+Static.SCREEN_WIDTH_FIX2-(divWidth/2), 0, divWidth, Static.SCREEN_HEIGHT*2);
+			yDivider = new Rectangle(Static.SCREEN_WIDTH/2-(divWidth/2), 0, divWidth, Static.SCREEN_HEIGHT*2);
 			xDivider = new Rectangle(0, Static.SCREEN_HEIGHT/2-(divWidth/2), Static.SCREEN_WIDTH*2, divWidth);
 
 			dividers.Add(yDivider); 
@@ -398,7 +405,8 @@ namespace GameName1
             {
                 WaveCleared();
                 //pause and do other stuff, maybe set timer
-				 WaveBegin();
+
+				WaveBegin();
             }
 
 
@@ -425,7 +433,7 @@ namespace GameName1
             //run AI
             foreach (AI ai in AIs)
             {
-                ai.AI();
+				ai.AI(gameTime);
             }
 
             //execute buffered movement

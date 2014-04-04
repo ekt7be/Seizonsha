@@ -28,19 +28,19 @@ namespace GameName1
 			if (numberOfPlayers == 1) {
 				cameraWidth = Static.SCREEN_WIDTH;
 				cameraHeight = Static.SCREEN_HEIGHT; 
-				viewportWidth = Static.SCREEN_WIDTH + Static.SCREEN_WIDTH_FIX1;
+				viewportWidth = Static.SCREEN_WIDTH;
 				viewportHeight = Static.SCREEN_HEIGHT;
 			}
 			else if (numberOfPlayers == 2) {
 				cameraWidth = Static.SCREEN_WIDTH / 2; 
 				cameraHeight = Static.SCREEN_HEIGHT; 
-				viewportWidth = Static.SCREEN_WIDTH / 2 + Static.SCREEN_WIDTH_FIX2;	// add 80 because SCREEN_WIDTH is off for some reason
+				viewportWidth = Static.SCREEN_WIDTH / 2;	// add 80 because SCREEN_WIDTH is off for some reason
 				viewportHeight = Static.SCREEN_HEIGHT;
 			}
 			else {
 				cameraWidth = Static.SCREEN_WIDTH / 2; 
 				cameraHeight = Static.SCREEN_HEIGHT / 2; 
-				viewportWidth = Static.SCREEN_WIDTH / 2 + Static.SCREEN_WIDTH_FIX2;
+				viewportWidth = Static.SCREEN_WIDTH / 2;
 				viewportHeight = Static.SCREEN_HEIGHT / 2;
 			}
 
@@ -56,22 +56,14 @@ namespace GameName1
 
 			cameraX = center.X;
 			cameraY = center.Y; 
-
-			int cameraXOffset;
-
-			if (numberOfPlayers == 1)
-				cameraXOffset = Static.SCREEN_WIDTH_FIX1;	// 640 / 4 
-			else 
-				cameraXOffset = Static.SCREEN_WIDTH_FIX2;		//640 / 8 
-
 			worldWidth = LevelBounds.Width;
 			worldHeight = LevelBounds.Height;
 
 			// control how far the camera can scroll
 			if (cameraX < 0)
 				cameraX = 0;
-			else if (cameraX + cameraWidth > worldWidth - cameraXOffset)	
-				cameraX = worldWidth - cameraWidth - cameraXOffset;
+			else if (cameraX + cameraWidth > worldWidth)	
+				cameraX = worldWidth - cameraWidth;
 
 			if (cameraY < 0) 
 				cameraY = 0;

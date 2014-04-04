@@ -16,26 +16,26 @@ namespace GameName1.NPCs
 		Tile playerTile; 
 		List<Tile> path;
 
-        HashSet<Tile> closed;
-        HashSet<Tile> open;
-
 		double closestDistance;
         int tilesWide;
         int tilesHigh;
 
-		bool drawPath = false; 
+		bool drawPath = false;  
+		bool drawHitbox = false; 
 
-		bool reachedDest; 
-		Tile currentDest; 
-
-		private static float elapsed, elapsed2;
+		private static float elapsed;
+		private float elapsed2;
 		private static readonly float delay = 200f;
+
+		private float sinceLastPathFind;
+
 		private int currentFrame = 0;
 		private Sword sword;
 
+		HashSet<Tile> closed;
+		HashSet<Tile> open;
 
         Random random; 
-
 
 		private static readonly int UP_ANIMATION = 0;
 		private static readonly int DOWN_ANIMATION = 2;
@@ -45,29 +45,74 @@ namespace GameName1.NPCs
 
 
 		public BasicEnemy(Seizonsha game)
-			: base(game, Seizonsha.spriteMappings[Static.SPRITE_BASIC_ENEMY_INT], Static.BASIC_ENEMY_WIDTH, Static.BASIC_ENEMY_HEIGHT, Static.DAMAGE_TYPE_ENEMY, 200)
+			: base(game, Seizonsha.spriteMappings[Static.SPRITE_BASIC_ENEMY_INT], Static.BASIC_ENEMY_WIDTH-1, Static.BASIC_ENEMY_HEIGHT-1, Static.DAMAGE_TYPE_ENEMY, 200)
 		{
 			base.scale = 1.0f;
 			setXPReward(50);
 
-			reachedDest = true;
+		  	closed = new HashSet<Tile>();
+			open = new HashSet<Tile>();
 
 			sword = new Sword(game, this, 5, 20);
 			sword.OnEquip();
 
             path = new List<Tile>();
-            closed = new HashSet<Tile>();
-            open = new HashSet<Tile>();
+
             random = new Random();
 
             tilesWide = (int)Math.Floor((double)(width / Static.TILE_WIDTH)) + 1;
             tilesHigh = (int)Math.Floor((double)(height / Static.TILE_WIDTH)) + 1;
 		}
 
-		public void AI()
+		float speed_x, speed_y;
+		bool stop = false;
+
+		void next_goal() {
+			path.RemoveAt(0);
+
+			if(path.Count == 0) {
+				return; 
+			}
+
+
+		}
+
+		void update_moving()
 		{
+			if(path.Count == 0)
+				stop = true; 
+			else 
+				stop = false;
+				
+			if(stop)
+				return;
+
+			if (path.Count != 0) {
+				speed_x = (path[0].x - this.x);
+				speed_y = (path[0].y - this.y);
+
+				if (speed_x!=0 || speed_y!=0){
+					Vector2 allSpeed = new Vector2(speed_x,speed_y);
+
+				allSpeed.Normalize();
+					allSpeed = allSpeed * Static.BASIC_ENEMY_SPEED;
+					//System.Console.Write(" | vec speed: " + allSpeed.X + " " + allSpeed.Y + "\n"); 
+
+					this.move(allSpeed.X, allSpeed.Y);
+				}
+			}
+
+				//System.Console.Write("next goal: " + path[0].x + " " + path[0].y); 
+
+			if(path.Count > 0) {
+				if (game.getTileFromIndex(game.getTileIndexFromLeftEdgeX(getLeftEdgeX()), game.getTileIndexFromTopEdgeY(getTopEdgeY())) == path[0])
+					next_goal();
+			}
+		}
 
 
+		public void AI(GameTime gameTime)
+		{
 			// find closest player
 			List<Player> players = game.getPlayers();
 
@@ -92,155 +137,80 @@ namespace GameName1.NPCs
 			float playerDirection = (float)Math.Atan2(closest.y-this.y, closest.x - this.x);
 			rotateToAngle(playerDirection);
 
-			// attack with sword if close enough
+			// attack with sword if in range
 			if (closestDistance < this.width*1.7)
-			{
 				sword.Use();
-			} 
-
-			//**PATHFINDING** 
-			playerTile = game.getTileFromCoord(closest.getCenterX(), closest.getCenterY());
-			enemyTile = game.getTileFromCoord(this.getCenterX(), this.getCenterY());
-
-			float speed = Static.BASIC_ENEMY_SPEED; 
+				
+			// ** PATHFINDING ** 
+			playerTile = game.getTileFromCoord(closest.x, closest.y);
+			enemyTile = game.getTileFromCoord(this.x, this.y);
 
 			// findPath(1, playerTile);
 			// System.Console.WriteLine(timer + ": " + this.x + " " + this.y + " " + this.velocityX + " " + this.velocityY + " " + this.lastX + " " + " " + this.isMoving());
 
-            if (currentDest != null)
-            {
-                if (currentDest.isTouching(this))
-                {
-                    // System.Console.WriteLine("reached destination!");
-                    this.reachedDest = true;
-                    path.Clear();
-                }
-            }
-
-
-			if (!reachedDest) {
-				// System.Console.Write ("time to move!");
-				Tile tileAtThisDir;
-
-				if (path == null)
-					return;
-
-				if (path.Count > 0) {	// like pacman gobbling up nodes
-					if (path[0].isTouching(this)) {
-						// System.Console.WriteLine("removed a node!"); 
-						path.RemoveAt(0);							
-					}
-				}
-
-				float speedX = 0;
-				float speedY = 0; 
-
-				// move along a path
-				for (int x = -1; x <= 1; x++) {
-					for (int y = -1; y <= 1; y++) {
-
-						bool currentTile = (x == 0 && y == 0);
-						bool isHorVert = (x == 0) || (y == 0); 
-						bool isDiagonal = (x != 0 && y != 0);
-
-						if (!currentTile) {
-
-							tileAtThisDir = game.getTileFromIndex (enemyTile.xIndex + x, enemyTile.yIndex + y);
-
-							if (path.Count > 0 && path != null) {
-
-								// movement
-								if (path [0].getCenterX() > this.getCenterX()) { // move right
-									speedX = speed; 
-									speedY = 0;
-									this.move(speedX, speedY);
-								}
-								if (path [0].getCenterX() < this.getCenterX()) { // move left
-									speedX = -speed; 
-									speedY = 0; 
-									this.move(speedX, speedY);
-
-								}
-								if (path [0].getCenterY() > this.getCenterY()) { // move up
-									speedX = 0; 
-									speedY = speed; 
-									this.move(speedX, speedY);
-
-								}
-								if (path [0].getCenterY() < this.getCenterY()) { // move down
-									speedX = 0; 
-									speedY = -speed; 
-									this.move(speedX, speedY);
-								}
-
-							}
-						}
-
-					}
-				}
-
-
+			if (this.getLastMovement() == new Vector2(0, 0) || 
+				path.Count == 0 || 
+				this.sinceLastPathFind >= Static.BASIC_ENEMY_PATH_REFRESH) {
+					if (playerTile.capacity < Math.Max(tilesWide, tilesHigh)) 
+						findPath(1, randomTile(playerTile, 1)); 
+					else
+						findPath(1, playerTile); 
 			}
-			else {
-				// System.Console.WriteLine("finding path...");
-				findPath(1, playerTile); 
-			}
-
-			if (currentDest == null)
-				return;
+				 
+			update_moving();
 		}
 
 		public void findPath(int searchMethod, Tile target) {
+				//System.Console.WriteLine("finding path");
+
+			this.sinceLastPathFind = 0;
+
 			if (target == null)
 				return;
 
-			if (path != null)
+			if (path != null || path.Count > 0)
 				path.Clear();
 
-			reachedDest = false; 
-
-			//HashSet<Tile> open = new HashSet<Tile>(); 
-			//HashSet<Tile> closed = new HashSet<Tile>(); 
 
 			Tile selected = enemyTile;	// start at enemy's current tile 
 			Tile start = selected;
 
-			//System.Console.WriteLine(game.getTileIndexFromLeftEdgeX(this.getCenterX()) +" "+ game.getTileIndexFromTopEdgeY(this.getCenterY()));
-			//System.Console.WriteLine(selected.xIndex +":"+ selected.yIndex + " (start)"); 
+				//System.Console.WriteLine(game.getTileIndexFromLeftEdgeX(this.getCenterX()) +" "+ game.getTileIndexFromTopEdgeY(this.getCenterY()));
+				//System.Console.WriteLine(selected.xIndex +":"+ selected.yIndex + " (start)"); 
 
-			open.Add(selected); 
-
-			// find closest player
+			open.Add(start); 
 
 			while (!closed.Contains(target)) {
-				// check squares in all 8 directions 
 				Tile tileAtThisDir;
+
+				// check squares in all 8 directions 
 				for (int x = -1; x <= 1; x++) {
 					for (int y = -1; y <= 1; y++) {
+
 						bool currentTile = (x == 0 && y == 0);
 						bool isDiagonal = (x != 0 && y != 0);
+
 						bool search = !currentTile && !isDiagonal; 
 
 						tileAtThisDir = game.getTileFromIndex(selected.xIndex + x, selected.yIndex + y); 
+
 						if (tileAtThisDir == null)
-							return;
+							continue;
 
 						switch (searchMethod) {
-							case 0: 
-								search = !currentTile && !isDiagonal; 
-								break;
-							case 1: 
-								search = !currentTile; 
-								break;
+							case 0: search = !currentTile && !isDiagonal;	// horizontal and vertical only pathfinding
+									break;
+							case 1: search = !currentTile;	// includes diagonals in pathfinding
+									break;
 						}
+
+						bool checkSize = tileAtThisDir.capacity >= Math.Max(tilesHigh,tilesWide);
 
 						if (search) {
 							int addG = 0;
 
-							if (!(y != 0) && (x != 0))	
-								addG = 10;	// up, down, left, right
-							else
-								addG = 14;	// diagonal
+							if (!(y != 0) && (x != 0)) 	addG = 10;	// up, down, left, right
+							else 						addG = 14;	// diagonal
 
 							if (open.Contains(tileAtThisDir)) {
 								if (tileAtThisDir.G < (selected.G + addG)) {	// try to find better path with smaller G
@@ -248,19 +218,21 @@ namespace GameName1.NPCs
 								}
 							}
 
+							//bool willNotCollide = !(game.willCollide(this, tileAtThisDir.x, tileAtThisDir.y));
+							bool willCollide = tileAtThisDir.isObstacle();
 
-
-
-                            if (!(tileAtThisDir.isObstacle()) && !(closed.Contains(tileAtThisDir)))
-                            {
+							//(!(tileAtThisDir.isObstacle())
+														
+							if (!willCollide && !(closed.Contains(tileAtThisDir))) {
                                 tileAtThisDir.parent = selected;
                                 tileAtThisDir.G = tileAtThisDir.parent.G + addG;
-                                open.Add(tileAtThisDir);
+								if (checkSize || tileAtThisDir == playerTile)
+                        			open.Add(tileAtThisDir);
                             }
 						}
 					}
 				}
-
+					
 				closed.Add(selected); 
 				open.Remove(selected); 
 
@@ -268,75 +240,81 @@ namespace GameName1.NPCs
 				Tile minFTile = null; 
 				int minF = 100000000; 
 
-				foreach (Tile t in open) {
-					int moveX = Math.Abs(playerTile.xIndex - t.xIndex);	// calculate tiles in x to player
-					int moveY = Math.Abs(playerTile.yIndex - t.yIndex);	// calculate tiles in y to player
+				foreach (Tile openTile in open) {
+					// manhattan distance
+					int moveX = Math.Abs(playerTile.xIndex - openTile.xIndex);	// calculate tiles in x to player
+					int moveY = Math.Abs(playerTile.yIndex - openTile.yIndex);	// calculate tiles in y to player
 
-					t.H = (moveX + moveY) * 10; 
-					t.F = t.G + t.H; 
+					openTile.H = (moveX + moveY) * 10; 
+					openTile.F = openTile.G + openTile.H; 
 
-					// System.Console.WriteLine (t.xIndex + ", " + t.yIndex + " | G: " + t.G + " H: " + t.H + "(" + moveX + ", " + moveY + ")" + " F: " + t.F);
-					if (t.F <= minF) {
-						minF = t.F; 
-						minFTile = t; 
+						// System.Console.WriteLine (t.xIndex + ", " + t.yIndex + " | G: " + t.G + " H: " + t.H + "(" + moveX + ", " + moveY + ")" + " F: " + t.F);
+					if (openTile.F <= minF) {
+						minF = openTile.F; 
+						minFTile = openTile; 
 					} 
 				}
 
-				//System.Console.WriteLine ("debug1");
-				// System.Console.WriteLine ("__");
+					//System.Console.WriteLine ("debug1");
+					// System.Console.WriteLine ("__");
 
 				if (minFTile != null) {
-					// System.Console.WriteLine ("MinF: " + minF.xIndex + ", " + minF.yIndex + " | F: " + minF.F);
+						// System.Console.WriteLine ("MinF: " + minF.xIndex + ", " + minF.yIndex + " | F: " + minF.F);
 					selected = minFTile;
 					closed.Add(minFTile); 
 					open.Remove(minFTile); 
 				} 
-				else {
-					//System.Console.WriteLine ("minFTile is null");
-					return;
-					//findPath (); 
-				}
+				else return;
 			}
 
 			open.Clear ();
 			closed.Clear (); 
 
-			//System.Console.WriteLine ("debug2");
+				//System.Console.WriteLine ("debug2");
 
 			Tile end = target;
 			Tile current = end; 
 
-			path.Clear(); 
-
 			while (current != start) {
-				//System.Console.WriteLine ("debug3");
-				//System.Console.WriteLine("started at: " + start.xIndex + " " + start.yIndex);
+					//System.Console.WriteLine ("debug3");
+					//System.Console.WriteLine("started at: " + start.xIndex + " " + start.yIndex);
 				if (current.parent != null) {
-					//System.Console.WriteLine("current is: " + current.xIndex + " " + current.yIndex + " with parent: " + current.parent.xIndex + " " + current.parent.yIndex + "\n");
+						//System.Console.WriteLine("current is: " + current.xIndex + " " + current.yIndex + " with parent: " + current.parent.xIndex + " " + current.parent.yIndex + "\n");
 					current = current.parent; 
-					path.Add(current); 
+					//Static.Debug(path.Count+"");
+					if (path.Count > 100) {
+						path.Reverse();
+						path.Add(target);
+						return;
+					}
+					else {
+						path.Add(current); 
+					}
+						// System.Console.Write("path node added - "); 
 				} 
-				else
-					return;
+				else return;
 			}
+
+			if (path.Count > 0)
+				path.RemoveAt(path.Count-1); 
 
 			path.Reverse();
-			path.Add(target);				// add end
+			path.Add(target);	// add player tile to path
 
+			/*
 			foreach(Tile t in path) {
-				// System.Console.Write("(" + t.xIndex + ", " + t.yIndex + ") -> "); 
+				System.Console.Write("(" + t.xIndex + ", " + t.yIndex + ") -> "); 
 			}
+			*/
 
-			// System.Console.WriteLine(); 
+				// System.Console.WriteLine(); 
 
-
-			/* intelligence: recalculate the path when they get to this node 
-			 * path[path.Count-1] means travel the whole path before recalculating = dumber AI
-			 * */
+				/* intelligence: recalculate the path when they get to this node 
+				 * path[path.Count-1] means travel the whole path before recalculating = dumber AI
+				 * */
 
 			//this.currentDest = path[path.Count-1];
-			this.currentDest = path[path.Count/2];
-
+			//this.currentDest = path[path.Count/2];
 		}
 
 		public Tile randomTile(Tile target, int within) {
@@ -364,7 +342,7 @@ namespace GameName1.NPCs
 			if(tileAtThisDir == null) 
 				return null; 
 
-			if (!tileAtThisDir.isObstacle())
+			if (!tileAtThisDir.isObstacle() && tileAtThisDir.capacity >= this.width/32)
 				return tileAtThisDir; 
 			else 
 				return null; 
@@ -374,20 +352,18 @@ namespace GameName1.NPCs
 
 		public override void collide(GameEntity entity)
 		{
+			/*
 			if (entity.getTargetType() == Static.TARGET_TYPE_ENEMY) {
 
 				if (elapsed2 >= 1000) {
-					findPath(1, randomTile(enemyTile, 3)); 
-					elapsed2 = 0;
+					findPath(1, randomTile(enemyTile, 6)); 
 				}
 				else {
 					// if close enough, try to surround the player
-					if (closestDistance < this.width*1.7*2)
-						findPath(1, playerTile);
-					else
-						findPath(1, randomTile(playerTile, 3));
+					findPath(1, randomTile(playerTile, 6));
 				}
 			}
+			*/
 		}
 
         public override void UpdateAnimation(GameTime gameTime)
@@ -453,6 +429,7 @@ namespace GameName1.NPCs
             }
 
         }
+
 		public override void collideWithWall()
 		{
 		}
@@ -466,13 +443,16 @@ namespace GameName1.NPCs
 		void DrawPath(SpriteBatch spriteBatch) {
 
 
-			int dotSize = 6; 
+			int dotSize = 32; 
 
 			if (path != null) {
 				foreach (Tile t in path) {
-					Rectangle rect = new Rectangle (t.x+Static.TILE_WIDTH/2-dotSize/2, 
+
+					Rectangle rect = new Rectangle(
+						t.x+Static.TILE_WIDTH/2-dotSize/2, 
 						t.y+Static.TILE_WIDTH/2-dotSize/2, 
-						dotSize, dotSize); 
+						dotSize, 
+						dotSize); 
 					spriteBatch.Draw(Static.PIXEL_THIN, rect, Color.LightPink);
 				}
 			}
@@ -481,6 +461,17 @@ namespace GameName1.NPCs
 
 		public override void Draw(SpriteBatch spriteBatch)
 		{
+
+			if (drawHitbox) {
+				Rectangle rect = new Rectangle (
+					this.x, 
+					this.y, 
+					this.hitbox.Width,
+					this.hitbox.Height); 
+				spriteBatch.Draw(Static.PIXEL_THIN, rect, Color.Blue);
+			}
+
+
 			if (drawPath) 
 				DrawPath(spriteBatch); 
 			base.Draw(spriteBatch);
@@ -493,6 +484,13 @@ namespace GameName1.NPCs
 
 			elapsed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
 			elapsed2 += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+
+			this.sinceLastPathFind += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+
+
+			if (elapsed2 >= 10000) {
+				elapsed2 = 0;			
+			}
 
 			if (elapsed > delay)
 			{
@@ -514,14 +512,12 @@ namespace GameName1.NPCs
 			game.decreaseNumberEnemies();
 		}
 
-
 		public override void rotateToAngle(float angle) //animation is based on rotation which is used by both movement and aiming
 		{
 			base.rotateToAngle(angle);
 
 
 		}
-
 
         public override string getName()
         {
@@ -533,7 +529,6 @@ namespace GameName1.NPCs
         {
            base.reset();
            setXPReward(50);
-           reachedDest = true;
            path.Clear();
            open.Clear();
            closed.Clear(); 

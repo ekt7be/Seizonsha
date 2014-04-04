@@ -54,7 +54,7 @@ namespace GameName1
 			if (drawCapacity) {
 				spriteBatch.DrawString(
 					Static.SPRITE_FONT, 
-					this.capacity+"", 
+					this.capacity + "", 
 					new Vector2(this.x+2, this.y), 
 					Color.LightGreen
 				);

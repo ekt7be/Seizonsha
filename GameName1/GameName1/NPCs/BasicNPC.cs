@@ -18,7 +18,7 @@ namespace GameName1.NPCs
 
         }
 
-        public void AI()
+		public void AI(GameTime gameTime)
         {
             //just sits there
         }
