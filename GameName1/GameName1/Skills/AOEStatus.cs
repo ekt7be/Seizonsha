@@ -46,6 +46,12 @@ namespace GameName1.Skills
             }
         }
 
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(Static.PIXEL_THIN, this.hitbox, null, Color.White, 0, new Vector2(0, 0), SpriteEffects.None, 1f);
+            base.Draw(spriteBatch);
+        }
+
         
 
 

@@ -33,6 +33,7 @@ namespace GameName1
         public float health;
         public float shield;
         public float speedModifier;
+        public float damageModifier;
         protected bool hasHealth;
         public float velocityX { get; set; }
         public float velocityY { get; set; }
@@ -82,11 +83,11 @@ namespace GameName1
 
             if (spriteSource == null)
             {
-                spriteBatch.Draw(sprite, this.hitbox, spriteSource, tint, this.direction, new Vector2(0, 0), SpriteEffects.None, 1);
+                spriteBatch.Draw(sprite, this.hitbox, spriteSource, tint, this.direction, new Vector2(0, 0), SpriteEffects.None, 1f);
             }
             else
             {
-                spriteBatch.Draw(sprite, this.hitbox, spriteSource, tint, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+                spriteBatch.Draw(sprite, this.hitbox, spriteSource, tint, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1f);
             }
 
         }
@@ -113,10 +114,13 @@ namespace GameName1
                 this.statusEffects.Add(statusEffect);
             }
             this.incomingStatusEffects.Clear();
+            int slowCount = 0;
             foreach (StatusEffect statusEffect in this.statusEffects)
             {
                 statusEffect.Update();
+                if (statusEffect is Slow) slowCount++;
             }
+            if (slowCount == 0) this.speedModifier = 1f;
         }
 
         public void UpdateAll(GameTime gameTime)

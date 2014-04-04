@@ -494,6 +494,7 @@ namespace GameName1
                 }
 
                 spriteBatch.Begin(
+                    //was Deferred
                     SpriteSortMode.Deferred,
                     BlendState.AlphaBlend,
                     null,
@@ -1201,6 +1202,11 @@ namespace GameName1
 
             return returnList;
         }
+
+       /* public List<GameEntity> getEntitiesInBounds(PolygonStuff.Polygon p)
+        {
+
+        }*/
 
         public List<GameEntity> getEntitiesInBounds(Rectangle bounds)
         {

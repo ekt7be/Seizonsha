@@ -89,7 +89,7 @@ namespace GameName1.Skills
 
         public override string getDescription()
         {
-            return "Drain life from your target while they are in range";
+            return "Drain life from your target while they are in range.";
         }
 
         public override string getName()

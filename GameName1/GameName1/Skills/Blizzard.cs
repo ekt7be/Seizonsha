@@ -38,7 +38,7 @@ namespace GameName1.Skills
 
         public override string getDescription()
         {
-            return "Creates a horrific blizzard in front of you";
+            return "Creates a horrific blizzard in front of you that slows and damages enemies.";
         }
 
         public override string getName()

@@ -32,6 +32,16 @@ namespace GameName1.Effects
             base.Update();
         }
 
+        public override void onEnd()
+        {
+            //afflicted.modifySpeed((float)(1.0 / amount));
+        }
+
+        public override void onCreate()
+        {
+           // afflicted.modifySpeed(amount);
+        }
+
 
     }
 }

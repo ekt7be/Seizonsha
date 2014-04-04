@@ -24,7 +24,10 @@ namespace GameName1.Effects
         {
             //
         }
+        public override void onEnd()
+        {
 
+        }
         public override void Update()
         {
             game.damageEntity(user, afflicted, amount, this.damageType);

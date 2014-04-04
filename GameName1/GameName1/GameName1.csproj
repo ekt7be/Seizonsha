@@ -90,6 +90,7 @@
     <Compile Include="Skills\ChangeColor.cs" />
     <Compile Include="Skills\ExplodingBullet.cs" />
     <Compile Include="Skills\Fireball.cs" />
+    <Compile Include="Skills\FireLance.cs" />
     <Compile Include="Skills\HealingTouch.cs" />
     <Compile Include="Skills\LifeDrain.cs" />
     <Compile Include="Skills\Skill.cs" />

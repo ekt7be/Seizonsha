@@ -144,6 +144,7 @@ namespace GameName1
             this.skilltree = new SkillTree.SkillTree(game, this, Static.PIXEL_THIN);
             Equip(new Gun(game, this, 30, 10, 10f), Static.PLAYER_L1_SKILL_INDEX);
             Equip(new LifeDrain(game, this, 3, 40, 40), Static.PLAYER_L1_SKILL_INDEX);
+            Equip(new FireLance(game, this, 10, 5), Static.PLAYER_L1_SKILL_INDEX);
             Equip(new Fireball(game, this, 120, 100, 5f), Static.PLAYER_R1_SKILL_INDEX);
             //Equip(new LifeDrain(game, this, 2, 2, 40), Static.PLAYER_L2_SKILL_INDEX);
             Equip(new Teleport(game, this, 180, 3, 1), Static.PLAYER_L2_SKILL_INDEX);

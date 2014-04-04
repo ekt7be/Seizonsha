@@ -33,12 +33,22 @@ namespace GameName1.Interfaces
             return this.origin;
         }
 
+        public virtual void onEnd()
+        {
+        }
+        public virtual void onCreate()
+        {
+        }
 
 
         public virtual void Update()
         {
             time++;
-            if (time >= duration) afflicted.removeStatusEffect(this);
+            if (time >= duration)
+            {
+                afflicted.removeStatusEffect(this);
+                this.onEnd();
+            }
         }
 
 
