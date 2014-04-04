@@ -52,10 +52,35 @@ namespace GameName1.Skills
 
         protected override void UseSkill()
         {
-            Rectangle slashBounds = new Rectangle((int)(user.getCenterX() + this.bufferedVectorDirection.X * user.width / 2 - user.width / 4), (int)(user.getCenterY() + this.bufferedVectorDirection.Y * user.height / 2 - user.height / 4), 200, 10);
+            int width = 10;
+            int length = 200;
+            Rectangle slashBounds = new Rectangle((int)(user.getCenterX()), (int)(user.getCenterY() -5), length, width);
+            List<PolygonIntersection.Vector> points = new List<PolygonIntersection.Vector>();
+            float theta = bufferedDirection;
+            //if(theta < (float)(2.0*Math.PI)) theta += 2.0f*(float)Math.PI;
+            float ox = user.getCenterX();
+            float oy = user.getCenterY() - (int)(width / 2);
+            float px1 = user.getCenterX();
+            float py1 = user.getCenterY();
+            float px2 = user.getCenterX();
+            float py2 = user.getCenterY() + width;
+            float px3 = user.getCenterX() + length;
+            float py3 = user.getCenterY() + width;
+            float px4 = user.getCenterX() + length;
+            float py4 = user.getCenterY();
+            points.Add(new PolygonIntersection.Vector((int)(Math.Cos(theta) * (px1-ox) - Math.Sin(theta) *(py1-oy) + ox),   (int)(Math.Sin(theta) * (px1-ox) + Math.Cos(theta) * (py1-oy) + oy)));
+            points.Add(new PolygonIntersection.Vector((int)(Math.Cos(theta) * (px2-ox) - Math.Sin(theta) *(py2-oy) + ox),   (int)(Math.Sin(theta) * (px2-ox) + Math.Cos(theta) * (py2-oy) + oy)));
+            points.Add(new PolygonIntersection.Vector((int)(Math.Cos(theta) * (px3-ox) - Math.Sin(theta) *(py3-oy) + ox),   (int)(Math.Sin(theta) * (px3-ox) + Math.Cos(theta) * (py3-oy) + oy)));
+            points.Add(new PolygonIntersection.Vector((int)(Math.Cos(theta) * (px4-ox) - Math.Sin(theta) *(py4-oy) + ox),   (int)(Math.Sin(theta) * (px4-ox) + Math.Cos(theta) * (py4-oy) + oy)));
+           /* p'x = cos(theta) * (px-ox) - sin(theta) * (py-oy) + ox
+            p'y = sin(theta) * (px-ox) + cos(theta) * (py-oy) + oy
+            */
+
+            PolygonIntersection.Polygon polygon = new PolygonIntersection.Polygon(points);
             //game.Spawn(new SwordSlash(game, user, Static.PIXEL_THIN, slashBounds, damage, damageType, 10, user.vectorDirection), slashBounds.Left, slashBounds.Top);
-            AOECone attack = EntityFactory.getAOECone(game, user, Static.PIXEL_THIN, this, slashBounds, damage, damageType, 10);
+            AOEPolygon attack = new AOEPolygon(game, user, Static.PIXEL_THIN, this, slashBounds, polygon, damage, damageType, 10, bufferedDirection);
             attack.rotateToAngle(this.bufferedDirection);
+            
             game.Spawn(attack, slashBounds.Left, slashBounds.Top);
         }
 

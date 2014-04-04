@@ -34,6 +34,7 @@ namespace GameName1
         private HashSet<Collision> collisions;
         private List<AI> AIs;
         private Level currLevel;
+        private PolygonIntersection.MainForm mainForm = new PolygonIntersection.MainForm();
 
         private bool paused;
 		FPSCounterComponent fps;
@@ -1211,10 +1212,15 @@ namespace GameName1
             return returnList;
         }
 
-       /* public List<GameEntity> getEntitiesInBounds(PolygonStuff.Polygon p)
+       public List<GameEntity> getEntitiesInBounds(PolygonIntersection.Polygon p)
         {
-
-        }*/
+            List<GameEntity> ret = new List<GameEntity>();
+            foreach (GameEntity entity in this.entities)
+            {
+                if((mainForm.PolygonCollision(p, entity.getPolygonFromHitbox(), new PolygonIntersection.Vector(0,0)).Intersect)) ret.Add(entity);
+            }
+            return ret;
+        }
 
         public List<GameEntity> getEntitiesInBounds(Rectangle bounds)
         {

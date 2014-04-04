@@ -61,6 +61,12 @@
     <Compile Include="Food.cs" />
     <Compile Include="Interfaces\Interactable.cs" />
     <Compile Include="PickUp.cs" />
+    <Compile Include="PolygonStuff\MainForm.Collisions.cs" />
+    <Compile Include="PolygonStuff\Point.cs" />
+    <Compile Include="PolygonStuff\PointF.cs" />
+    <Compile Include="PolygonStuff\Polygon.cs" />
+    <Compile Include="PolygonStuff\Vector.cs" />
+    <Compile Include="Skills\AOEPolygon.cs" />
     <Compile Include="Skills\AOEStatus.cs" />
     <Compile Include="Skills\Blizzard.cs" />
     <Compile Include="Skills\Burning.cs" />
@@ -131,6 +137,8 @@
     <Reference Include="Lidgren.Network">
       <HintPath>$(MSBuildExtensionsPath)\..\MonoGame\v3.0\Assemblies\WindowsGL\Lidgren.Network.dll</HintPath>
     </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="Tao.Sdl">
       <HintPath>$(MSBuildExtensionsPath)\..\MonoGame\v3.0\Assemblies\WindowsGL\Tao.Sdl.dll</HintPath>
     </Reference>

@@ -18,7 +18,7 @@ namespace GameName1.Skills
 
 
         public Blizzard(Seizonsha game, GameEntity user, int damage, int recharge_time, int duration, int slowDuration)
-            : base(game, user, 0, recharge_time, 0, 10)
+            : base(game, user, 15, recharge_time, 5, 10)
         {
             this.damage = damage;
             this.damageType = Static.DAMAGE_TYPE_NO_DAMAGE;
@@ -48,6 +48,8 @@ namespace GameName1.Skills
 
         public override void affect(GameEntity affected)
         {
+
+            game.damageEntity(user, affected, this.damage, damageType);
             foreach (StatusEffect statusEffect in affected.getStatusEffects())
             {
                 if (statusEffect.getOrigin() is Blizzard) return;
