@@ -39,6 +39,8 @@ namespace GameName1
         private bool paused;
 		FPSCounterComponent fps;
 		private bool showFPS = true; 
+
+		private float sinceLastWaveCleared; 
 	
         // By preloading any assets used by UI rendering, we avoid framerate glitches
         // when they suddenly need to be loaded in the middle of a menu transition.
@@ -46,6 +48,8 @@ namespace GameName1
         {
             "gradient",
         };
+
+		bool waveCleared; 
 
 
         public static Dictionary<int, Texture2D> spriteMappings = new Dictionary<int, Texture2D>();
@@ -205,14 +209,19 @@ namespace GameName1
 
 
 
-            this.difficulty = 5;
+            this.difficulty = 1;
             this.numberEnemies = 0;
             this.Wave = 0;
-			WaveBegin();
+            WaveBegin();
+            //Spawn(new Food(this), 500, 600);
 
-            Spawn(new Food(this), 500, 600);
+			waveCleared = false; 
 
 			//Spawn(new BasicEnemy(this), 500, 800);
+
+
+			//Spawn(new BossEnemy(this), 500, 800);
+
 			//Spawn(new BasicEnemy(this), 500, 800);
 
 			//Spawn(new BasicEnemy(this), 500, 800);
@@ -329,6 +338,9 @@ namespace GameName1
         public void UpdateGame(GameTime gameTime)
         {
 
+
+			sinceLastWaveCleared += (float)gameTime.ElapsedGameTime.TotalMilliseconds; 
+
             //flag entities to be removed
             foreach (GameEntity entity in entities)
             {
@@ -396,26 +408,32 @@ namespace GameName1
                     spawn.OnSpawn();
                 }
 
-
+			
 
 
             }
 
             //check for wave completion
-            if (numberEnemies <= 0)
+			if (numberEnemies <= 0 && !waveCleared)
             {
-                WaveCleared();
-                
+                WaveCleared(gameTime);
+
                 //check # of players and create appropriate number of player menus
-                for (int index = 0; index < Static.NUM_PLAYERS; index++)
+          /*      for (int index = 0; index < Static.NUM_PLAYERS; index++)
                 {
                     screenManager.AddScreen(new PlayerMenuScreen(), (PlayerIndex)index);
                 }
-                //pause and do other stuff, maybe set timer
-
-				WaveBegin();
+            */   
             }
+			else if (waveCleared) {
+               
+				if (sinceLastWaveCleared >= 20000) {
+					WaveBegin();
+				}
+			}
 
+
+            currLevel.Update();
 
             //update all entities including players
             foreach (GameEntity entity in entities)
@@ -570,14 +588,22 @@ namespace GameName1
 
             spriteBatch.Begin();
 
-
-            drawSplitscreenDividers(Static.NUM_PLAYERS);
-
+            	drawSplitscreenDividers(Static.NUM_PLAYERS);
 
             spriteBatch.End();
 
 			if (showFPS)
 				fps.Draw(gameTime); 
+
+			spriteBatch.Begin();
+
+				if (waveCleared)
+					spriteBatch.DrawString(Static.SPRITE_FONT, 20-(int)sinceLastWaveCleared/1000+
+					" seconds until next wave...\n" +
+					"press space(start) to open skill tree!",
+					new Vector2(defaultView.Width-390, defaultView.Height-50), Color.White); 
+			spriteBatch.End();
+
         }
 
 		void drawSplitscreenDividers(int numberOfPlayers) {
@@ -782,11 +808,16 @@ namespace GameName1
         public void damageEntity(GameEntity user, GameEntity target, int amount, int damageType)
         {
 
+            if (amount == 0)
+            {
+                return;
+            }
+
             if (ShouldDamage(damageType, target.getTargetType()))
             {
 
-                TextEffect text = EntityFactory.getTextEffect(this, amount + "", 10, new Vector2(0, -2), Color.Red);
-                Spawn(text, target.getCenterX(), target.getCenterY() - 60);
+                    TextEffect text = EntityFactory.getTextEffect(this, amount + "", 10, new Vector2(0, -2), Color.Red);
+                    Spawn(text, target.getCenterX(), target.getCenterY() - 60);
 
                 if (user == null)
                 {
@@ -814,7 +845,7 @@ namespace GameName1
             {
                 target.health = target.maxHealth;
             }
-            if (target.health < 0)
+            if (target.health <= 0)
             {
                 target.health = 0;
                 if (!target.shouldRemove())
@@ -869,7 +900,7 @@ namespace GameName1
             }
 
             foreach (GameEntity tileEntity in getEntitiesInBounds(bounds)){
-                if (entity.shouldCollide(tileEntity) && tileEntity.shouldCollide(tileEntity)){
+                if (entity.shouldCollide(tileEntity) && tileEntity.shouldCollide(tileEntity) && entity!=tileEntity){
                     collide = true;
                 }
             }
@@ -1328,8 +1359,12 @@ namespace GameName1
         }
 
 
-        public void WaveCleared()
+		public void WaveCleared(GameTime gameTime)
         {
+			sinceLastWaveCleared = 0; 
+
+			waveCleared = true; 
+
             difficulty++;
             difficulty++;
 
@@ -1337,8 +1372,21 @@ namespace GameName1
 
         public void WaveBegin()
         {
+			waveCleared = false; 
             Wave++;
-            currLevel.spawnEnemies(difficulty);
+            //currLevel.spawnEnemies(difficulty);
+
+            if (this.Wave % 3 == 0)
+            {
+                List<GameEntity> enemyList = new List<GameEntity>();
+                enemyList.Add(new BossEnemy(this));
+                //Spawn(new BossEnemy(this), 500, 800);
+                currLevel.populateQueue(difficulty, enemyList);
+            }
+            else
+            {
+                currLevel.populateQueue(difficulty, null);
+            }
 
         }
 

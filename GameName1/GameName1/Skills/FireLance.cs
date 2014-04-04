@@ -8,7 +8,7 @@ using System.Text;
 
 namespace GameName1.Skills
 {
-    class FireLance : Skill
+    class FireLance : Skill, Unlockable
     {
 
         private int damage;
@@ -16,7 +16,7 @@ namespace GameName1.Skills
 
 
         public FireLance(Seizonsha game, GameEntity user, int damage, int recharge_time)
-            : base(game, user, 5, recharge_time, 5, 5)
+            : base(game, user, Static.FIRELANCE_COST, Static.FIRELANCE_RECHARGE, 5, 5)
         {
             this.damage = damage;
             this.damageType = Static.DAMAGE_TYPE_NO_DAMAGE;
@@ -78,11 +78,16 @@ namespace GameName1.Skills
 
             PolygonIntersection.Polygon polygon = new PolygonIntersection.Polygon(points);
             //game.Spawn(new SwordSlash(game, user, Static.PIXEL_THIN, slashBounds, damage, damageType, 10, user.vectorDirection), slashBounds.Left, slashBounds.Top);
-            AOEPolygon attack = new AOEPolygon(game, user, Static.PIXEL_THIN, this, slashBounds, polygon, damage, damageType, 10, bufferedDirection);
+            AOEPolygon attack = new AOEPolygon(game, user, Seizonsha.spriteMappings[Static.SPRITE_FIREBALL], this, slashBounds, polygon, damage, damageType, 10, bufferedDirection);
             attack.rotateToAngle(this.bufferedDirection);
             
             game.Spawn(attack, slashBounds.Left, slashBounds.Top);
         }
 
+
+        public void OnUnlock(Player player)
+        {
+            player.addEquipable(this);
+        }
     }
 }

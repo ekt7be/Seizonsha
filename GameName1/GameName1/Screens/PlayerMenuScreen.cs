@@ -73,15 +73,20 @@ namespace GameName1
         public override void Draw(GameTime gameTime)
         {
             GraphicsDevice graphics = ScreenManager.GraphicsDevice;
+            ScreenManager.SpriteBatch.Begin();
             graphics.Viewport = game.defaultView;
-
+            List<Player> players = game.getPlayers();
+            
             switch ((int)ControllingPlayer+1)
             {
                 case 1:
                     graphics.Viewport = game.p1View;
+                    //players[0].SkillTreeOpen();
+                    players[0].DrawSkillTree(graphics.Viewport.Bounds, ScreenManager.SpriteBatch);
                     break;
                 case 2:
                     graphics.Viewport = game.p2View;
+                    players[0].DrawSkillTree(graphics.Viewport.Bounds, ScreenManager.SpriteBatch);
                     break;
                 case 3:
                     graphics.Viewport = game.p3View;
@@ -93,15 +98,7 @@ namespace GameName1
                     graphics.Viewport = game.defaultView;
                     break;
             }
-           /* if (ControllingPlayer == PlayerIndex.One)
-            {
-                graphics.Viewport = game.p1View;
-            }
-            else if (ControllingPlayer == PlayerIndex.Two)
-            {
-                graphics.Viewport = game.p2View;
-            }*/
-
+            ScreenManager.SpriteBatch.End();
             base.Draw(gameTime);
         }
 

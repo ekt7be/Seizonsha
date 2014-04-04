@@ -48,7 +48,7 @@ namespace GameName1.NPCs
 			: base(game, Seizonsha.spriteMappings[Static.SPRITE_BASIC_ENEMY_INT], Static.BASIC_ENEMY_WIDTH-1, Static.BASIC_ENEMY_HEIGHT-1, Static.DAMAGE_TYPE_ENEMY, Static.BASIC_ENEMY_HEALTH)
 		{
 			base.scale = 1.0f;
-			setXPReward(50);
+			setXPReward(100);
 
 		  	closed = new HashSet<Tile>();
 			open = new HashSet<Tile>();
@@ -154,7 +154,7 @@ namespace GameName1.NPCs
 					if (playerTile.capacity < Math.Max(tilesWide, tilesHigh)) 
 						findPath(1, randomTile(playerTile, 1)); 
 					else
-						findPath(1, playerTile); 
+						findPath(1, randomTile(playerTile, 1)); 
 			}
 				 
 			update_moving();
@@ -170,7 +170,6 @@ namespace GameName1.NPCs
 
 			if (path != null || path.Count > 0)
 				path.Clear();
-
 
 			Tile selected = enemyTile;	// start at enemy's current tile 
 			Tile start = selected;
@@ -443,7 +442,7 @@ namespace GameName1.NPCs
 		void DrawPath(SpriteBatch spriteBatch) {
 
 
-			int dotSize = 32; 
+			int dotSize = 6; 
 
 			if (path != null) {
 				foreach (Tile t in path) {
@@ -528,7 +527,7 @@ namespace GameName1.NPCs
         public override void reset()
         {
            base.reset();
-           setXPReward(50);
+           setXPReward(100);
            path.Clear();
            open.Clear();
            closed.Clear(); 

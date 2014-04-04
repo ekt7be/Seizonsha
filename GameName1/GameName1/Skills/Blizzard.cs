@@ -8,7 +8,7 @@ using System.Text;
 
 namespace GameName1.Skills
 {
-    class Blizzard : Skill
+    class Blizzard : Skill, Unlockable
     {
 
         private int damage;
@@ -76,5 +76,10 @@ namespace GameName1.Skills
             game.Spawn(blizzard, slashBounds.Left, slashBounds.Top);
         }
 
+
+        public void OnUnlock(Player player)
+        {
+            player.addEquipable(this);
+        }
     }
 }

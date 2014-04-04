@@ -22,6 +22,8 @@ namespace GameName1
         public static readonly string TYPE_EFFECT = "Effect";
         public static readonly string TYPE_TEXT_EFFECT = "Text Effect";
         public static readonly string TYPE_BASIC_ENEMY = "Basic Enemy";
+		public static readonly string TYPE_BOSS_ENEMY = "Boss Enemy";
+
         public static readonly string TYPE_AOE_CIRCLE = "AOE Circle";
         public static readonly string TYPE_AOE_CONE = "AOE Cone";
         public static readonly string TYPE_SWORD_SLASH= "Sword Slash";
@@ -30,7 +32,7 @@ namespace GameName1
         public static readonly string TYPE_AOE_POLYGON = "AOE Polygon";
 
 
-        public static int NUM_PLAYERS = 1;
+		public static int NUM_PLAYERS = 1;
 
 
         //player stuff
@@ -51,9 +53,17 @@ namespace GameName1
 		public static readonly int BASIC_ENEMY_HEIGHT = 32*1;
 		public static readonly int BASIC_ENEMY_WIDTH = 32*1;
         public static readonly int BASIC_ENEMY_DAMAGE = 5;
-		public static readonly float BASIC_ENEMY_SPEED = 0.5f;
+		public static readonly float BASIC_ENEMY_SPEED = 2f;
         public static readonly int BASIC_ENEMY_HEALTH = 30;
+
 		public static readonly float BASIC_ENEMY_PATH_REFRESH = 500f;
+
+		public static readonly int BOSS_ENEMY_HEIGHT = 32*3;
+		public static readonly int BOSS_ENEMY_WIDTH = 32*3;
+		public static readonly float BOSS_ENEMY_SPEED = 8f;
+
+
+
 
         //dimensions
 		public static int SCREEN_WIDTH = 1280; // 640 x 480, 1280 x 640
@@ -116,7 +126,10 @@ namespace GameName1
         public static readonly int SKILL_TREE_NODE_HEIGHT = 100;
         public static readonly int SKILL_TREE_MOVEMENT_RECHARGE = 20;
 
-
+        //Firelance
+        public static readonly int FIRELANCE_COST = 15;
+        public static readonly int FIRELANCE_RECHARGE = 5;
+        public static readonly int FIRELANCE_DAMAGE = 25;
 
         //skilltree sprites
         public static readonly int SKILL_TREE_NODE_ANY = 4;

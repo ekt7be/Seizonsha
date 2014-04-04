@@ -145,7 +145,8 @@ namespace GameName1
 			this.skillSlots = new Equipable[4]; //each slot is different skill, weapon, or item
             this.inventory = new List<Equipable>();
             this.skilltree = new SkillTree.SkillTree(game, this, Static.PIXEL_THIN);
-            //Equip(new Gun(game, this, 30, 10, 10f), Static.PLAYER_L1_SKILL_INDEX);
+
+			//Equip(new Gun(game, this, 30, 10, 10f), Static.PLAYER_L1_SKILL_INDEX);
             //Equip(new LifeDrain(game, this, 3, 40, 40), Static.PLAYER_L1_SKILL_INDEX);
             //Equip(new FireLance(game, this, 10, 5), Static.PLAYER_L1_SKILL_INDEX);
             //Equip(new Fireball(game, this, 120, 100, 5f), Static.PLAYER_R1_SKILL_INDEX);
@@ -155,12 +156,10 @@ namespace GameName1
             //Equip(new Sword(game, this, 300, 10), Static.PLAYER_R2_SKILL_INDEX);
             //Equip(new Blizzard(game, this, 0, 200, 200, 100), Static.PLAYER_R2_SKILL_INDEX);
 
-            Equip(new Gun(game, this, 10, 60, 15), Static.PLAYER_L1_SKILL_INDEX);
+            Equip(new Gun(game, this, 10, 30, 15), Static.PLAYER_L1_SKILL_INDEX);
             Equip(new Sword(game, this, 30, 40), Static.PLAYER_R1_SKILL_INDEX);
-            Equip(new Fireball(game, this, 40, 30, 50), Static.PLAYER_R2_SKILL_INDEX);
+            Equip(new Fireball(game, this, 40, 30, 10), Static.PLAYER_R2_SKILL_INDEX);
             Equip(new HealingTouch(game, this, -50, 60), Static.PLAYER_L2_SKILL_INDEX);
-
-
 
             this.maxMana = Static.PLAYER_MAX_MANA;
             this.mana = maxMana;
@@ -326,7 +325,7 @@ namespace GameName1
 
             if (SkillTreeOpen())
             {
-                skilltree.Draw(screenPortion, spriteBatch);
+                DrawSkillTree(screenPortion, spriteBatch);
                 return;
             }
             Texture2D texture = Static.PIXEL_THIN;
@@ -374,10 +373,10 @@ namespace GameName1
 			);
 
 			// draw skills text
-			string displaySkills = "L1: " + this.getSkill(Static.PLAYER_L1_SKILL_INDEX).getName() + "\n" +
-				"L2: " + this.getSkill(Static.PLAYER_L2_SKILL_INDEX).getName() + "\n" +
-				"R1: " + this.getSkill(Static.PLAYER_R1_SKILL_INDEX).getName() + "\n" +
-				"R2: " + this.getSkill(Static.PLAYER_R2_SKILL_INDEX).getName() + "\n" +
+			string displaySkills = "L1(1 key): " + this.getSkill(Static.PLAYER_L1_SKILL_INDEX).getName() + "\n" +
+				"L2(2 key): " + this.getSkill(Static.PLAYER_L2_SKILL_INDEX).getName() + "\n" +
+				"R1(3 key): " + this.getSkill(Static.PLAYER_R1_SKILL_INDEX).getName() + "\n" +
+				"R2(4 key): " + this.getSkill(Static.PLAYER_R2_SKILL_INDEX).getName() + "\n" +
                 "P:  Pause/Quit Menu (temp)" ;
 			spriteBatch.DrawString(game.getSpriteFont(), displaySkills, new Vector2(20, 100), Color.White);
 
@@ -469,6 +468,11 @@ namespace GameName1
             }
 
 
+        }
+
+        public void DrawSkillTree(Rectangle screenPortion, SpriteBatch spriteBatch)
+        {
+            skilltree.Draw(screenPortion, spriteBatch);
         }
 
         private void OpenSkillTree()

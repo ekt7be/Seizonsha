@@ -36,7 +36,7 @@ namespace GameName1.Skills
         {
             this.hitbox = new Rectangle((int)(user.getCenterX()), (int)(user.getCenterY()), (int)this.getDistanceToTarget(), 5);
             spriteBatch.Draw(sprite, hitbox, null,
-                Color.White, (float)Math.Atan2(target.getCenterY() - user.getCenterY(), target.getCenterX() - user.getCenterX()), new Vector2(0f, 0f), SpriteEffects.None, 1f);
+                tint, (float)Math.Atan2(target.getCenterY() - user.getCenterY(), target.getCenterX() - user.getCenterX()), new Vector2(0f, 0f), SpriteEffects.None, 1f);
            // base.Draw(spriteBatch);
         }
 
