@@ -55,6 +55,12 @@ namespace GameName1
 
         bool isPopup = false;
 
+        public Seizonsha game;
+
+        public void setGame(Seizonsha game)
+        {
+            this.game = game;
+        }
 
         /// <summary>
         /// Indicates how long the screen takes to

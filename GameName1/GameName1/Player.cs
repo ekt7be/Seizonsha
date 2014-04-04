@@ -323,6 +323,14 @@ namespace GameName1
                 }
             }
 
+            if (SkillTreeOpen())
+            {
+                DrawSkillTree(screenPortion, spriteBatch);
+                return;
+            }
+
+            //draw Wave number
+            spriteBatch.DrawString(game.getSpriteFont(), "WAVE: " + game.Wave, new Vector2(20, screenPortion.Height - 100), Color.White);
 
             Texture2D texture = Static.PIXEL_THIN;
 
@@ -375,17 +383,7 @@ namespace GameName1
 				"R2(4 key): " + this.getSkill(Static.PLAYER_R2_SKILL_INDEX).getName() + "\n" +
                 "P:  Pause/Quit Menu (temp)" ;
 			spriteBatch.DrawString(game.getSpriteFont(), displaySkills, new Vector2(20, 100), Color.White);
-
-			if (SkillTreeOpen())
-			{
-				skilltree.Draw(screenPortion, spriteBatch);
-				return;
-			}
-
-
-            //draw Wave number
-            spriteBatch.DrawString(game.getSpriteFont(), "WAVE: " + game.Wave, new Vector2(20, screenPortion.Height-100), Color.White);
-           
+          
         }
 
 
@@ -468,8 +466,11 @@ namespace GameName1
             {
                 return;
             }
+        }
 
-
+        public void DrawSkillTree(Rectangle screenPortion, SpriteBatch spriteBatch)
+        {
+            skilltree.Draw(screenPortion, spriteBatch);
         }
 
         private void OpenSkillTree()
@@ -734,8 +735,5 @@ namespace GameName1
         {
             return Static.TYPE_PLAYER;
         }
-
-
-
     }
 }

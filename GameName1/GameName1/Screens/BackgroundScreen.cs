@@ -96,6 +96,7 @@ namespace GameName1
             Viewport viewport = ScreenManager.GraphicsDevice.Viewport;
             Rectangle fullscreen = new Rectangle(0, 0, viewport.Width, viewport.Height);
 
+          
             spriteBatch.Begin();
 
             spriteBatch.Draw(backgroundTexture, fullscreen,

@@ -70,7 +70,6 @@ namespace GameName1
                                                            new MainMenuScreen());
         }
 
-
         #endregion
     }
 }

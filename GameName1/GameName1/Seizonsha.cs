@@ -55,7 +55,7 @@ namespace GameName1
         public static Dictionary<int, Texture2D> spriteMappings = new Dictionary<int, Texture2D>();
 
 		// AlexAlpha
-		Viewport defaultView, p1View, p2View, p3View, p4View; 
+		public Viewport defaultView, p1View, p2View, p3View, p4View; 
 		Camera p1Camera, p2Camera, p3Camera, p4Camera; 
 		List<Camera> cameras; 
 		Rectangle yDivider, xDivider; 
@@ -209,11 +209,11 @@ namespace GameName1
 
 
 
-            this.difficulty = 5;
+            this.difficulty = 1;
             this.numberEnemies = 0;
             this.Wave = 0;
-
-			//Spawn(new Food(this), 500, 600);
+            WaveBegin();
+            //Spawn(new Food(this), 500, 600);
 
 			waveCleared = false; 
 
@@ -416,11 +416,17 @@ namespace GameName1
             //check for wave completion
 			if (numberEnemies <= 0 && !waveCleared)
             {
-				WaveCleared(gameTime);
-				//pause and do other stuff, maybe set time
+                WaveCleared(gameTime);
 
+                //check # of players and create appropriate number of player menus
+              /*  for (int index = 0; index < Static.NUM_PLAYERS; index++)
+                {
+                    screenManager.AddScreen(new PlayerMenuScreen(), (PlayerIndex)index);
+                }
+            */   
             }
 			else if (waveCleared) {
+               
 				if (sinceLastWaveCleared >= 20000) {
 					WaveBegin();
 				}

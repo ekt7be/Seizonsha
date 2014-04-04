@@ -31,8 +31,6 @@ namespace GameName1
     {
         #region Fields
 
-        Seizonsha game;
-        
         ContentManager Content;
         SpriteFont spriteFont;
         
@@ -86,10 +84,7 @@ namespace GameName1
 
         #endregion
 
-        public void setGame(Seizonsha game)
-        {
-            this.game = game;
-        }
+
 
         #region Update and Draw
 
