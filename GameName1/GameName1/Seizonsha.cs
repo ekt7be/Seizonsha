@@ -38,7 +38,7 @@ namespace GameName1
 
         private bool paused;
 		FPSCounterComponent fps;
-		private bool showFPS = true; 
+		private bool showFPS = false; 
 
 		private float sinceLastWaveCleared; 
 	
@@ -419,7 +419,7 @@ namespace GameName1
                 WaveCleared(gameTime);
 
                 //check # of players and create appropriate number of player menus
-          /*      for (int index = 0; index < Static.NUM_PLAYERS; index++)
+              /*  for (int index = 0; index < Static.NUM_PLAYERS; index++)
                 {
                     screenManager.AddScreen(new PlayerMenuScreen(), (PlayerIndex)index);
                 }
