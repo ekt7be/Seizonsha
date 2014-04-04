@@ -35,6 +35,8 @@ namespace GameName1.NPCs
 		HashSet<Tile> closed;
 		HashSet<Tile> open;
 
+        private GameEntity closest;
+
         Random random; 
 
 		private static readonly int UP_ANIMATION = 0;
@@ -116,7 +118,6 @@ namespace GameName1.NPCs
 			// find closest player
 			List<Player> players = game.getPlayers();
 
-			Player closest = null;
 			closestDistance = Double.PositiveInfinity;
 
 			foreach (Player p in players)
@@ -221,6 +222,10 @@ namespace GameName1.NPCs
 							bool willCollide = tileAtThisDir.isObstacle();
 
 							//(!(tileAtThisDir.isObstacle())
+                            if (!(tileAtThisDir.isTouching(closest)))
+                            {
+                                willCollide = game.willCollide(this, tileAtThisDir.x, tileAtThisDir.y);
+                            }
 														
 							if (!willCollide && !(closed.Contains(tileAtThisDir))) {
                                 tileAtThisDir.parent = selected;
