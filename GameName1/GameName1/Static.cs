@@ -27,6 +27,7 @@ namespace GameName1
         public static readonly string TYPE_SWORD_SLASH= "Sword Slash";
         public static readonly string TYPE_PLAYER = "Player";
         public static readonly string TYPE_AOE_STATUS = "AOE Status";
+        public static readonly string TYPE_AOE_POLYGON = "AOE Polygon";
 
 
         public static int NUM_PLAYERS = 1;

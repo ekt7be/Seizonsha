@@ -151,6 +151,17 @@ namespace GameName1
             }
         }
 
+        public PolygonIntersection.Polygon getPolygonFromHitbox()
+        {
+            List<PolygonIntersection.Vector> points = new List<PolygonIntersection.Vector>();
+            points.Add(new PolygonIntersection.Vector(this.x, this.y));
+            points.Add(new PolygonIntersection.Vector(this.x+this.width, this.y));
+            points.Add(new PolygonIntersection.Vector(this.x+this.width, this.y+this.height));
+            points.Add(new PolygonIntersection.Vector(this.x+this.width, this.y+this.height));
+            PolygonIntersection.Polygon ret = new PolygonIntersection.Polygon(points);
+            return ret;
+        }
+
         public void addShield(float amount)
         {
             this.shield += amount;
