@@ -733,8 +733,5 @@ namespace GameName1
         {
             return Static.TYPE_PLAYER;
         }
-
-
-
     }
 }

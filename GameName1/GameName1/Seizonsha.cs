@@ -51,7 +51,7 @@ namespace GameName1
         public static Dictionary<int, Texture2D> spriteMappings = new Dictionary<int, Texture2D>();
 
 		// AlexAlpha
-		Viewport defaultView, p1View, p2View, p3View, p4View; 
+		public Viewport defaultView, p1View, p2View, p3View, p4View; 
 		Camera p1Camera, p2Camera, p3Camera, p4Camera; 
 		List<Camera> cameras; 
 		Rectangle yDivider, xDivider; 
@@ -405,6 +405,12 @@ namespace GameName1
             if (numberEnemies <= 0)
             {
                 WaveCleared();
+                
+                //check # of players and create appropriate number of player menus
+                for (int index = 0; index < Static.NUM_PLAYERS; index++)
+                {
+                    screenManager.AddScreen(new PlayerMenuScreen(), (PlayerIndex)index);
+                }
                 //pause and do other stuff, maybe set timer
 
 				WaveBegin();

@@ -200,13 +200,12 @@ namespace GameName1
         /// </summary>
         public override void Draw(GameTime gameTime)
         {
-            // make sure our entries are in the right place before we draw them
-            UpdateMenuEntryLocations();
-
             GraphicsDevice graphics = ScreenManager.GraphicsDevice;
             SpriteBatch spriteBatch = ScreenManager.SpriteBatch;
             SpriteFont font = ScreenManager.Font;
 
+            // make sure our entries are in the right place before we draw them
+            UpdateMenuEntryLocations();
             spriteBatch.Begin();
 
             // Draw each menu entry in turn.
