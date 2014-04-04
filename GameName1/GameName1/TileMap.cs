@@ -50,7 +50,7 @@ namespace GameName1
 				this.tilesHorz = Static.TILES_ON_SCREEN_X = info[0]; 			// number of y tiles
 				this.tilesVert = Static.TILES_ON_SCREEN_Y = info[1]; 			// number of x tiles
 				Static.TILE_WIDTH = info[2]; 									// tile width
-				Static.TILE_HEIGHT = info[3];									// tile height
+				Static.TILE_WIDTH = info[3];									// tile height
 
 				tiles = new Tile[tilesHorz, tilesVert];
 
@@ -73,18 +73,18 @@ namespace GameName1
 
                             if (tileType == Static.TILE_SPAWN)
                             {
-								SpawnTile spawnTile = new SpawnTile(0,i * Static.TILE_WIDTH, j * Static.TILE_HEIGHT);
+								SpawnTile spawnTile = new SpawnTile(0,i * Static.TILE_WIDTH, j * Static.TILE_WIDTH);
 								spawnTile.capacity = 0; 
 								level.AddSpawnPoint(spawnTile);
                                 tiles[i, j] = spawnTile;
                             }
 							else if (wallTiles.Contains(tileType)) {
-                                tiles[i, j] = new Tile(i * Static.TILE_WIDTH, j * Static.TILE_HEIGHT, true, tileType);
+                                tiles[i, j] = new Tile(i * Static.TILE_WIDTH, j * Static.TILE_WIDTH, true, tileType);
 								tiles[i, j].capacity = 0; 
 								wallTiles2.Add(tiles[i, j]);
 								}
 							else {
-                                tiles[i, j] = new Tile(i * Static.TILE_WIDTH, j * Static.TILE_HEIGHT, false, tileType);
+                                tiles[i, j] = new Tile(i * Static.TILE_WIDTH, j * Static.TILE_WIDTH, false, tileType);
 								tiles[i, j].capacity = 0; 
 								tiles[i, j].capacityBounds = tiles[i, j].bounds; 
 							}

@@ -42,6 +42,9 @@ namespace GameName1
         protected Seizonsha game;
         public Texture2D sprite { get; set; }
 
+
+        private DamageAnimation damageAnimation;
+
         protected int frozen; // stop entity from moving for a period of time
         protected List<StatusEffect> statusEffects;
         protected List<StatusEffect> incomingStatusEffects;
@@ -225,6 +228,7 @@ namespace GameName1
 
             this.animations = new List<Animation>();
             this.outgoingAnimations = new List<Animation>();
+            this.damageAnimation = new DamageAnimation(this);
 
 
 
@@ -433,7 +437,13 @@ namespace GameName1
             return targetType;
         }
 
-
+        public void makeDamageAnimation()
+        {
+            this.damageAnimation.reset(this);
+            if (!this.animations.Contains(this.damageAnimation)){
+                this.AddAnimation(damageAnimation);
+            }
+        }
         public void die()
         {
             OnDie();
@@ -481,6 +491,7 @@ namespace GameName1
             this.outgoingAnimations.Clear();
             this.animations.Clear();
             this.scale = 1.0f;
+            this.damageAnimation.reset(this);
         }
 
         public void setSprite(Texture2D sprite)

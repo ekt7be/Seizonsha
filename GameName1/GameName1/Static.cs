@@ -11,6 +11,10 @@ namespace GameName1
     {
 
 
+        //Animations
+        public static readonly int ANIMATION_DAMAGE_DURATION = 20;
+
+
         //entity type names
 
         public static readonly string TYPE_BULLET = "Bullet";
@@ -35,6 +39,7 @@ namespace GameName1
 		public static readonly int PLAYER_MOVE_SPEED = 5;
         public static readonly int PLAYER_MAX_HEALTH = 100;
         public static readonly int PLAYER_MAX_MANA = 100;
+        public static readonly float PLAYER_START_MANA_REGEN = .2f;
 		public static readonly int PLAYER_L1_SKILL_INDEX = 0; 
         public static readonly int PLAYER_L2_SKILL_INDEX = 1;
         public static readonly int PLAYER_R1_SKILL_INDEX = 2;
@@ -55,7 +60,6 @@ namespace GameName1
 		public static int TILES_ON_SCREEN_X = 0;
 		public static int TILES_ON_SCREEN_Y = 0;//(int)((float)SCREEN_HEIGHT / (float)SCREEN_WIDTH * TILES_ON_SCREEN_X);
 		public static int TILE_WIDTH = 0; //SCREEN_WIDTH / TILES_ON_SCREEN_X;
-        public static int TILE_HEIGHT = TILE_WIDTH;
 
 		public static readonly int SCREEN_WIDTH_FIX1 = 0;//SCREEN_WIDTH / 4;	// 640 / 4 = 160
 		public static readonly int SCREEN_WIDTH_FIX2 = 0;//SCREEN_WIDTH / 8;	// 640 / 8 = 80 

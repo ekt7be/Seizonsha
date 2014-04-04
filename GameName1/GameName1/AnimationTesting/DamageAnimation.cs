@@ -11,7 +11,7 @@ namespace GameName1.AnimationTesting
 
 
         public DamageAnimation(GameEntity target)
-            : base(target, 20)
+            : base(target, Static.ANIMATION_DAMAGE_DURATION)
         {
 
         }
@@ -23,6 +23,11 @@ namespace GameName1.AnimationTesting
         public override void OnRemove(GameEntity target)
         {
             target.setDefaultTint();
+        }
+
+        public void reset(GameEntity target)
+        {
+            base.reset(target, Static.ANIMATION_DAMAGE_DURATION);
         }
     }
 }

@@ -115,7 +115,7 @@ namespace GameName1
 
         public Rectangle getBounds()
         {
-            return new Rectangle(0, 0, map.GetTilesHorizontal() * Static.TILE_WIDTH, map.GetTilesVertical() * Static.TILE_HEIGHT);
+            return new Rectangle(0, 0, map.GetTilesHorizontal() * Static.TILE_WIDTH, map.GetTilesVertical() * Static.TILE_WIDTH);
         }
     }
 }

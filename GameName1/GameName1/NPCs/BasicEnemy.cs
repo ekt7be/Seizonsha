@@ -61,7 +61,7 @@ namespace GameName1.NPCs
             random = new Random();
 
             tilesWide = (int)Math.Floor((double)(width / Static.TILE_WIDTH)) + 1;
-            tilesHigh = (int)Math.Floor((double)(height / Static.TILE_HEIGHT)) + 1;
+            tilesHigh = (int)Math.Floor((double)(height / Static.TILE_WIDTH)) + 1;
 		}
 
 		public void AI()
@@ -471,7 +471,7 @@ namespace GameName1.NPCs
 			if (path != null) {
 				foreach (Tile t in path) {
 					Rectangle rect = new Rectangle (t.x+Static.TILE_WIDTH/2-dotSize/2, 
-						t.y+Static.TILE_HEIGHT/2-dotSize/2, 
+						t.y+Static.TILE_WIDTH/2-dotSize/2, 
 						dotSize, dotSize); 
 					spriteBatch.Draw(Static.PIXEL_THIN, rect, Color.LightPink);
 				}

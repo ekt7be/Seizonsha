@@ -28,6 +28,7 @@ namespace GameName1.SkillTree
             this.backgroundTexture = backgroundTexture;
             this.nodes = new List<SkillTreeNode>();
             populateNodes();
+            currNode.Unlock(player); //unlock first node
             this.movementRecharge = Static.SKILL_TREE_MOVEMENT_RECHARGE;
             cameraOffset = new Vector2(0, 0);
         }
@@ -40,18 +41,23 @@ namespace GameName1.SkillTree
             nodes.Add(startNode);
             currNode = startNode;
                 
-            SkillTreeNode cColorNode = new SkillTreeNode(this, startNode.getX()+Static.SKILL_TREE_NODE_WIDTH*2, startNode.getY(), nodeTextures[Static.SKILL_TREE_NODE_ANY], new ChangeColor(game, player, Color.Red));
+            SkillTreeNode cColorNode = new SkillTreeNode(this, startNode.getX()+Static.SKILL_TREE_NODE_WIDTH*2, startNode.getY(), nodeTextures[Static.SKILL_TREE_NODE_ANY], new ChangeColor(game, player, Color.Red), 1000);
             nodes.Add(cColorNode);
             startNode.attachRight(cColorNode, Static.SKILL_TREE_WEIGHT_LOCKED);
 
-            SkillTreeNode FireballNode = new SkillTreeNode(this, startNode.getX(), startNode.getY() + Static.SKILL_TREE_NODE_HEIGHT*2, nodeTextures[Static.SKILL_TREE_NODE_ANY], new Fireball(game, player, 300, 20, 12));
+            //magic path
+            SkillTreeNode FireballNode = new SkillTreeNode(this, startNode.getX(), startNode.getY() + Static.SKILL_TREE_NODE_HEIGHT*2, nodeTextures[Static.SKILL_TREE_NODE_ANY], new Fireball(game, player, 300, 20, 12), 1000);
             nodes.Add(FireballNode);
             startNode.attachBottom(FireballNode, Static.SKILL_TREE_WEIGHT_LOCKED);
 
-            SkillTreeNode HealNode = new SkillTreeNode(this, startNode.getX()-Static.SKILL_TREE_NODE_WIDTH * 2, startNode.getY(), nodeTextures[Static.SKILL_TREE_NODE_ANY], new HealingTouch(game, player, 300, 12));
+            //support
+            SkillTreeNode HealNode = new SkillTreeNode(this, startNode.getX()-Static.SKILL_TREE_NODE_WIDTH * 2, startNode.getY(), nodeTextures[Static.SKILL_TREE_NODE_ANY], new HealingTouch(game, player, 300, 12), 1000);
             nodes.Add(HealNode);
             startNode.attachLeft(HealNode, Static.SKILL_TREE_WEIGHT_LOCKED);
 
+            SkillTreeNode ManaRegenPlusNode = new SkillTreeNode(this, FireballNode.getX() - Static.SKILL_TREE_NODE_WIDTH * 2, FireballNode.getY() + Static.SKILL_TREE_NODE_WIDTH * 2, nodeTextures[Static.SKILL_TREE_NODE_ANY], new ManaRegenPlusUnlockable(Static.PLAYER_START_MANA_REGEN / 2), 1000);
+            nodes.Add(ManaRegenPlusNode);
+            FireballNode.attachLeft(ManaRegenPlusNode, Static.SKILL_TREE_WEIGHT_LOCKED);
 
             
         
@@ -113,6 +119,10 @@ namespace GameName1.SkillTree
                 else if (node.isUnlocked())
                 {
                     tint = Color.White;
+                }
+                else
+                {
+                    tint = Color.Gray;
                 }
 
                 node.Draw(spriteBatch, cameraOffset, tint);
@@ -192,10 +202,6 @@ namespace GameName1.SkillTree
 
         public void Unlock()
         {
-            if (currNode == null)
-            {
-                return;
-            }
             currNode.Unlock(player);
         }
 

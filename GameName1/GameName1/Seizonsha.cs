@@ -209,6 +209,7 @@ namespace GameName1
             this.Wave = 0;
 			WaveBegin();
 
+            Spawn(new Food(this), 500, 600);
 			Spawn(new BasicEnemy(this), 500, 600);
 
             base.Initialize();
@@ -647,18 +648,13 @@ namespace GameName1
                     player.rotateToAngle((float)Math.Atan2(GamePad.GetState(player.playerIndex).ThumbSticks.Right.Y * -1, GamePad.GetState(player.playerIndex).ThumbSticks.Right.X)); // angle to point		
                 }
 
+                
 				// calculates mouse aim angle and rotation 
                 MouseState mouse = Mouse.GetState();
-
                 Vector2 playerMouseDistance; // distance between player and mouse
-
-				playerMouseDistance.X = player.camera.getWorldPositionX((float)mouse.X) - player.floatx;
-				playerMouseDistance.Y = player.camera.getWorldPositionY((float)mouse.Y) - player.floaty;
-
-                //Static.Debug("" + (float)Math.Atan2(playerMouseDistance.Y, playerMouseDistance.X));
-
-				player.rotateToAngle((float)Math.Atan2(playerMouseDistance.Y, playerMouseDistance.X)); // angle to point at					
-
+				playerMouseDistance.X = player.camera.getWorldPositionX(mouse.X) - player.x;
+				playerMouseDistance.Y = player.camera.getWorldPositionY(mouse.Y) - player.y;
+				player.rotateToAngle((float)Math.Atan2(playerMouseDistance.Y, playerMouseDistance.X)); // angle to point at	
                 if (mouse.LeftButton == ButtonState.Pressed)
                 {
                     player.LeftClick();
@@ -780,12 +776,14 @@ namespace GameName1
                 if (user == null)
                 {
                     incEntityHealth(target, -1 * amount);
-                    target.AddAnimation(new DamageAnimation(target));
+                    //target.AddAnimation(new DamageAnimation(target));
+                    target.makeDamageAnimation();
                     return;
                 }
 
                 user.OnDamageOther(target, amount); // if damage goes through
-                target.AddAnimation(new DamageAnimation(target));
+                //target.AddAnimation(new DamageAnimation(target));
+                target.makeDamageAnimation();
                 if (incEntityHealth(target, -1 * amount))
                 {
                     user.OnKillOther(target); //if kills target
@@ -891,7 +889,7 @@ namespace GameName1
 
             //calculate number of tiles distance covers
             int tilesX = (int)Math.Floor((float)Math.Abs(dx) / Static.TILE_WIDTH) + 1;
-            int tilesY = (int)Math.Floor((float)Math.Abs(dy) / Static.TILE_HEIGHT) + 1;
+            int tilesY = (int)Math.Floor((float)Math.Abs(dy) / Static.TILE_WIDTH) + 1;
 
             //get entity bounds
             int leftEdgeTile = getTileIndexFromLeftEdgeX(entity.getLeftEdgeX());
@@ -1043,7 +1041,7 @@ namespace GameName1
             if (dy > 0)
             { //down
 
-                float distanceToBoundary = currLevel.GetTilesVertical() * Static.TILE_HEIGHT - entity.getBottomEdgeFloatY();
+                float distanceToBoundary = currLevel.GetTilesVertical() * Static.TILE_WIDTH - entity.getBottomEdgeFloatY();
                 if (distanceToBoundary < distanceToTravelY)
                 {
                     distanceToTravelY = distanceToBoundary;
@@ -1129,7 +1127,7 @@ namespace GameName1
                         }
                         if (currTile.isObstacle())
                         {
-                            float distanceToTile = (currTile.y + Static.TILE_HEIGHT) - entity.getTopEdgeFloatY();
+                            float distanceToTile = (currTile.y + Static.TILE_WIDTH) - entity.getTopEdgeFloatY();
                             if (distanceToTile > distanceToTravelY)
                             {
                                     distanceToTravelY = distanceToTile;
@@ -1249,12 +1247,12 @@ namespace GameName1
 
         public int getTileIndexFromTopEdgeY(int y)
         {
-            return (int)Math.Floor((float)y / Static.TILE_HEIGHT);
+            return (int)Math.Floor((float)y / Static.TILE_WIDTH);
         }
 
         public int getTileIndexFromBottomEdgeY(int y)
         {
-            return (int)Math.Ceiling(((float)y / Static.TILE_HEIGHT)) - 1;
+            return (int)Math.Ceiling(((float)y / Static.TILE_WIDTH)) - 1;
         }
 
         public Tile getTileFromCoordinates(int x, int y)

@@ -21,7 +21,7 @@ namespace GameName1
         {
             if (direction == Static.SPAWN_POINT_DOWN)
             {
-                return new Vector2(x,y + Static.TILE_HEIGHT);
+                return new Vector2(x,y + Static.TILE_WIDTH);
             }
             else if (direction == Static.SPAWN_POINT_RIGHT)
             {

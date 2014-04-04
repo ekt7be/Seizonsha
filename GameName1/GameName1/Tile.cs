@@ -35,11 +35,11 @@ namespace GameName1
 			this.y = y;
 			this.obstacle = obstacle;
 			this.touching = new List<GameEntity>();
-			this.bounds = new Rectangle(x, y, Static.TILE_WIDTH, Static.TILE_HEIGHT);
+			this.bounds = new Rectangle(x, y, Static.TILE_WIDTH, Static.TILE_WIDTH);
 			this.tileType = tileType; 
 
 			this.xIndex = this.x / Static.TILE_WIDTH;
-			this.yIndex = this.y / Static.TILE_HEIGHT;
+			this.yIndex = this.y / Static.TILE_WIDTH;
 			this.parent = null; 
 		}
 
@@ -49,7 +49,7 @@ namespace GameName1
 			{
 				return;
 			}
-			spriteBatch.Draw(sprite, new Rectangle(x - cameraX, y - cameraY, Static.TILE_WIDTH, Static.TILE_HEIGHT), Color.White);
+			spriteBatch.Draw(sprite, new Rectangle(x - cameraX, y - cameraY, Static.TILE_WIDTH, Static.TILE_WIDTH), Color.White);
 
 			if (drawCapacity) {
 				spriteBatch.DrawString(
@@ -104,7 +104,7 @@ namespace GameName1
 
 		public int getCenterY()
 		{
-			return y + Static.TILE_HEIGHT / 2;
+			return y + Static.TILE_WIDTH / 2;
 		}
 
 

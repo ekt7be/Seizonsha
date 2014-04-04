@@ -26,7 +26,10 @@ namespace GameName1.Skills
         public override void collide(GameEntity entity)
         {
 
-            if (damageType == Static.TARGET_TYPE_FRIENDLY && entity.getTargetType() == Static.TARGET_TYPE_FRIENDLY) ;
+            if (damageType == Static.TARGET_TYPE_FRIENDLY && entity.getTargetType() == Static.TARGET_TYPE_FRIENDLY)
+            {
+
+            }
             else
             {
                 int explosionWidth = 80;

@@ -9,7 +9,7 @@ namespace GameName1.SkillTree
     class BlankNode : SkillTreeNode
     {
 
-        public BlankNode(SkillTree skilltree, int x,int  y, Texture2D sprite) : base(skilltree,x,y, sprite, null)
+        public BlankNode(SkillTree skilltree, int x,int  y, Texture2D sprite) : base(skilltree,x,y, sprite, null, 0)
         {
 
         }

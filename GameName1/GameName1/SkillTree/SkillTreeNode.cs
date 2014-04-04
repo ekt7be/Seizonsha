@@ -25,12 +25,13 @@ namespace GameName1.SkillTree
         private Texture2D sprite;
         private int x; //offset from origin
         private int y;
+        private int cost;
 
 
         private bool unlocked;
 
 
-        public SkillTreeNode(SkillTree skilltree, int x,int  y, Texture2D sprite, Unlockable unlockable)
+        public SkillTreeNode(SkillTree skilltree, int x,int  y, Texture2D sprite, Unlockable unlockable, int cost)
         {
             this.unlockable = unlockable;
             this.unlocked = false;
@@ -38,25 +39,40 @@ namespace GameName1.SkillTree
             this.y = y;
             this.sprite = sprite;
             this.skilltree =skilltree;
+            this.cost = cost;
         }
 
 
         public void Unlock(Player player)
         {
+            if (!Available(player)){
+                return;
+            }
 
+            player.incXP(-cost);
 
             setLeftWeight(Static.SKILL_TREE_WEIGHT_UNLOCKED);
             setRightWeight(Static.SKILL_TREE_WEIGHT_UNLOCKED);
             setBottomWeight(Static.SKILL_TREE_WEIGHT_UNLOCKED);
             setTopWeight(Static.SKILL_TREE_WEIGHT_UNLOCKED);
 
+            this.unlocked = true;
+
             if (unlockable == null)
             {
                 return;
             }
             unlockable.OnUnlock(player);
-            this.unlocked = true;
 
+        }
+
+        public bool Available(Player player)
+        {
+            if (player.xp >= cost)
+            {
+                return true;
+            }
+            return false;
         }
 
         public bool isUnlocked()
@@ -94,7 +110,17 @@ namespace GameName1.SkillTree
             {
                 return;
             }
-            spriteBatch.DrawString(Static.SPRITE_FONT, unlockable.getName(), new Vector2(bounds.Left, bounds.Top),Color.Green);
+            if (unlocked)
+            {
+                spriteBatch.DrawString(Static.SPRITE_FONT, unlockable.getName(), new Vector2(bounds.Left, bounds.Top), Color.Green);
+
+            }
+            else
+            {
+                spriteBatch.DrawString(Static.SPRITE_FONT, unlockable.getName() + "\nCOST: " + cost + " XP", new Vector2(bounds.Left, bounds.Top), Color.Green);
+
+            }
+
         }
 
         public void attachLeft(SkillTreeNode node, int weight)

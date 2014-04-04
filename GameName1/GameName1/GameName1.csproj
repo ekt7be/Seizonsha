@@ -58,7 +58,9 @@
     <Compile Include="AnimationTesting\SpriteAnimation.cs" />
     <Compile Include="Collision.cs" />
     <Compile Include="EntityFactory.cs" />
+    <Compile Include="Food.cs" />
     <Compile Include="Interfaces\Interactable.cs" />
+    <Compile Include="PickUp.cs" />
     <Compile Include="Skills\AOEStatus.cs" />
     <Compile Include="Skills\Blizzard.cs" />
     <Compile Include="Skills\Burning.cs" />
@@ -100,6 +102,8 @@
     <Compile Include="SkillTree\BlankNode.cs" />
     <Compile Include="SkillTree\HealthPlusUnlockable.cs" />
     <Compile Include="Skills\TargetedAbility.cs" />
+    <Compile Include="SkillTree\ManaPlusUnlockable.cs" />
+    <Compile Include="SkillTree\ManaRegenPlusUnlockable.cs" />
     <Compile Include="SpawnTile.cs" />
     <Compile Include="SkillTree\SkillTree.cs" />
     <Compile Include="SkillTree\SkillTreeNode.cs" />

@@ -22,9 +22,9 @@ namespace GameName1
         private Equipable[] skillSlots;
         private List<Equipable> inventory;
         private SkillTree.SkillTree skilltree;
-        private float manaRegen;
+        public float manaRegen;
         private float mana;
-        private int maxMana;
+        public float maxMana;
 
         private bool skilltreebuttondown;
         private bool skilltreescreen;
@@ -68,6 +68,8 @@ namespace GameName1
             base.Update(gameTime);
             //base.source = new Rectangle(sprite.Width / 4 * currentAnimationFrame, 0, sprite.Width / 4, sprite.Height);
 
+            this.currentInteractable = findInteraction();
+
          
         }
 
@@ -104,6 +106,7 @@ namespace GameName1
                     }
                 }
             }
+
             //draw armor and weapons equipped etc
             spriteBatch.Draw(Seizonsha.spriteMappings[3], this.hitbox, base.spriteSource, tint, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
             spriteBatch.Draw(Seizonsha.spriteMappings[5], this.hitbox, base.spriteSource, tint, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
@@ -155,7 +158,7 @@ namespace GameName1
             this.maxMana = Static.PLAYER_MAX_MANA;
             this.mana = maxMana;
 
-            this.manaRegen = 0.2f;
+            this.manaRegen = Static.PLAYER_START_MANA_REGEN;
             this.skilltreescreen = false;
             this.skilltreebuttondown = false;
             this.currentInteractable = null;
@@ -179,7 +182,12 @@ namespace GameName1
                 for (int i = game.getTileIndexFromTopEdgeY(getTopEdgeY()); i <= game.getTileIndexFromBottomEdgeY(getBottomEdgeY()); i++){
                     for (int j = 0; j <= Static.PLAYER_INTERACTION_RANGE; j++)
                     {
-                        Tile currTile = game.getTileFromIndex(i, game.getTileIndexFromRightEdgeX(getRightEdgeX()) + j);
+                        Tile currTile = game.getTileFromIndex(game.getTileIndexFromRightEdgeX(getRightEdgeX()) + j, i);
+
+                        if (currTile == null)
+                        {
+                            continue;
+                        }
 
                         if (currTile is Interactable)
                         {
@@ -200,19 +208,94 @@ namespace GameName1
             }
             else if (Math.Sin(this.direction) > .5) // down
             {
-                base.spriteSource = new Rectangle(64 * walkFrame, DOWN_ANIMATION * 64, 64, 64);
+                for (int i = game.getTileIndexFromLeftEdgeX(getLeftEdgeX()); i <= game.getTileIndexFromRightEdgeX(getRightEdgeX()); i++)
+                {
+                    for (int j = 0; j <= Static.PLAYER_INTERACTION_RANGE; j++)
+                    {
+                        Tile currTile = game.getTileFromIndex(i,game.getTileIndexFromBottomEdgeY(getBottomEdgeY())+j);
+
+                        if (currTile == null)
+                        {
+                            continue;
+                        }
+
+                        if (currTile is Interactable)
+                        {
+                            return (Interactable)currTile;
+                        }
+                        else
+                        {
+                            foreach (GameEntity entity in currTile.getEntities())
+                            {
+                                if (entity is Interactable)
+                                {
+                                    return (Interactable)entity;
+                                }
+                            }
+                        }
+                    }
+                }
 
             }
             else if (Math.Sin(direction) < -.5) //up
             {
-                //spriteSource = FramesToAnimation[UP_ANIMATION];
-                base.spriteSource = new Rectangle(64 * walkFrame, UP_ANIMATION * 64, 64, 64);
+                for (int i = game.getTileIndexFromLeftEdgeX(getLeftEdgeX()); i <= game.getTileIndexFromRightEdgeX(getRightEdgeX()); i++)
+                {
+                    for (int j = 0; j <= Static.PLAYER_INTERACTION_RANGE; j++)
+                    {
+                        Tile currTile = game.getTileFromIndex(i, game.getTileIndexFromTopEdgeY(getTopEdgeY())-j);
+
+                        if (currTile == null)
+                        {
+                            continue;
+                        }
+                        if (currTile is Interactable)
+                        {
+                            return (Interactable)currTile;
+                        }
+                        else
+                        {
+                            foreach (GameEntity entity in currTile.getEntities())
+                            {
+                                if (entity is Interactable)
+                                {
+                                    return (Interactable)entity;
+                                }
+                            }
+                        }
+                    }
+                }
 
             }
             else if (Math.Cos(direction) < -.5) //left
             {
-                //spriteSource = FramesToAnimation[LEFT_ANIMATION];
-                base.spriteSource = new Rectangle(64 * walkFrame, LEFT_ANIMATION * 64, 64, 64);
+                for (int i = game.getTileIndexFromTopEdgeY(getTopEdgeY()); i <= game.getTileIndexFromBottomEdgeY(getBottomEdgeY()); i++)
+                {
+                    for (int j = 0; j <= Static.PLAYER_INTERACTION_RANGE; j++)
+                    {
+                        Tile currTile = game.getTileFromIndex(game.getTileIndexFromLeftEdgeX(getLeftEdgeX()) - j, i);
+
+                        if (currTile == null)
+                        {
+                            continue;
+                        }
+
+                        if (currTile is Interactable)
+                        {
+                            return (Interactable)currTile;
+                        }
+                        else
+                        {
+                            foreach (GameEntity entity in currTile.getEntities())
+                            {
+                                if (entity is Interactable)
+                                {
+                                    return (Interactable)entity;
+                                }
+                            }
+                        }
+                    }
+                }
             }
             return null;
         }
@@ -223,13 +306,23 @@ namespace GameName1
             //and the dimensions of their portion of the screen to draw their screen.
             //Interface will be drawn on top along with any menus including skill tree
 
+
+
+            if (currentInteractable != null)
+            {
+                if (currentInteractable is GameEntity)
+                {
+                    spriteBatch.DrawString(game.getSpriteFont(), "Press A(Enter) to " + currentInteractable.Message(this), new Vector2(screenPortion.Width/2, screenPortion.Height/2), Color.White);
+                    //(GameEntity)currentInteractable
+                }
+            }
+
             if (SkillTreeOpen())
             {
                 skilltree.Draw(screenPortion, spriteBatch);
                 return;
             }
-			Texture2D texture = new Texture2D(game.GraphicsDevice, 1, 1);
-			texture.SetData(new[] { Color.White });
+            Texture2D texture = Static.PIXEL_THIN;
 
 			int barLength = screenPortion.Width / 2; 
 			int barHeight = screenPortion.Height / 32; 
@@ -392,7 +485,14 @@ namespace GameName1
             {
                 skilltree.Unlock();
             }
-            //whatever A Button does
+
+
+            if (currentInteractable != null)
+            {
+                if (currentInteractable.Available(this)){
+                    currentInteractable.Interact(this);
+                }
+            }
         }
 
         public void BButton()
@@ -471,6 +571,7 @@ namespace GameName1
 
         public void RightButton()
         {
+
             if (SkillTreeOpen())
             {
                 skilltree.Right();
