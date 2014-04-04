@@ -78,7 +78,7 @@ namespace GameName1.Skills
 
             PolygonIntersection.Polygon polygon = new PolygonIntersection.Polygon(points);
             //game.Spawn(new SwordSlash(game, user, Static.PIXEL_THIN, slashBounds, damage, damageType, 10, user.vectorDirection), slashBounds.Left, slashBounds.Top);
-            AOEPolygon attack = new AOEPolygon(game, user, Static.PIXEL_THIN, this, slashBounds, polygon, damage, damageType, 10, bufferedDirection);
+            AOEPolygon attack = new AOEPolygon(game, user, Seizonsha.spriteMappings[Static.SPRITE_FIREBALL], this, slashBounds, polygon, damage, damageType, 10, bufferedDirection);
             attack.rotateToAngle(this.bufferedDirection);
             
             game.Spawn(attack, slashBounds.Left, slashBounds.Top);

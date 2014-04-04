@@ -373,10 +373,10 @@ namespace GameName1
 			);
 
 			// draw skills text
-			string displaySkills = "L1: " + this.getSkill(Static.PLAYER_L1_SKILL_INDEX).getName() + "\n" +
-				"L2: " + this.getSkill(Static.PLAYER_L2_SKILL_INDEX).getName() + "\n" +
-				"R1: " + this.getSkill(Static.PLAYER_R1_SKILL_INDEX).getName() + "\n" +
-				"R2: " + this.getSkill(Static.PLAYER_R2_SKILL_INDEX).getName() + "\n" +
+			string displaySkills = "L1(1 key): " + this.getSkill(Static.PLAYER_L1_SKILL_INDEX).getName() + "\n" +
+				"L2(2 key): " + this.getSkill(Static.PLAYER_L2_SKILL_INDEX).getName() + "\n" +
+				"R1(3 key): " + this.getSkill(Static.PLAYER_R1_SKILL_INDEX).getName() + "\n" +
+				"R2(4 key): " + this.getSkill(Static.PLAYER_R2_SKILL_INDEX).getName() + "\n" +
                 "P:  Pause/Quit Menu (temp)" ;
 			spriteBatch.DrawString(game.getSpriteFont(), displaySkills, new Vector2(20, 100), Color.White);
 

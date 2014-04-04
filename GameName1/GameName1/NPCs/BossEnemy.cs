@@ -53,11 +53,11 @@ namespace GameName1.NPCs
 			closed = new HashSet<Tile>();
 			open = new HashSet<Tile>();
 
-			sword = new Sword(game, this, 5, 20);
+			sword = new Sword(game, this, 15, 20);
 			sword.OnEquip();
 
 			//gun = new Gun(game, this, 30, 10, 10f);
-			gun = new Gun(game, this, 30, 25, 10f);
+			gun = new Gun(game, this, 20, 25, 10f);
 
 			gun.OnEquip();
 		

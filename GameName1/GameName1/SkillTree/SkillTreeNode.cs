@@ -60,6 +60,11 @@ namespace GameName1.SkillTree
                 return;
             }
 
+            if (isUnlocked())
+            {
+                return;
+            }
+
             player.incXP(-cost);
 
             setLeftWeight(Static.SKILL_TREE_WEIGHT_UNLOCKED);

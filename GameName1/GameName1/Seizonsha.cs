@@ -802,11 +802,16 @@ namespace GameName1
         public void damageEntity(GameEntity user, GameEntity target, int amount, int damageType)
         {
 
+            if (amount == 0)
+            {
+                return;
+            }
+
             if (ShouldDamage(damageType, target.getTargetType()))
             {
 
-                TextEffect text = EntityFactory.getTextEffect(this, amount + "", 10, new Vector2(0, -2), Color.Red);
-                Spawn(text, target.getCenterX(), target.getCenterY() - 60);
+                    TextEffect text = EntityFactory.getTextEffect(this, amount + "", 10, new Vector2(0, -2), Color.Red);
+                    Spawn(text, target.getCenterX(), target.getCenterY() - 60);
 
                 if (user == null)
                 {
@@ -1364,10 +1369,18 @@ namespace GameName1
 			waveCleared = false; 
             Wave++;
             //currLevel.spawnEnemies(difficulty);
-            currLevel.populateQueue(difficulty, null);
 
-			if (this.Wave == 3)
-				Spawn(new BossEnemy(this), 500, 800);
+            if (this.Wave % 3 == 0)
+            {
+                List<GameEntity> enemyList = new List<GameEntity>();
+                enemyList.Add(new BossEnemy(this));
+                //Spawn(new BossEnemy(this), 500, 800);
+                currLevel.populateQueue(difficulty, enemyList);
+            }
+            else
+            {
+                currLevel.populateQueue(difficulty, null);
+            }
 
         }
 

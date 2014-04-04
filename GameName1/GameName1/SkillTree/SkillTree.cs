@@ -58,7 +58,7 @@ namespace GameName1.SkillTree
             
 
             //magic path
-            SkillTreeNode FireballNode = new SkillTreeNode(this, startNode.getX(), startNode.getY() + Static.SKILL_TREE_NODE_HEIGHT*2, nodeTextures[Static.SKILL_TREE_NODE_ANY], new Fireball(game, player, 50, 20, 50), 500);
+            SkillTreeNode FireballNode = new SkillTreeNode(this, startNode.getX(), startNode.getY() + Static.SKILL_TREE_NODE_HEIGHT*2, nodeTextures[Static.SKILL_TREE_NODE_ANY], new Fireball(game, player, 50, 20, 100), 500);
             nodes.Add(FireballNode);
             startNode.attachBottom(FireballNode, Static.SKILL_TREE_WEIGHT_LOCKED);
 
@@ -164,19 +164,25 @@ namespace GameName1.SkillTree
 
             }
 
+            if (currNode.getEquipable()!= null)
+            {
+                spriteBatch.DrawString(game.getSpriteFont(),currNode.getEquipable().getDescription(), new Vector2(30, bounds.Height - 300), Color.White);
+            }
+
+
             if (currNode.getEquipable() != null && currNode.isUnlocked())
             {
-                spriteBatch.DrawString(game.getSpriteFont(), "Press L1(1), L2(2), R1(3), or R2(4) to Equip", new Vector2(0, bounds.Height - 100), Color.White);
+                spriteBatch.DrawString(game.getSpriteFont(), "Press L1(1), L2(2), R1(3), or R2(4) to Equip", new Vector2(30, bounds.Height - 100), Color.White);
             }
 
             if (!currNode.isUnlocked() && currNode.Available(player))
             {
-                spriteBatch.DrawString(game.getSpriteFont(), "Press A(Enter) to Unlock", new Vector2(0, bounds.Height - 100), Color.White);
+                spriteBatch.DrawString(game.getSpriteFont(), "Press A(Enter) to Unlock", new Vector2(30, bounds.Height - 100), Color.White);
             }
 
             if (!currNode.isUnlocked() && !currNode.Available(player))
             {
-                spriteBatch.DrawString(game.getSpriteFont(), "Not enough XP", new Vector2(0, bounds.Height - 100), Color.White);
+                spriteBatch.DrawString(game.getSpriteFont(), "Not enough XP", new Vector2(30, bounds.Height - 100), Color.White);
             }
 
         }

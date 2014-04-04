@@ -527,7 +527,7 @@ namespace GameName1.NPCs
         public override void reset()
         {
            base.reset();
-           setXPReward(50);
+           setXPReward(100);
            path.Clear();
            open.Clear();
            closed.Clear(); 

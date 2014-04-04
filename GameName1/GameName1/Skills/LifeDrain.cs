@@ -80,6 +80,7 @@ namespace GameName1.Skills
                 int bulletHeight = 15;
                 Rectangle slashBounds = new Rectangle((int)(user.getCenterX()), (int)(user.getCenterY()), bulletWidth, bulletHeight);
                 ability = new TargetedAbility(game, user, this, Static.PIXEL_THIN, t, damage, damageType, this.duration, user.vectorDirection);
+                ability.setTint(Color.Aquamarine);
                 game.Spawn(ability, slashBounds.Left, slashBounds.Top);
             }
             
