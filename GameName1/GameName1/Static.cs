@@ -115,7 +115,10 @@ namespace GameName1
         public static readonly int SKILL_TREE_NODE_HEIGHT = 100;
         public static readonly int SKILL_TREE_MOVEMENT_RECHARGE = 20;
 
-
+        //Firelance
+        public static readonly int FIRELANCE_COST = 15;
+        public static readonly int FIRELANCE_RECHARGE = 5;
+        public static readonly int FIRELANCE_DAMAGE = 25;
 
         //skilltree sprites
         public static readonly int SKILL_TREE_NODE_ANY = 4;

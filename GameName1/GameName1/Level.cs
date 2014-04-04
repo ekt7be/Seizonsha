@@ -1,4 +1,5 @@
-﻿using GameName1.NPCs;
+﻿using GameName1.Interfaces;
+using GameName1.NPCs;
 using GameName1.SkillTree;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -17,13 +18,15 @@ namespace GameName1
         private List<SpawnTile> spawnPoints;
         private Random rnd = new Random();
 
+        public Queue<GameEntity> enemyQueue;
+
 
         public Level(Seizonsha game)
         {
             this.game = game;
             this.spawnPoints = new List<SpawnTile>();
 			this.map = new TileMap(this, game);
-
+            this.enemyQueue = new Queue<GameEntity>();
             initialize();
         }
 
@@ -47,13 +50,25 @@ namespace GameName1
 
         public void Update()
         {
+            TrySpawnEnemy();
         }
 
-        public void SpawnEnemy()
+        private void TrySpawnEnemy()
         {
-            //List<GameEntity> entities = getRandomSpawnPoint().get
+            if (enemyQueue.Count < 1)
+            {
+                return;
+            }
+            SpawnTile spawn = getRandomSpawnPoint();
+            GameEntity enemy = enemyQueue.Peek();
+            Vector2 spawnPoint = spawn.getSpawnPosition(enemy);
+            if (!game.willCollide(enemy, (int)spawnPoint.X, (int)spawnPoint.Y)){
+                game.Spawn(enemy, (int)spawnPoint.X, (int)spawnPoint.Y);
+                enemyQueue.Dequeue();
+            }
         }
 
+        /*
         public void spawnEnemies(int totalDifficulty)
         {
 
@@ -63,6 +78,28 @@ namespace GameName1
                 BasicEnemy enemy = EntityFactory.getBasicEnemy(game);
                 Vector2 spawnPoint = spawn.getSpawnPosition(enemy);
                 game.Spawn(enemy, (int)spawnPoint.X, (int)spawnPoint.Y);
+                game.increaseNumberEnemies();
+            }
+
+        }
+         * */
+
+        public void populateQueue(int totalDifficulty, List<GameEntity> list)
+        {
+
+            if (list != null)
+            {
+                foreach (GameEntity entity in list)
+                {
+                    enemyQueue.Enqueue(entity);
+                    game.increaseNumberEnemies();
+                }
+            }
+
+            for (int i = 0; i < totalDifficulty; i++)
+            {
+                SpawnTile spawn = getRandomSpawnPoint();
+                enemyQueue.Enqueue(EntityFactory.getBasicEnemy(game));
                 game.increaseNumberEnemies();
             }
 

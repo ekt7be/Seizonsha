@@ -42,23 +42,57 @@ namespace GameName1.SkillTree
             nodes.Add(startNode);
             currNode = startNode;
                 
-            SkillTreeNode goodSwordNode = new SkillTreeNode(this, startNode.getX()+Static.SKILL_TREE_NODE_WIDTH*2, startNode.getY(), nodeTextures[Static.SKILL_TREE_NODE_ANY], new Sword(game,player,60,20), 0);
+            //fight path
+            SkillTreeNode goodSwordNode = new SkillTreeNode(this, startNode.getX()+Static.SKILL_TREE_NODE_WIDTH*2, startNode.getY(), nodeTextures[Static.SKILL_TREE_NODE_ANY], new Sword(game,player,60,20), 300);
             nodes.Add(goodSwordNode);
             startNode.attachRight(goodSwordNode, Static.SKILL_TREE_WEIGHT_LOCKED);
 
+            SkillTreeNode HPplusNode = new SkillTreeNode(this, goodSwordNode.getX() + Static.SKILL_TREE_NODE_WIDTH, startNode.getY()- Static.SKILL_TREE_NODE_WIDTH*2, nodeTextures[Static.SKILL_TREE_NODE_ANY], new HealthPlusUnlockable(100), 1000);
+            nodes.Add(HPplusNode);
+            goodSwordNode.attachTop(HPplusNode, Static.SKILL_TREE_WEIGHT_LOCKED);
+
+            SkillTreeNode dankSwordNode = new SkillTreeNode(this, HPplusNode.getX() + Static.SKILL_TREE_NODE_WIDTH * 2, HPplusNode.getY(), nodeTextures[Static.SKILL_TREE_NODE_ANY], new Sword(game, player, 300, 10), 7000);
+            nodes.Add(dankSwordNode);
+            HPplusNode.attachRight(dankSwordNode, Static.SKILL_TREE_WEIGHT_LOCKED);
+
+            
+
             //magic path
-            SkillTreeNode FireballNode = new SkillTreeNode(this, startNode.getX(), startNode.getY() + Static.SKILL_TREE_NODE_HEIGHT*2, nodeTextures[Static.SKILL_TREE_NODE_ANY], new Fireball(game, player, 300, 20, 12), 0);
+            SkillTreeNode FireballNode = new SkillTreeNode(this, startNode.getX(), startNode.getY() + Static.SKILL_TREE_NODE_HEIGHT*2, nodeTextures[Static.SKILL_TREE_NODE_ANY], new Fireball(game, player, 50, 20, 50), 500);
             nodes.Add(FireballNode);
             startNode.attachBottom(FireballNode, Static.SKILL_TREE_WEIGHT_LOCKED);
 
+            SkillTreeNode ManaRegenPlusNode = new SkillTreeNode(this, FireballNode.getX() - Static.SKILL_TREE_NODE_WIDTH * 2, FireballNode.getY() + Static.SKILL_TREE_NODE_WIDTH * 2, nodeTextures[Static.SKILL_TREE_NODE_ANY], new ManaRegenPlusUnlockable(Static.PLAYER_START_MANA_REGEN / 2), 1500);
+            nodes.Add(ManaRegenPlusNode);
+            FireballNode.attachLeft(ManaRegenPlusNode, Static.SKILL_TREE_WEIGHT_LOCKED);
+
+            SkillTreeNode FirelanceNode = new SkillTreeNode(this, FireballNode.getX() + Static.SKILL_TREE_NODE_WIDTH * 2, FireballNode.getY() + Static.SKILL_TREE_NODE_WIDTH * 2, nodeTextures[Static.SKILL_TREE_NODE_ANY], new FireLance(game,player,Static.FIRELANCE_DAMAGE, 30), 1500);
+            nodes.Add(FirelanceNode);
+            FireballNode.attachRight(FirelanceNode, Static.SKILL_TREE_WEIGHT_LOCKED);
+
+            SkillTreeNode LifeDrainNode = new SkillTreeNode(this, ManaRegenPlusNode.getX() + Static.SKILL_TREE_NODE_WIDTH, ManaRegenPlusNode.getY() + Static.SKILL_TREE_NODE_WIDTH * 2, nodeTextures[Static.SKILL_TREE_NODE_ANY], new LifeDrain(game, player, 5, 6, 4), 5000);
+            nodes.Add(LifeDrainNode);
+            ManaRegenPlusNode.attachBottom(LifeDrainNode, Static.SKILL_TREE_WEIGHT_LOCKED);
+
+
             //support
-            SkillTreeNode HealNode = new SkillTreeNode(this, startNode.getX()-Static.SKILL_TREE_NODE_WIDTH * 2, startNode.getY(), nodeTextures[Static.SKILL_TREE_NODE_ANY], new HealingTouch(game, player, 100, 12), 0);
+            SkillTreeNode HealNode = new SkillTreeNode(this, startNode.getX()-Static.SKILL_TREE_NODE_WIDTH * 2, startNode.getY(), nodeTextures[Static.SKILL_TREE_NODE_ANY], new HealingTouch(game, player, 100, 12), 500);
             nodes.Add(HealNode);
             startNode.attachLeft(HealNode, Static.SKILL_TREE_WEIGHT_LOCKED);
 
-            SkillTreeNode ManaRegenPlusNode = new SkillTreeNode(this, FireballNode.getX() - Static.SKILL_TREE_NODE_WIDTH * 2, FireballNode.getY() + Static.SKILL_TREE_NODE_WIDTH * 2, nodeTextures[Static.SKILL_TREE_NODE_ANY], new ManaRegenPlusUnlockable(Static.PLAYER_START_MANA_REGEN / 2), 0);
-            nodes.Add(ManaRegenPlusNode);
-            FireballNode.attachLeft(ManaRegenPlusNode, Static.SKILL_TREE_WEIGHT_LOCKED);
+            SkillTreeNode BlizzardNode = new SkillTreeNode(this, HealNode.getX() - Static.SKILL_TREE_NODE_WIDTH, HealNode.getY() - Static.SKILL_TREE_NODE_WIDTH*2, nodeTextures[Static.SKILL_TREE_NODE_ANY], new Blizzard(game, player, 0, 200, 200, 100), 2000);
+            nodes.Add(BlizzardNode);
+            HealNode.attachTop(BlizzardNode, Static.SKILL_TREE_WEIGHT_LOCKED);
+
+            SkillTreeNode ManaPlusNode = new SkillTreeNode(this, HealNode.getX() - Static.SKILL_TREE_NODE_WIDTH, HealNode.getY() + Static.SKILL_TREE_NODE_WIDTH*2, nodeTextures[Static.SKILL_TREE_NODE_ANY], new ManaPlusUnlockable(50), 2000);
+            nodes.Add(ManaPlusNode);
+            HealNode.attachBottom(ManaPlusNode, Static.SKILL_TREE_WEIGHT_LOCKED);
+
+            SkillTreeNode TeleportNode = new SkillTreeNode(this, ManaPlusNode.getX() - Static.SKILL_TREE_NODE_WIDTH*2, ManaPlusNode.getY(), nodeTextures[Static.SKILL_TREE_NODE_ANY], new Teleport(game,player,40,40,20), 2000);
+            nodes.Add(TeleportNode);
+            ManaPlusNode.attachLeft(TeleportNode, Static.SKILL_TREE_WEIGHT_LOCKED);
+
+
 
         
         }
@@ -132,7 +166,17 @@ namespace GameName1.SkillTree
 
             if (currNode.getEquipable() != null && currNode.isUnlocked())
             {
-                spriteBatch.DrawString(game.getSpriteFont(), "Press L1, L2, R1, or R2 to Equip", new Vector2(0, bounds.Height - 100), Color.White);
+                spriteBatch.DrawString(game.getSpriteFont(), "Press L1(1), L2(2), R1(3), or R2(4) to Equip", new Vector2(0, bounds.Height - 100), Color.White);
+            }
+
+            if (!currNode.isUnlocked() && currNode.Available(player))
+            {
+                spriteBatch.DrawString(game.getSpriteFont(), "Press A(Enter) to Unlock", new Vector2(0, bounds.Height - 100), Color.White);
+            }
+
+            if (!currNode.isUnlocked() && !currNode.Available(player))
+            {
+                spriteBatch.DrawString(game.getSpriteFont(), "Not enough XP", new Vector2(0, bounds.Height - 100), Color.White);
             }
 
         }

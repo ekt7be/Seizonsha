@@ -22,12 +22,12 @@ namespace GameName1.SkillTree
 
         public string getDescription()
         {
-            return "Increase Mana Regen by " + amount;
+            return "Increase Mana Regen";
         }
 
         public string getName()
         {
-            return "Mana Regen + " + amount;
+            return "Mana Regen + ";
         }
     }
 }

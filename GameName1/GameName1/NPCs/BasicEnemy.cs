@@ -48,7 +48,7 @@ namespace GameName1.NPCs
 			: base(game, Seizonsha.spriteMappings[Static.SPRITE_BASIC_ENEMY_INT], Static.BASIC_ENEMY_WIDTH-1, Static.BASIC_ENEMY_HEIGHT-1, Static.DAMAGE_TYPE_ENEMY, Static.BASIC_ENEMY_HEALTH)
 		{
 			base.scale = 1.0f;
-			setXPReward(50);
+			setXPReward(100);
 
 		  	closed = new HashSet<Tile>();
 			open = new HashSet<Tile>();

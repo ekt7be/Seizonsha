@@ -410,6 +410,8 @@ namespace GameName1
             }
 
 
+            currLevel.Update();
+
             //update all entities including players
             foreach (GameEntity entity in entities)
             {
@@ -807,7 +809,7 @@ namespace GameName1
             {
                 target.health = target.maxHealth;
             }
-            if (target.health < 0)
+            if (target.health <= 0)
             {
                 target.health = 0;
                 if (!target.shouldRemove())
@@ -862,7 +864,7 @@ namespace GameName1
             }
 
             foreach (GameEntity tileEntity in getEntitiesInBounds(bounds)){
-                if (entity.shouldCollide(tileEntity) && tileEntity.shouldCollide(tileEntity)){
+                if (entity.shouldCollide(tileEntity) && tileEntity.shouldCollide(tileEntity) && entity!=tileEntity){
                     collide = true;
                 }
             }
@@ -1326,7 +1328,8 @@ namespace GameName1
         public void WaveBegin()
         {
             Wave++;
-            currLevel.spawnEnemies(difficulty);
+            //currLevel.spawnEnemies(difficulty);
+            currLevel.populateQueue(difficulty, null);
 
         }
 

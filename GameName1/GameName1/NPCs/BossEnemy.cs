@@ -13,7 +13,7 @@ namespace GameName1.NPCs
         public BossEnemy(Seizonsha game, Texture2D sprite, int width, int height)
             : base(game, sprite, width, height, Static.DAMAGE_TYPE_ENEMY, 20)
         {
-     
+            setXPReward(1000);
         }
 
         public override void Update(GameTime gameTime)
@@ -24,22 +24,19 @@ namespace GameName1.NPCs
 
         protected override void OnDie()
         {
-            throw new NotImplementedException();
+            game.Spawn(new Food(game), x, y);
         }
 
         public override void OnSpawn()
         {
-            throw new NotImplementedException();
         }
 
         public override void collideWithWall()
         {
-            throw new NotImplementedException();
         }
 
         public override void collide(GameEntity entity)
         {
-            throw new NotImplementedException();
         }
     }
 }

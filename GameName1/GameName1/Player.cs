@@ -155,9 +155,9 @@ namespace GameName1
             //Equip(new Sword(game, this, 300, 10), Static.PLAYER_R2_SKILL_INDEX);
             //Equip(new Blizzard(game, this, 0, 200, 200, 100), Static.PLAYER_R2_SKILL_INDEX);
 
-            Equip(new Gun(game, this, 10, 60, 15), Static.PLAYER_L1_SKILL_INDEX);
+            Equip(new Gun(game, this, 10, 30, 15), Static.PLAYER_L1_SKILL_INDEX);
             Equip(new Sword(game, this, 30, 40), Static.PLAYER_R1_SKILL_INDEX);
-            Equip(new Fireball(game, this, 40, 30, 50), Static.PLAYER_R2_SKILL_INDEX);
+            Equip(new Fireball(game, this, 40, 30, 10), Static.PLAYER_R2_SKILL_INDEX);
             Equip(new HealingTouch(game, this, -50, 60), Static.PLAYER_L2_SKILL_INDEX);
 
 
