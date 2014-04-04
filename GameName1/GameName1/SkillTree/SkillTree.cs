@@ -110,7 +110,7 @@ namespace GameName1.SkillTree
         {
             //draw background
 			Rectangle screenRectangle = new Rectangle(0,0,bounds.Width, bounds.Height);
-			spriteBatch.Draw(backgroundTexture, screenRectangle, Color.Black);
+			spriteBatch.Draw(backgroundTexture, screenRectangle, new Color(new Vector4(0, 0, 0, 0.7f)));
 
 
             cameraOffset = new Vector2(currNode.getCenterX() - bounds.Width/2, currNode.getCenterY()- bounds.Height/2);
@@ -139,6 +139,8 @@ namespace GameName1.SkillTree
                     Static.DrawLine(spriteBatch, Static.PIXEL_THICK, new Vector2(node.getCenterX() - cameraOffset.X, node.getCenterY() - cameraOffset.Y), new Vector2(node.topNode.getCenterX() - cameraOffset.X, node.topNode.getCenterY() - cameraOffset.Y), lineColor);
                 }
 
+
+
             }
 
             foreach (SkillTreeNode node in nodes)
@@ -152,11 +154,11 @@ namespace GameName1.SkillTree
                 }
                 else if (node.isUnlocked())
                 {
-                    tint = Color.White;
+					tint = Color.Pink;
                 }
                 else
                 {
-                    tint = Color.Gray;
+					tint = Color.LightGray;
                 }
 
                 node.Draw(spriteBatch, cameraOffset, tint);

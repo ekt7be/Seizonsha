@@ -129,7 +129,6 @@ namespace GameName1.SkillTree
             if (unlocked)
             {
                 spriteBatch.DrawString(Static.SPRITE_FONT, unlockable.getName(), new Vector2(bounds.Left, bounds.Top), Color.Green);
-
             }
             else
             {

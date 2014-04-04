@@ -1,24 +1,31 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="GameName1\Camera.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="GameName1\Static.cs">
     <Files>
       <File FileName="GameName1\TileMap.cs" Line="1" Column="1" />
-      <File FileName="c:\Users\ALEX\Documents\GitHub\Seizonsha\GameName1\GameName1\Seizonsha.cs" Line="287" Column="48" />
-      <File FileName="GameName1\EntityFactory.cs" Line="1" Column="1" />
+      <File FileName="c:\Users\ALEX\Documents\GitHub\Seizonsha\GameName1\GameName1\Seizonsha.cs" Line="217" Column="1" />
+      <File FileName="GameName1\EntityFactory.cs" Line="136" Column="38" />
       <File FileName="GameName1\Collision.cs" Line="1" Column="1" />
-      <File FileName="GameName1\Camera.cs" Line="65" Column="49" />
-      <File FileName="GameName1\Tile.cs" Line="111" Column="1" />
-      <File FileName="GameName1\Static.cs" Line="70" Column="17" />
-      <File FileName="GameName1\NPCs\BasicEnemy.cs" Line="170" Column="4" />
+      <File FileName="GameName1\Camera.cs" Line="58" Column="24" />
+      <File FileName="GameName1\Tile.cs" Line="16" Column="16" />
+      <File FileName="GameName1\Static.cs" Line="36" Column="3" />
+      <File FileName="GameName1\NPCs\BasicEnemy.cs" Line="21" Column="23" />
       <File FileName="GameName1\SpawnTile.cs" Line="1" Column="1" />
-      <File FileName="GameName1\GameEntity.cs" Line="326" Column="26" />
-      <File FileName="GameName1\NPCs\BasicNPC.cs" Line="21" Column="35" />
-      <File FileName="GameName1\Skills\Bullet.cs" Line="14" Column="28" />
-      <File FileName="GameName1\NPCs\BossEnemy.cs" Line="1" Column="1" />
+      <File FileName="GameName1\GameEntity.cs" Line="240" Column="24" />
+      <File FileName="GameName1\NPCs\BasicNPC.cs" Line="10" Column="2" />
+      <File FileName="GameName1\Skills\Bullet.cs" Line="76" Column="9" />
+      <File FileName="GameName1\NPCs\BossEnemy.cs" Line="543" Column="3" />
       <File FileName="GameName1\Level.cs" Line="1" Column="1" />
-      <File FileName="c:\Users\ALEX\Documents\GitHub\Seizonsha\GameName1\GameName1\Screens\MainMenuScreen.cs" Line="65" Column="4" />
-      <File FileName="GameName1\Player.cs" Line="211" Column="5" />
-      <File FileName="GameName1\Interfaces\AI.cs" Line="11" Column="13" />
+      <File FileName="c:\Users\ALEX\Documents\GitHub\Seizonsha\GameName1\GameName1\Screens\MainMenuScreen.cs" Line="13" Column="1" />
+      <File FileName="GameName1\Player.cs" Line="163" Column="1" />
+      <File FileName="GameName1\Interfaces\AI.cs" Line="1" Column="1" />
+      <File FileName="GameName1\Skills\Blizzard.cs" Line="1" Column="1" />
+      <File FileName="GameName1\Interfaces\Equipable.cs" Line="1" Column="1" />
+      <File FileName="GameName1\Interfaces\Interactable.cs" Line="1" Column="1" />
+      <File FileName="GameName1\Interfaces\Spawnable.cs" Line="1" Column="1" />
+      <File FileName="GameName1\Interfaces\StatusEffect.cs" Line="10" Column="20" />
+      <File FileName="GameName1\Effects\Effect.cs" Line="8" Column="24" />
+      <File FileName="GameName1\Skills\Gun.cs" Line="52" Column="48" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

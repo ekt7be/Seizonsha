@@ -323,11 +323,7 @@ namespace GameName1
                 }
             }
 
-            if (SkillTreeOpen())
-            {
-                skilltree.Draw(screenPortion, spriteBatch);
-                return;
-            }
+
             Texture2D texture = Static.PIXEL_THIN;
 
 			int barLength = screenPortion.Width / 2; 
@@ -379,6 +375,12 @@ namespace GameName1
 				"R2(4 key): " + this.getSkill(Static.PLAYER_R2_SKILL_INDEX).getName() + "\n" +
                 "P:  Pause/Quit Menu (temp)" ;
 			spriteBatch.DrawString(game.getSpriteFont(), displaySkills, new Vector2(20, 100), Color.White);
+
+			if (SkillTreeOpen())
+			{
+				skilltree.Draw(screenPortion, spriteBatch);
+				return;
+			}
 
 
             //draw Wave number

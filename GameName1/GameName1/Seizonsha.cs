@@ -38,7 +38,7 @@ namespace GameName1
 
         private bool paused;
 		FPSCounterComponent fps;
-		private bool showFPS = true; 
+		private bool showFPS = false; 
 
 		private float sinceLastWaveCleared; 
 	
