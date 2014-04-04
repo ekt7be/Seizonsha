@@ -42,6 +42,17 @@ namespace GameName1.SkillTree
             this.cost = cost;
         }
 
+        public Equipable getEquipable()
+        {
+            if (unlockable is Equipable)
+            {
+                return (Equipable)unlockable;
+            }
+            else
+            {
+                return null;
+            }
+        }
 
         public void Unlock(Player player)
         {

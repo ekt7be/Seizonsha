@@ -7,7 +7,7 @@ using System.Text;
 
 namespace GameName1.Skills
 {
-    class Sword : Skill
+    class Sword : Skill, Unlockable
     {
 
         private int damage;
@@ -54,5 +54,10 @@ namespace GameName1.Skills
             game.Spawn(attack, slashBounds.Left, slashBounds.Top);
         }
 
+
+        public void OnUnlock(Player player)
+        {
+            player.addEquipable(this);
+        }
     }
 }

@@ -12,9 +12,9 @@ namespace GameName1
         int direction;
 
         public SpawnTile(int tileType, int x, int y)
-            : base(x, y, true, Static.TILE_SPAWN)
+            : base(x, y, true, tileType)
         {
-            this.tileType = direction;
+            this.direction = tileType;
         }
 
         public Vector2 getSpawnPosition(GameEntity entity)
@@ -25,7 +25,7 @@ namespace GameName1
             }
             else if (direction == Static.SPAWN_POINT_RIGHT)
             {
-                return new Vector2(x + Static.TILE_WIDTH, y);
+                return new Vector2(x + Static.TILE_WIDTH + entity.width*2, y);
             }
             else if (direction == Static.SPAWN_POINT_LEFT)
             {

@@ -39,7 +39,7 @@ namespace GameName1
 		public static readonly int PLAYER_MOVE_SPEED = 5;
         public static readonly int PLAYER_MAX_HEALTH = 100;
         public static readonly int PLAYER_MAX_MANA = 100;
-        public static readonly float PLAYER_START_MANA_REGEN = .2f;
+        public static readonly float PLAYER_START_MANA_REGEN = .08f;
 		public static readonly int PLAYER_L1_SKILL_INDEX = 0; 
         public static readonly int PLAYER_L2_SKILL_INDEX = 1;
         public static readonly int PLAYER_R1_SKILL_INDEX = 2;
@@ -51,6 +51,7 @@ namespace GameName1
 		public static readonly int BASIC_ENEMY_WIDTH = 32*1;
         public static readonly int BASIC_ENEMY_DAMAGE = 5;
 		public static readonly float BASIC_ENEMY_SPEED = 0.5f;
+        public static readonly int BASIC_ENEMY_HEALTH = 30;
 		public static readonly float BASIC_ENEMY_PATH_REFRESH = 500f;
 
         //dimensions
@@ -67,7 +68,6 @@ namespace GameName1
         public static readonly int TILE_NERVES = 840;
         public static readonly int TILE_BRICK = 1033;
         public static readonly int TILE_STONE = 1157;
-        public static readonly int TILE_SPAWN = 0;
 
         //spawn directions
         public static readonly int SPAWN_POINT_UP = 0;

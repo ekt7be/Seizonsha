@@ -71,9 +71,9 @@ namespace GameName1
 						if (int.TryParse(nums[i], out m)) {
 							int tileType = Convert.ToInt32(nums[i]);
 
-                            if (tileType == Static.TILE_SPAWN)
+                            if (tileType == Static.SPAWN_POINT_DOWN || tileType == Static.SPAWN_POINT_UP || tileType == Static.SPAWN_POINT_RIGHT || tileType == Static.SPAWN_POINT_LEFT)
                             {
-								SpawnTile spawnTile = new SpawnTile(0,i * Static.TILE_WIDTH, j * Static.TILE_WIDTH);
+								SpawnTile spawnTile = new SpawnTile(tileType,i * Static.TILE_WIDTH, j * Static.TILE_WIDTH);
 								spawnTile.capacity = 0; 
 								level.AddSpawnPoint(spawnTile);
                                 tiles[i, j] = spawnTile;

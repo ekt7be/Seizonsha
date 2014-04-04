@@ -1318,6 +1318,8 @@ namespace GameName1
 
         public void WaveCleared()
         {
+            difficulty++;
+            difficulty++;
 
         }
 

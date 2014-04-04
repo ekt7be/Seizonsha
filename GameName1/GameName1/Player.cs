@@ -145,15 +145,22 @@ namespace GameName1
 			this.skillSlots = new Equipable[4]; //each slot is different skill, weapon, or item
             this.inventory = new List<Equipable>();
             this.skilltree = new SkillTree.SkillTree(game, this, Static.PIXEL_THIN);
-            Equip(new Gun(game, this, 30, 10, 10f), Static.PLAYER_L1_SKILL_INDEX);
-            Equip(new LifeDrain(game, this, 3, 40, 40), Static.PLAYER_L1_SKILL_INDEX);
-            Equip(new FireLance(game, this, 10, 5), Static.PLAYER_L1_SKILL_INDEX);
-            Equip(new Fireball(game, this, 120, 100, 5f), Static.PLAYER_R1_SKILL_INDEX);
+            //Equip(new Gun(game, this, 30, 10, 10f), Static.PLAYER_L1_SKILL_INDEX);
+            //Equip(new LifeDrain(game, this, 3, 40, 40), Static.PLAYER_L1_SKILL_INDEX);
+            //Equip(new FireLance(game, this, 10, 5), Static.PLAYER_L1_SKILL_INDEX);
+            //Equip(new Fireball(game, this, 120, 100, 5f), Static.PLAYER_R1_SKILL_INDEX);
             //Equip(new LifeDrain(game, this, 2, 2, 40), Static.PLAYER_L2_SKILL_INDEX);
-            Equip(new Teleport(game, this, 180, 3, 1), Static.PLAYER_L2_SKILL_INDEX);
+            //Equip(new Teleport(game, this, 180, 3, 1), Static.PLAYER_L2_SKILL_INDEX);
             //Equip(new HealingTouch(game, this, -50, 100), Static.PLAYER_R1_SKILL_INDEX);
-            Equip(new Sword(game, this, 300, 10), Static.PLAYER_R2_SKILL_INDEX);
-            Equip(new Blizzard(game, this, 0, 200, 200, 100), Static.PLAYER_R2_SKILL_INDEX);
+            //Equip(new Sword(game, this, 300, 10), Static.PLAYER_R2_SKILL_INDEX);
+            //Equip(new Blizzard(game, this, 0, 200, 200, 100), Static.PLAYER_R2_SKILL_INDEX);
+
+            Equip(new Gun(game, this, 10, 60, 15), Static.PLAYER_L1_SKILL_INDEX);
+            Equip(new Sword(game, this, 30, 40), Static.PLAYER_R1_SKILL_INDEX);
+            Equip(new Fireball(game, this, 40, 30, 50), Static.PLAYER_R2_SKILL_INDEX);
+            Equip(new HealingTouch(game, this, -50, 60), Static.PLAYER_L2_SKILL_INDEX);
+
+
 
             this.maxMana = Static.PLAYER_MAX_MANA;
             this.mana = maxMana;
@@ -507,6 +514,7 @@ namespace GameName1
         {
             if (SkillTreeOpen())
             {
+                skilltree.L1();
                 return;
             }
             UseSkill(Static.PLAYER_L1_SKILL_INDEX);
@@ -515,6 +523,7 @@ namespace GameName1
         {
             if (SkillTreeOpen())
             {
+                skilltree.L2();
                 return;
             }
             UseSkill(Static.PLAYER_L2_SKILL_INDEX);
@@ -523,6 +532,7 @@ namespace GameName1
         {
             if (SkillTreeOpen())
             {
+                skilltree.R1();
                 return;
             }
             UseSkill(Static.PLAYER_R1_SKILL_INDEX);
@@ -531,6 +541,7 @@ namespace GameName1
         {
             if (SkillTreeOpen())
             {
+                skilltree.R2();
                 return;
             }
             UseSkill(Static.PLAYER_R2_SKILL_INDEX);

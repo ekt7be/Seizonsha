@@ -7,7 +7,7 @@ using System.Text;
 
 namespace GameName1.Skills
 {
-	class Gun : Skill
+	class Gun : Skill, Unlockable
 	{
 
 
@@ -64,5 +64,10 @@ namespace GameName1.Skills
 		}
 
 
-	}
+
+        public void OnUnlock(Player player)
+        {
+            player.addEquipable(this);
+        }
+    }
 }

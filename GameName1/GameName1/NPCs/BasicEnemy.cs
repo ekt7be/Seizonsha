@@ -45,7 +45,7 @@ namespace GameName1.NPCs
 
 
 		public BasicEnemy(Seizonsha game)
-			: base(game, Seizonsha.spriteMappings[Static.SPRITE_BASIC_ENEMY_INT], Static.BASIC_ENEMY_WIDTH-1, Static.BASIC_ENEMY_HEIGHT-1, Static.DAMAGE_TYPE_ENEMY, 200)
+			: base(game, Seizonsha.spriteMappings[Static.SPRITE_BASIC_ENEMY_INT], Static.BASIC_ENEMY_WIDTH-1, Static.BASIC_ENEMY_HEIGHT-1, Static.DAMAGE_TYPE_ENEMY, Static.BASIC_ENEMY_HEALTH)
 		{
 			base.scale = 1.0f;
 			setXPReward(50);
@@ -53,7 +53,7 @@ namespace GameName1.NPCs
 		  	closed = new HashSet<Tile>();
 			open = new HashSet<Tile>();
 
-			sword = new Sword(game, this, 5, 20);
+			sword = new Sword(game, this, 5, 40);
 			sword.OnEquip();
 
             path = new List<Tile>();

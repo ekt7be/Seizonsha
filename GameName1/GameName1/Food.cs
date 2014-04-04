@@ -10,9 +10,10 @@ namespace GameName1
     {
 
         public Food(Seizonsha game)
-            : base(game, Static.PIXEL_THIN, 40, 40)
+            : base(game, Static.PIXEL_THIN, 20, 20)
         {
             this.tint = Color.Brown;
+            setCollidable(false);
         }
         public override void Interact(Player player)
         {

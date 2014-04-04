@@ -25,6 +25,7 @@ namespace GameName1.SkillTree
         public SkillTree(Seizonsha game, Player player, Texture2D backgroundTexture)
         {
             this.player = player;
+            this.game = game;
             this.backgroundTexture = backgroundTexture;
             this.nodes = new List<SkillTreeNode>();
             populateNodes();
@@ -41,25 +42,24 @@ namespace GameName1.SkillTree
             nodes.Add(startNode);
             currNode = startNode;
                 
-            SkillTreeNode cColorNode = new SkillTreeNode(this, startNode.getX()+Static.SKILL_TREE_NODE_WIDTH*2, startNode.getY(), nodeTextures[Static.SKILL_TREE_NODE_ANY], new ChangeColor(game, player, Color.Red), 1000);
-            nodes.Add(cColorNode);
-            startNode.attachRight(cColorNode, Static.SKILL_TREE_WEIGHT_LOCKED);
+            SkillTreeNode goodSwordNode = new SkillTreeNode(this, startNode.getX()+Static.SKILL_TREE_NODE_WIDTH*2, startNode.getY(), nodeTextures[Static.SKILL_TREE_NODE_ANY], new Sword(game,player,60,20), 0);
+            nodes.Add(goodSwordNode);
+            startNode.attachRight(goodSwordNode, Static.SKILL_TREE_WEIGHT_LOCKED);
 
             //magic path
-            SkillTreeNode FireballNode = new SkillTreeNode(this, startNode.getX(), startNode.getY() + Static.SKILL_TREE_NODE_HEIGHT*2, nodeTextures[Static.SKILL_TREE_NODE_ANY], new Fireball(game, player, 300, 20, 12), 1000);
+            SkillTreeNode FireballNode = new SkillTreeNode(this, startNode.getX(), startNode.getY() + Static.SKILL_TREE_NODE_HEIGHT*2, nodeTextures[Static.SKILL_TREE_NODE_ANY], new Fireball(game, player, 300, 20, 12), 0);
             nodes.Add(FireballNode);
             startNode.attachBottom(FireballNode, Static.SKILL_TREE_WEIGHT_LOCKED);
 
             //support
-            SkillTreeNode HealNode = new SkillTreeNode(this, startNode.getX()-Static.SKILL_TREE_NODE_WIDTH * 2, startNode.getY(), nodeTextures[Static.SKILL_TREE_NODE_ANY], new HealingTouch(game, player, 300, 12), 1000);
+            SkillTreeNode HealNode = new SkillTreeNode(this, startNode.getX()-Static.SKILL_TREE_NODE_WIDTH * 2, startNode.getY(), nodeTextures[Static.SKILL_TREE_NODE_ANY], new HealingTouch(game, player, 100, 12), 0);
             nodes.Add(HealNode);
             startNode.attachLeft(HealNode, Static.SKILL_TREE_WEIGHT_LOCKED);
 
-            SkillTreeNode ManaRegenPlusNode = new SkillTreeNode(this, FireballNode.getX() - Static.SKILL_TREE_NODE_WIDTH * 2, FireballNode.getY() + Static.SKILL_TREE_NODE_WIDTH * 2, nodeTextures[Static.SKILL_TREE_NODE_ANY], new ManaRegenPlusUnlockable(Static.PLAYER_START_MANA_REGEN / 2), 1000);
+            SkillTreeNode ManaRegenPlusNode = new SkillTreeNode(this, FireballNode.getX() - Static.SKILL_TREE_NODE_WIDTH * 2, FireballNode.getY() + Static.SKILL_TREE_NODE_WIDTH * 2, nodeTextures[Static.SKILL_TREE_NODE_ANY], new ManaRegenPlusUnlockable(Static.PLAYER_START_MANA_REGEN / 2), 0);
             nodes.Add(ManaRegenPlusNode);
             FireballNode.attachLeft(ManaRegenPlusNode, Static.SKILL_TREE_WEIGHT_LOCKED);
 
-            
         
         }
 
@@ -128,8 +128,11 @@ namespace GameName1.SkillTree
                 node.Draw(spriteBatch, cameraOffset, tint);
 
 
+            }
 
-
+            if (currNode.getEquipable() != null && currNode.isUnlocked())
+            {
+                spriteBatch.DrawString(game.getSpriteFont(), "Press L1, L2, R1, or R2 to Equip", new Vector2(0, bounds.Height - 100), Color.White);
             }
 
         }
@@ -198,6 +201,67 @@ namespace GameName1.SkillTree
             }
             movementRecharge = 0;
 
+        }
+
+
+        public void L1()
+        {
+            if (currNode == null || !moveAvailable() || !currNode.isUnlocked())
+            {
+                return;
+            }
+
+            if (currNode.getEquipable() != null)
+            {
+                player.Equip(currNode.getEquipable(),Static.PLAYER_L1_SKILL_INDEX);
+            }
+
+            movementRecharge = 0;
+        }
+
+        public void L2()
+        {
+            if (currNode == null || !moveAvailable() || !currNode.isUnlocked())
+            {
+                return;
+            }
+
+            if (currNode.getEquipable() != null)
+            {
+                player.Equip(currNode.getEquipable(), Static.PLAYER_L2_SKILL_INDEX);
+            }
+
+            movementRecharge = 0;
+        }
+
+        public void R1()
+        {
+            if (currNode == null || !moveAvailable() || !currNode.isUnlocked())
+            {
+                return;
+            }
+
+            if (currNode.getEquipable() != null)
+            {
+                player.Equip(currNode.getEquipable(), Static.PLAYER_R1_SKILL_INDEX);
+            }
+
+            movementRecharge = 0;
+        }
+
+        public void R2()
+        {
+            if (currNode == null || !moveAvailable() || !currNode.isUnlocked())
+            {
+                return;
+            }
+
+            if (currNode.getEquipable() != null)
+            {
+                player.Equip(currNode.getEquipable(), Static.PLAYER_R2_SKILL_INDEX);
+            }
+
+            movementRecharge = 0;
         }
 
         public void Unlock()
