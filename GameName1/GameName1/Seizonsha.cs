@@ -626,10 +626,10 @@ namespace GameName1
             if (player.playerIndex == PlayerIndex.One)
             {
                 
-                if (GamePad.GetState(player.playerIndex).Buttons.Start == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Space))
+                if (GamePad.GetState(player.playerIndex).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Space))
                 {
                     player.SkillTreeButtonDown();
-                } else if (GamePad.GetState(player.playerIndex).Buttons.Start == ButtonState.Released || Keyboard.GetState().IsKeyUp(Keys.Space)){
+                } else if (GamePad.GetState(player.playerIndex).Buttons.Back == ButtonState.Released || Keyboard.GetState().IsKeyUp(Keys.Space)){
                     player.SkillTreeButtonRelease();
                 }
 
@@ -638,10 +638,6 @@ namespace GameName1
                     player.AButton();
                 }
 
-                if (GamePad.GetState(player.playerIndex).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                {
-                    Exit();
-                }
                 if (GamePad.GetState(player.playerIndex).ThumbSticks.Left.Y > .5 || Keyboard.GetState().IsKeyDown(Keys.W))
                 {
                     player.UpButton();
@@ -684,10 +680,7 @@ namespace GameName1
                     player.R2Button();
                 }
 
-                if (Math.Abs(GamePad.GetState(player.playerIndex).ThumbSticks.Right.Y) > .1 || Math.Abs(GamePad.GetState(player.playerIndex).ThumbSticks.Right.X) > .1)
-                {
-                    player.rotateToAngle((float)Math.Atan2(GamePad.GetState(player.playerIndex).ThumbSticks.Right.Y * -1, GamePad.GetState(player.playerIndex).ThumbSticks.Right.X)); // angle to point		
-                }
+
 
                 
 				// calculates mouse aim angle and rotation 
@@ -696,6 +689,12 @@ namespace GameName1
 				playerMouseDistance.X = player.camera.getWorldPositionX(mouse.X) - player.x;
 				playerMouseDistance.Y = player.camera.getWorldPositionY(mouse.Y) - player.y;
 				player.rotateToAngle((float)Math.Atan2(playerMouseDistance.Y, playerMouseDistance.X)); // angle to point at	
+
+                if (Math.Abs(GamePad.GetState(player.playerIndex).ThumbSticks.Right.Y) > .1 || Math.Abs(GamePad.GetState(player.playerIndex).ThumbSticks.Right.X) > .1)
+                {
+                    player.rotateToAngle((float)Math.Atan2(GamePad.GetState(player.playerIndex).ThumbSticks.Right.Y * -1, GamePad.GetState(player.playerIndex).ThumbSticks.Right.X)); // angle to point		
+                }
+
                 if (mouse.LeftButton == ButtonState.Pressed)
                 {
                     player.LeftClick();
@@ -703,11 +702,11 @@ namespace GameName1
             }
             else
             {           
-                if (GamePad.GetState(player.playerIndex).Buttons.Start == ButtonState.Pressed)
+                if (GamePad.GetState(player.playerIndex).Buttons.Back == ButtonState.Pressed)
                 {
                     player.SkillTreeButtonDown();
                 }
-                else if (GamePad.GetState(player.playerIndex).Buttons.Start == ButtonState.Released)
+                else if (GamePad.GetState(player.playerIndex).Buttons.Back == ButtonState.Released)
                 {
                     player.SkillTreeButtonRelease();
 
@@ -718,10 +717,6 @@ namespace GameName1
                     player.AButton();
                 }
 
-                if (GamePad.GetState(player.playerIndex).Buttons.Back == ButtonState.Pressed)
-                {
-                    Exit();
-                }
                 if (GamePad.GetState(player.playerIndex).ThumbSticks.Left.Y > .5)
                 {
                     player.UpButton();

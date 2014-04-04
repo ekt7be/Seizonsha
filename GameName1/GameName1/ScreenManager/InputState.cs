@@ -227,7 +227,6 @@ namespace GameName1
             PlayerIndex playerIndex;
 
             return IsNewKeyPress(Keys.P, controllingPlayer, out playerIndex) ||
-                   IsNewButtonPress(Buttons.Back, controllingPlayer, out playerIndex) ||
                    IsNewButtonPress(Buttons.Start, controllingPlayer, out playerIndex);
         }
 
