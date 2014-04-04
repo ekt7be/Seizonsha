@@ -80,7 +80,7 @@ namespace GameName1.Skills
             setSprite(sprite);
             width = bounds.Width;
             height = bounds.Height;
-
+			this.user = user; 
         }
 
         public override void collideWithWall()
