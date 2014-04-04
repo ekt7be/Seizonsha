@@ -14,11 +14,13 @@ namespace GameName1.Skills
         private int amount;
         private GameEntity user;
         private GameEntity target;
+        private Skill origin;
 
-        public TargetedAbility(Seizonsha game, GameEntity user, Texture2D sprite, GameEntity target, int amount, int damageType, int duration, Vector2 direction)
+        public TargetedAbility(Seizonsha game, GameEntity user, Skill origin, Texture2D sprite, GameEntity target, int amount, int damageType, int duration, Vector2 direction)
             : base(game, sprite, user.width, user.height, duration)
         {
             this.amount = amount;
+            this.origin = origin;
             this.damageType = damageType;
             this.user = user;
             this.target = target;
@@ -32,7 +34,7 @@ namespace GameName1.Skills
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            
+            this.hitbox = new Rectangle((int)(user.getCenterX()), (int)(user.getCenterY()), (int)this.getDistanceToTarget(), 5);
             spriteBatch.Draw(sprite, hitbox, null,
                 Color.White, (float)Math.Atan2(target.getCenterY() - user.getCenterY(), target.getCenterX() - user.getCenterX()), new Vector2(0f, 0f), SpriteEffects.None, 1f);
            // base.Draw(spriteBatch);
@@ -54,16 +56,16 @@ namespace GameName1.Skills
             Rectangle slashBounds = new Rectangle((int)(user.getCenterX()), (int)(user.getCenterY()), (int)this.getDistanceToTarget(), 5);
             //this.hitbox = new Rectangle(this.x, this.y, this.width, this.height);
             this.sprite = Static.PIXEL_THIN;
-            this.hitbox = new Rectangle((int)(user.getCenterX()), (int)(user.getCenterY()), (int)this.getDistanceToTarget(), 5);
-            if (!target.shouldRemove()) game.damageEntity(user, target, amount, damageType);
+            
+            if (!target.shouldRemove() && this.getDistanceToTarget() < 400.0) this.origin.affect(target);
             else setRemove(true);
 
         }
 
         public override void OnSpawn()
         {
-                game.damageEntity(user, target, amount, damageType);
-                game.healEntity(user, user, -amount, damageType);
+                //game.damageEntity(user, target, amount, damageType);
+                //game.healEntity(user, user, -amount, damageType);
             
         }
 

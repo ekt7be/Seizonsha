@@ -62,7 +62,7 @@ namespace GameName1.Effects
 
         public override String getName()
         {
-            return Static.TYPE_BULLET;
+            return Static.TYPE_EFFECT;
         }
     }
 }

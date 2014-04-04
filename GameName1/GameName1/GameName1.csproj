@@ -59,6 +59,8 @@
     <Compile Include="Collision.cs" />
     <Compile Include="EntityFactory.cs" />
     <Compile Include="Interfaces\Interactable.cs" />
+    <Compile Include="Skills\AOEStatus.cs" />
+    <Compile Include="Skills\Blizzard.cs" />
     <Compile Include="Skills\Burning.cs" />
     <Compile Include="Effects\Effect.cs" />
     <Compile Include="Interfaces\StatusEffect.cs" />
@@ -91,6 +93,7 @@
     <Compile Include="Skills\HealingTouch.cs" />
     <Compile Include="Skills\LifeDrain.cs" />
     <Compile Include="Skills\Skill.cs" />
+    <Compile Include="Skills\Slow.cs" />
     <Compile Include="Skills\Sword.cs" />
     <Compile Include="Skills\Teleport.cs" />
     <Compile Include="SkillTree\BlankNode.cs" />

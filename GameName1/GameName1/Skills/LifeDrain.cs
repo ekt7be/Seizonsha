@@ -1,4 +1,5 @@
-﻿using GameName1.Interfaces;
+﻿using GameName1.Effects;
+using GameName1.Interfaces;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,7 @@ namespace GameName1.Skills
         private bool timerStarted;
 
         public LifeDrain(Seizonsha game, GameEntity user, int damage, int recharge_time, int duration)
-            : base(game, user, 50, recharge_time, 20, 20)
+            : base(game, user, 20, recharge_time, 20, 20)
         {
 
             this.damage = damage;
@@ -54,7 +55,9 @@ namespace GameName1.Skills
         protected GameEntity getTarget()
         {
             GameEntity enemy = null;
-            foreach (GameEntity entity in game.getEntitiesInBounds(game.getLevelBounds()))
+            int rangeX = 300;
+            int rangeY = 300;
+            foreach (GameEntity entity in game.getEntitiesInBounds(new Rectangle(user.getCenterX() - rangeX/2, user.getCenterY() - rangeY/2, rangeX, rangeY)))
             {
                 if (entity.getTargetType() == Static.TARGET_TYPE_ENEMY)
                 {
@@ -76,7 +79,7 @@ namespace GameName1.Skills
                 int bulletWidth = 15;
                 int bulletHeight = 15;
                 Rectangle slashBounds = new Rectangle((int)(user.getCenterX()), (int)(user.getCenterY()), bulletWidth, bulletHeight);
-                ability = new TargetedAbility(game, user, Static.PIXEL_THIN, t, damage, damageType, 5, user.vectorDirection);
+                ability = new TargetedAbility(game, user, this, Static.PIXEL_THIN, t, damage, damageType, this.duration, user.vectorDirection);
                 game.Spawn(ability, slashBounds.Left, slashBounds.Top);
             }
             
@@ -96,7 +99,14 @@ namespace GameName1.Skills
 
         public override void affect(GameEntity affected)
         {
-            throw new NotImplementedException();
+            game.healEntity(user, user, this.damage, this.damageType);
+            game.damageEntity(user, affected, this.damage, this.damageType);
+            foreach (StatusEffect statusEffect in affected.getStatusEffects())
+            {
+                if (statusEffect.getOrigin() is LifeDrain) return;
+
+            }
+            affected.addStatusEffect(new Slow(game, user, this, null, affected, 0.3f, this.damageType, this.duration));
         }
 
         public void OnUnlock(Player player)

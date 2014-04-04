@@ -207,7 +207,7 @@ namespace GameName1
             this.difficulty = 5;
             this.numberEnemies = 0;
             this.Wave = 0;
-			//WaveBegin();
+			WaveBegin();
 
 			Spawn(new BasicEnemy(this), 500, 600);
 
@@ -397,7 +397,7 @@ namespace GameName1
             {
                 WaveCleared();
                 //pause and do other stuff, maybe set timer
-				// WaveBegin();
+				 WaveBegin();
             }
 
 

@@ -32,6 +32,7 @@ namespace GameName1
         public float maxHealth;
         public float health;
         public float shield;
+        public float speedModifier;
         protected bool hasHealth;
         public float velocityX { get; set; }
         public float velocityY { get; set; }
@@ -148,6 +149,11 @@ namespace GameName1
             this.shield += amount;
         }
 
+        public void modifySpeed(float amount)
+        {
+            this.speedModifier*=amount;
+        }
+
         public virtual void UpdateAnimation(GameTime gameTime)
         {
             foreach (Animation animation in animations)
@@ -211,6 +217,7 @@ namespace GameName1
             this.incomingStatusEffects = new List<StatusEffect>();
             this.outgoingStatusEffects = new List<StatusEffect>();
             this.shield = 0;
+            this.speedModifier = 1;
 
             this.animations = new List<Animation>();
             this.outgoingAnimations = new List<Animation>();
@@ -270,6 +277,9 @@ namespace GameName1
         public void addStatusEffect(StatusEffect statusEffect)
         {
             this.incomingStatusEffects.Add(statusEffect);
+        }
+        public List<StatusEffect> getStatusEffects(){
+            return this.statusEffects;
         }
 
         public void removeStatusEffect(StatusEffect statusEffect)
@@ -336,13 +346,16 @@ namespace GameName1
             {
                 return;
             }
+            
 
                 movement.X += dx;
                 movement.Y += dy;
         }
 
         public void executeMovement(){
-            game.moveGameEntity(this, movement.X, movement.Y);
+            //float dist = (float)Math.Sqrt(dx * dx + dy * dy);   
+            game.moveGameEntity(this, movement.X * speedModifier, movement.Y*speedModifier);
+            speedModifier = 1f;
 
         }
 

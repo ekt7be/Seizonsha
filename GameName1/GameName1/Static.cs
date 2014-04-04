@@ -22,6 +22,7 @@ namespace GameName1
         public static readonly string TYPE_AOE_CONE = "AOE Cone";
         public static readonly string TYPE_SWORD_SLASH= "Sword Slash";
         public static readonly string TYPE_PLAYER = "Player";
+        public static readonly string TYPE_AOE_STATUS = "AOE Status";
 
 
         public static int NUM_PLAYERS = 1;
@@ -44,7 +45,7 @@ namespace GameName1
 		public static readonly int BASIC_ENEMY_HEIGHT = 32*1;
 		public static readonly int BASIC_ENEMY_WIDTH = 32*1;
         public static readonly int BASIC_ENEMY_DAMAGE = 5;
-		public static readonly float BASIC_ENEMY_SPEED = 0.4f;
+		public static readonly float BASIC_ENEMY_SPEED = 0.5f;
 
         //dimensions
 		public static int SCREEN_WIDTH = 1280; // 640 x 480, 1280 x 640

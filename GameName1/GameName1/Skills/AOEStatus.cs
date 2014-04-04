@@ -8,7 +8,7 @@ using System.Text;
 
 namespace GameName1.Skills
 {
-    class AOECone : GameName1.Effects.Effect
+    class AOEStatus : GameName1.Effects.Effect
     {
         private int damageType;
         private int amount;
@@ -16,7 +16,7 @@ namespace GameName1.Skills
         private Skill origin;
 
 
-        public AOECone(Seizonsha game, GameEntity user, Texture2D sprite, Skill origin, Rectangle bounds, int amount, int damageType, int duration)
+        public AOEStatus(Seizonsha game, GameEntity user, Texture2D sprite, Skill origin, Rectangle bounds, int amount, int damageType, int duration)
             : base(game, sprite, bounds.Width, bounds.Height, duration)
         {
             this.amount = amount;
@@ -27,14 +27,33 @@ namespace GameName1.Skills
 
         protected override void OnDie()
         {
-            
+
         }
 
         public override void OnSpawn()
         {
             if (amount < 0)
             {
-                game.healArea(user,this.getHitbox(), -amount, damageType);
+                game.healArea(user, this.getHitbox(), -amount, damageType);
+            }
+            else
+            {
+                //game.damageArea(user, this.getHitbox(), amount, damageType);
+                foreach (GameEntity entity in game.getEntitiesInBounds(this.getHitbox()))
+                {
+                    if (entity.getTargetType() == Static.TARGET_TYPE_ENEMY) this.origin.affect(entity);
+                }
+            }
+        }
+
+        
+
+
+        public override void Update(GameTime gameTime)
+        {
+            if (amount < 0)
+            {
+                game.healArea(user, this.getHitbox(), -amount, damageType);
             }
             else
             {
@@ -44,12 +63,12 @@ namespace GameName1.Skills
                     this.origin.affect(entity);
                 }
             }
+            base.Update(gameTime);
         }
-
 
         public override string getName()
         {
-            return Static.TYPE_AOE_CONE;
+            return Static.TYPE_AOE_STATUS;
         }
 
 

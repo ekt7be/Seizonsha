@@ -42,6 +42,7 @@ namespace GameName1.Skills
 
         public override void affect(GameEntity affected)
         {
+            game.damageEntity(user, affected, this.damage, this.damageType);
         }
 
 

@@ -1,4 +1,5 @@
 ﻿using GameName1.Interfaces;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,16 +18,21 @@ namespace GameName1.Skills
         protected int castingTime;
         private bool waitingForCast;
         private int manaCost;
+        protected Vector2 bufferedVectorDirection;
+        protected float bufferedDirection;
+        
 
         public Skill(Seizonsha game, GameEntity user, int manaCost, int rechargeTime, int castingTime, int freezeTime)
         {
             this.rechargeTime = rechargeTime + castingTime;
+            this.recharged = rechargeTime;
             this.manaCost = manaCost;
             this.castingTime = castingTime;
             this.freezeTime = freezeTime;
             this.waitingForCast = false;
             this.user = user;
             this.game = game;
+            bufferedDirection = 0;
         }
 
         public virtual void OnUnequip()
@@ -39,9 +45,12 @@ namespace GameName1.Skills
 
         }
 
-
+        //INSTANTIATING IN HERE
         public virtual void Use()
         {
+            this.bufferedDirection = user.direction;
+            this.bufferedVectorDirection = new Vector2(user.vectorDirection.X, user.vectorDirection.Y);
+
             if (!(Available()) || user.isFrozen() || this.waitingForCast){
                 return;
             }
