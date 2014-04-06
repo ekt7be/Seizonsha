@@ -326,7 +326,7 @@ namespace GameName1
             if (SkillTreeOpen())
             {
                 DrawSkillTree(screenPortion, spriteBatch);
-                return;
+				return;
             }
 
             //draw Wave number
@@ -384,7 +384,6 @@ namespace GameName1
                 "P:  Pause/Quit Menu (temp)" ;
 			spriteBatch.DrawString(game.getSpriteFont(), displaySkills, new Vector2(20, 100), Color.White);
 
-
 			// skill bar 
 			for (int s = 0; s < skillSlots.Length; s++) {
 				Rectangle skillBox = new Rectangle(screenPortion.Width/2-400+(s*103), screenPortion.Height-100, 100, 100);
@@ -392,13 +391,12 @@ namespace GameName1
 				Skill skill = (Skill)skillSlots[s];
 				Texture2D icon = SkillTree.SkillTree.nodeTextures["Blank"]; 
 
-
-
 				if (SkillTree.SkillTree.nodeTextures.ContainsKey(skill.getName()))
 					icon = SkillTree.SkillTree.nodeTextures[skill.getName()];
 
 
 
+				spriteBatch.Draw(icon, skillBox, Color.White);
 
 				if (!skill.Available()) {
 					if (skill.recharged < skill.rechargeTime) {
@@ -408,7 +406,7 @@ namespace GameName1
 
 						Rectangle cooldown = new Rectangle(screenPortion.Width/2-400+(s*103), screenPortion.Height-100, 100 , 100-(int)(100*coolDownPercentage));
 
-						spriteBatch.Draw(icon, skillBox, Color.White);
+						//spriteBatch.Draw(icon, skillBox, Color.White);
 
 						spriteBatch.Draw(Static.PIXEL_THIN, cooldown, new Color(Color.Black, 0.5f));
 
@@ -422,12 +420,11 @@ namespace GameName1
 						);
 					}
 					if (skill.manaCost > this.mana) 
-						spriteBatch.Draw(icon, skillBox, new Color(Color.RoyalBlue, 1f));
+						spriteBatch.Draw(Static.PIXEL_THIN, skillBox, new Color(Color.DarkBlue, 0.10f));
 	
 
 				}
-				else
-					spriteBatch.Draw(icon, skillBox, Color.White);
+	
 
 
 
