@@ -65,10 +65,12 @@ namespace GameName1
 			else if (cameraX + cameraWidth > worldWidth)	
 				cameraX = worldWidth - cameraWidth;
 
-			if (cameraY < 0) 
-				cameraY = 0;
-			else if (cameraY + cameraHeight > worldHeight)
-				cameraY = worldHeight - cameraHeight;
+			int reserved = 100; 
+
+			if (cameraY < 0 - reserved) 
+				cameraY = 0 - reserved;
+			else if (cameraY + cameraHeight > worldHeight + reserved)	// add reserved here and player won't be able to move past center
+				cameraY = worldHeight - cameraHeight + reserved;
 				
 			transform = Matrix.CreateScale(1f) * Matrix.CreateTranslation(new Vector3(-cameraX, -cameraY, 0)); 
 		} 

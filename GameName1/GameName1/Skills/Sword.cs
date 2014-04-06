@@ -37,7 +37,7 @@ namespace GameName1.Skills
 
         public override string getName()
         {
-            return "SWORD";
+			return "Sword";
         }
 
         public override void affect(GameEntity affected)

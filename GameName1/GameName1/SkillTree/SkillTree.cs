@@ -17,7 +17,7 @@ namespace GameName1.SkillTree
         private Seizonsha game;
         private Texture2D backgroundTexture;
         private Vector2 cameraOffset;
-        public static Dictionary<int, Texture2D> nodeTextures = new Dictionary<int, Texture2D>();
+		public static Dictionary<string, Texture2D> nodeTextures = new Dictionary<string, Texture2D>();
 
 
         private int movementRecharge;
@@ -36,6 +36,7 @@ namespace GameName1.SkillTree
 
         public void populateNodes()
         {
+		
 
 
             BlankNode startNode = new BlankNode(this, 0, 0, nodeTextures[Static.SKILL_TREE_NODE_ANY]);
@@ -58,7 +59,7 @@ namespace GameName1.SkillTree
             
 
             //magic path
-            SkillTreeNode FireballNode = new SkillTreeNode(this, startNode.getX(), startNode.getY() + Static.SKILL_TREE_NODE_HEIGHT*2, nodeTextures[Static.SKILL_TREE_NODE_ANY], new Fireball(game, player, 50, 20, 100), 500);
+			SkillTreeNode FireballNode = new SkillTreeNode(this, startNode.getX(), startNode.getY() + Static.SKILL_TREE_NODE_HEIGHT*2, nodeTextures["Fireball"], new Fireball(game, player, 50, 20, 100), 500);
             nodes.Add(FireballNode);
             startNode.attachBottom(FireballNode, Static.SKILL_TREE_WEIGHT_LOCKED);
 
@@ -76,7 +77,7 @@ namespace GameName1.SkillTree
 
 
             //support
-            SkillTreeNode HealNode = new SkillTreeNode(this, startNode.getX()-Static.SKILL_TREE_NODE_WIDTH * 2, startNode.getY(), nodeTextures[Static.SKILL_TREE_NODE_ANY], new HealingTouch(game, player, 100, 12), 500);
+			SkillTreeNode HealNode = new SkillTreeNode(this, startNode.getX()-Static.SKILL_TREE_NODE_WIDTH * 2, startNode.getY(), nodeTextures["Healing Touch"], new HealingTouch(game, player, 100, 12), 500);
             nodes.Add(HealNode);
             startNode.attachLeft(HealNode, Static.SKILL_TREE_WEIGHT_LOCKED);
 

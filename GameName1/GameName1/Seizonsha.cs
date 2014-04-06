@@ -125,7 +125,6 @@ namespace GameName1
             playerRect = Content.Load<Texture2D>("Sprites/humanfullspritesheet");
             Texture2D npcRect = Content.Load<Texture2D>("Sprites/player");
             Texture2D basicEnemyRect = Content.Load<Texture2D>("Sprites/SkeletonWalkingSpritesheet");
-            Texture2D nodeRect = Content.Load<Texture2D>("Sprites/SkillNode");
 
             Texture2D plateArmorHead = Content.Load<Texture2D>("Sprites/PlateArmorHeadSpritesheet");
             Texture2D plateArmorFeet = Content.Load<Texture2D>("Sprites/PlateArmorFeetSpritesheet");
@@ -138,7 +137,23 @@ namespace GameName1
             Texture2D bullet = Content.Load<Texture2D>("Sprites/bulletsprite");
             Texture2D sword = Content.Load<Texture2D>("Sprites/swordspritesheetfull");
 
-            SkillTree.SkillTree.nodeTextures.Add(Static.SKILL_TREE_NODE_ANY, nodeRect);
+			// add icons to skills 
+			Texture2D nodeRect = Content.Load<Texture2D>("Sprites/SkillNode");
+			Texture2D fireballicon = Content.Load<Texture2D>("Sprites/skill_icons/fireball-red-1");
+			Texture2D healingtouchicon = Content.Load<Texture2D>("Sprites/skill_icons/heal-jade-1");
+			Texture2D swordicon = Content.Load<Texture2D>("Sprites/skill_icons/enchant-blue-3");
+			Texture2D gunicon = Content.Load<Texture2D>("Sprites/skill_icons/pistol-gun");
+
+
+
+			SkillTree.SkillTree.nodeTextures.Add("Blank", nodeRect);
+			SkillTree.SkillTree.nodeTextures.Add("Fireball", fireballicon);
+			SkillTree.SkillTree.nodeTextures.Add("Healing Touch", healingtouchicon);
+			SkillTree.SkillTree.nodeTextures.Add("Sword", swordicon);
+			SkillTree.SkillTree.nodeTextures.Add("Gun", gunicon);
+
+
+
 
             initTileSprites();
 
@@ -209,7 +224,7 @@ namespace GameName1
 
 
 
-            this.difficulty = 1;
+			this.difficulty = 5;
             this.numberEnemies = 0;
             this.Wave = 0;
             WaveBegin();
@@ -499,7 +514,7 @@ namespace GameName1
 
         public void DrawGame(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+			GraphicsDevice.Clear(Color.Black);
 
             foreach (Player player in players)
             {

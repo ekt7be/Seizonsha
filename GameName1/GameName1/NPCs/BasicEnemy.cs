@@ -20,8 +20,8 @@ namespace GameName1.NPCs
         int tilesWide;
         int tilesHigh;
 
-		bool drawPath = false;  
-		bool drawHitbox = false; 
+		bool drawPath = true;  
+		bool drawHitbox = true; 
 
 		private static float elapsed;
 		private float elapsed2;
@@ -93,10 +93,13 @@ namespace GameName1.NPCs
 				speed_x = (path[0].x - this.x);
 				speed_y = (path[0].y - this.y);
 
-				if (speed_x!=0 || speed_y!=0){
+				//speed_x = (path[0].x - this.getLeftEdgeX());
+				//speed_y = (path[0].y - this.getTopEdgeFloatY());
+
+				if (speed_x != 0 || speed_y != 0){
 					Vector2 allSpeed = new Vector2(speed_x,speed_y);
 
-				allSpeed.Normalize();
+					allSpeed.Normalize();
 					allSpeed = allSpeed * Static.BASIC_ENEMY_SPEED;
 					//System.Console.Write(" | vec speed: " + allSpeed.X + " " + allSpeed.Y + "\n"); 
 
@@ -108,6 +111,7 @@ namespace GameName1.NPCs
 
 			if(path.Count > 0) {
 				if (game.getTileFromIndex(game.getTileIndexFromLeftEdgeX(getLeftEdgeX()), game.getTileIndexFromTopEdgeY(getTopEdgeY())) == path[0])
+					//if ( Math.Abs ( (this.floatx + this.floaty) - (path[0].x + path[0].y)) <= 1 ) 
 					next_goal();
 			}
 		}
@@ -155,7 +159,7 @@ namespace GameName1.NPCs
 					if (playerTile.capacity < Math.Max(tilesWide, tilesHigh)) 
 						findPath(1, randomTile(playerTile, 1)); 
 					else
-						findPath(1, randomTile(playerTile, 1)); 
+						findPath(1, playerTile); 
 			}
 				 
 			update_moving();
@@ -299,7 +303,7 @@ namespace GameName1.NPCs
 				else return;
 			}
 
-			if (path.Count > 0)
+			if (path.Count > 0) 
 				path.RemoveAt(path.Count-1); 
 
 			path.Reverse();

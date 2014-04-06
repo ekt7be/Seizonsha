@@ -1716,6 +1716,18 @@
     <Content Include="Content\maps\map5.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Sprites\skill_icons\fireball-red-1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sprites\skill_icons\heal-jade-1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sprites\skill_icons\enchant-blue-3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sprites\skill_icons\pistol-gun.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Font.xnb">
@@ -1724,6 +1736,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="obj\x86\Debug\TempPE\" />
+    <Folder Include="Content\Sprites\skill_icons\" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">

@@ -383,7 +383,58 @@ namespace GameName1
 				"R2(4 key): " + this.getSkill(Static.PLAYER_R2_SKILL_INDEX).getName() + "\n" +
                 "P:  Pause/Quit Menu (temp)" ;
 			spriteBatch.DrawString(game.getSpriteFont(), displaySkills, new Vector2(20, 100), Color.White);
-          
+
+
+			// skill bar 
+			for (int s = 0; s < skillSlots.Length; s++) {
+				Rectangle skillBox = new Rectangle(screenPortion.Width/2-400+(s*103), screenPortion.Height-100, 100, 100);
+
+				Skill skill = (Skill)skillSlots[s];
+				Texture2D icon = SkillTree.SkillTree.nodeTextures["Blank"]; 
+
+
+
+				if (SkillTree.SkillTree.nodeTextures.ContainsKey(skill.getName()))
+					icon = SkillTree.SkillTree.nodeTextures[skill.getName()];
+
+
+
+
+				if (!skill.Available()) {
+					if (skill.recharged < skill.rechargeTime) {
+						double coolDownPercentage = (double)skill.recharged/skill.rechargeTime; 
+
+						//System.Console.WriteLine(skill.recharged + " " + skill.rechargeTime + " " + (double)skill.recharged/skill.rechargeTime );
+
+						Rectangle cooldown = new Rectangle(screenPortion.Width/2-400+(s*103), screenPortion.Height-100, 100 , 100-(int)(100*coolDownPercentage));
+
+						spriteBatch.Draw(icon, skillBox, Color.White);
+
+						spriteBatch.Draw(Static.PIXEL_THIN, cooldown, new Color(Color.Black, 0.5f));
+
+
+
+						spriteBatch.DrawString(
+							game.getSpriteFont(), 
+							skill.rechargeTime-skill.recharged + "", 
+							new Vector2(screenPortion.Width/2-400+(s*103), screenPortion.Height-100),
+							Color.White
+						);
+					}
+					if (skill.manaCost > this.mana) 
+						spriteBatch.Draw(icon, skillBox, new Color(Color.RoyalBlue, 1f));
+	
+
+				}
+				else
+					spriteBatch.Draw(icon, skillBox, Color.White);
+
+
+
+
+
+			}
+				          
         }
 
 
@@ -410,6 +461,7 @@ namespace GameName1
             }
             //use skill
             skillSlots[skillIndex].Use();
+			//System.Console.WriteLine(skillSlots[skillIndex].getName() + " used!");
         }
 
         public void addEquipable(Equipable equip)

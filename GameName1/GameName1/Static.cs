@@ -37,11 +37,11 @@ namespace GameName1
 
         //player stuff
         public static readonly int PLAYER_INTERACTION_RANGE = 4;
-        public static readonly int PLAYER_HEIGHT = 45;
-        public static readonly int PLAYER_WIDTH = 45;
+		public static readonly int PLAYER_HEIGHT = 32*1;
+		public static readonly int PLAYER_WIDTH = 32*1;
 		public static readonly int PLAYER_MOVE_SPEED = 5;
         public static readonly int PLAYER_MAX_HEALTH = 100;
-        public static readonly int PLAYER_MAX_MANA = 100;
+		public static readonly int PLAYER_MAX_MANA = 100;
         public static readonly float PLAYER_START_MANA_REGEN = .08f;
 		public static readonly int PLAYER_L1_SKILL_INDEX = 0; 
         public static readonly int PLAYER_L2_SKILL_INDEX = 1;
@@ -60,7 +60,7 @@ namespace GameName1
 
 		public static readonly int BOSS_ENEMY_HEIGHT = 32*3;
 		public static readonly int BOSS_ENEMY_WIDTH = 32*3;
-		public static readonly float BOSS_ENEMY_SPEED = 8f;
+		public static readonly float BOSS_ENEMY_SPEED = 4f;
 
 
 
@@ -132,7 +132,7 @@ namespace GameName1
         public static readonly int FIRELANCE_DAMAGE = 25;
 
         //skilltree sprites
-        public static readonly int SKILL_TREE_NODE_ANY = 4;
+		public static readonly string SKILL_TREE_NODE_ANY = "Blank";
 
         //spritefont
         public static SpriteFont SPRITE_FONT = null;

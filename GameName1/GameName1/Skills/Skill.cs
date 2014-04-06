@@ -11,13 +11,13 @@ namespace GameName1.Skills
     {
         protected GameEntity user;
         protected Seizonsha game;
-        private int recharged;
+		public int recharged;
         private int casting;
-        protected int rechargeTime;
+		public int rechargeTime;
         protected int freezeTime;
         protected int castingTime;
         private bool waitingForCast;
-        private int manaCost;
+		public int manaCost;
         protected Vector2 bufferedVectorDirection;
         protected float bufferedDirection;
         
