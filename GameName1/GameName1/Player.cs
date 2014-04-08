@@ -404,7 +404,7 @@ namespace GameName1
 			spriteBatch.DrawString(Static.SPRITEFONT_Calibri10, displaySkills, new Vector2(20, 100), Color.White);
 
 			#region SKILL BAR
-			int iconSize = 100; 
+			int iconSize = 75; 
 
 			for (int s = 0; s < skillSlots.Length; s++) {
 				Rectangle skillBox = new Rectangle(screenPortion.Width/2-(iconSize*4)+(s*(iconSize+3)), screenPortion.Height-iconSize, iconSize, iconSize);
