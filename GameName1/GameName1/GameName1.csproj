@@ -1731,6 +1731,22 @@
     <Content Include="Content\Sprites\skill_icons\fire_lance.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="..\..\Font Maker\WindowsGame1\WindowsGame1\bin\x86\Debug\Content\Arial10.xnb">
+      <Link>Content\Fonts\Arial10.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Font Maker\WindowsGame1\WindowsGame1\bin\x86\Debug\Content\Calibri10.xnb">
+      <Link>Content\Fonts\Calibri10.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Font Maker\WindowsGame1\WindowsGame1\bin\x86\Debug\Content\Calibri12.xnb">
+      <Link>Content\Fonts\Calibri12.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Font Maker\WindowsGame1\WindowsGame1\bin\x86\Debug\Content\Calibri14.xnb">
+      <Link>Content\Fonts\Calibri14.xnb</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Font.xnb">
@@ -1740,6 +1756,7 @@
   <ItemGroup>
     <Folder Include="obj\x86\Debug\TempPE\" />
     <Folder Include="Content\Sprites\skill_icons\" />
+    <Folder Include="Content\Fonts\" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">

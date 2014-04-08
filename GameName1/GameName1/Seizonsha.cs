@@ -332,8 +332,18 @@ namespace GameName1
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
+
             spriteFont = Content.Load<SpriteFont>("Font");
             Static.SPRITE_FONT = spriteFont;
+			SpriteFont Arial10 = Content.Load<SpriteFont>("Fonts/Arial10");
+			Static.SPRITEFONT_Arial10 = Arial10; 
+			SpriteFont Calibri10 = Content.Load<SpriteFont>("Fonts/Calibri10");
+			Static.SPRITEFONT_Calibri10 = Calibri10;
+			SpriteFont Calibri12 = Content.Load<SpriteFont>("Fonts/Calibri12");
+			Static.SPRITEFONT_Calibri12 = Calibri12;
+			SpriteFont Calibri14 = Content.Load<SpriteFont>("Fonts/Calibri14");
+			Static.SPRITEFONT_Calibri14 = Calibri14;
+
             Static.PIXEL_THIN = new Texture2D(GraphicsDevice, 1, 1);
             Static.PIXEL_THIN.SetData(new[] { Color.White });
             Static.PIXEL_THICK = new Texture2D(GraphicsDevice, 3, 3);

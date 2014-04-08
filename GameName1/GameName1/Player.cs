@@ -375,21 +375,21 @@ namespace GameName1
             
 			// draw HP text
 			spriteBatch.DrawString(
-				game.getSpriteFont(), 
+				Static.SPRITEFONT_Calibri14, 
 				"HP : " + this.health + "/" + this.maxHealth, 
 				new Vector2(20, 20), 
 				Color.White
 			);
 			// draw Mana text
 			spriteBatch.DrawString(
-				game.getSpriteFont(), 
+				Static.SPRITEFONT_Calibri14, 
 				"Mana : " + (int)this.mana + "/" + this.maxMana, 
 				new Vector2(20, 20+(barHeight)), 
 				Color.White
 			);
 			// draw XP text
 			spriteBatch.DrawString(
-				game.getSpriteFont(), 
+				Static.SPRITEFONT_Calibri14, 
 				"XP : " + this.xp, 
 				new Vector2(20, 20+(barHeight*2)), 
 				Color.Black
@@ -401,7 +401,7 @@ namespace GameName1
 				"R1(3 key): " + this.getSkill(Static.PLAYER_R1_SKILL_INDEX).getName() + "\n" +
 				"R2(4 key): " + this.getSkill(Static.PLAYER_R2_SKILL_INDEX).getName() + "\n" +
                 "P:  Pause/Quit Menu (temp)" ;
-			spriteBatch.DrawString(game.getSpriteFont(), displaySkills, new Vector2(20, 100), Color.White);
+			spriteBatch.DrawString(Static.SPRITEFONT_Calibri10, displaySkills, new Vector2(20, 100), Color.White);
 
 			#region SKILL BAR
 			int iconSize = 100; 
@@ -585,17 +585,18 @@ namespace GameName1
 				return; 
 			}
 
-			if (!selectingSkill) {
-				selectingSkill = true; 
-				skillbarIndex = 0; 
-			}
-			else {
-				selectingSkill = false; 
-			}
+			selectingSkill = false; 
 		}
 
 		public void UpArrow()
 		{
+
+			if (!selectingSkill) {
+				selectingSkill = true; 
+				skillbarIndex = 0; 
+				return;
+			}
+
 			if (selectingSkill) {
 				selectingSkill2 = true; 
 				skillbarIndex2 = 0;

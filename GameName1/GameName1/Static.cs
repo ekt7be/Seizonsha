@@ -136,6 +136,14 @@ namespace GameName1
 
         //spritefont
         public static SpriteFont SPRITE_FONT = null;
+		public static SpriteFont SPRITEFONT_Arial10 = null;
+		public static SpriteFont SPRITEFONT_Calibri10 = null;
+		public static SpriteFont SPRITEFONT_Calibri12 = null;
+		public static SpriteFont SPRITEFONT_Calibri14 = null;
+
+
+
+
 
         //static pixel for drawing rectangles
         public static Texture2D PIXEL_THIN = null;
