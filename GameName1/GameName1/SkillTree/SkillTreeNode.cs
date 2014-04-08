@@ -8,10 +8,10 @@ using System.Text;
 
 namespace GameName1.SkillTree
 {
-    class SkillTreeNode
+	public class SkillTreeNode
     {
 
-        private SkillTree skilltree; 
+		public SkillTree skilltree; 
         public SkillTreeNode leftNode;
         public int leftWeight;
         public SkillTreeNode rightNode;
@@ -21,7 +21,7 @@ namespace GameName1.SkillTree
         public SkillTreeNode topNode;
         public int topWeight;
         private Rectangle bounds;
-        private Unlockable unlockable;
+		public Unlockable unlockable;	// the skill
         private Texture2D sprite;
         private int x; //offset from origin
         private int y;

@@ -21,7 +21,7 @@ namespace GameName1
         private bool dead;
         private Equipable[] skillSlots;
         private List<Equipable> inventory;
-        private SkillTree.SkillTree skilltree;
+		public SkillTree.SkillTree skilltree;
         public float manaRegen;
         private float mana;
         public float maxMana;
@@ -30,6 +30,8 @@ namespace GameName1
         private bool skilltreescreen;
 
         private Interactable currentInteractable;
+
+		List<Skill> unlockedSkills = new List<Skill>(); 
 
         private static float elapsed;
         private static float swordElapsed;
@@ -45,9 +47,15 @@ namespace GameName1
         private static readonly int WALK_ANIMATION_FRAMES = 9;
         private static readonly int SLASH_ANIMATION_FRAMES = 6;
 
+		public int skillbarIndex = 0;
+		public int skillbarIndex2 = 0; 
+		public Rectangle highlightRect; 
+		bool selectingSkill, selectingSkill2; 
+		Rectangle viewportBounds; 
 
 		public Camera camera;
 
+		List<Skill> reducedUnlockedSkills = new List<Skill>(); 
 
         public override void Update(GameTime gameTime)
         {
@@ -161,6 +169,14 @@ namespace GameName1
             Equip(new Fireball(game, this, 40, 30, 10), Static.PLAYER_R2_SKILL_INDEX);
             Equip(new HealingTouch(game, this, -50, 60), Static.PLAYER_L2_SKILL_INDEX);
 
+			for (int s = 0; s < skillSlots.Length; s++) {
+				Skill skill = (Skill)skillSlots[s];
+	
+				if (!unlockedSkills.Contains(skill)) 
+					unlockedSkills.Add(skill); 
+			}
+
+
             this.maxMana = Static.PLAYER_MAX_MANA;
             this.mana = maxMana;
 
@@ -175,6 +191,9 @@ namespace GameName1
             base.scale = 1.0f;
 
             this.rotateToAngle(0f); //sets correct animation
+
+
+
 
 
 
@@ -312,7 +331,7 @@ namespace GameName1
             //and the dimensions of their portion of the screen to draw their screen.
             //Interface will be drawn on top along with any menus including skill tree
 
-
+			this.viewportBounds = screenPortion; 
 
             if (currentInteractable != null)
             {
@@ -384,18 +403,19 @@ namespace GameName1
                 "P:  Pause/Quit Menu (temp)" ;
 			spriteBatch.DrawString(game.getSpriteFont(), displaySkills, new Vector2(20, 100), Color.White);
 
-			// skill bar 
+			#region SKILL BAR
+			int iconSize = 100; 
+
 			for (int s = 0; s < skillSlots.Length; s++) {
-				Rectangle skillBox = new Rectangle(screenPortion.Width/2-400+(s*103), screenPortion.Height-100, 100, 100);
+				Rectangle skillBox = new Rectangle(screenPortion.Width/2-(iconSize*4)+(s*(iconSize+3)), screenPortion.Height-iconSize, iconSize, iconSize);
 
 				Skill skill = (Skill)skillSlots[s];
 				Texture2D icon = SkillTree.SkillTree.nodeTextures["Blank"]; 
 
-				if (SkillTree.SkillTree.nodeTextures.ContainsKey(skill.getName()))
+				if (SkillTree.SkillTree.nodeTextures.ContainsKey(skill.getName())) {
 					icon = SkillTree.SkillTree.nodeTextures[skill.getName()];
-
-
-
+				}
+					
 				spriteBatch.Draw(icon, skillBox, Color.White);
 
 				if (!skill.Available()) {
@@ -404,33 +424,66 @@ namespace GameName1
 
 						//System.Console.WriteLine(skill.recharged + " " + skill.rechargeTime + " " + (double)skill.recharged/skill.rechargeTime );
 
-						Rectangle cooldown = new Rectangle(screenPortion.Width/2-400+(s*103), screenPortion.Height-100, 100 , 100-(int)(100*coolDownPercentage));
+						Rectangle cooldown = new Rectangle(screenPortion.Width/2-(iconSize*4)+(s*(iconSize+3)), screenPortion.Height-iconSize, iconSize , iconSize-(int)(iconSize*coolDownPercentage));
 
 						//spriteBatch.Draw(icon, skillBox, Color.White);
 
 						spriteBatch.Draw(Static.PIXEL_THIN, cooldown, new Color(Color.Black, 0.5f));
 
-
-
 						spriteBatch.DrawString(
 							game.getSpriteFont(), 
 							skill.rechargeTime-skill.recharged + "", 
-							new Vector2(screenPortion.Width/2-400+(s*103), screenPortion.Height-100),
+							new Vector2(screenPortion.Width/2-(iconSize*4)+(s*(iconSize+3)), screenPortion.Height-iconSize),
 							Color.White
 						);
 					}
 					if (skill.manaCost > this.mana) 
 						spriteBatch.Draw(Static.PIXEL_THIN, skillBox, new Color(Color.DarkBlue, 0.10f));
-	
+
+
+				}
+
+				foreach (Skill sk in skilltree.allUnlockedSkills()) 
+					if (!unlockedSkills.Contains(sk))
+						unlockedSkills.Add(sk); 
+				}
+
+
+				if (selectingSkill) {
+					highlightRect = new Rectangle(viewportBounds.Width/2-(iconSize*4)+(skillbarIndex*(iconSize+3)), viewportBounds.Height-iconSize, iconSize, iconSize);
+
+					spriteBatch.Draw(Static.PIXEL_THIN, highlightRect, new Color(Color.DarkOrchid, 0.1f));
+
+					if (selectingSkill2 && unlockedSkills.Count > 0) {
+		
+					int j = 0; 
+
+						foreach (Skill unlockedSkill in unlockedSkills) {
+
+						if (unlockedSkill != skillSlots[skillbarIndex]) {
+
+							if (!reducedUnlockedSkills.Contains(unlockedSkill))
+								reducedUnlockedSkills.Add(unlockedSkill); 
+								//System.Console.WriteLine(unlockedSkill.getName()); 
+
+							Rectangle unlockedSkillRect = new Rectangle(viewportBounds.Width/2-(iconSize*4)+(skillbarIndex*(iconSize+3) + (j*(iconSize/2)) + (j*3)), viewportBounds.Height-iconSize-(iconSize/2+3), iconSize/2, iconSize/2);
+								spriteBatch.Draw(SkillTree.SkillTree.nodeTextures[unlockedSkill.getName()], unlockedSkillRect, Color.White);
+								j++; 
+						}
+					
+					}
+
+					//System.Console.WriteLine(+ skillbarIndex + "." + skillbarIndex2); 
+
+
+					Rectangle unlockedSkillRect2 = new Rectangle(viewportBounds.Width/2-(iconSize*4)+(skillbarIndex *(iconSize+3) + (skillbarIndex2*(iconSize/2)) + (skillbarIndex2*3)), viewportBounds.Height-iconSize-(iconSize/2+3), iconSize/2, iconSize/2);
+					spriteBatch.Draw(Static.PIXEL_THIN, unlockedSkillRect2, new Color(Color.DarkOrchid, 0.1f));
 
 				}
 	
-
-
-
-
-
 			}
+			#endregion
+
 				          
         }
 
@@ -479,8 +532,6 @@ namespace GameName1
             //equip new skill
             skillSlots[skillIndex] = equip;
             equip.OnEquip();
-
-
         }
 
         public void incXP(int amount)
@@ -527,6 +578,62 @@ namespace GameName1
             skilltreescreen = !skilltreescreen;
         }
 
+		public void DownArrow()
+		{
+			if (selectingSkill2) {
+				selectingSkill2 = false; 
+				return; 
+			}
+
+			if (!selectingSkill) {
+				selectingSkill = true; 
+				skillbarIndex = 0; 
+			}
+			else {
+				selectingSkill = false; 
+			}
+		}
+
+		public void UpArrow()
+		{
+			if (selectingSkill) {
+				selectingSkill2 = true; 
+				skillbarIndex2 = 0;
+			}
+		}
+
+		public void RightArrow()
+		{
+			if (selectingSkill2) {
+				if (skillbarIndex2 < unlockedSkills.Count-1-1)
+					skillbarIndex2++;
+				else
+					skillbarIndex2 = 0;
+				return; 
+			}
+
+			if (skillbarIndex < skillSlots.Length-1) 
+				skillbarIndex++; 
+			else 
+				skillbarIndex = 0; 
+		}
+
+		public void LeftArrow()
+		{
+			if (selectingSkill2) {
+				if (skillbarIndex2 > 0)
+					skillbarIndex2--;
+				else
+					skillbarIndex2 = unlockedSkills.Count-1-1;
+				return; 
+			}
+
+			if (skillbarIndex > 0) 
+				skillbarIndex--; 
+			else 
+				skillbarIndex = skillSlots.Length-1; 
+		}
+			
 		public void LeftClick()
 		{
             if (SkillTreeOpen())
@@ -538,12 +645,26 @@ namespace GameName1
 
         public void AButton()
         {
+			/*
+			if (selectingSkill) {
+				selectingSkill = false; 
+				return; 
+			}
+			*/
+
+			if (selectingSkill2) {
+				skillSlots[skillbarIndex] = reducedUnlockedSkills[skillbarIndex2]; 
+				reducedUnlockedSkills.Clear();
+				selectingSkill2 = false; 
+				skillbarIndex2 = 0; 
+				return;
+			}
+
             if (SkillTreeOpen())
             {
                 skilltree.Unlock();
             }
-
-
+				
             if (currentInteractable != null)
             {
                 if (currentInteractable.Available(this)){

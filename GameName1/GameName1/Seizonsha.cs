@@ -51,6 +51,9 @@ namespace GameName1
 
 		bool waveCleared; 
 
+		private KeyboardState oldState;
+
+
 
         public static Dictionary<int, Texture2D> spriteMappings = new Dictionary<int, Texture2D>();
 
@@ -137,13 +140,13 @@ namespace GameName1
             Texture2D bullet = Content.Load<Texture2D>("Sprites/bulletsprite");
             Texture2D sword = Content.Load<Texture2D>("Sprites/swordspritesheetfull");
 
-			// add icons to skills 
+			#region ADD SKILL ICONS (remember to add in SkillTree.cs too)
 			Texture2D nodeRect = Content.Load<Texture2D>("Sprites/SkillNode");
 			Texture2D fireballicon = Content.Load<Texture2D>("Sprites/skill_icons/fireball-red-1");
 			Texture2D healingtouchicon = Content.Load<Texture2D>("Sprites/skill_icons/heal-jade-1");
 			Texture2D swordicon = Content.Load<Texture2D>("Sprites/skill_icons/enchant-blue-3");
 			Texture2D gunicon = Content.Load<Texture2D>("Sprites/skill_icons/pistol-gun");
-
+			Texture2D firelanceicon = Content.Load<Texture2D>("Sprites/skill_icons/fire_lance");
 
 
 			SkillTree.SkillTree.nodeTextures.Add("Blank", nodeRect);
@@ -151,6 +154,8 @@ namespace GameName1
 			SkillTree.SkillTree.nodeTextures.Add("Healing Touch", healingtouchicon);
 			SkillTree.SkillTree.nodeTextures.Add("Sword", swordicon);
 			SkillTree.SkillTree.nodeTextures.Add("Gun", gunicon);
+			SkillTree.SkillTree.nodeTextures.Add("FireLance", firelanceicon);
+			#endregion
 
 
 
@@ -652,7 +657,7 @@ namespace GameName1
                 {
                     player.AButton();
                 }
-
+					
                 if (GamePad.GetState(player.playerIndex).ThumbSticks.Left.Y > .5 || Keyboard.GetState().IsKeyDown(Keys.W))
                 {
                     player.UpButton();
@@ -694,6 +699,37 @@ namespace GameName1
                 {
                     player.R2Button();
                 }
+
+				if (oldState.IsKeyUp(Keys.Down) && Keyboard.GetState().IsKeyDown(Keys.Down))
+				{
+					player.DownArrow();
+				}
+				if (oldState.IsKeyUp(Keys.Up) && Keyboard.GetState().IsKeyDown(Keys.Up))
+				{
+					player.UpArrow();
+				}
+
+				if (oldState.IsKeyUp(Keys.F) && Keyboard.GetState().IsKeyDown(Keys.F))
+				{
+					//player.F(); 
+				}
+
+				if (oldState.IsKeyUp(Keys.G) && Keyboard.GetState().IsKeyDown(Keys.G))
+				{
+					//player.G(); 
+				}
+
+				if (oldState.IsKeyUp(Keys.Right) && Keyboard.GetState().IsKeyDown(Keys.Right))
+				{
+					player.RightArrow(); 
+				}
+				if (oldState.IsKeyUp(Keys.Left) && Keyboard.GetState().IsKeyDown(Keys.Left))
+				{
+					player.LeftArrow(); 
+				}
+
+
+				oldState = Keyboard.GetState();
 
 
 

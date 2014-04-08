@@ -11,14 +11,13 @@ namespace GameName1.SkillTree
 {
     public class SkillTree
     {
-        private List<SkillTreeNode> nodes;
+		public List<SkillTreeNode> nodes;
         private SkillTreeNode currNode;
         private Player player;
         private Seizonsha game;
         private Texture2D backgroundTexture;
         private Vector2 cameraOffset;
 		public static Dictionary<string, Texture2D> nodeTextures = new Dictionary<string, Texture2D>();
-
 
         private int movementRecharge;
 
@@ -33,6 +32,21 @@ namespace GameName1.SkillTree
             this.movementRecharge = Static.SKILL_TREE_MOVEMENT_RECHARGE;
             cameraOffset = new Vector2(0, 0);
         }
+
+		public List<Skill> allUnlockedSkills() {
+			List<Skill> allUnlockedSkills = new List<Skill>(); 
+
+			foreach(SkillTreeNode skn in this.nodes) {
+				if (skn.isUnlocked() && (!(skn is BlankNode))) {
+					allUnlockedSkills.Add((Skill)skn.unlockable); 
+					//unlockedSkills.Add((Skill)sk.unlockable); 
+					//System.Console.WriteLine(((Skill)skn.unlockable).getName()); 
+				}
+			}
+
+			return allUnlockedSkills;
+		}
+
 
         public void populateNodes()
         {
@@ -59,7 +73,7 @@ namespace GameName1.SkillTree
             
 
             //magic path
-			SkillTreeNode FireballNode = new SkillTreeNode(this, startNode.getX(), startNode.getY() + Static.SKILL_TREE_NODE_HEIGHT*2, nodeTextures["Fireball"], new Fireball(game, player, 50, 20, 100), 500);
+			SkillTreeNode FireballNode = new SkillTreeNode(this, startNode.getX(), startNode.getY() + Static.SKILL_TREE_NODE_HEIGHT*2, nodeTextures["Fireball"], new Fireball(game, player, 50, 20, 100), 0); // 500
             nodes.Add(FireballNode);
             startNode.attachBottom(FireballNode, Static.SKILL_TREE_WEIGHT_LOCKED);
 
@@ -67,7 +81,7 @@ namespace GameName1.SkillTree
             nodes.Add(ManaRegenPlusNode);
             FireballNode.attachLeft(ManaRegenPlusNode, Static.SKILL_TREE_WEIGHT_LOCKED);
 
-            SkillTreeNode FirelanceNode = new SkillTreeNode(this, FireballNode.getX() + Static.SKILL_TREE_NODE_WIDTH * 2, FireballNode.getY() + Static.SKILL_TREE_NODE_WIDTH * 2, nodeTextures[Static.SKILL_TREE_NODE_ANY], new FireLance(game,player,Static.FIRELANCE_DAMAGE, 30), 1500);
+			SkillTreeNode FirelanceNode = new SkillTreeNode(this, FireballNode.getX() + Static.SKILL_TREE_NODE_WIDTH * 2, FireballNode.getY() + Static.SKILL_TREE_NODE_WIDTH * 2, nodeTextures["FireLance"], new FireLance(game,player,Static.FIRELANCE_DAMAGE, 30), 0); //1500
             nodes.Add(FirelanceNode);
             FireballNode.attachRight(FirelanceNode, Static.SKILL_TREE_WEIGHT_LOCKED);
 
@@ -156,6 +170,7 @@ namespace GameName1.SkillTree
                 else if (node.isUnlocked())
                 {
 					tint = Color.Pink;
+
                 }
                 else
                 {

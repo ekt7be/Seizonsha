@@ -14,6 +14,9 @@ Global
 		{47E7D242-3755-4914-9AA0-691201C0469E}.Release|x86.ActiveCfg = Release|x86
 		{47E7D242-3755-4914-9AA0-691201C0469E}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = GameName1\GameName1.csproj
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
