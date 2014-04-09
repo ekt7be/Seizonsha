@@ -72,8 +72,7 @@ namespace GameName1
         {
             numPlayersMenuEntry.Text = "Number of Players: " + (currentNumPlayers+1);
             Static.NUM_PLAYERS = currentNumPlayers + 1;
-            languageMenuEntry.Text = "Language: " + languages[currentLanguage];
-            
+            languageMenuEntry.Text = "Language: " + languages[currentLanguage];   
         }
 
 
@@ -87,14 +86,7 @@ namespace GameName1
         /// </summary>
         void NumPlayersMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
-/*            currentNumPlayers++;
-
-            if (currentNumPlayers > 4)
-                currentNumPlayers = 0;
-            */
-
             currentNumPlayers = (currentNumPlayers + 1) %  players.Length;
-
             SetMenuEntryText();
         }
 

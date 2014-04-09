@@ -30,21 +30,30 @@ namespace GameName1
         {
             // Create our menu entries.
             MenuEntry resumeGameMenuEntry = new MenuEntry("Resume Game");
+            MenuEntry playGameMenuEntry = new MenuEntry("Restart ");
             MenuEntry quitGameMenuEntry = new MenuEntry("Quit Game");
             
             // Hook up menu event handlers.
             resumeGameMenuEntry.Selected += OnCancel;
+            playGameMenuEntry.Selected += PlayGameMenuEntrySelected;
             quitGameMenuEntry.Selected += QuitGameMenuEntrySelected;
 
             // Add entries to the menu.
             MenuEntries.Add(resumeGameMenuEntry);
+            MenuEntries.Add(playGameMenuEntry);
             MenuEntries.Add(quitGameMenuEntry);
         }
         #endregion
 
         #region Handle Input
 
-
+        void PlayGameMenuEntrySelected(object sender, PlayerIndexEventArgs e)
+        {
+            LoadingScreen.Load(ScreenManager, true, e.PlayerIndex,
+                               new GameplayScreen());
+            game.initializeVariables();
+            game.spawnInitialEntities();
+        }
         /// <summary>
         /// Event handler for when the Quit Game menu entry is selected.
         /// </summary>
