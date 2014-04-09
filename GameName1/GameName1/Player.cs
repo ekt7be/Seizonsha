@@ -123,6 +123,12 @@ namespace GameName1
                 }
             }
 
+            int dist = 50;
+            int width = 30;
+            int height = 30;
+            Rectangle rBounds = new Rectangle((int)((float)this.getCenterX() + dist*this.vectorDirection.X - width/2), (int)((float)this.getCenterY() + dist*this.vectorDirection.Y - height/2), width, height);
+
+            spriteBatch.Draw(game.getSpriteTexture(Static.SPRITE_RETICLE), rBounds, Color.Red);
             //draw armor and weapons equipped etc
 
             
@@ -194,7 +200,7 @@ namespace GameName1
             Equip(fireball, Static.PLAYER_R2_SKILL_INDEX);
             addEquipable(fireball);
 
-            HealingTouch healingtouch = new HealingTouch(game, this, -50, 60);
+            HealingTouch healingtouch = new HealingTouch(game, this, 50, 60);
             Equip(healingtouch, Static.PLAYER_L2_SKILL_INDEX);
             addEquipable(healingtouch);
 
@@ -449,6 +455,13 @@ namespace GameName1
             spriteBatch.DrawString(Static.SPRITEFONT_Calibri10, displaySkills, new Vector2(20, 100), Color.White);
              * */
 
+            if (game.waveCleared)
+                spriteBatch.DrawString(Static.SPRITE_FONT, Static.SECONDS_BETWEEN_WAVE - (int)game.sinceLastWaveCleared / 1000 +
+                " seconds until next wave...\n" +
+                "press space(start) to open skill tree! \n" +
+                "use arrow keys (DPad) to equip skills and weapons",
+                new Vector2(screenPortion.Width - 390, screenPortion.Height - 150), Color.White); 
+
             #region SKILL BAR
 			int iconSize = screenPortion.Width/18;
 
@@ -491,6 +504,9 @@ namespace GameName1
                         //spriteBatch.Draw(icon, skillBox, Color.White);
 
                         spriteBatch.Draw(Static.PIXEL_THIN, cooldown, new Color(Color.Black, 0.5f));
+
+
+
 
                         //to draw cooldown time
                         /*

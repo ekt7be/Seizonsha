@@ -124,6 +124,7 @@ namespace GameName1
         public static readonly int SPRITE_BULLET = 9;
         public static readonly int SPRITE_HEAL = 10;
         public static readonly int SPRITE_SWORD = 11;
+        public static readonly int SPRITE_RETICLE = 12;
 
         //Skilltree
         public static readonly int SKILL_TREE_WEIGHT_UNLOCKED = 1;

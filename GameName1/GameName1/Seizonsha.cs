@@ -40,7 +40,7 @@ namespace GameName1
 		FPSCounterComponent fps;
 		private bool showFPS = false; 
 
-		private float sinceLastWaveCleared;
+		public float sinceLastWaveCleared;
 
 	
         // By preloading any assets used by UI rendering, we avoid framerate glitches
@@ -50,7 +50,7 @@ namespace GameName1
             "gradient",
         };
 
-		bool waveCleared; 
+		public bool waveCleared; 
 
 
 
@@ -141,6 +141,8 @@ namespace GameName1
             Texture2D heal = Content.Load<Texture2D>("Sprites/healsprite");
             Texture2D bullet = Content.Load<Texture2D>("Sprites/bulletsprite");
             Texture2D sword = Content.Load<Texture2D>("Sprites/swordspritesheetfull3");
+            Texture2D reticle = Content.Load<Texture2D>("Sprites/reticle");
+
 
 			#region ADD SKILL ICONS (remember to add in SkillTree.cs too)
 			Texture2D nodeRect = Content.Load<Texture2D>("Sprites/SkillNode");
@@ -178,6 +180,7 @@ namespace GameName1
             spriteMappings.Add(Static.SPRITE_HEAL, heal);
             spriteMappings.Add(Static.SPRITE_BULLET, bullet);
             spriteMappings.Add(Static.SPRITE_SWORD, sword);
+            spriteMappings.Add(Static.SPRITE_RETICLE, reticle);
 
 
 
@@ -639,8 +642,10 @@ namespace GameName1
 			if (showFPS)
 				fps.Draw(gameTime); 
 
+            /*
 			spriteBatch.Begin();
 
+           
 				if (waveCleared)
 					spriteBatch.DrawString(Static.SPRITE_FONT, Static.SECONDS_BETWEEN_WAVE-(int)sinceLastWaveCleared/1000+
 					" seconds until next wave...\n" +
@@ -648,6 +653,7 @@ namespace GameName1
                     "use arrow keys (DPad) to equip skills and weapons",
 					new Vector2(defaultView.Width-390, defaultView.Height-150), Color.White); 
 			spriteBatch.End();
+             * */
 
         }
 
