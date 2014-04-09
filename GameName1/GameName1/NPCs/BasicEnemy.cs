@@ -79,7 +79,7 @@ namespace GameName1.NPCs
 
 
 			// attack with sword if in range
-			if (closestDistance < this.width*1.7)
+			if (closestDistance < this.width*1.2)
 				sword.Use();
 
             base.AI(gameTime);

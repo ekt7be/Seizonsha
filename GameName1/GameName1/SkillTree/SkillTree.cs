@@ -187,11 +187,12 @@ namespace GameName1.SkillTree
                 spriteBatch.DrawString(game.getSpriteFont(),currNode.getEquipable().getDescription(), new Vector2(30, bounds.Height - 300), Color.White);
             }
 
-
+            /*
             if (currNode.getEquipable() != null && currNode.isUnlocked())
             {
                 spriteBatch.DrawString(game.getSpriteFont(), "Press L1(1), L2(2), R1(3), or R2(4) to Equip", new Vector2(30, bounds.Height - 100), Color.White);
             }
+             * */
 
             if (!currNode.isUnlocked() && currNode.Available(player))
             {

@@ -194,7 +194,7 @@ namespace GameName1
             Equip(fireball, Static.PLAYER_R2_SKILL_INDEX);
             addEquipable(fireball);
 
-            HealingTouch healingtouch = new HealingTouch(game, this, -50, 60);
+            HealingTouch healingtouch = new HealingTouch(game, this, 50, 60);
             Equip(healingtouch, Static.PLAYER_L2_SKILL_INDEX);
             addEquipable(healingtouch);
 
@@ -643,6 +643,11 @@ namespace GameName1
 
 		public void DownArrow()
 		{
+
+            if (SkillTreeOpen())
+            {
+                return;
+            }
 			if (selectingSkill2) {
 				skillSlots[skillbarIndex] = reducedUnlockedSkills[skillbarIndex2]; 
 				reducedUnlockedSkills.Clear();
@@ -664,6 +669,11 @@ namespace GameName1
 		public void UpArrow()
 		{
 
+            if (SkillTreeOpen())
+            {
+                return;
+            }
+
 			if (!selectingSkill) {
 				selectingSkill = true; 
 				skillbarIndex = 0; 
@@ -678,6 +688,11 @@ namespace GameName1
 
 		public void RightArrow()
 		{
+            if (SkillTreeOpen())
+            {
+                return;
+            }
+
 			if (selectingSkill2) {
 				if (skillbarIndex2 < inventory.Count-1-1)
 					skillbarIndex2++;
@@ -694,6 +709,10 @@ namespace GameName1
 
 		public void LeftArrow()
 		{
+            if (SkillTreeOpen())
+            {
+                return;
+            }
 			if (selectingSkill2) {
 				if (skillbarIndex2 > 0)
 					skillbarIndex2--;

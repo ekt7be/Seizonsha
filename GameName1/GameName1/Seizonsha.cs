@@ -470,7 +470,7 @@ namespace GameName1
             }
 			else if (waveCleared) {
                
-				if (sinceLastWaveCleared >= 20000) {
+				if (sinceLastWaveCleared >= Static.SECONDS_BETWEEN_WAVE* 1000) {
 					WaveBegin();
 				}
 			}
@@ -641,10 +641,11 @@ namespace GameName1
 			spriteBatch.Begin();
 
 				if (waveCleared)
-					spriteBatch.DrawString(Static.SPRITE_FONT, 20-(int)sinceLastWaveCleared/1000+
+					spriteBatch.DrawString(Static.SPRITE_FONT, Static.SECONDS_BETWEEN_WAVE-(int)sinceLastWaveCleared/1000+
 					" seconds until next wave...\n" +
-					"press space(start) to open skill tree!",
-					new Vector2(defaultView.Width-390, defaultView.Height-50), Color.White); 
+					"press space(start) to open skill tree! \n" +
+                    "use arrow keys (DPad) to equip skills and weapons",
+					new Vector2(defaultView.Width-390, defaultView.Height-150), Color.White); 
 			spriteBatch.End();
 
         }
