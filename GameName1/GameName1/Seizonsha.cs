@@ -40,7 +40,7 @@ namespace GameName1
 		FPSCounterComponent fps;
 		private bool showFPS = false; 
 
-		private float sinceLastWaveCleared;
+		public float sinceLastWaveCleared;
 
 	
         // By preloading any assets used by UI rendering, we avoid framerate glitches
@@ -50,7 +50,7 @@ namespace GameName1
             "gradient",
         };
 
-		bool waveCleared; 
+		public bool waveCleared; 
 
 
 
@@ -642,8 +642,10 @@ namespace GameName1
 			if (showFPS)
 				fps.Draw(gameTime); 
 
+            /*
 			spriteBatch.Begin();
 
+           
 				if (waveCleared)
 					spriteBatch.DrawString(Static.SPRITE_FONT, Static.SECONDS_BETWEEN_WAVE-(int)sinceLastWaveCleared/1000+
 					" seconds until next wave...\n" +
@@ -651,6 +653,7 @@ namespace GameName1
                     "use arrow keys (DPad) to equip skills and weapons",
 					new Vector2(defaultView.Width-390, defaultView.Height-150), Color.White); 
 			spriteBatch.End();
+             * */
 
         }
 
