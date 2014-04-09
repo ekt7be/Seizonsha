@@ -58,7 +58,7 @@ namespace GameName1.SkillTree
             currNode = startNode;
                 
             //fight path
-            SkillTreeNode goodSwordNode = new SkillTreeNode(this, startNode.getX()+Static.SKILL_TREE_NODE_WIDTH*2, startNode.getY(), nodeTextures[Static.SKILL_TREE_NODE_ANY], new Sword(game,player,60,20), 300);
+            SkillTreeNode goodSwordNode = new SkillTreeNode(this, startNode.getX()+Static.SKILL_TREE_NODE_WIDTH*2, startNode.getY(), nodeTextures[Static.SWORD_NAME], new Sword(game,player,60,20), 300);
             nodes.Add(goodSwordNode);
             startNode.attachRight(goodSwordNode, Static.SKILL_TREE_WEIGHT_LOCKED);
 
@@ -73,7 +73,7 @@ namespace GameName1.SkillTree
             
 
             //magic path
-			SkillTreeNode FireballNode = new SkillTreeNode(this, startNode.getX(), startNode.getY() + Static.SKILL_TREE_NODE_HEIGHT*2, nodeTextures["Fireball"], new Fireball(game, player, 50, 20, 100), 0); // 500
+			SkillTreeNode FireballNode = new SkillTreeNode(this, startNode.getX(), startNode.getY() + Static.SKILL_TREE_NODE_HEIGHT*2, nodeTextures[Static.FIREBALL_NAME], new Fireball(game, player, 50, 20, 100), 0); // 500
             nodes.Add(FireballNode);
             startNode.attachBottom(FireballNode, Static.SKILL_TREE_WEIGHT_LOCKED);
 
@@ -81,7 +81,7 @@ namespace GameName1.SkillTree
             nodes.Add(ManaRegenPlusNode);
             FireballNode.attachLeft(ManaRegenPlusNode, Static.SKILL_TREE_WEIGHT_LOCKED);
 
-			SkillTreeNode FirelanceNode = new SkillTreeNode(this, FireballNode.getX() + Static.SKILL_TREE_NODE_WIDTH * 2, FireballNode.getY() + Static.SKILL_TREE_NODE_WIDTH * 2, nodeTextures["FireLance"], new FireLance(game,player,Static.FIRELANCE_DAMAGE, 30), 0); //1500
+			SkillTreeNode FirelanceNode = new SkillTreeNode(this, FireballNode.getX() + Static.SKILL_TREE_NODE_WIDTH * 2, FireballNode.getY() + Static.SKILL_TREE_NODE_WIDTH * 2, nodeTextures[Static.FIRELANCE_NAME], new FireLance(game,player,Static.FIRELANCE_DAMAGE, 30), 0); //1500
             nodes.Add(FirelanceNode);
             FireballNode.attachRight(FirelanceNode, Static.SKILL_TREE_WEIGHT_LOCKED);
 
@@ -91,7 +91,7 @@ namespace GameName1.SkillTree
 
 
             //support
-			SkillTreeNode HealNode = new SkillTreeNode(this, startNode.getX()-Static.SKILL_TREE_NODE_WIDTH * 2, startNode.getY(), nodeTextures["Healing Touch"], new HealingTouch(game, player, 100, 12), 500);
+			SkillTreeNode HealNode = new SkillTreeNode(this, startNode.getX()-Static.SKILL_TREE_NODE_WIDTH * 2, startNode.getY(), nodeTextures[Static.HEALING_TOUCH_NAME], new HealingTouch(game, player, 100, 12), 500);
             nodes.Add(HealNode);
             startNode.attachLeft(HealNode, Static.SKILL_TREE_WEIGHT_LOCKED);
 

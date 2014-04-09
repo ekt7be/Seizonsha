@@ -10,19 +10,11 @@ namespace GameName1.Skills
     class HealingTouch : Skill, Unlockable
     {
         private int damage;
-        private int damageType;
 
         public HealingTouch(Seizonsha game, GameEntity user, int damage, int recharge_time) : base(game, user, 20,recharge_time, 30, 30)
         {
             this.damage = damage;
-            if (user.getTargetType() == Static.TARGET_TYPE_FRIENDLY)
-            {
-                damageType = Static.DAMAGE_TYPE_FRIENDLY;
-            }
-            if (user.getTargetType() == Static.TARGET_TYPE_ENEMY)
-            {
-                damageType = Static.DAMAGE_TYPE_ENEMY;
-            }
+
         }
 
         public override void OnUnequip()
@@ -41,7 +33,7 @@ namespace GameName1.Skills
 
         public override string getName()
         {
-            return "Healing Touch";
+            return Static.HEALING_TOUCH_NAME;
         }
 
         public void OnUnlock(Player player)

@@ -150,12 +150,14 @@ namespace GameName1
 			Texture2D firelanceicon = Content.Load<Texture2D>("Sprites/skill_icons/fire_lance");
 
 
-			SkillTree.SkillTree.nodeTextures.Add("Blank", nodeRect);
-			SkillTree.SkillTree.nodeTextures.Add("Fireball", fireballicon);
-			SkillTree.SkillTree.nodeTextures.Add("Healing Touch", healingtouchicon);
-			SkillTree.SkillTree.nodeTextures.Add("Sword", swordicon);
-			SkillTree.SkillTree.nodeTextures.Add("Gun", gunicon);
-			SkillTree.SkillTree.nodeTextures.Add("FireLance", firelanceicon);
+			SkillTree.SkillTree.nodeTextures.Add(Static.SKILL_TREE_NODE_ANY, nodeRect);
+			SkillTree.SkillTree.nodeTextures.Add(Static.FIREBALL_NAME, fireballicon);
+			SkillTree.SkillTree.nodeTextures.Add(Static.HEALING_TOUCH_NAME, healingtouchicon);
+			SkillTree.SkillTree.nodeTextures.Add(Static.SWORD_NAME, swordicon);
+			SkillTree.SkillTree.nodeTextures.Add(Static.GUN_NAME, gunicon);
+			SkillTree.SkillTree.nodeTextures.Add(Static.FIRELANCE_NAME, firelanceicon);
+
+
 			#endregion
 
 
@@ -954,6 +956,13 @@ namespace GameName1
             return false;
         }
 
+        public void affectArea(Skill skill, Rectangle bounds)
+        {
+            foreach (GameEntity entity in getEntitiesInBounds(bounds))
+            {
+                skill.affect(entity);
+            }
+        }
 
         public void damageArea(GameEntity user, Rectangle bounds, int amount, int damageType){ //damage not caused by an entity
             foreach (GameEntity entity in getEntitiesInBounds(bounds)){
@@ -1414,16 +1423,16 @@ namespace GameName1
 
         public bool ShouldDamage(int damageType, int targetType)
         {
-            return (targetType == Static.TARGET_TYPE_ENEMY && damageType == Static.TARGET_TYPE_FRIENDLY)
-                || (targetType == Static.TARGET_TYPE_FRIENDLY && damageType == Static.TARGET_TYPE_ENEMY)
+            return (targetType == Static.TARGET_TYPE_BAD && damageType == Static.TARGET_TYPE_GOOD)
+                || (targetType == Static.TARGET_TYPE_GOOD && damageType == Static.TARGET_TYPE_BAD)
                 || (targetType != Static.TARGET_TYPE_NOT_DAMAGEABLE && damageType == Static.DAMAGE_TYPE_ALL)
                 || (targetType == Static.TARGET_TYPE_ALL);
         }
 
         public bool ShouldHeal(int damageType, int targetType)
         {
-            return (targetType == Static.TARGET_TYPE_ENEMY && damageType == Static.TARGET_TYPE_ENEMY)
-                || (targetType == Static.TARGET_TYPE_FRIENDLY && damageType == Static.TARGET_TYPE_FRIENDLY)
+            return (targetType == Static.TARGET_TYPE_BAD && damageType == Static.TARGET_TYPE_BAD)
+                || (targetType == Static.TARGET_TYPE_GOOD && damageType == Static.TARGET_TYPE_GOOD)
                 || (targetType != Static.TARGET_TYPE_NOT_DAMAGEABLE && damageType == Static.DAMAGE_TYPE_ALL)
                 || (targetType == Static.TARGET_TYPE_ALL);
         }

@@ -12,7 +12,6 @@ namespace GameName1.Skills
     {
 
         private int damage;
-        private int damageType;
         private int duration;
         private int time;
         private TargetedAbility ability;
@@ -23,15 +22,6 @@ namespace GameName1.Skills
         {
 
             this.damage = damage;
-            this.damageType = Static.DAMAGE_TYPE_NO_DAMAGE;
-            if (user.getTargetType() == Static.TARGET_TYPE_FRIENDLY)
-            {
-                damageType = Static.DAMAGE_TYPE_FRIENDLY;
-            }
-            if (user.getTargetType() == Static.TARGET_TYPE_ENEMY)
-            {
-                damageType = Static.DAMAGE_TYPE_ENEMY;
-            }
             this.duration = duration;
             this.time = 0;
             this.timerStarted = false;
@@ -59,7 +49,7 @@ namespace GameName1.Skills
             int rangeY = 300;
             foreach (GameEntity entity in game.getEntitiesInBounds(new Rectangle(user.getCenterX() - rangeX/2, user.getCenterY() - rangeY/2, rangeX, rangeY)))
             {
-                if (entity.getTargetType() == Static.TARGET_TYPE_ENEMY)
+                if (entity.getTargetType() == Static.TARGET_TYPE_BAD)
                 {
                     enemy = entity;
                     break;
@@ -95,7 +85,7 @@ namespace GameName1.Skills
 
         public override string getName()
         {
-            return "Life Drain";
+            return Static.LIFE_DRAIN_NAME;
         }
 
         public override void affect(GameEntity affected)

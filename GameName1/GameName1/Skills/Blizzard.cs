@@ -12,7 +12,6 @@ namespace GameName1.Skills
     {
 
         private int damage;
-        private int damageType;
         private int duration;
         private int slowDuration;
 
@@ -21,15 +20,6 @@ namespace GameName1.Skills
             : base(game, user, 15, recharge_time, 5, 10)
         {
             this.damage = damage;
-            this.damageType = Static.DAMAGE_TYPE_NO_DAMAGE;
-            if (user.getTargetType() == Static.TARGET_TYPE_FRIENDLY)
-            {
-                damageType = Static.DAMAGE_TYPE_FRIENDLY;
-            }
-            if (user.getTargetType() == Static.TARGET_TYPE_ENEMY)
-            {
-                damageType = Static.DAMAGE_TYPE_ENEMY;
-            }
             this.duration = duration;
             this.slowDuration = slowDuration;
         }
@@ -72,7 +62,7 @@ namespace GameName1.Skills
             float dist = 100;
             Rectangle slashBounds = new Rectangle((int)(user.getCenterX() + this.bufferedVectorDirection.X * dist - 50), (int)(user.getCenterY() +this.bufferedVectorDirection.Y * dist - 50), 100, 100);
             //game.Spawn(new SwordSlash(game, user, Static.PIXEL_THIN, slashBounds, damage, damageType, 10, user.vectorDirection), slashBounds.Left, slashBounds.Top);
-            AOEStatus blizzard = new AOEStatus(game, user, Static.PIXEL_THIN, this, slashBounds, damage, damageType, this.duration);
+            AOEStatus blizzard = new AOEStatus(game, user, Static.PIXEL_THIN, this, slashBounds,this.duration);
             game.Spawn(blizzard, slashBounds.Left, slashBounds.Top);
         }
 

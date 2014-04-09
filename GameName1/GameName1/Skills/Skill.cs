@@ -21,6 +21,7 @@ namespace GameName1.Skills
 		public int manaCost;
         protected Vector2 bufferedVectorDirection;
         protected float bufferedDirection;
+        protected int damageType;
         
 
         public Skill(Seizonsha game, GameEntity user, int manaCost, int rechargeTime, int castingTime, int freezeTime)
@@ -34,6 +35,16 @@ namespace GameName1.Skills
             this.user = user;
             this.game = game;
             bufferedDirection = 0;
+
+            this.damageType = Static.DAMAGE_TYPE_NO_DAMAGE;
+            if (user.getTargetType() == Static.TARGET_TYPE_GOOD)
+            {
+                damageType = Static.DAMAGE_TYPE_GOOD;
+            }
+            if (user.getTargetType() == Static.TARGET_TYPE_BAD)
+            {
+                damageType = Static.DAMAGE_TYPE_BAD;
+            }
         }
 
         public virtual void Draw(SpriteBatch spriteBatch)

@@ -7,28 +7,18 @@ using System.Text;
 
 namespace GameName1.Skills
 {
-	class Gun : Skill, Unlockable
+	class Gun : Weapon
 	{
 
 
 		private int damage;
-        private int damageType;
 		private float bulletSpeed; 
 
 
-		public Gun(Seizonsha game, GameEntity user, int damage, int recharge_time, float bulletSpeed) : base(game, user, 0, recharge_time,0,0)
+		public Gun(Seizonsha game, GameEntity user, int damage, int recharge_time, int freezeTime, float bulletSpeed) : base(game, user,recharge_time, freezeTime)
 		{
 
 			this.damage = damage;
-            this.damageType = Static.DAMAGE_TYPE_NO_DAMAGE;
-            if (user.getTargetType() == Static.TARGET_TYPE_FRIENDLY)
-            {
-                damageType = Static.DAMAGE_TYPE_FRIENDLY;
-            }
-            if (user.getTargetType() == Static.TARGET_TYPE_ENEMY)
-            {
-                damageType = Static.DAMAGE_TYPE_ENEMY;
-            }
 			this.bulletSpeed = bulletSpeed; 
 		}
 
@@ -49,7 +39,7 @@ namespace GameName1.Skills
 
         public override void affect(GameEntity affected)
         {
-            throw new NotImplementedException();
+            //just damage from bullet collision
         }
 
 
@@ -60,14 +50,9 @@ namespace GameName1.Skills
 
 		public override string getName()
 		{
-			return "Gun";
+			return Static.GUN_NAME;
 		}
 
 
-
-        public void OnUnlock(Player player)
-        {
-            player.addEquipable(this);
-        }
     }
 }

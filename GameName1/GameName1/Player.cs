@@ -156,7 +156,7 @@ namespace GameName1
         {
         }
 
-		public Player(Seizonsha game, PlayerIndex playerIndex, Texture2D sprite, Camera camera) : base(game, sprite, Static.PLAYER_WIDTH, Static.PLAYER_HEIGHT, Static.TARGET_TYPE_FRIENDLY, Static.PLAYER_MAX_HEALTH)
+		public Player(Seizonsha game, PlayerIndex playerIndex, Texture2D sprite, Camera camera) : base(game, sprite, Static.PLAYER_WIDTH, Static.PLAYER_HEIGHT, Static.TARGET_TYPE_GOOD, Static.PLAYER_MAX_HEALTH)
         {
             this.cameraX = 0;
             this.cameraY = 0;
@@ -182,7 +182,7 @@ namespace GameName1
 
            // Equip(new Gun(game, this, 10, 30, 15), Static.PLAYER_L1_SKILL_INDEX);
 
-            Gun gun = new Gun(game, this, 10, 30, 15);
+            Gun gun = new Gun(game, this, 10, 30,0, 15f);
             Equip(gun, Static.PLAYER_L1_SKILL_INDEX);
             addEquipable(gun);
 
@@ -452,7 +452,7 @@ namespace GameName1
                 Rectangle skillBox = new Rectangle(screenPortion.Width / 2 + (s * (iconSize + 3)) - 2 *iconSize - 6, screenPortion.Height - iconSize, iconSize, iconSize);
 
                 Skill skill = (Skill)skillSlots[s];
-                Texture2D icon = SkillTree.SkillTree.nodeTextures["Blank"];
+                Texture2D icon = SkillTree.SkillTree.nodeTextures[Static.SKILL_TREE_NODE_ANY];
 
                 if (SkillTree.SkillTree.nodeTextures.ContainsKey(skill.getName()))
                 {
@@ -567,6 +567,20 @@ namespace GameName1
         {
             inventory.Add(equip);
         }
+
+        public void removeEquipable(Equipable equip)
+        {
+            foreach (Equipable skill in skillSlots)
+            {
+                if (skill == equip)
+                {
+                    skill.OnUnequip();
+                }
+            }
+            inventory.Remove(equip);
+
+        }
+
         public void Equip(Equipable equip, int skillIndex)
         {
 			if (skillIndex > 4 || skillIndex < 0)

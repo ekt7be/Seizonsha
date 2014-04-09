@@ -48,7 +48,7 @@ namespace GameName1.NPCs
 			sword.OnEquip();
 
 			//gun = new Gun(game, this, 30, 10, 10f);
-			gun = new Gun(game, this, 20, 25, 10f);
+			gun = new Gun(game, this, 20, 25, 0, 10f);
 
 			gun.OnEquip();
 		

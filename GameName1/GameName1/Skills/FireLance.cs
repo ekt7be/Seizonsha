@@ -12,22 +12,12 @@ namespace GameName1.Skills
     {
 
         private int damage;
-        private int damageType;
 
 
         public FireLance(Seizonsha game, GameEntity user, int damage, int recharge_time)
             : base(game, user, Static.FIRELANCE_COST, Static.FIRELANCE_RECHARGE, 5, 5)
         {
             this.damage = damage;
-            this.damageType = Static.DAMAGE_TYPE_NO_DAMAGE;
-            if (user.getTargetType() == Static.TARGET_TYPE_FRIENDLY)
-            {
-                damageType = Static.DAMAGE_TYPE_FRIENDLY;
-            }
-            if (user.getTargetType() == Static.TARGET_TYPE_ENEMY)
-            {
-                damageType = Static.DAMAGE_TYPE_ENEMY;
-            }
         }
 
 
@@ -39,7 +29,7 @@ namespace GameName1.Skills
 
         public override string getName()
         {
-            return "FireLance";
+            return Static.FIRELANCE_NAME;
         }
 
         public override void affect(GameEntity affected)

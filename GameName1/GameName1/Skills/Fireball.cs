@@ -11,29 +11,22 @@ namespace GameName1.Skills
     {
 
         private int damage;
-        private int damageType;
         private float bulletSpeed;
 
         public Fireball(Seizonsha game, GameEntity user, int damage, int recharge_time, float bulletSpeed) : base(game, user, 40, recharge_time, 20, 20)
         {
 
             this.damage = damage;
-            this.damageType = Static.DAMAGE_TYPE_NO_DAMAGE;
-            if (user.getTargetType() == Static.TARGET_TYPE_FRIENDLY)
-            {
-                damageType = Static.DAMAGE_TYPE_FRIENDLY;
-            }
-            if (user.getTargetType() == Static.TARGET_TYPE_ENEMY)
-            {
-                damageType = Static.DAMAGE_TYPE_ENEMY;
-            }
+
             this.bulletSpeed = bulletSpeed;
         }
 
         public override void affect(GameEntity affected)
         {
             game.damageEntity(user, affected, this.damage, this.damageType);
-            affected.addStatusEffect(new GameName1.Effects.Burning(game, user, this, null, affected, 1, damageType, 40));
+           if (game.ShouldDamage(this.damageType,affected.getTargetType())){
+                affected.addStatusEffect(new GameName1.Effects.Burning(game, user, this, null, affected, 1, damageType, 40));
+           }
         }
 
 
@@ -57,7 +50,7 @@ namespace GameName1.Skills
 
         public override string getName()
         {
-            return "Fireball";
+            return Static.FIREBALL_NAME;
         }
 
 

@@ -9,30 +9,19 @@ using System.Text;
 
 namespace GameName1.Skills
 {
-    class Sword : Skill, Unlockable
+    class Sword : Weapon, Unlockable
     {
 
         private int damage;
-        private int damageType;
 
         protected Rectangle? swordSource;
 
         SlashAnimation slashAnimation;
 
 
-        public Sword(Seizonsha game, GameEntity user,int damage, int recharge_time) : base(game, user, 0, recharge_time, 0, 10)
+        public Sword(Seizonsha game, GameEntity user,int damage, int recharge_time) : base(game, user, recharge_time, recharge_time)
         {
             this.damage = damage;
-            this.damageType = Static.DAMAGE_TYPE_NO_DAMAGE;
-            if (user.getTargetType() == Static.TARGET_TYPE_FRIENDLY)
-            {
-                damageType = Static.DAMAGE_TYPE_FRIENDLY;
-            }
-            if (user.getTargetType() == Static.TARGET_TYPE_ENEMY)
-            {
-                damageType = Static.DAMAGE_TYPE_ENEMY;
-            }
-
             slashAnimation = new SlashAnimation(this, user, recharge_time);
 
 
@@ -77,7 +66,7 @@ namespace GameName1.Skills
 
         public override string getName()
         {
-			return "Sword";
+			return Static.SWORD_NAME;
         }
 
         public override void affect(GameEntity affected)

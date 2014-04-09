@@ -70,7 +70,7 @@
     <Compile Include="Skills\AOEPolygon.cs" />
     <Compile Include="Skills\AOEStatus.cs" />
     <Compile Include="Skills\Blizzard.cs" />
-    <Compile Include="Skills\Burning.cs" />
+    <Compile Include="Skills\StatusEffects\Burning.cs" />
     <Compile Include="Effects\Effect.cs" />
     <Compile Include="Interfaces\StatusEffect.cs" />
     <Compile Include="Effects\TextEffect.cs" />
@@ -103,9 +103,10 @@
     <Compile Include="Skills\HealingTouch.cs" />
     <Compile Include="Skills\LifeDrain.cs" />
     <Compile Include="Skills\Skill.cs" />
-    <Compile Include="Skills\Slow.cs" />
-    <Compile Include="Skills\Sword.cs" />
+    <Compile Include="Skills\StatusEffects\Slow.cs" />
+    <Compile Include="Skills\Weapons\Sword.cs" />
     <Compile Include="Skills\Teleport.cs" />
+    <Compile Include="Skills\Weapons\Weapon.cs" />
     <Compile Include="SkillTree\BlankNode.cs" />
     <Compile Include="SkillTree\HealthPlusUnlockable.cs" />
     <Compile Include="Skills\TargetedAbility.cs" />
@@ -124,7 +125,7 @@
     <Compile Include="Tile.cs" />
     <Compile Include="TileMap.cs" />
     <Compile Include="Skills\Bullet.cs" />
-    <Compile Include="Skills\Gun.cs" />
+    <Compile Include="Skills\Weapons\Gun.cs" />
     <Compile Include="Camera.cs" />
     <Compile Include="FPSCounterComponent.cs" />
   </ItemGroup>

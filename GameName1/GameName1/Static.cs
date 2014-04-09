@@ -91,14 +91,14 @@ namespace GameName1
 
 
         //Damage
-        public static readonly int DAMAGE_TYPE_FRIENDLY = 1;
-        public static readonly int DAMAGE_TYPE_ENEMY = 2;
+        public static readonly int DAMAGE_TYPE_GOOD = 1;
+        public static readonly int DAMAGE_TYPE_BAD = 2;
         public static readonly int DAMAGE_TYPE_ALL = 3;
         public static readonly int DAMAGE_TYPE_NO_DAMAGE = 0;
 
         //Target
-        public static readonly int TARGET_TYPE_FRIENDLY = 1;
-        public static readonly int TARGET_TYPE_ENEMY = 2;
+        public static readonly int TARGET_TYPE_GOOD = 1;
+        public static readonly int TARGET_TYPE_BAD = 2;
         public static readonly int TARGET_TYPE_NOT_DAMAGEABLE = 0;
         public static readonly int TARGET_TYPE_ALL = 3;
 
@@ -133,9 +133,31 @@ namespace GameName1
         public static readonly int FIRELANCE_COST = 15;
         public static readonly int FIRELANCE_RECHARGE = 5;
         public static readonly int FIRELANCE_DAMAGE = 25;
+        public static readonly string FIRELANCE_NAME = "Fire Lance";
+
+        //Fireball
+        public static readonly string FIREBALL_NAME = "Fireball";
+
+        //Blizzard
+        public static readonly string BLIZZARD_NAME = "Blizzard";
+
+        //Healing Touch
+        public static readonly string HEALING_TOUCH_NAME = "Healing Touch";
 
         //skilltree sprites
 		public static readonly string SKILL_TREE_NODE_ANY = "Blank";
+
+        //Sword
+        public static readonly string SWORD_NAME = "Sword";
+
+        //Gun
+        public static readonly string GUN_NAME = "Gun";
+
+        //Life Drain
+        public static readonly string LIFE_DRAIN_NAME = "Life Drain";
+
+        //Teleport
+        public static readonly string TELEPORT_NAME = "Teleport";
 
         //spritefont
         public static SpriteFont SPRITE_FONT = null;

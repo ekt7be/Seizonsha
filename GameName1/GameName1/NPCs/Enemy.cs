@@ -35,7 +35,7 @@ namespace GameName1.NPCs
 
 
         public Enemy(Seizonsha game, Texture2D sprite, int width, int height, int health, int XPReward)
-            : base(game, sprite, width, height, Static.DAMAGE_TYPE_ENEMY, health)
+            : base(game, sprite, width, height, Static.DAMAGE_TYPE_BAD, health)
         {
             setXPReward(XPReward);
             closed = new HashSet<Tile>();

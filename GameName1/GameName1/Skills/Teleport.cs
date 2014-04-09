@@ -21,13 +21,13 @@ namespace GameName1.Skills
 
             this.damage = damage;
             this.damageType = Static.DAMAGE_TYPE_NO_DAMAGE;
-            if (user.getTargetType() == Static.TARGET_TYPE_FRIENDLY)
+            if (user.getTargetType() == Static.TARGET_TYPE_GOOD)
             {
-                damageType = Static.DAMAGE_TYPE_FRIENDLY;
+                damageType = Static.DAMAGE_TYPE_GOOD;
             }
-            if (user.getTargetType() == Static.TARGET_TYPE_ENEMY)
+            if (user.getTargetType() == Static.TARGET_TYPE_BAD)
             {
-                damageType = Static.DAMAGE_TYPE_ENEMY;
+                damageType = Static.DAMAGE_TYPE_BAD;
             }
             this.duration = duration;
         }
@@ -59,7 +59,7 @@ namespace GameName1.Skills
 
         public override string getName()
         {
-            return "Teleport";
+            return Static.TELEPORT_NAME;
         }
 
         public override void affect(GameEntity affected)

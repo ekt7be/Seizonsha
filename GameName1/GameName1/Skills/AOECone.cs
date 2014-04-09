@@ -32,18 +32,7 @@ namespace GameName1.Skills
 
         public override void OnSpawn()
         {
-            if (amount < 0)
-            {
-                game.healArea(user,this.getHitbox(), -amount, damageType);
-            }
-            else
-            {
-                //game.damageArea(user, this.getHitbox(), amount, damageType);
-                foreach (GameEntity entity in game.getEntitiesInBounds(this.getHitbox()))
-                {
-                    this.origin.affect(entity);
-                }
-            }
+            game.affectArea(origin, this.hitbox);
         }
 
 
