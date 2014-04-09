@@ -612,9 +612,19 @@ namespace GameName1
 		public void DownArrow()
 		{
 			if (selectingSkill2) {
+				skillSlots[skillbarIndex] = reducedUnlockedSkills[skillbarIndex2]; 
+				reducedUnlockedSkills.Clear();
+				selectingSkill2 = false; 
+				skillbarIndex2 = 0; 
+				return;
+			}
+			/*
+
+			if (selectingSkill2) {
 				selectingSkill2 = false; 
 				return; 
 			}
+			*/
 
 			selectingSkill = false; 
 		}
