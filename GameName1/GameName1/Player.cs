@@ -465,6 +465,18 @@ namespace GameName1
                 }
 
                 spriteBatch.Draw(icon, skillBox, Color.White);
+                String Button;
+
+                if (s == 0){
+                    Button = "1 (L1)";
+                } else if (s ==1){
+                    Button = "2 (L2)";
+                } else if (s ==2 ){
+                    Button = "3 (R1)";
+                } else {
+                    Button = "4 (R2)";
+                }
+                spriteBatch.DrawString(Static.SPRITEFONT_Calibri10, Button, new Vector2(skillBox.Left, skillBox.Top), Color.White);
 
                 if (!skill.Available())
                 {
@@ -480,14 +492,17 @@ namespace GameName1
 
                         spriteBatch.Draw(Static.PIXEL_THIN, cooldown, new Color(Color.Black, 0.5f));
 
+                        //to draw cooldown time
+                        /*
                         spriteBatch.DrawString(
                             game.getSpriteFont(),
                             skill.rechargeTime - skill.recharged + "",
                             new Vector2(screenPortion.Width / 2 + (s * (iconSize + 3)) - 2 * iconSize - 6, screenPortion.Height - iconSize),
                             Color.White
                         );
+                         * */
                     }
-                    if (skill.manaCost > this.mana)
+                    if (!skill.Available())
                         spriteBatch.Draw(Static.PIXEL_THIN, skillBox, new Color(Color.DarkBlue, 0.10f));
 
 

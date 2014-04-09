@@ -160,8 +160,7 @@ namespace GameName1.NPCs
 
 		public override void OnSpawn()
 		{
-			this.velocityX = 0;
-			this.velocityY = 0;
+
 		}
 
 	

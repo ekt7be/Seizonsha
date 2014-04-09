@@ -40,7 +40,8 @@ namespace GameName1
 		FPSCounterComponent fps;
 		private bool showFPS = false; 
 
-		private float sinceLastWaveCleared; 
+		private float sinceLastWaveCleared;
+
 	
         // By preloading any assets used by UI rendering, we avoid framerate glitches
         // when they suddenly need to be loaded in the middle of a menu transition.
@@ -476,7 +477,7 @@ namespace GameName1
 			}
 
 
-            currLevel.Update();
+            currLevel.Update(gameTime);
 
             //update all entities including players
             foreach (GameEntity entity in entities)
