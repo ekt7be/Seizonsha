@@ -140,6 +140,8 @@ namespace GameName1
             Texture2D heal = Content.Load<Texture2D>("Sprites/healsprite");
             Texture2D bullet = Content.Load<Texture2D>("Sprites/bulletsprite");
             Texture2D sword = Content.Load<Texture2D>("Sprites/swordspritesheetfull3");
+            Texture2D reticle = Content.Load<Texture2D>("Sprites/reticle");
+
 
 			#region ADD SKILL ICONS (remember to add in SkillTree.cs too)
 			Texture2D nodeRect = Content.Load<Texture2D>("Sprites/SkillNode");
@@ -177,6 +179,7 @@ namespace GameName1
             spriteMappings.Add(Static.SPRITE_HEAL, heal);
             spriteMappings.Add(Static.SPRITE_BULLET, bullet);
             spriteMappings.Add(Static.SPRITE_SWORD, sword);
+            spriteMappings.Add(Static.SPRITE_RETICLE, reticle);
 
 
 

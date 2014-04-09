@@ -123,6 +123,12 @@ namespace GameName1
                 }
             }
 
+            int dist = 50;
+            int width = 30;
+            int height = 30;
+            Rectangle rBounds = new Rectangle((int)((float)this.getCenterX() + dist*this.vectorDirection.X - width/2), (int)((float)this.getCenterY() + dist*this.vectorDirection.Y - height/2), width, height);
+
+            spriteBatch.Draw(game.getSpriteTexture(Static.SPRITE_RETICLE), rBounds, Color.Red);
             //draw armor and weapons equipped etc
 
             
