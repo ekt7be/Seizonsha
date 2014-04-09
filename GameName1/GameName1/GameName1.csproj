@@ -59,6 +59,7 @@
     <Compile Include="EntityFactory.cs" />
     <Compile Include="Food.cs" />
     <Compile Include="Interfaces\Interactable.cs" />
+    <Compile Include="NPCs\Enemy.cs" />
     <Compile Include="PickUp.cs" />
     <Compile Include="PolygonStuff\MainForm.Collisions.cs" />
     <Compile Include="PolygonStuff\Point.cs" />

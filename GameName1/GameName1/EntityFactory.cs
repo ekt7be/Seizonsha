@@ -132,7 +132,7 @@ namespace GameName1
             if (recycled != null)
             {
                 BasicEnemy recycledEnemy = (BasicEnemy)recycled;
-                recycledEnemy.reset();
+                recycledEnemy.reset(Static.BASIC_ENEMY_XP);
                 return recycledEnemy;
             }
 

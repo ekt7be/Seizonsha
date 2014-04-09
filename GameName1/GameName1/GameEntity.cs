@@ -25,6 +25,7 @@ namespace GameName1
         public float direction { get; set; }
         public int width { get; set; }
         public int height { get; set; }
+        public Rectangle spriteBox;
         public Rectangle hitbox;
         protected bool remove;
         protected bool collidable;
@@ -41,6 +42,7 @@ namespace GameName1
         public int accelY { get; set; }
         protected Seizonsha game;
         public Texture2D sprite { get; set; }
+        protected float scale = 1.0f;
 
 
         private DamageAnimation damageAnimation;
@@ -55,7 +57,6 @@ namespace GameName1
         private List<Animation> animations;
         private List<Animation> outgoingAnimations;
         protected Rectangle? spriteSource = null;
-        protected float scale = 1.0f;
 
 
 
@@ -84,13 +85,16 @@ namespace GameName1
                 spriteBatch.Draw(Static.PIXEL_THIN, greenCoordinates, Color.Green);
             }
 
+            spriteBox = hitbox;
+            spriteBox.Inflate((int)((scale-1f) * hitbox.Width/2), (int)((scale-1f) * hitbox.Height/2));
+
             if (spriteSource == null)
             {
-                spriteBatch.Draw(sprite, this.hitbox, spriteSource, tint, this.direction, new Vector2(0, 0), SpriteEffects.None, 1f);
+                spriteBatch.Draw(sprite, spriteBox, spriteSource, tint, this.direction, new Vector2(0, 0), SpriteEffects.None, 1f);
             }
             else
             {
-                spriteBatch.Draw(sprite, this.hitbox, spriteSource, tint, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1f);
+                spriteBatch.Draw(sprite, spriteBox, spriteSource, tint, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1f);
             }
 
         }

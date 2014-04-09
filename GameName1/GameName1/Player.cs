@@ -36,16 +36,13 @@ namespace GameName1
         private static float elapsed;
         private static float swordElapsed;
         private static readonly float delay = 200f;
-        private static readonly float swordDelay = 50f;
         private static int walkFrame = 0;
-        private static int swordFrame = 0;
 
         private static readonly int UP_ANIMATION = 0;
         private static readonly int DOWN_ANIMATION = 2;
         private static readonly int LEFT_ANIMATION = 1;
         private static readonly int RIGHT_ANIMATION = 3;
         private static readonly int WALK_ANIMATION_FRAMES = 9;
-        private static readonly int SLASH_ANIMATION_FRAMES = 6;
 
 		public int skillbarIndex = 0;
 		public int skillbarIndex2 = 0; 
@@ -96,6 +93,12 @@ namespace GameName1
 
         public override void Draw(SpriteBatch spriteBatch)
         {
+            /*
+            //draw hitbox
+            Rectangle rect = new Rectangle(this.x,this.y,this.hitbox.Width,this.hitbox.Height);
+            spriteBatch.Draw(Static.PIXEL_THIN, rect, Color.Blue);
+            */
+            
             base.Draw(spriteBatch);
             foreach(Equipable equip in this.skillSlots)
             {
@@ -116,19 +119,21 @@ namespace GameName1
             }
 
             //draw armor and weapons equipped etc
-            
-            spriteBatch.Draw(Seizonsha.spriteMappings[3], this.hitbox, base.spriteSource, tint, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
-            spriteBatch.Draw(Seizonsha.spriteMappings[5], this.hitbox, base.spriteSource, tint, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
-            spriteBatch.Draw(Seizonsha.spriteMappings[4], this.hitbox, base.spriteSource, tint, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
-            spriteBatch.Draw(Seizonsha.spriteMappings[6], this.hitbox, base.spriteSource, tint, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
-            spriteBatch.Draw(Seizonsha.spriteMappings[7], this.hitbox, base.spriteSource, tint, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
-            spriteBatch.Draw(Seizonsha.spriteMappings[2], this.hitbox, base.spriteSource, tint, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+
             
 
-            foreach (Skill skill in skillSlots){
+
+            spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_PLATE_ARMOR_FEET], this.spriteBox, base.spriteSource, tint, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+            spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_PLATE_ARMOR_PANTS], this.spriteBox, base.spriteSource, tint, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+            spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_PLATE_ARMOR_GLOVES], this.spriteBox, base.spriteSource, tint, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+            spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_PLATE_ARMOR_ARMS_SHOULDER], this.spriteBox, base.spriteSource, tint, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+            spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_PLATE_ARMOR_TORSO], this.spriteBox, base.spriteSource, tint, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+            spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_PLATE_ARMOR_HEAD], this.spriteBox, base.spriteSource, tint, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+
+            foreach (Skill skill in skillSlots)
+            {
                 skill.Draw(spriteBatch);
             }
-
         }
 
 
@@ -217,7 +222,7 @@ namespace GameName1
 			this.camera = camera;
 
 
-            base.scale = 1.0f;
+            base.scale = Static.PLAYER_SPRITE_SCALE;
 
             this.rotateToAngle(0f); //sets correct animation
 
@@ -424,6 +429,7 @@ namespace GameName1
                 Color.Black
             );
 
+            /*
             // draw skills text
             string displaySkills = "L1(1 key): " + this.getSkill(Static.PLAYER_L1_SKILL_INDEX).getName() + "\n" +
                 "L2(2 key): " + this.getSkill(Static.PLAYER_L2_SKILL_INDEX).getName() + "\n" +
@@ -431,13 +437,14 @@ namespace GameName1
                 "R2(4 key): " + this.getSkill(Static.PLAYER_R2_SKILL_INDEX).getName() + "\n" +
                 "P:  Pause/Quit Menu (temp)";
             spriteBatch.DrawString(Static.SPRITEFONT_Calibri10, displaySkills, new Vector2(20, 100), Color.White);
+             * */
 
             #region SKILL BAR
-			int iconSize = 100;
+			int iconSize = screenPortion.Width/18;
 
             for (int s = 0; s < skillSlots.Length; s++)
             {
-                Rectangle skillBox = new Rectangle(screenPortion.Width / 2 - (iconSize * 4) + (s * (iconSize + 3)), screenPortion.Height - iconSize, iconSize, iconSize);
+                Rectangle skillBox = new Rectangle(screenPortion.Width / 2 + (s * (iconSize + 3)) - 2 *iconSize - 6, screenPortion.Height - iconSize, iconSize, iconSize);
 
                 Skill skill = (Skill)skillSlots[s];
                 Texture2D icon = SkillTree.SkillTree.nodeTextures["Blank"];
@@ -457,7 +464,7 @@ namespace GameName1
 
                         //System.Console.WriteLine(skill.recharged + " " + skill.rechargeTime + " " + (double)skill.recharged/skill.rechargeTime );
 
-                        Rectangle cooldown = new Rectangle(screenPortion.Width / 2 - (iconSize * 4) + (s * (iconSize + 3)), screenPortion.Height - iconSize, iconSize, iconSize - (int)(iconSize * coolDownPercentage));
+                        Rectangle cooldown = new Rectangle(screenPortion.Width / 2 + (s * (iconSize + 3)) - 2 * iconSize - 6, screenPortion.Height - iconSize, iconSize, iconSize - (int)(iconSize * coolDownPercentage));
 
                         //spriteBatch.Draw(icon, skillBox, Color.White);
 
@@ -466,7 +473,7 @@ namespace GameName1
                         spriteBatch.DrawString(
                             game.getSpriteFont(),
                             skill.rechargeTime - skill.recharged + "",
-                            new Vector2(screenPortion.Width / 2 - (iconSize * 4) + (s * (iconSize + 3)), screenPortion.Height - iconSize),
+                            new Vector2(screenPortion.Width / 2 + (s * (iconSize + 3)) - 2 * iconSize - 6, screenPortion.Height - iconSize),
                             Color.White
                         );
                     }
@@ -486,7 +493,7 @@ namespace GameName1
 
                 if (selectingSkill)
                 {
-                    highlightRect = new Rectangle(viewportBounds.Width / 2 - (iconSize * 4) + (skillbarIndex * (iconSize + 3)), viewportBounds.Height - iconSize, iconSize, iconSize);
+                    highlightRect = new Rectangle(viewportBounds.Width / 2 + (skillbarIndex * (iconSize + 3)) - 2 * iconSize - 6, viewportBounds.Height - iconSize, iconSize, iconSize);
 
                     spriteBatch.Draw(Static.PIXEL_THIN, highlightRect, new Color(Color.DarkOrchid, 0.1f));
 
@@ -505,7 +512,7 @@ namespace GameName1
                                     reducedUnlockedSkills.Add(unlockedSkill);
                                 //System.Console.WriteLine(unlockedSkill.getName()); 
 
-                                Rectangle unlockedSkillRect = new Rectangle(viewportBounds.Width / 2 - (iconSize * 4) + (skillbarIndex * (iconSize + 3) + (j * (iconSize / 2)) + (j * 3)), viewportBounds.Height - iconSize - (iconSize / 2 + 3), iconSize / 2, iconSize / 2);
+                                Rectangle unlockedSkillRect = new Rectangle(viewportBounds.Width / 2 + (skillbarIndex * (iconSize + 3) + (j * (iconSize / 2)) + (j * 3)) - 2 * iconSize - 6, viewportBounds.Height - iconSize - (iconSize / 2 + 3), iconSize / 2, iconSize / 2);
                                 spriteBatch.Draw(SkillTree.SkillTree.nodeTextures[unlockedSkill.getName()], unlockedSkillRect, Color.White);
                                 j++;
                             }
@@ -514,7 +521,7 @@ namespace GameName1
 
                         //System.Console.WriteLine(+ skillbarIndex + "." + skillbarIndex2); 
 
-                        Rectangle unlockedSkillRect2 = new Rectangle(viewportBounds.Width / 2 - (iconSize * 4) + (skillbarIndex * (iconSize + 3) + (skillbarIndex2 * (iconSize / 2)) + (skillbarIndex2 * 3)), viewportBounds.Height - iconSize - (iconSize / 2 + 3), iconSize / 2, iconSize / 2);
+                        Rectangle unlockedSkillRect2 = new Rectangle(viewportBounds.Width / 2 + (skillbarIndex * (iconSize + 3) + (skillbarIndex2 * (iconSize / 2)) + (skillbarIndex2 * 3)) - 2 * iconSize - 6, viewportBounds.Height - iconSize - (iconSize / 2 + 3), iconSize / 2, iconSize / 2);
                         spriteBatch.Draw(Static.PIXEL_THIN, unlockedSkillRect2, new Color(Color.DarkOrchid, 0.1f));
 
                     }

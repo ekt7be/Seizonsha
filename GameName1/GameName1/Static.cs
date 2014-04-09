@@ -36,6 +36,7 @@ namespace GameName1
 
 
         //player stuff
+        public static readonly float PLAYER_SPRITE_SCALE = 1f;
         public static readonly int PLAYER_INTERACTION_RANGE = 4;
 		public static readonly int PLAYER_HEIGHT = 32*1;
 		public static readonly int PLAYER_WIDTH = 32*1;
@@ -55,7 +56,8 @@ namespace GameName1
         public static readonly int BASIC_ENEMY_DAMAGE = 5;
 		public static readonly float BASIC_ENEMY_SPEED = 2f;
         public static readonly int BASIC_ENEMY_HEALTH = 30;
-
+        public static readonly float BASIC_ENEMY_SPRITE_SCALE = 1f;
+        public static readonly int BASIC_ENEMY_XP = 100;
 		public static readonly float BASIC_ENEMY_PATH_REFRESH = 500f;
 
 		public static readonly int BOSS_ENEMY_HEIGHT = 32*3;
@@ -63,7 +65,8 @@ namespace GameName1
 		public static readonly float BOSS_ENEMY_SPEED = 4f;
 
 
-
+        //boss
+        public static readonly int BOSS_ENEMY_XP = 1000;
 
         //dimensions
 		public static int SCREEN_WIDTH = 1280; // 640 x 480, 1280 x 640

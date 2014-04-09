@@ -91,11 +91,13 @@ namespace GameName1
             screenManager.AddScreen(new MainMenuScreen(), null);
         }
 			
-	
+	    //does not handle boundary cases and causes bugs
+        /*
 		// for pathfinding 
 		public Tile getTileFromCoord(int x, int y) {
 			return currLevel.getTileFromIndex(getTileIndexFromLeftEdgeX(x), getTileIndexFromTopEdgeY(y)); 
 		}
+         * */
 
 		public Tile getTileFromIndex(int x, int y) {
 			return currLevel.getTileFromIndex(x, y); 
