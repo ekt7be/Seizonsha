@@ -176,7 +176,7 @@ namespace GameName1
         {
             foreach (Animation animation in animations)
             {
-                animation.Update();
+                animation.Update(gameTime);
                 if (animation.shouldRemove())
                 {
                     RemoveAnimation(animation);
@@ -186,6 +186,7 @@ namespace GameName1
 
         public void AddAnimation(Animation animation)
         {
+
             animations.Add(animation);
         }
 
@@ -205,6 +206,10 @@ namespace GameName1
             outgoingAnimations.Clear();
         }
 
+        public bool HasAnimation(Animation animation)
+        {
+            return animations.Contains(animation);
+        }
 
 
         public GameEntity(Seizonsha game, Texture2D sprite, int width, int height, int targetType, int maxHealth)

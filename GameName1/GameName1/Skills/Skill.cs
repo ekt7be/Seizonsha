@@ -1,5 +1,6 @@
 ﻿using GameName1.Interfaces;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +34,11 @@ namespace GameName1.Skills
             this.user = user;
             this.game = game;
             bufferedDirection = 0;
+        }
+
+        public virtual void Draw(SpriteBatch spriteBatch)
+        {
+
         }
 
         public virtual void OnUnequip()

@@ -116,12 +116,18 @@ namespace GameName1
             }
 
             //draw armor and weapons equipped etc
+            
             spriteBatch.Draw(Seizonsha.spriteMappings[3], this.hitbox, base.spriteSource, tint, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
             spriteBatch.Draw(Seizonsha.spriteMappings[5], this.hitbox, base.spriteSource, tint, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
             spriteBatch.Draw(Seizonsha.spriteMappings[4], this.hitbox, base.spriteSource, tint, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
             spriteBatch.Draw(Seizonsha.spriteMappings[6], this.hitbox, base.spriteSource, tint, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
             spriteBatch.Draw(Seizonsha.spriteMappings[7], this.hitbox, base.spriteSource, tint, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
             spriteBatch.Draw(Seizonsha.spriteMappings[2], this.hitbox, base.spriteSource, tint, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+            
+
+            foreach (Skill skill in skillSlots){
+                skill.Draw(spriteBatch);
+            }
 
         }
 
@@ -822,7 +828,6 @@ namespace GameName1
         public override void UpdateAnimation(GameTime gameTime)
         {
 
-            base.UpdateAnimation(gameTime);
             // Animation stuff
             elapsed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
             swordElapsed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
@@ -900,6 +905,10 @@ namespace GameName1
                 }
 
             }
+
+
+            base.UpdateAnimation(gameTime);
+
         }
 
         public override string getName()

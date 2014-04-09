@@ -21,14 +21,14 @@ namespace GameName1.AnimationTesting
         }
 
 
-        public void Update()
+        public void Update(GameTime gameTime)
         {
             if (duration <= 0)
             {
                 remove = true;
             }
 
-            UpdateAnimation(target);
+            UpdateAnimation(target, gameTime);
             duration--;
 
         }
@@ -37,7 +37,7 @@ namespace GameName1.AnimationTesting
         {
             return remove;
         }
-        protected abstract void UpdateAnimation(GameEntity target);
+        protected abstract void UpdateAnimation(GameEntity target, GameTime gameTime);
 
         public abstract void OnRemove(GameEntity target);
 

@@ -15,7 +15,7 @@ namespace GameName1.AnimationTesting
         {
 
         }
-        protected override void UpdateAnimation(GameEntity target)
+        protected override void UpdateAnimation(GameEntity target, GameTime gameTime)
         {
             target.setTint(Color.Red);
         }

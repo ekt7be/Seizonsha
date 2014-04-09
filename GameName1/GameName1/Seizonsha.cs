@@ -138,7 +138,7 @@ namespace GameName1
             Texture2D fireball = Content.Load<Texture2D>("Sprites/fireballsprite");
             Texture2D heal = Content.Load<Texture2D>("Sprites/healsprite");
             Texture2D bullet = Content.Load<Texture2D>("Sprites/bulletsprite");
-            Texture2D sword = Content.Load<Texture2D>("Sprites/swordspritesheetfull");
+            Texture2D sword = Content.Load<Texture2D>("Sprites/swordspritesheetfull3");
 
 			#region ADD SKILL ICONS (remember to add in SkillTree.cs too)
 			Texture2D nodeRect = Content.Load<Texture2D>("Sprites/SkillNode");
@@ -224,6 +224,7 @@ namespace GameName1
             {
                 cameras[i] = new Camera();
                 players[i] = new Player(this, playerToController[i + 1], playerRect, cameras[i]);
+
                 Spawn(players[i], 500, 100 + (i * 40));
             }
 
