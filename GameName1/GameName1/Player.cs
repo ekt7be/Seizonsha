@@ -4,6 +4,7 @@ using GameName1.Skills;
 using GameName1.SkillTree;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,10 @@ namespace GameName1
         public float manaRegen;
         private float mana;
         public float maxMana;
+
+        public bool keyboard = false;
+        public KeyboardState oldKeyboardState;
+        public GamePadState oldGamepadState;
 
         private bool skilltreebuttondown;
         private bool skilltreescreen;

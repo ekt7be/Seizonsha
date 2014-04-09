@@ -169,20 +169,7 @@ namespace GameName1.NPCs
 		public override void Draw(SpriteBatch spriteBatch)
 		{
 
-			if (drawHitbox) {
-				Rectangle rect = new Rectangle (
-					this.x, 
-					this.y, 
-					this.hitbox.Width,
-					this.hitbox.Height); 
-				spriteBatch.Draw(Static.PIXEL_THIN, rect, Color.Blue);
-			}
-
-
-			if (drawPath) 
-				DrawPath(spriteBatch); 
 			base.Draw(spriteBatch);
-
             sword.Draw(spriteBatch);
 		}
 

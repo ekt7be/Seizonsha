@@ -51,7 +51,6 @@ namespace GameName1
 
 		bool waveCleared; 
 
-		private KeyboardState oldState;
 
 
 
@@ -230,6 +229,15 @@ namespace GameName1
                 Spawn(players[i], 500, 100 + (i * 40));
             }
 
+            players[0].keyboard = true;
+
+            //below code makes player two controlled by keyboard.  just comment player 1s flag
+            /*
+            if (Static.NUM_PLAYERS > 1)
+            {
+                players[1].keyboard = true;
+            }
+             * */
 
 
 			this.difficulty = 5;
@@ -656,93 +664,93 @@ namespace GameName1
 
         protected void handlePlayerInput(Player player)
         {
-            if (player.playerIndex == PlayerIndex.One)
+            if (player.keyboard)
             {
                 
-                if (GamePad.GetState(player.playerIndex).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Space))
+                if (Keyboard.GetState().IsKeyDown(Keys.Space))
                 {
                     player.SkillTreeButtonDown();
-                } else if (GamePad.GetState(player.playerIndex).Buttons.Back == ButtonState.Released || Keyboard.GetState().IsKeyUp(Keys.Space)){
+                } else if (Keyboard.GetState().IsKeyUp(Keys.Space)){
                     player.SkillTreeButtonRelease();
                 }
 
-                if (GamePad.GetState(player.playerIndex).Buttons.A == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Enter))
+                if (Keyboard.GetState().IsKeyDown(Keys.Enter))
                 {
                     player.AButton();
                 }
 					
-                if (GamePad.GetState(player.playerIndex).ThumbSticks.Left.Y > .5 || Keyboard.GetState().IsKeyDown(Keys.W))
+                if (Keyboard.GetState().IsKeyDown(Keys.W))
                 {
                     player.UpButton();
 
                 }
-                if (GamePad.GetState(player.playerIndex).ThumbSticks.Left.X < -.5 || Keyboard.GetState().IsKeyDown(Keys.A))
+                if (Keyboard.GetState().IsKeyDown(Keys.A))
                 {
                     player.LeftButton();
 
                 }
-                if (GamePad.GetState(player.playerIndex).ThumbSticks.Left.X > .5 || Keyboard.GetState().IsKeyDown(Keys.D))
+                if (Keyboard.GetState().IsKeyDown(Keys.D))
                 {
                     player.RightButton();
 
                 }
-                if (GamePad.GetState(player.playerIndex).ThumbSticks.Left.Y < -.5 || Keyboard.GetState().IsKeyDown(Keys.S))
+                if (Keyboard.GetState().IsKeyDown(Keys.S))
                 {
                     player.DownButton();
                 }
                 
-                if(Math.Abs(GamePad.GetState(player.playerIndex).ThumbSticks.Left.X) <= .5 && Math.Abs(GamePad.GetState(player.playerIndex).ThumbSticks.Left.Y) <= .5 && Keyboard.GetState().GetPressedKeys().Length == 0)
+                if(Keyboard.GetState().GetPressedKeys().Length == 0)
                 {
                     player.noMovement();
                 }
 
-                if (GamePad.GetState(player.playerIndex).Buttons.LeftShoulder == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.D1))
+                if (Keyboard.GetState().IsKeyDown(Keys.D1))
                 {
                     player.L1Button();
                 }
-                if (GamePad.GetState(player.playerIndex).Triggers.Left > .5f || Keyboard.GetState().IsKeyDown(Keys.D2))
+                if (Keyboard.GetState().IsKeyDown(Keys.D2))
                 {
                     player.L2Button();
                 }
-                if (GamePad.GetState(player.playerIndex).Buttons.RightShoulder == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.D3))
+                if (Keyboard.GetState().IsKeyDown(Keys.D3))
                 {
                     player.R1Button();
                 }
-                if (GamePad.GetState(player.playerIndex).Triggers.Right > .5f || Keyboard.GetState().IsKeyDown(Keys.D4))
+                if (Keyboard.GetState().IsKeyDown(Keys.D4))
                 {
                     player.R2Button();
                 }
 
-				if (oldState.IsKeyUp(Keys.Down) && Keyboard.GetState().IsKeyDown(Keys.Down))
+				if (player.oldKeyboardState.IsKeyUp(Keys.Down) && Keyboard.GetState().IsKeyDown(Keys.Down))
 				{
 					player.DownArrow();
 				}
-				if (oldState.IsKeyUp(Keys.Up) && Keyboard.GetState().IsKeyDown(Keys.Up))
+				if (player.oldKeyboardState.IsKeyUp(Keys.Up) && Keyboard.GetState().IsKeyDown(Keys.Up))
 				{
 					player.UpArrow();
 				}
 
-				if (oldState.IsKeyUp(Keys.F) && Keyboard.GetState().IsKeyDown(Keys.F))
+				if (player.oldKeyboardState.IsKeyUp(Keys.F) && Keyboard.GetState().IsKeyDown(Keys.F))
 				{
 					//player.F(); 
 				}
 
-				if (oldState.IsKeyUp(Keys.G) && Keyboard.GetState().IsKeyDown(Keys.G))
+				if (player.oldKeyboardState.IsKeyUp(Keys.G) && Keyboard.GetState().IsKeyDown(Keys.G))
 				{
 					//player.G(); 
 				}
 
-				if (oldState.IsKeyUp(Keys.Right) && Keyboard.GetState().IsKeyDown(Keys.Right))
+				if (player.oldKeyboardState.IsKeyUp(Keys.Right) && Keyboard.GetState().IsKeyDown(Keys.Right))
 				{
 					player.RightArrow(); 
 				}
-				if (oldState.IsKeyUp(Keys.Left) && Keyboard.GetState().IsKeyDown(Keys.Left))
+				if (player.oldKeyboardState.IsKeyUp(Keys.Left) && Keyboard.GetState().IsKeyDown(Keys.Left))
 				{
 					player.LeftArrow(); 
 				}
 
 
-				oldState = Keyboard.GetState();
+				player.oldKeyboardState = Keyboard.GetState();
 
 
 
@@ -753,11 +761,6 @@ namespace GameName1
 				playerMouseDistance.X = player.camera.getWorldPositionX(mouse.X) - player.x;
 				playerMouseDistance.Y = player.camera.getWorldPositionY(mouse.Y) - player.y;
 				player.rotateToAngle((float)Math.Atan2(playerMouseDistance.Y, playerMouseDistance.X)); // angle to point at	
-
-                if (Math.Abs(GamePad.GetState(player.playerIndex).ThumbSticks.Right.Y) > .1 || Math.Abs(GamePad.GetState(player.playerIndex).ThumbSticks.Right.X) > .1)
-                {
-                    player.rotateToAngle((float)Math.Atan2(GamePad.GetState(player.playerIndex).ThumbSticks.Right.Y * -1, GamePad.GetState(player.playerIndex).ThumbSticks.Right.X)); // angle to point		
-                }
 
                 if (mouse.LeftButton == ButtonState.Pressed)
                 {
@@ -832,6 +835,39 @@ namespace GameName1
                 {
                     player.rotateToAngle((float)Math.Atan2(GamePad.GetState(player.playerIndex).ThumbSticks.Right.Y * -1, GamePad.GetState(player.playerIndex).ThumbSticks.Right.X)); // angle to point		
                 }
+
+
+                if (player.oldGamepadState.DPad.Down == ButtonState.Released && GamePad.GetState(player.playerIndex).DPad.Down == ButtonState.Pressed)
+                {
+                    player.DownArrow();
+                }
+                if (player.oldGamepadState.DPad.Up == ButtonState.Released && GamePad.GetState(player.playerIndex).DPad.Up == ButtonState.Pressed)
+                {
+                    player.UpArrow();
+                }
+                /*
+                if (player.oldKeyboardState.IsKeyUp(Keys.F) && Keyboard.GetState().IsKeyDown(Keys.F))
+                {
+                    //player.F(); 
+                }
+
+                if (player.oldKeyboardState.IsKeyUp(Keys.G) && Keyboard.GetState().IsKeyDown(Keys.G))
+                {
+                    //player.G(); 
+                }
+                 * */
+
+                if (player.oldGamepadState.DPad.Right == ButtonState.Released && GamePad.GetState(player.playerIndex).DPad.Right == ButtonState.Pressed)
+                {
+                    player.RightArrow();
+                }
+                if (player.oldGamepadState.DPad.Left == ButtonState.Released && GamePad.GetState(player.playerIndex).DPad.Left == ButtonState.Pressed)
+                {
+                    player.LeftArrow();
+                }
+
+
+                player.oldGamepadState = GamePad.GetState(player.playerIndex);
             }
         }
 

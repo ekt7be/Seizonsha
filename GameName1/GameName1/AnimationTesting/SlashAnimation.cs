@@ -30,7 +30,7 @@ namespace GameName1.AnimationTesting
 
         protected override void UpdateAnimation(GameEntity target, GameTime gameTime)
         {
-            if (target is Player || target is BasicEnemy)
+            if (target is Player || target is BasicEnemy || target is BossEnemy)
             {
                 elapsed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
 

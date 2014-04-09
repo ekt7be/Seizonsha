@@ -57,8 +57,6 @@ namespace GameName1.NPCs
 
 		}
 
-		float speed_x, speed_y;
-		bool stop = false;
 
 		void next_goal() {
 			path.RemoveAt(0);
@@ -183,6 +181,14 @@ namespace GameName1.NPCs
 		{
 
 		}
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+
+            base.Draw(spriteBatch);
+            sword.Draw(spriteBatch);
+            gun.Draw(spriteBatch);
+        }
 
 
 		public override void Update(GameTime gameTime)
