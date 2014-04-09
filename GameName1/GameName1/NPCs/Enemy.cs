@@ -20,9 +20,12 @@ namespace GameName1.NPCs
         protected bool drawPath = true;
         protected bool drawHitbox = true;
 
+        protected bool stopped;
+
 
         protected float sinceLastPathFind;
 
+        protected GameEntity target;
 
         HashSet<Tile> closed;
         HashSet<Tile> open;
@@ -44,6 +47,7 @@ namespace GameName1.NPCs
 
             tilesWide = (int)Math.Floor((double)(width / Static.TILE_WIDTH)) + 1;
             tilesHigh = (int)Math.Floor((double)(height / Static.TILE_WIDTH)) + 1;
+            this.stopped = false;
         }
 
         float speed_x, speed_y;
@@ -61,6 +65,16 @@ namespace GameName1.NPCs
 
         }
 
+
+        public void Stop()
+        {
+            stopped = true;
+        }
+
+        public void Resume()
+        {
+            stopped = false;
+        }
         public void update_moving()
         {
             if (path.Count == 0)
@@ -101,33 +115,65 @@ namespace GameName1.NPCs
             }
         }
 
-
-        public abstract void AI(GameTime gameTime);
-
-        public void findPath(int searchMethod, Tile target, GameEntity targetEntity)
+        public void setTarget(GameEntity target)
         {
-            //System.Console.WriteLine("finding path");
+            this.target = target;
+        }
 
+        public virtual void AI(GameTime gameTime)
+        {
+            if (target == null)
+            {
+                return;
+            }
+            else
+            {
+                //face target
+                float targetDirection = (float)Math.Atan2(target.y - this.y, target.x - this.x);
+                rotateToAngle(targetDirection);
+
+
+                //pathfinding
+
+                if (!stopped)
+                {
+                    Tile targetTile = game.getTileFromIndex(game.getTileIndexFromLeftEdgeX(target.x), game.getTileIndexFromTopEdgeY(target.y));
+
+                    if ((this.getLastMovement() == new Vector2(0, 0) && this.sinceLastPathFind >= Static.BASIC_ENEMY_PATH_REFRESH) ||
+                        path.Count == 0 ||
+                        this.sinceLastPathFind >= Static.BASIC_ENEMY_PATH_REFRESH)
+                    {
+                        if (targetTile.capacity < Math.Max(tilesWide, tilesHigh))
+                            findPath(1, randomTile(targetTile, 1));
+                        else
+                            findPath(1, targetTile);
+                    }
+
+                    update_moving();
+                }
+            }
+        }
+
+        public void findPath(int searchMethod, Tile targetTile)
+        {
             this.sinceLastPathFind = 0;
 
-            if (target == null)
+            if (targetTile == null)
                 return;
 
             if (path != null || path.Count > 0)
+            {
                 path.Clear();
+            }
 
             Tile selected = game.getTileFromIndex(game.getTileIndexFromLeftEdgeX(getLeftEdgeX()), game.getTileIndexFromTopEdgeY(getTopEdgeY())); ;	// start at enemy's current tile 
             Tile start = selected;
 
 
-            //Tile entityTile = game.getTileFromIndex(game.getTileIndexFromLeftEdgeX(targetEntity.getLeftEdgeX()), game.getTileIndexFromTopEdgeY(targetEntity.getTopEdgeY()));
-
-            //System.Console.WriteLine(game.getTileIndexFromLeftEdgeX(this.getCenterX()) +" "+ game.getTileIndexFromTopEdgeY(this.getCenterY()));
-            //System.Console.WriteLine(selected.xIndex +":"+ selected.yIndex + " (start)"); 
 
             open.Add(start);
 
-            while (!closed.Contains(target))
+            while (!closed.Contains(targetTile))
             {
                 Tile tileAtThisDir;
 
@@ -176,6 +222,7 @@ namespace GameName1.NPCs
                            
                             bool willCollide = tileAtThisDir.isObstacle();
 
+                            /*
                             //(!(tileAtThisDir.isObstacle())
                             if (targetEntity != null)
                             {
@@ -184,12 +231,13 @@ namespace GameName1.NPCs
                                     willCollide = game.willCollide(this, tileAtThisDir.x, tileAtThisDir.y);
                                 }
                             }
+                             * */
 
                             if (!willCollide && !(closed.Contains(tileAtThisDir)))
                             {
                                 tileAtThisDir.parent = selected;
                                 tileAtThisDir.G = tileAtThisDir.parent.G + addG;
-                                if (checkSize || tileAtThisDir == target)
+                                if (checkSize || tileAtThisDir == targetTile)
                                     open.Add(tileAtThisDir);
                             }
                         }
@@ -206,8 +254,8 @@ namespace GameName1.NPCs
                 foreach (Tile openTile in open)
                 {
                     // manhattan distance
-                    int moveX = Math.Abs(target.xIndex - openTile.xIndex);	// calculate tiles in x to player
-                    int moveY = Math.Abs(target.yIndex - openTile.yIndex);	// calculate tiles in y to player
+                    int moveX = Math.Abs(targetTile.xIndex - openTile.xIndex);	// calculate tiles in x to player
+                    int moveY = Math.Abs(targetTile.yIndex - openTile.yIndex);	// calculate tiles in y to player
 
                     openTile.H = (moveX + moveY) * 10;
                     openTile.F = openTile.G + openTile.H;
@@ -220,12 +268,9 @@ namespace GameName1.NPCs
                     }
                 }
 
-                //System.Console.WriteLine ("debug1");
-                // System.Console.WriteLine ("__");
 
                 if (minFTile != null)
                 {
-                    // System.Console.WriteLine ("MinF: " + minF.xIndex + ", " + minF.yIndex + " | F: " + minF.F);
                     selected = minFTile;
                     closed.Add(minFTile);
                     open.Remove(minFTile);
@@ -236,31 +281,27 @@ namespace GameName1.NPCs
             open.Clear();
             closed.Clear();
 
-            //System.Console.WriteLine ("debug2");
 
-            Tile end = target;
+            Tile end = targetTile;
             Tile current = end;
 
             while (current != start)
             {
-                //System.Console.WriteLine ("debug3");
-                //System.Console.WriteLine("started at: " + start.xIndex + " " + start.yIndex);
+
                 if (current.parent != null)
                 {
-                    //System.Console.WriteLine("current is: " + current.xIndex + " " + current.yIndex + " with parent: " + current.parent.xIndex + " " + current.parent.yIndex + "\n");
                     current = current.parent;
-                    //Static.Debug(path.Count+"");
+
                     if (path.Count > 100)
                     {
                         path.Reverse();
-                        path.Add(target);
+                        path.Add(targetTile);
                         return;
                     }
                     else
                     {
                         path.Add(current);
                     }
-                    // System.Console.Write("path node added - "); 
                 }
                 else return;
             }
@@ -269,15 +310,8 @@ namespace GameName1.NPCs
                 path.RemoveAt(path.Count - 1);
 
             path.Reverse();
-            path.Add(target);	// add player tile to path
+            path.Add(targetTile);	// add target tile to path
 
-            /*
-            foreach(Tile t in path) {
-                System.Console.Write("(" + t.xIndex + ", " + t.yIndex + ") -> "); 
-            }
-            */
-
-            // System.Console.WriteLine(); 
 
             /* intelligence: recalculate the path when they get to this node 
              * path[path.Count-1] means travel the whole path before recalculating = dumber AI
@@ -319,7 +353,6 @@ namespace GameName1.NPCs
             else
                 return null;
 
-            // System.Console.WriteLine(enemyTile.xIndex + rx + " " + enemyTile.yIndex);
         }
 
         public abstract override void collide(GameEntity entity);
@@ -387,7 +420,7 @@ namespace GameName1.NPCs
             game.decreaseNumberEnemies();
         }
 
-        public override void rotateToAngle(float angle) //animation is based on rotation which is used by both movement and aiming
+        public override void rotateToAngle(float angle)
         {
             base.rotateToAngle(angle);
 

@@ -91,9 +91,7 @@ namespace GameName1.NPCs
 			if (closest == null)
 				return;
 
-			// rotate to face player
-			float playerDirection = (float)Math.Atan2(closest.y-this.y, closest.x - this.x);
-			rotateToAngle(playerDirection);
+            setTarget(closest);
 
 			// attack with sword if in range
 			//if (closestDistance < this.width*1.7*50)
@@ -104,24 +102,8 @@ namespace GameName1.NPCs
 				gun.Use();
 			}
 
+            base.AI(gameTime);
 
-			// ** PATHFINDING ** 
-			playerTile = game.getTileFromIndex(game.getTileIndexFromLeftEdgeX(closest.x), game.getTileIndexFromTopEdgeY(closest.y));
-			enemyTile = game.getTileFromIndex(game.getTileIndexFromLeftEdgeX(this.x), game.getTileIndexFromTopEdgeY(this.y));
-
-			// findPath(1, playerTile);
-			// System.Console.WriteLine(timer + ": " + this.x + " " + this.y + " " + this.velocityX + " " + this.velocityY + " " + this.lastX + " " + " " + this.isMoving());
-
-			if ((this.getLastMovement() == new Vector2(0, 0) && this.sinceLastPathFind >= Static.BASIC_ENEMY_PATH_REFRESH) || 
-				path.Count == 0 || 
-				this.sinceLastPathFind >= Static.BASIC_ENEMY_PATH_REFRESH) {
-				if (playerTile.capacity < Math.Max(tilesWide, tilesHigh)) 
-					findPath(1, randomTile(playerTile, 1), null); 
-				else
-					findPath(1, playerTile, closest); 
-			}
-
-			update_moving();
 		}
 
 		public override void collide(GameEntity entity)

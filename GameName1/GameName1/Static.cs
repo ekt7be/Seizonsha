@@ -38,8 +38,8 @@ namespace GameName1
         //player stuff
         public static readonly float PLAYER_SPRITE_SCALE = 1f;
         public static readonly int PLAYER_INTERACTION_RANGE = 4;
-		public static readonly int PLAYER_HEIGHT = 32*1;
-		public static readonly int PLAYER_WIDTH = 32*1;
+		public static readonly int PLAYER_HEIGHT = 50;
+		public static readonly int PLAYER_WIDTH = 50;
 		public static readonly int PLAYER_MOVE_SPEED = 5;
         public static readonly int PLAYER_MAX_HEALTH = 100;
 		public static readonly int PLAYER_MAX_MANA = 100;
@@ -51,8 +51,8 @@ namespace GameName1
 		public static readonly int PLAYER_LEFTCLICK_SKILL_INDEX = 0; 
 
         //basic enemy
-		public static readonly int BASIC_ENEMY_HEIGHT = 32*1;
-		public static readonly int BASIC_ENEMY_WIDTH = 32*1;
+		public static readonly int BASIC_ENEMY_HEIGHT = 50;
+		public static readonly int BASIC_ENEMY_WIDTH = 50;
         public static readonly int BASIC_ENEMY_DAMAGE = 5;
 		public static readonly float BASIC_ENEMY_SPEED = 2f;
         public static readonly int BASIC_ENEMY_HEALTH = 30;

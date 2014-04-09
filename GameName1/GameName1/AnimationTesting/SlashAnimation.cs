@@ -1,4 +1,5 @@
-﻿using GameName1.Skills;
+﻿using GameName1.NPCs;
+using GameName1.Skills;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -29,7 +30,7 @@ namespace GameName1.AnimationTesting
 
         protected override void UpdateAnimation(GameEntity target, GameTime gameTime)
         {
-            if (target is Player)
+            if (target is Player || target is BasicEnemy)
             {
                 elapsed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
 
