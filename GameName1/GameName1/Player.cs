@@ -395,9 +395,9 @@ namespace GameName1
             int barLength = screenPortion.Width / 3;
             int barHeight = screenPortion.Height / 32;
 
-            int hpHeight = screenPortion.Height - 90 + barHeight;
-            int manaHeight = screenPortion.Height - 90 + barHeight * 2;
-            int xpHeight = screenPortion.Height - 90 + barHeight * 3;
+            int hpHeight = screenPortion.Height - barHeight * 3;
+            int manaHeight = screenPortion.Height - barHeight * 2;
+            int xpHeight = screenPortion.Height - barHeight;
             int offsetFromLeft = 20;
 
             double green = ((double)this.health / (double)this.maxHealth) * barLength;
@@ -504,8 +504,6 @@ namespace GameName1
                     }
                     if (!skill.Available())
                         spriteBatch.Draw(Static.PIXEL_THIN, skillBox, new Color(Color.DarkBlue, 0.10f));
-
-
                 }
 
                 /*
@@ -548,9 +546,7 @@ namespace GameName1
 
                         Rectangle unlockedSkillRect2 = new Rectangle(viewportBounds.Width / 2 + (skillbarIndex * (iconSize + 3) + (skillbarIndex2 * (iconSize / 2)) + (skillbarIndex2 * 3)) - 2 * iconSize - 6, viewportBounds.Height - iconSize - (iconSize / 2 + 3), iconSize / 2, iconSize / 2);
                         spriteBatch.Draw(Static.PIXEL_THIN, unlockedSkillRect2, new Color(Color.DarkOrchid, 0.1f));
-
                     }
-
                 }
             #endregion
             }
