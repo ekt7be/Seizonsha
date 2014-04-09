@@ -194,7 +194,7 @@ namespace GameName1
             Equip(fireball, Static.PLAYER_R2_SKILL_INDEX);
             addEquipable(fireball);
 
-            HealingTouch healingtouch = new HealingTouch(game, this, 50, 60);
+            HealingTouch healingtouch = new HealingTouch(game, this, -50, 60);
             Equip(healingtouch, Static.PLAYER_L2_SKILL_INDEX);
             addEquipable(healingtouch);
 
@@ -392,16 +392,21 @@ namespace GameName1
 
             Texture2D texture = Static.PIXEL_THIN;
 
-            int barLength = screenPortion.Width / 2;
+            int barLength = screenPortion.Width / 3;
             int barHeight = screenPortion.Height / 32;
+
+            int hpHeight = screenPortion.Height - 90 + barHeight;
+            int manaHeight = screenPortion.Height - 90 + barHeight * 2;
+            int xpHeight = screenPortion.Height - 90 + barHeight * 3;
+            int offsetFromLeft = 20;
 
             double green = ((double)this.health / (double)this.maxHealth) * barLength;
             double blue = ((double)this.mana / (double)this.maxMana) * barLength;
-            Rectangle hpMax = new Rectangle(20, 20, barLength, barHeight);
-            Rectangle hpRemaining = new Rectangle(20, 20, (int)green, barHeight);
-            Rectangle manaMax = new Rectangle(20, 20 + (barHeight), barLength, barHeight);
-            Rectangle manaRemaining = new Rectangle(20, 20 + (barHeight), (int)blue, barHeight);
-            Rectangle xp = new Rectangle(20, 20 + (barHeight * 2), barLength, barHeight);
+            Rectangle hpMax = new Rectangle(offsetFromLeft, hpHeight, barLength, barHeight);
+            Rectangle hpRemaining = new Rectangle(offsetFromLeft, hpHeight, (int)green, barHeight);
+            Rectangle manaMax = new Rectangle(offsetFromLeft, manaHeight, barLength, barHeight);
+            Rectangle manaRemaining = new Rectangle(offsetFromLeft, manaHeight, (int)blue, barHeight);
+            Rectangle xp = new Rectangle(offsetFromLeft, xpHeight, barLength, barHeight);
 
             // draw HP bar
             spriteBatch.Draw(texture, hpMax, Color.Red);
@@ -416,21 +421,21 @@ namespace GameName1
             spriteBatch.DrawString(
                 Static.SPRITEFONT_Calibri14,
                 "HP : " + this.health + "/" + this.maxHealth,
-                new Vector2(20, 20),
+                new Vector2(offsetFromLeft, hpHeight),
                 Color.White
             );
             // draw Mana text
             spriteBatch.DrawString(
                 Static.SPRITEFONT_Calibri14,
                 "Mana : " + (int)this.mana + "/" + this.maxMana,
-                new Vector2(20, 20 + (barHeight)),
+                new Vector2(offsetFromLeft, manaHeight),
                 Color.White
             );
             // draw XP text
             spriteBatch.DrawString(
                 Static.SPRITEFONT_Calibri14,
                 "XP : " + this.xp,
-                new Vector2(20, 20 + (barHeight * 2)),
+                new Vector2(offsetFromLeft, xpHeight),
                 Color.Black
             );
 
@@ -643,11 +648,6 @@ namespace GameName1
 
 		public void DownArrow()
 		{
-
-            if (SkillTreeOpen())
-            {
-                return;
-            }
 			if (selectingSkill2) {
 				skillSlots[skillbarIndex] = reducedUnlockedSkills[skillbarIndex2]; 
 				reducedUnlockedSkills.Clear();
@@ -669,11 +669,6 @@ namespace GameName1
 		public void UpArrow()
 		{
 
-            if (SkillTreeOpen())
-            {
-                return;
-            }
-
 			if (!selectingSkill) {
 				selectingSkill = true; 
 				skillbarIndex = 0; 
@@ -688,11 +683,6 @@ namespace GameName1
 
 		public void RightArrow()
 		{
-            if (SkillTreeOpen())
-            {
-                return;
-            }
-
 			if (selectingSkill2) {
 				if (skillbarIndex2 < inventory.Count-1-1)
 					skillbarIndex2++;
@@ -709,10 +699,6 @@ namespace GameName1
 
 		public void LeftArrow()
 		{
-            if (SkillTreeOpen())
-            {
-                return;
-            }
 			if (selectingSkill2) {
 				if (skillbarIndex2 > 0)
 					skillbarIndex2--;
