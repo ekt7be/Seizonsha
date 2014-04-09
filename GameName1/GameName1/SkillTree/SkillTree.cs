@@ -182,10 +182,7 @@ namespace GameName1.SkillTree
 
             }
 
-            if (currNode.getEquipable()!= null)
-            {
-                spriteBatch.DrawString(game.getSpriteFont(),currNode.getEquipable().getDescription(), new Vector2(30, bounds.Height - 300), Color.White);
-            }
+
 
             /*
             if (currNode.getEquipable() != null && currNode.isUnlocked())
@@ -194,17 +191,22 @@ namespace GameName1.SkillTree
             }
              * */
 
-            spriteBatch.DrawString(game.getSpriteFont(), "XP Available: "+ player.xp, new Vector2(10, 10), Color.White);
+            spriteBatch.DrawString(Static.SPRITEFONT_Calibri12, "XP Available: "+ player.xp, new Vector2(10, 10), Color.White);
 
+
+            if (currNode.getEquipable() != null)
+            {
+                spriteBatch.DrawString(Static.SPRITEFONT_Calibri12, currNode.getEquipable().getDescription(), new Vector2(30, bounds.Height - 150), Color.White);
+            }
 
             if (!currNode.isUnlocked() && currNode.Available(player))
             {
-                spriteBatch.DrawString(game.getSpriteFont(), "Press A(Enter) to Unlock", new Vector2(30, bounds.Height - 100), Color.White);
+                spriteBatch.DrawString(Static.SPRITEFONT_Calibri12, "Press A(Enter) to Unlock", new Vector2(30, bounds.Height - 100), Color.White);
             }
 
             if (!currNode.isUnlocked() && !currNode.Available(player))
             {
-                spriteBatch.DrawString(game.getSpriteFont(), "Not enough XP", new Vector2(30, bounds.Height - 100), Color.White);
+                spriteBatch.DrawString(Static.SPRITEFONT_Calibri12, "Not enough XP", new Vector2(30, bounds.Height - 100), Color.White);
             }
 
         }

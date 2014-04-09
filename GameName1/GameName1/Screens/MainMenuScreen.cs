@@ -20,7 +20,8 @@ namespace GameName1
     class MainMenuScreen : MenuScreen
     {
         #region Initialization
-
+        static int currentNumPlayers = 0;
+        MenuEntry numPlayersMenuEntry;
 
         /// <summary>
         /// Constructor fills in the menu contents.
@@ -30,16 +31,20 @@ namespace GameName1
         {
             // Create our menu entries.
             MenuEntry playGameMenuEntry = new MenuEntry("Play Game");
+            numPlayersMenuEntry = new MenuEntry(string.Empty);
             MenuEntry optionsMenuEntry = new MenuEntry("Options");
             MenuEntry exitMenuEntry = new MenuEntry("Exit");
+            SetMenuEntryText();
 
             // Hook up menu event handlers.
             playGameMenuEntry.Selected += PlayGameMenuEntrySelected;
             optionsMenuEntry.Selected += OptionsMenuEntrySelected;
             exitMenuEntry.Selected += OnCancel;
+            numPlayersMenuEntry.Selected += NumPlayersMenuEntrySelected;
 
             // Add entries to the menu.
             MenuEntries.Add(playGameMenuEntry);
+            MenuEntries.Add(numPlayersMenuEntry);
             MenuEntries.Add(optionsMenuEntry);
             MenuEntries.Add(exitMenuEntry);
         }
@@ -55,12 +60,24 @@ namespace GameName1
         {
             LoadingScreen.Load(ScreenManager, true, e.PlayerIndex,
                                new GameplayScreen());
-
-
 			game.initializeVariables();
             game.spawnInitialEntities();
         }
 
+        void SetMenuEntryText()
+        {
+            numPlayersMenuEntry.Text = "Number of Players: " + (currentNumPlayers + 1);
+            Static.NUM_PLAYERS = currentNumPlayers + 1;
+        }
+
+        /// <summary>
+        /// Event handler for when the numplayers menu entry is selected.
+        /// </summary>
+        void NumPlayersMenuEntrySelected(object sender, PlayerIndexEventArgs e)
+        {
+            currentNumPlayers = (currentNumPlayers + 1) % 4;
+            SetMenuEntryText();
+        }
 
         /// <summary>
         /// Event handler for when the Options menu entry is selected.

@@ -129,8 +129,8 @@ namespace GameName1
         //Skilltree
         public static readonly int SKILL_TREE_WEIGHT_UNLOCKED = 1;
         public static readonly int SKILL_TREE_WEIGHT_LOCKED = 0;
-        public static readonly int SKILL_TREE_NODE_WIDTH = 100;
-        public static readonly int SKILL_TREE_NODE_HEIGHT = 100;
+        public static readonly int SKILL_TREE_NODE_WIDTH = 70;
+        public static readonly int SKILL_TREE_NODE_HEIGHT = 70;
         public static readonly int SKILL_TREE_MOVEMENT_RECHARGE = 20;
 
         //Firelance
