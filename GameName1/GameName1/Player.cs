@@ -20,7 +20,7 @@ namespace GameName1
         public PlayerIndex playerIndex { get; set; }
         private bool dead;
         private Equipable[] skillSlots;
-        private List<Equipable> inventory;
+		private List<Equipable> inventory;	// list of all usable weapons, skills, and items 
 		public SkillTree.SkillTree skilltree;
         public float manaRegen;
         private float mana;
@@ -170,17 +170,40 @@ namespace GameName1
             //Equip(new Sword(game, this, 300, 10), Static.PLAYER_R2_SKILL_INDEX);
             //Equip(new Blizzard(game, this, 0, 200, 200, 100), Static.PLAYER_R2_SKILL_INDEX);
 
-            Equip(new Gun(game, this, 10, 30, 15), Static.PLAYER_L1_SKILL_INDEX);
+           // Equip(new Gun(game, this, 10, 30, 15), Static.PLAYER_L1_SKILL_INDEX);
+
+            Gun gun = new Gun(game, this, 10, 30, 15);
+            Equip(gun, Static.PLAYER_L1_SKILL_INDEX);
+            addEquipable(gun);
+
+            Sword sword = new Sword(game, this, 30, 40);
+            Equip(sword, Static.PLAYER_R1_SKILL_INDEX);
+            addEquipable(sword);
+
+            Fireball fireball = new Fireball(game, this, 40, 30, 10);
+            Equip(fireball, Static.PLAYER_R2_SKILL_INDEX);
+            addEquipable(fireball);
+
+            HealingTouch healingtouch = new HealingTouch(game, this, -50, 60);
+            Equip(healingtouch, Static.PLAYER_L2_SKILL_INDEX);
+            addEquipable(healingtouch);
+
+            /*
+
             Equip(new Sword(game, this, 30, 40), Static.PLAYER_R1_SKILL_INDEX);
             Equip(new Fireball(game, this, 40, 30, 10), Static.PLAYER_R2_SKILL_INDEX);
             Equip(new HealingTouch(game, this, -50, 60), Static.PLAYER_L2_SKILL_INDEX);
+             * */
 
+
+            /*
 			for (int s = 0; s < skillSlots.Length; s++) {
 				Skill skill = (Skill)skillSlots[s];
 	
 				if (!unlockedSkills.Contains(skill)) 
 					unlockedSkills.Add(skill); 
 			}
+            */
 
 
             this.maxMana = Static.PLAYER_MAX_MANA;
@@ -337,13 +360,13 @@ namespace GameName1
             //and the dimensions of their portion of the screen to draw their screen.
             //Interface will be drawn on top along with any menus including skill tree
 
-			this.viewportBounds = screenPortion; 
+            this.viewportBounds = screenPortion;
 
             if (currentInteractable != null)
             {
                 if (currentInteractable is GameEntity)
                 {
-                    spriteBatch.DrawString(game.getSpriteFont(), "Press A(Enter) to " + currentInteractable.Message(this), new Vector2(screenPortion.Width/2, screenPortion.Height/2), Color.White);
+                    spriteBatch.DrawString(game.getSpriteFont(), "Press A(Enter) to " + currentInteractable.Message(this), new Vector2(screenPortion.Width / 2, screenPortion.Height / 2), Color.White);
                     //(GameEntity)currentInteractable
                 }
             }
@@ -351,7 +374,7 @@ namespace GameName1
             if (SkillTreeOpen())
             {
                 DrawSkillTree(screenPortion, spriteBatch);
-				return;
+                return;
             }
 
             //draw Wave number
@@ -359,138 +382,146 @@ namespace GameName1
 
             Texture2D texture = Static.PIXEL_THIN;
 
-			int barLength = screenPortion.Width / 2; 
-			int barHeight = screenPortion.Height / 32; 
+            int barLength = screenPortion.Width / 2;
+            int barHeight = screenPortion.Height / 32;
 
-			double green = ((double)this.health/(double)this.maxHealth) * barLength;
+            double green = ((double)this.health / (double)this.maxHealth) * barLength;
             double blue = ((double)this.mana / (double)this.maxMana) * barLength;
-			Rectangle hpMax = new Rectangle(20, 20, barLength, barHeight);
-			Rectangle hpRemaining = new Rectangle(20, 20, (int)green, barHeight);
-			Rectangle manaMax = new Rectangle (20, 20+(barHeight), barLength, barHeight);
-            Rectangle manaRemaining = new Rectangle(20, 20 + (barHeight), (int) blue, barHeight);
-			Rectangle xp = new Rectangle (20, 20+(barHeight*2), barLength, barHeight); 
+            Rectangle hpMax = new Rectangle(20, 20, barLength, barHeight);
+            Rectangle hpRemaining = new Rectangle(20, 20, (int)green, barHeight);
+            Rectangle manaMax = new Rectangle(20, 20 + (barHeight), barLength, barHeight);
+            Rectangle manaRemaining = new Rectangle(20, 20 + (barHeight), (int)blue, barHeight);
+            Rectangle xp = new Rectangle(20, 20 + (barHeight * 2), barLength, barHeight);
 
-			// draw HP bar
-			spriteBatch.Draw(texture, hpMax, Color.Red); 
-			spriteBatch.Draw(texture, hpRemaining, Color.Green); 
-			// draw Mana bar
-			spriteBatch.Draw(texture, manaMax, Color.LightBlue);
-			spriteBatch.Draw(texture, manaRemaining, Color.Blue);
-			// draw XP bar
-			spriteBatch.Draw(texture, xp, Color.Yellow); 
-            
-			// draw HP text
-			spriteBatch.DrawString(
-				Static.SPRITEFONT_Calibri14, 
-				"HP : " + this.health + "/" + this.maxHealth, 
-				new Vector2(20, 20), 
-				Color.White
-			);
-			// draw Mana text
-			spriteBatch.DrawString(
-				Static.SPRITEFONT_Calibri14, 
-				"Mana : " + (int)this.mana + "/" + this.maxMana, 
-				new Vector2(20, 20+(barHeight)), 
-				Color.White
-			);
-			// draw XP text
-			spriteBatch.DrawString(
-				Static.SPRITEFONT_Calibri14, 
-				"XP : " + this.xp, 
-				new Vector2(20, 20+(barHeight*2)), 
-				Color.Black
-			);
+            // draw HP bar
+            spriteBatch.Draw(texture, hpMax, Color.Red);
+            spriteBatch.Draw(texture, hpRemaining, Color.Green);
+            // draw Mana bar
+            spriteBatch.Draw(texture, manaMax, Color.LightBlue);
+            spriteBatch.Draw(texture, manaRemaining, Color.Blue);
+            // draw XP bar
+            spriteBatch.Draw(texture, xp, Color.Yellow);
 
-			// draw skills text
-			string displaySkills = "L1(1 key): " + this.getSkill(Static.PLAYER_L1_SKILL_INDEX).getName() + "\n" +
-				"L2(2 key): " + this.getSkill(Static.PLAYER_L2_SKILL_INDEX).getName() + "\n" +
-				"R1(3 key): " + this.getSkill(Static.PLAYER_R1_SKILL_INDEX).getName() + "\n" +
-				"R2(4 key): " + this.getSkill(Static.PLAYER_R2_SKILL_INDEX).getName() + "\n" +
-                "P:  Pause/Quit Menu (temp)" ;
-			spriteBatch.DrawString(Static.SPRITEFONT_Calibri10, displaySkills, new Vector2(20, 100), Color.White);
+            // draw HP text
+            spriteBatch.DrawString(
+                Static.SPRITEFONT_Calibri14,
+                "HP : " + this.health + "/" + this.maxHealth,
+                new Vector2(20, 20),
+                Color.White
+            );
+            // draw Mana text
+            spriteBatch.DrawString(
+                Static.SPRITEFONT_Calibri14,
+                "Mana : " + (int)this.mana + "/" + this.maxMana,
+                new Vector2(20, 20 + (barHeight)),
+                Color.White
+            );
+            // draw XP text
+            spriteBatch.DrawString(
+                Static.SPRITEFONT_Calibri14,
+                "XP : " + this.xp,
+                new Vector2(20, 20 + (barHeight * 2)),
+                Color.Black
+            );
 
-			#region SKILL BAR
-			int iconSize = 75; 
+            // draw skills text
+            string displaySkills = "L1(1 key): " + this.getSkill(Static.PLAYER_L1_SKILL_INDEX).getName() + "\n" +
+                "L2(2 key): " + this.getSkill(Static.PLAYER_L2_SKILL_INDEX).getName() + "\n" +
+                "R1(3 key): " + this.getSkill(Static.PLAYER_R1_SKILL_INDEX).getName() + "\n" +
+                "R2(4 key): " + this.getSkill(Static.PLAYER_R2_SKILL_INDEX).getName() + "\n" +
+                "P:  Pause/Quit Menu (temp)";
+            spriteBatch.DrawString(Static.SPRITEFONT_Calibri10, displaySkills, new Vector2(20, 100), Color.White);
 
-			for (int s = 0; s < skillSlots.Length; s++) {
-				Rectangle skillBox = new Rectangle(screenPortion.Width/2-(iconSize*4)+(s*(iconSize+3)), screenPortion.Height-iconSize, iconSize, iconSize);
+            #region SKILL BAR
+			int iconSize = 100;
 
-				Skill skill = (Skill)skillSlots[s];
-				Texture2D icon = SkillTree.SkillTree.nodeTextures["Blank"]; 
+            for (int s = 0; s < skillSlots.Length; s++)
+            {
+                Rectangle skillBox = new Rectangle(screenPortion.Width / 2 - (iconSize * 4) + (s * (iconSize + 3)), screenPortion.Height - iconSize, iconSize, iconSize);
 
-				if (SkillTree.SkillTree.nodeTextures.ContainsKey(skill.getName())) {
-					icon = SkillTree.SkillTree.nodeTextures[skill.getName()];
+                Skill skill = (Skill)skillSlots[s];
+                Texture2D icon = SkillTree.SkillTree.nodeTextures["Blank"];
+
+                if (SkillTree.SkillTree.nodeTextures.ContainsKey(skill.getName()))
+                {
+                    icon = SkillTree.SkillTree.nodeTextures[skill.getName()];
+                }
+
+                spriteBatch.Draw(icon, skillBox, Color.White);
+
+                if (!skill.Available())
+                {
+                    if (skill.recharged < skill.rechargeTime)
+                    {
+                        double coolDownPercentage = (double)skill.recharged / skill.rechargeTime;
+
+                        //System.Console.WriteLine(skill.recharged + " " + skill.rechargeTime + " " + (double)skill.recharged/skill.rechargeTime );
+
+                        Rectangle cooldown = new Rectangle(screenPortion.Width / 2 - (iconSize * 4) + (s * (iconSize + 3)), screenPortion.Height - iconSize, iconSize, iconSize - (int)(iconSize * coolDownPercentage));
+
+                        //spriteBatch.Draw(icon, skillBox, Color.White);
+
+                        spriteBatch.Draw(Static.PIXEL_THIN, cooldown, new Color(Color.Black, 0.5f));
+
+                        spriteBatch.DrawString(
+                            game.getSpriteFont(),
+                            skill.rechargeTime - skill.recharged + "",
+                            new Vector2(screenPortion.Width / 2 - (iconSize * 4) + (s * (iconSize + 3)), screenPortion.Height - iconSize),
+                            Color.White
+                        );
+                    }
+                    if (skill.manaCost > this.mana)
+                        spriteBatch.Draw(Static.PIXEL_THIN, skillBox, new Color(Color.DarkBlue, 0.10f));
+
+
+                }
+
+                /*
+
+				foreach (Skill sk in skilltree.allUnlockedSkills())  {
+					if (!inventory.Contains(sk))
+						inventory.Add(sk); 
 				}
-					
-				spriteBatch.Draw(icon, skillBox, Color.White);
+                 * */
 
-				if (!skill.Available()) {
-					if (skill.recharged < skill.rechargeTime) {
-						double coolDownPercentage = (double)skill.recharged/skill.rechargeTime; 
+                if (selectingSkill)
+                {
+                    highlightRect = new Rectangle(viewportBounds.Width / 2 - (iconSize * 4) + (skillbarIndex * (iconSize + 3)), viewportBounds.Height - iconSize, iconSize, iconSize);
 
-						//System.Console.WriteLine(skill.recharged + " " + skill.rechargeTime + " " + (double)skill.recharged/skill.rechargeTime );
+                    spriteBatch.Draw(Static.PIXEL_THIN, highlightRect, new Color(Color.DarkOrchid, 0.1f));
 
-						Rectangle cooldown = new Rectangle(screenPortion.Width/2-(iconSize*4)+(s*(iconSize+3)), screenPortion.Height-iconSize, iconSize , iconSize-(int)(iconSize*coolDownPercentage));
+                    if (selectingSkill2 && inventory.Count > 0)
+                    {
 
-						//spriteBatch.Draw(icon, skillBox, Color.White);
+                        int j = 0;
 
-						spriteBatch.Draw(Static.PIXEL_THIN, cooldown, new Color(Color.Black, 0.5f));
+                        foreach (Skill unlockedSkill in inventory)
+                        {
 
-						spriteBatch.DrawString(
-							game.getSpriteFont(), 
-							skill.rechargeTime-skill.recharged + "", 
-							new Vector2(screenPortion.Width/2-(iconSize*4)+(s*(iconSize+3)), screenPortion.Height-iconSize),
-							Color.White
-						);
-					}
-					if (skill.manaCost > this.mana) 
-						spriteBatch.Draw(Static.PIXEL_THIN, skillBox, new Color(Color.DarkBlue, 0.10f));
+                            if (unlockedSkill != skillSlots[skillbarIndex])
+                            {
 
+                                if (!reducedUnlockedSkills.Contains(unlockedSkill))
+                                    reducedUnlockedSkills.Add(unlockedSkill);
+                                //System.Console.WriteLine(unlockedSkill.getName()); 
 
-				}
+                                Rectangle unlockedSkillRect = new Rectangle(viewportBounds.Width / 2 - (iconSize * 4) + (skillbarIndex * (iconSize + 3) + (j * (iconSize / 2)) + (j * 3)), viewportBounds.Height - iconSize - (iconSize / 2 + 3), iconSize / 2, iconSize / 2);
+                                spriteBatch.Draw(SkillTree.SkillTree.nodeTextures[unlockedSkill.getName()], unlockedSkillRect, Color.White);
+                                j++;
+                            }
 
-				foreach (Skill sk in skilltree.allUnlockedSkills()) 
-					if (!unlockedSkills.Contains(sk))
-						unlockedSkills.Add(sk); 
-				}
+                        }
 
+                        //System.Console.WriteLine(+ skillbarIndex + "." + skillbarIndex2); 
 
-				if (selectingSkill) {
-					highlightRect = new Rectangle(viewportBounds.Width/2-(iconSize*4)+(skillbarIndex*(iconSize+3)), viewportBounds.Height-iconSize, iconSize, iconSize);
+                        Rectangle unlockedSkillRect2 = new Rectangle(viewportBounds.Width / 2 - (iconSize * 4) + (skillbarIndex * (iconSize + 3) + (skillbarIndex2 * (iconSize / 2)) + (skillbarIndex2 * 3)), viewportBounds.Height - iconSize - (iconSize / 2 + 3), iconSize / 2, iconSize / 2);
+                        spriteBatch.Draw(Static.PIXEL_THIN, unlockedSkillRect2, new Color(Color.DarkOrchid, 0.1f));
 
-					spriteBatch.Draw(Static.PIXEL_THIN, highlightRect, new Color(Color.DarkOrchid, 0.1f));
+                    }
 
-					if (selectingSkill2 && unlockedSkills.Count > 0) {
-		
-					int j = 0; 
-
-						foreach (Skill unlockedSkill in unlockedSkills) {
-
-						if (unlockedSkill != skillSlots[skillbarIndex]) {
-
-							if (!reducedUnlockedSkills.Contains(unlockedSkill))
-								reducedUnlockedSkills.Add(unlockedSkill); 
-								//System.Console.WriteLine(unlockedSkill.getName()); 
-
-							Rectangle unlockedSkillRect = new Rectangle(viewportBounds.Width/2-(iconSize*4)+(skillbarIndex*(iconSize+3) + (j*(iconSize/2)) + (j*3)), viewportBounds.Height-iconSize-(iconSize/2+3), iconSize/2, iconSize/2);
-								spriteBatch.Draw(SkillTree.SkillTree.nodeTextures[unlockedSkill.getName()], unlockedSkillRect, Color.White);
-								j++; 
-						}
-					
-					}
-
-					//System.Console.WriteLine(+ skillbarIndex + "." + skillbarIndex2); 
-
-
-					Rectangle unlockedSkillRect2 = new Rectangle(viewportBounds.Width/2-(iconSize*4)+(skillbarIndex *(iconSize+3) + (skillbarIndex2*(iconSize/2)) + (skillbarIndex2*3)), viewportBounds.Height-iconSize-(iconSize/2+3), iconSize/2, iconSize/2);
-					spriteBatch.Draw(Static.PIXEL_THIN, unlockedSkillRect2, new Color(Color.DarkOrchid, 0.1f));
-
-				}
-	
-			}
-			#endregion
-
-				          
+                }
+            #endregion
+            }
         }
 
 
@@ -587,9 +618,19 @@ namespace GameName1
 		public void DownArrow()
 		{
 			if (selectingSkill2) {
+				skillSlots[skillbarIndex] = reducedUnlockedSkills[skillbarIndex2]; 
+				reducedUnlockedSkills.Clear();
+				selectingSkill2 = false; 
+				skillbarIndex2 = 0; 
+				return;
+			}
+			/*
+
+			if (selectingSkill2) {
 				selectingSkill2 = false; 
 				return; 
 			}
+			*/
 
 			selectingSkill = false; 
 		}
@@ -612,7 +653,7 @@ namespace GameName1
 		public void RightArrow()
 		{
 			if (selectingSkill2) {
-				if (skillbarIndex2 < unlockedSkills.Count-1-1)
+				if (skillbarIndex2 < inventory.Count-1-1)
 					skillbarIndex2++;
 				else
 					skillbarIndex2 = 0;
@@ -631,7 +672,7 @@ namespace GameName1
 				if (skillbarIndex2 > 0)
 					skillbarIndex2--;
 				else
-					skillbarIndex2 = unlockedSkills.Count-1-1;
+					skillbarIndex2 = inventory.Count-1-1;
 				return; 
 			}
 
