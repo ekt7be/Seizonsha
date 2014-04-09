@@ -73,7 +73,7 @@ namespace GameName1.SkillTree
             
 
             //magic path
-			SkillTreeNode FireballNode = new SkillTreeNode(this, startNode.getX(), startNode.getY() + Static.SKILL_TREE_NODE_HEIGHT*2, nodeTextures[Static.FIREBALL_NAME], new Fireball(game, player, 50, 20, 100), 0); // 500
+			SkillTreeNode FireballNode = new SkillTreeNode(this, startNode.getX(), startNode.getY() + Static.SKILL_TREE_NODE_HEIGHT*2, nodeTextures[Static.FIREBALL_NAME], new Fireball(game, player, 50, 20, 100), 500); // 500
             nodes.Add(FireballNode);
             startNode.attachBottom(FireballNode, Static.SKILL_TREE_WEIGHT_LOCKED);
 
@@ -81,7 +81,7 @@ namespace GameName1.SkillTree
             nodes.Add(ManaRegenPlusNode);
             FireballNode.attachLeft(ManaRegenPlusNode, Static.SKILL_TREE_WEIGHT_LOCKED);
 
-			SkillTreeNode FirelanceNode = new SkillTreeNode(this, FireballNode.getX() + Static.SKILL_TREE_NODE_WIDTH * 2, FireballNode.getY() + Static.SKILL_TREE_NODE_WIDTH * 2, nodeTextures[Static.FIRELANCE_NAME], new FireLance(game,player,Static.FIRELANCE_DAMAGE, 30), 0); //1500
+			SkillTreeNode FirelanceNode = new SkillTreeNode(this, FireballNode.getX() + Static.SKILL_TREE_NODE_WIDTH * 2, FireballNode.getY() + Static.SKILL_TREE_NODE_WIDTH * 2, nodeTextures[Static.FIRELANCE_NAME], new FireLance(game,player,Static.FIRELANCE_DAMAGE, 30), 1500); //1500
             nodes.Add(FirelanceNode);
             FireballNode.attachRight(FirelanceNode, Static.SKILL_TREE_WEIGHT_LOCKED);
 
@@ -187,11 +187,15 @@ namespace GameName1.SkillTree
                 spriteBatch.DrawString(game.getSpriteFont(),currNode.getEquipable().getDescription(), new Vector2(30, bounds.Height - 300), Color.White);
             }
 
-
+            /*
             if (currNode.getEquipable() != null && currNode.isUnlocked())
             {
                 spriteBatch.DrawString(game.getSpriteFont(), "Press L1(1), L2(2), R1(3), or R2(4) to Equip", new Vector2(30, bounds.Height - 100), Color.White);
             }
+             * */
+
+            spriteBatch.DrawString(game.getSpriteFont(), "XP Available: "+ player.xp, new Vector2(10, 10), Color.White);
+
 
             if (!currNode.isUnlocked() && currNode.Available(player))
             {

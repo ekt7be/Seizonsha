@@ -398,16 +398,21 @@ namespace GameName1
 
             Texture2D texture = Static.PIXEL_THIN;
 
-            int barLength = screenPortion.Width / 2;
+            int barLength = screenPortion.Width / 3;
             int barHeight = screenPortion.Height / 32;
+
+            int hpHeight = screenPortion.Height - 90 + barHeight;
+            int manaHeight = screenPortion.Height - 90 + barHeight * 2;
+            int xpHeight = screenPortion.Height - 90 + barHeight * 3;
+            int offsetFromLeft = 20;
 
             double green = ((double)this.health / (double)this.maxHealth) * barLength;
             double blue = ((double)this.mana / (double)this.maxMana) * barLength;
-            Rectangle hpMax = new Rectangle(20, 20, barLength, barHeight);
-            Rectangle hpRemaining = new Rectangle(20, 20, (int)green, barHeight);
-            Rectangle manaMax = new Rectangle(20, 20 + (barHeight), barLength, barHeight);
-            Rectangle manaRemaining = new Rectangle(20, 20 + (barHeight), (int)blue, barHeight);
-            Rectangle xp = new Rectangle(20, 20 + (barHeight * 2), barLength, barHeight);
+            Rectangle hpMax = new Rectangle(offsetFromLeft, hpHeight, barLength, barHeight);
+            Rectangle hpRemaining = new Rectangle(offsetFromLeft, hpHeight, (int)green, barHeight);
+            Rectangle manaMax = new Rectangle(offsetFromLeft, manaHeight, barLength, barHeight);
+            Rectangle manaRemaining = new Rectangle(offsetFromLeft, manaHeight, (int)blue, barHeight);
+            Rectangle xp = new Rectangle(offsetFromLeft, xpHeight, barLength, barHeight);
 
             // draw HP bar
             spriteBatch.Draw(texture, hpMax, Color.Red);
@@ -422,21 +427,21 @@ namespace GameName1
             spriteBatch.DrawString(
                 Static.SPRITEFONT_Calibri14,
                 "HP : " + this.health + "/" + this.maxHealth,
-                new Vector2(20, 20),
+                new Vector2(offsetFromLeft, hpHeight),
                 Color.White
             );
             // draw Mana text
             spriteBatch.DrawString(
                 Static.SPRITEFONT_Calibri14,
                 "Mana : " + (int)this.mana + "/" + this.maxMana,
-                new Vector2(20, 20 + (barHeight)),
+                new Vector2(offsetFromLeft, manaHeight),
                 Color.White
             );
             // draw XP text
             spriteBatch.DrawString(
                 Static.SPRITEFONT_Calibri14,
                 "XP : " + this.xp,
-                new Vector2(20, 20 + (barHeight * 2)),
+                new Vector2(offsetFromLeft, xpHeight),
                 Color.Black
             );
 
@@ -466,6 +471,18 @@ namespace GameName1
                 }
 
                 spriteBatch.Draw(icon, skillBox, Color.White);
+                String Button;
+
+                if (s == 0){
+                    Button = "1 (L1)";
+                } else if (s ==1){
+                    Button = "2 (L2)";
+                } else if (s ==2 ){
+                    Button = "3 (R1)";
+                } else {
+                    Button = "4 (R2)";
+                }
+                spriteBatch.DrawString(Static.SPRITEFONT_Calibri10, Button, new Vector2(skillBox.Left, skillBox.Top), Color.White);
 
                 if (!skill.Available())
                 {
@@ -481,14 +498,17 @@ namespace GameName1
 
                         spriteBatch.Draw(Static.PIXEL_THIN, cooldown, new Color(Color.Black, 0.5f));
 
+                        //to draw cooldown time
+                        /*
                         spriteBatch.DrawString(
                             game.getSpriteFont(),
                             skill.rechargeTime - skill.recharged + "",
                             new Vector2(screenPortion.Width / 2 + (s * (iconSize + 3)) - 2 * iconSize - 6, screenPortion.Height - iconSize),
                             Color.White
                         );
+                         * */
                     }
-                    if (skill.manaCost > this.mana)
+                    if (!skill.Available())
                         spriteBatch.Draw(Static.PIXEL_THIN, skillBox, new Color(Color.DarkBlue, 0.10f));
 
 

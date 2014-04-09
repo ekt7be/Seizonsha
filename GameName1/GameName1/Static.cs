@@ -34,6 +34,9 @@ namespace GameName1
 
 		public static int NUM_PLAYERS = 1;
 
+        public static int SECONDS_BETWEEN_WAVE = 30;
+
+        public static float TIME_BETWEEN_SPAWN = 2000f;
 
         //player stuff
         public static readonly float PLAYER_SPRITE_SCALE = 1f;

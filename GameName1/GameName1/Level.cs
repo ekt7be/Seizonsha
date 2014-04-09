@@ -18,6 +18,9 @@ namespace GameName1
         private List<SpawnTile> spawnPoints;
         private Random rnd = new Random();
 
+
+        private float sinceLastSpawn;
+
         public Queue<GameEntity> enemyQueue;
 
 
@@ -32,7 +35,7 @@ namespace GameName1
 
         private void initialize()
         {
-
+            this.sinceLastSpawn = 0f;
         }
 
 
@@ -48,9 +51,13 @@ namespace GameName1
             return spawnPoints;
         }
 
-        public void Update()
+        public void Update(GameTime gameTime)
         {
-            TrySpawnEnemy();
+            sinceLastSpawn += gameTime.ElapsedGameTime.Milliseconds;
+            if (this.sinceLastSpawn > Static.TIME_BETWEEN_SPAWN)
+            {
+                TrySpawnEnemy();
+            }
         }
 
         private void TrySpawnEnemy()
@@ -65,6 +72,7 @@ namespace GameName1
             if (!game.willCollide(enemy, (int)spawnPoint.X, (int)spawnPoint.Y)){
                 game.Spawn(enemy, (int)spawnPoint.X, (int)spawnPoint.Y);
                 enemyQueue.Dequeue();
+                this.sinceLastSpawn = 0f;
             }
         }
 

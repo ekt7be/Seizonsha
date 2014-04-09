@@ -40,7 +40,8 @@ namespace GameName1
 		FPSCounterComponent fps;
 		private bool showFPS = false; 
 
-		private float sinceLastWaveCleared; 
+		private float sinceLastWaveCleared;
+
 	
         // By preloading any assets used by UI rendering, we avoid framerate glitches
         // when they suddenly need to be loaded in the middle of a menu transition.
@@ -473,13 +474,13 @@ namespace GameName1
             }
 			else if (waveCleared) {
                
-				if (sinceLastWaveCleared >= 20000) {
+				if (sinceLastWaveCleared >= Static.SECONDS_BETWEEN_WAVE* 1000) {
 					WaveBegin();
 				}
 			}
 
 
-            currLevel.Update();
+            currLevel.Update(gameTime);
 
             //update all entities including players
             foreach (GameEntity entity in entities)
@@ -644,10 +645,11 @@ namespace GameName1
 			spriteBatch.Begin();
 
 				if (waveCleared)
-					spriteBatch.DrawString(Static.SPRITE_FONT, 20-(int)sinceLastWaveCleared/1000+
+					spriteBatch.DrawString(Static.SPRITE_FONT, Static.SECONDS_BETWEEN_WAVE-(int)sinceLastWaveCleared/1000+
 					" seconds until next wave...\n" +
-					"press space(start) to open skill tree!",
-					new Vector2(defaultView.Width-390, defaultView.Height-50), Color.White); 
+					"press space(start) to open skill tree! \n" +
+                    "use arrow keys (DPad) to equip skills and weapons",
+					new Vector2(defaultView.Width-390, defaultView.Height-150), Color.White); 
 			spriteBatch.End();
 
         }

@@ -129,7 +129,7 @@ namespace GameName1.NPCs
             else
             {
                 //face target
-                float targetDirection = (float)Math.Atan2(target.y - this.y, target.x - this.x);
+                float targetDirection = (float)Math.Atan2(target.getCenterY() - this.getCenterY(), target.getCenterX() - this.getCenterX());
                 rotateToAngle(targetDirection);
 
 

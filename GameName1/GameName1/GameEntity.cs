@@ -353,6 +353,10 @@ namespace GameName1
         }
 
         public virtual void rotateToAngle(float angle){
+            if (isFrozen())
+            {
+                return;
+            }
             this.direction = angle;
             vectorDirection = new Vector2((float)Math.Cos(direction), (float)Math.Sin(direction));
 

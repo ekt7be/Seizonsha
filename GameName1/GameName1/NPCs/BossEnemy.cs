@@ -12,8 +12,6 @@ namespace GameName1.NPCs
 
 	class BossEnemy : Enemy, AI
 	{
-		Tile enemyTile; 
-		Tile playerTile; 
 
 
 		double closestDistance;
@@ -27,10 +25,6 @@ namespace GameName1.NPCs
 		private Sword sword;
 		private Gun gun; 
 
-		HashSet<Tile> closed;
-		HashSet<Tile> open;
-
-		Random random; 
 
 		private static readonly int UP_ANIMATION = 0;
 		private static readonly int DOWN_ANIMATION = 2;
