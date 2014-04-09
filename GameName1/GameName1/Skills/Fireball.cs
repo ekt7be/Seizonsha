@@ -36,7 +36,7 @@ namespace GameName1.Skills
             int bulletWidth = 20;
             int bulletHeight = 20;
          
-            Rectangle fireballBounds = new Rectangle((int)(user.getCenterX()), (int)(user.getCenterY()), bulletWidth, bulletHeight);
+            Rectangle fireballBounds = new Rectangle((int)(user.getCenterX() - bulletWidth/2), (int)(user.getCenterY() - bulletHeight/2), bulletWidth, bulletHeight);
             ExplodingBullet fireball = EntityFactory.getExplodingBullet(game, user, Seizonsha.spriteMappings[Static.SPRITE_FIREBALL], this, fireballBounds, damage, damageType, bulletSpeed, this.bufferedDirection);
             game.Spawn(fireball, fireballBounds.Left, fireballBounds.Top);
 
