@@ -10,6 +10,9 @@
 
 #region Using Statements
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Media;
 #endregion
 
 namespace GameName1
@@ -20,9 +23,11 @@ namespace GameName1
     class MainMenuScreen : MenuScreen
     {
         #region Initialization
+        ContentManager Content;
         static int currentNumPlayers = 0;
         MenuEntry numPlayersMenuEntry;
-
+        SoundEffect menuSound;
+        SoundEffectInstance menuSoundLoop;
         /// <summary>
         /// Constructor fills in the menu contents.
         /// </summary>
@@ -51,6 +56,16 @@ namespace GameName1
 
         #endregion
 
+        public override void LoadContent()
+        {
+            if (Content == null)
+                Content = new ContentManager(ScreenManager.Game.Services, "Content");
+
+            menuSound = Content.Load<SoundEffect>("sound/old_legend");
+            menuSoundLoop = menuSound.CreateInstance();
+            menuSoundLoop.IsLooped = true;
+            menuSoundLoop.Play();
+        }
         #region Handle Input
 
         /// <summary>
@@ -62,6 +77,9 @@ namespace GameName1
                                new GameplayScreen());
 			game.initializeVariables();
             game.spawnInitialEntities();
+            menuSoundLoop.Stop();
+            game.gameSoundLoop.Play();
+
         }
 
         void SetMenuEntryText()

@@ -66,7 +66,7 @@ namespace GameName1
 
             //simulate loading content
             Thread.Sleep(0);
-
+ 
             // once the load has finished, we use ResetElapsedTime to tell the game's
             // timing mechanism that we have just finished a very long frame, and that
             // it should not try to catch up.

@@ -75,8 +75,10 @@ namespace GameName1
         /// </summary>
         void ConfirmQuitMessageBoxAccepted(object sender, PlayerIndexEventArgs e)
         {
+            game.gameSoundLoop.Stop();
             LoadingScreen.Load(ScreenManager, false, null, new BackgroundScreen(),
                                                            new MainMenuScreen());
+            
         }
 
         #endregion
