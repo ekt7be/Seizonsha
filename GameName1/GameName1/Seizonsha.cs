@@ -170,6 +170,9 @@ namespace GameName1
 			SkillTree.SkillTree.nodeTextures.Add(Static.SWORD_NAME, swordicon);
 			SkillTree.SkillTree.nodeTextures.Add(Static.GUN_NAME, gunicon);
 			SkillTree.SkillTree.nodeTextures.Add(Static.FIRELANCE_NAME, firelanceicon);
+			SkillTree.SkillTree.nodeTextures.Add(Static.BLIZZARD_NAME, nodeRect);
+			SkillTree.SkillTree.nodeTextures.Add(Static.TELEPORT_NAME, nodeRect);
+
 
 
 			#endregion
@@ -242,15 +245,17 @@ namespace GameName1
                 Spawn(players[i], 500, 100 + (i * 40));
             }
 
-            players[0].keyboard = true;
+			players[0].keyboard = true;
 
             //below code makes player two controlled by keyboard.  just comment player 1s flag
-            /*
+            
+			/*
             if (Static.NUM_PLAYERS > 1)
             {
                 players[1].keyboard = true;
             }
-             * */
+            */
+             
 
 
 			this.difficulty = 5;
