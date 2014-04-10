@@ -32,14 +32,14 @@ namespace GameName1.Skills
             
             Rectangle bulletBounds = new Rectangle((int)(user.getCenterX() - bulletWidth/2), (int)(user.getCenterY() - bulletHeight/2), bulletWidth, bulletHeight);
 
-			game.Spawn(EntityFactory.getBullet(game, user, Seizonsha.spriteMappings[Static.SPRITE_BULLET], bulletBounds, damage, damageType, bulletSpeed, user.direction), bulletBounds.Left, bulletBounds.Top);
+			game.Spawn(EntityFactory.getBullet(game, this, Seizonsha.spriteMappings[Static.SPRITE_BULLET], bulletBounds, damage, damageType, bulletSpeed, user.direction), bulletBounds.Left, bulletBounds.Top);
 
 
 		}
 
         public override void affect(GameEntity affected)
         {
-            //just damage from bullet collision
+            game.damageEntity(user, affected, damage, damageType);
         }
 
 

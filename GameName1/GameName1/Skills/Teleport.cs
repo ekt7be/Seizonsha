@@ -45,7 +45,7 @@ namespace GameName1.Skills
                 int width = 100;
                 int height = 100;
                 Rectangle slashBounds = new Rectangle((int)(user.getCenterX())-(int)((double)width/2.0), (int)(user.getCenterY())-(int)((double)height/2.0), width, height);
-                ability = EntityFactory.getAOECone(game, user, Static.PIXEL_THIN, this, slashBounds, damage, damageType, 1);
+                ability = EntityFactory.getAOECone(game, Static.PIXEL_THIN, this, slashBounds, damage, damageType, 1);
                 game.Spawn(ability, slashBounds.Left, slashBounds.Top);
 
             // game sprite bounds amount dmgAmount dmgType duration bulletSpeed

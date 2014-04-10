@@ -95,17 +95,17 @@ namespace GameName1
 
 
 
-        public static Bullet getBullet(Seizonsha game, GameEntity user, Texture2D sprite, Rectangle bounds, int amount, int damageType, float bulletSpeed, float directionAngle)
+        public static Bullet getBullet(Seizonsha game, Skill origin, Texture2D sprite, Rectangle bounds, int amount, int damageType, float bulletSpeed, float directionAngle)
         {
             GameEntity recycled = tryRecycleInstance(Static.TYPE_BULLET);
             if (recycled != null)
             {
                 Bullet recycledBullet = (Bullet)recycled;
-                recycledBullet.reset(user, sprite, bounds, amount, damageType, bulletSpeed, directionAngle);
+                recycledBullet.reset(sprite, origin, bounds, amount, damageType, bulletSpeed, directionAngle);
                 return recycledBullet;
             }
 
-            Bullet newBullet = new Bullet(game, user, sprite, bounds, amount, damageType, bulletSpeed, directionAngle);
+            Bullet newBullet = new Bullet(game, origin, sprite, bounds, amount, damageType, bulletSpeed, directionAngle);
             addToActive(newBullet);
             return newBullet;
         }
@@ -116,11 +116,11 @@ namespace GameName1
             if (recycled != null)
             {
                 ExplodingBullet recycledBullet = (ExplodingBullet)recycled;
-                recycledBullet.reset(user, sprite, bounds, amount, damageType, bulletSpeed, directionAngle);
+                recycledBullet.reset(sprite, origin, bounds, amount, damageType, bulletSpeed, directionAngle);
                 return recycledBullet;
             }
 
-            ExplodingBullet newBullet = new ExplodingBullet(game, user, sprite, origin, bounds, amount, damageType, bulletSpeed, directionAngle);
+            ExplodingBullet newBullet = new ExplodingBullet(game, origin, sprite, bounds, amount, damageType, bulletSpeed, directionAngle);
             addToActive(newBullet);
             return newBullet;
         }
@@ -175,17 +175,17 @@ namespace GameName1
 
 
 
-        public static AOECone getAOECone(Seizonsha game, GameEntity user, Texture2D sprite, Skill origin, Rectangle bounds, int amount, int damageType, int duration)
+        public static AOECone getAOECone(Seizonsha game, Texture2D sprite, Skill origin, Rectangle bounds, int amount, int damageType, int duration)
         {
             GameEntity recycled = tryRecycleInstance(Static.TYPE_AOE_CONE);
             if (recycled != null)
             {
                 AOECone recycledAOE = (AOECone)recycled;
-                recycledAOE.reset(user,sprite,origin,bounds,amount,damageType,duration);
+                recycledAOE.reset(sprite,origin,bounds,amount,damageType,duration);
                 return recycledAOE;
             }
 
-            AOECone newAOE = new AOECone(game, user, sprite, origin, bounds, amount, damageType, duration);
+            AOECone newAOE = new AOECone(game, sprite, origin, bounds, amount, damageType, duration);
             addToActive(newAOE);
             return newAOE;
         }

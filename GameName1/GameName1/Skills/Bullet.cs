@@ -14,12 +14,12 @@ namespace GameName1.Skills
 		protected int damageType;
 		protected int amount;
 		private float bulletSpeed; 
-        protected GameEntity user;
+        protected Skill origin;
 
 
 
 
-		public Bullet(Seizonsha game, GameEntity user, Texture2D sprite, Rectangle bounds, int amount, int damageType, float bulletSpeed, float directionAngle)
+		public Bullet(Seizonsha game, Skill origin, Texture2D sprite, Rectangle bounds, int amount, int damageType, float bulletSpeed, float directionAngle)
 			: base(game, sprite, bounds.Width, bounds.Height, Static.TARGET_TYPE_NOT_DAMAGEABLE, 30)
 		{
 			this.amount = amount;
@@ -29,7 +29,7 @@ namespace GameName1.Skills
             this.rotateToAngle(directionAngle);
             this.velocityX = (bulletSpeed * vectorDirection.X);
             this.velocityY = (bulletSpeed * vectorDirection.Y);
-            this.user = user;
+            this.origin = origin;
 		}
 
 
@@ -43,7 +43,8 @@ namespace GameName1.Skills
         public override void collide(GameEntity entity)
         {
 
-            game.damageEntity(user, entity, amount, damageType);
+            //game.damageEntity(user, entity, amount, damageType);
+            origin.affect(entity);
 
             setRemove(true);
 
@@ -57,7 +58,7 @@ namespace GameName1.Skills
 
         public override bool shouldCollide(GameEntity entity)
         {
-            if (entity == user || !game.ShouldDamage(damageType,entity.getTargetType()))
+            if (entity == origin.getUser() || !game.ShouldDamage(damageType,entity.getTargetType()))
             {
                 return false;
             }
@@ -68,7 +69,7 @@ namespace GameName1.Skills
             return true;
         }
 
-        public void reset(GameEntity user, Texture2D sprite, Rectangle bounds, int amount, int damageType, float bulletSpeed, float directionAngle)
+        public void reset(Texture2D sprite, Skill origin, Rectangle bounds, int amount, int damageType, float bulletSpeed, float directionAngle)
         {
             base.reset();
             this.amount = amount;
@@ -80,7 +81,7 @@ namespace GameName1.Skills
             setSprite(sprite);
             width = bounds.Width;
             height = bounds.Height;
-			this.user = user; 
+            this.origin = origin;
         }
 
         public override void collideWithWall()

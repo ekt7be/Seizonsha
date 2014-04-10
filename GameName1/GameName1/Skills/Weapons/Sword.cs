@@ -19,7 +19,7 @@ namespace GameName1.Skills
         SlashAnimation slashAnimation;
 
 
-        public Sword(Seizonsha game, GameEntity user,int damage, int recharge_time) : base(game, user, recharge_time, recharge_time)
+        public Sword(Seizonsha game, GameEntity user,int damage, int recharge_time) : base(game, user, recharge_time, recharge_time/2)
         {
             this.damage = damage;
             slashAnimation = new SlashAnimation(this, user, recharge_time);
@@ -84,7 +84,7 @@ namespace GameName1.Skills
             }
             Rectangle slashBounds = new Rectangle((int)(user.getCenterX() + user.vectorDirection.X * user.width / 2 - user.width / 4), (int)(user.getCenterY() + user.vectorDirection.Y * user.height / 2 - user.height / 4), user.width / 2, user.height / 2);
             //game.Spawn(new SwordSlash(game, user, Static.PIXEL_THIN, slashBounds, damage, damageType, 10, user.vectorDirection), slashBounds.Left, slashBounds.Top);
-            AOECone attack = EntityFactory.getAOECone(game, user, Static.PIXEL_THIN, this, slashBounds, damage, damageType, 10);
+            AOECone attack = EntityFactory.getAOECone(game, Static.PIXEL_THIN, this, slashBounds, damage, damageType, 10);
             attack.setTint(Color.White * .5f);
             game.Spawn(attack, slashBounds.Left, slashBounds.Top);
         }

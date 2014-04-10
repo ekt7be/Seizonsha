@@ -12,16 +12,14 @@ namespace GameName1.Skills
     {
         private int damageType;
         private int amount;
-        private GameEntity user;
         private Skill origin;
 
 
-        public AOECone(Seizonsha game, GameEntity user, Texture2D sprite, Skill origin, Rectangle bounds, int amount, int damageType, int duration)
+        public AOECone(Seizonsha game, Texture2D sprite, Skill origin, Rectangle bounds, int amount, int damageType, int duration)
             : base(game, sprite, bounds.Width, bounds.Height, duration)
         {
             this.amount = amount;
             this.damageType = damageType;
-            this.user = user;
             this.origin = origin;
         }
 
@@ -42,10 +40,9 @@ namespace GameName1.Skills
         }
 
 
-        public void reset(GameEntity user, Texture2D sprite, Skill origin, Rectangle bounds, int amount, int damageType, int duration)
+        public void reset(Texture2D sprite, Skill origin, Rectangle bounds, int amount, int damageType, int duration)
         {
             base.reset(duration);
-            this.user = user;
             setSprite(sprite);
             this.origin = origin;
             this.width = bounds.Width;
