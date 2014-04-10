@@ -13,6 +13,8 @@ using GameName1.NPCs;
 using GameName1.Skills;
 using GameName1.Effects;
 using GameName1.AnimationTesting;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Media;
 #endregion
 
 namespace GameName1
@@ -35,10 +37,14 @@ namespace GameName1
         private List<AI> AIs;
         private Level currLevel;
         private PolygonIntersection.MainForm mainForm = new PolygonIntersection.MainForm();
-
         private bool paused;
 		FPSCounterComponent fps;
-		private bool showFPS = false; 
+		private bool showFPS = false;
+        public SoundEffect bossSound;
+        public SoundEffectInstance bossSoundLoop;
+        public SoundEffect gameSound;
+        public SoundEffectInstance gameSoundLoop;
+
 
 		public float sinceLastWaveCleared;
 
@@ -119,8 +125,6 @@ namespace GameName1
 
         protected override void Initialize()
         {
-            initializeVariables();
-
             graphics.PreferredBackBufferHeight = Static.SCREEN_HEIGHT;
             graphics.PreferredBackBufferWidth = Static.SCREEN_WIDTH;
 
@@ -142,7 +146,14 @@ namespace GameName1
             Texture2D bullet = Content.Load<Texture2D>("Sprites/bulletsprite");
             Texture2D sword = Content.Load<Texture2D>("Sprites/swordspritesheetfull3");
             Texture2D reticle = Content.Load<Texture2D>("Sprites/reticle");
-
+            gameSound = Content.Load<SoundEffect>("sound/antique_market");
+            gameSoundLoop = gameSound.CreateInstance();
+            gameSoundLoop.IsLooped = true;
+            bossSound = Content.Load<SoundEffect>("sound/armageddon");
+            bossSoundLoop = bossSound.CreateInstance();
+            bossSoundLoop.IsLooped = true;
+            
+            initializeVariables();
 
 			#region ADD SKILL ICONS (remember to add in SkillTree.cs too)
 			Texture2D nodeRect = Content.Load<Texture2D>("Sprites/SkillNode");
@@ -162,8 +173,7 @@ namespace GameName1
 
 
 			#endregion
-
-
+            
 
 
             initTileSprites();
@@ -201,8 +211,6 @@ namespace GameName1
             playerToController.Add(3, PlayerIndex.Three);
             playerToController.Add(4, PlayerIndex.Four);
 
-            spawnInitialEntities();
-
             base.Initialize();
         }
 
@@ -221,9 +229,8 @@ namespace GameName1
 
             initViewports(Static.NUM_PLAYERS);
 
-			fps = new FPSCounterComponent(this, spriteBatch, spriteFont); 
-
-        }
+			fps = new FPSCounterComponent(this, spriteBatch, spriteFont);
+       }
 
         public void spawnInitialEntities()
         {
@@ -473,8 +480,11 @@ namespace GameName1
             */   
             }
 			else if (waveCleared) {
-               
-				if (sinceLastWaveCleared >= Static.SECONDS_BETWEEN_WAVE* 1000) {
+                if(bossSoundLoop.State == SoundState.Playing)
+                    bossSoundLoop.Stop();
+                if (gameSoundLoop.State == SoundState.Playing)
+                    gameSoundLoop.Stop();
+				if (sinceLastWaveCleared >= Static.SECONDS_BETWEEN_WAVE * 1000) {
 					WaveBegin();
 				}
 			}
@@ -1488,15 +1498,21 @@ namespace GameName1
             Wave++;
             //currLevel.spawnEnemies(difficulty);
 
-            if (this.Wave % 3 == 0)
+            if (this.Wave % 2 == 0)
             {
                 List<GameEntity> enemyList = new List<GameEntity>();
                 enemyList.Add(new BossEnemy(this));
                 //Spawn(new BossEnemy(this), 500, 800);
                 currLevel.populateQueue(difficulty, enemyList);
+                gameSoundLoop.Stop();
+                bossSoundLoop.Play();
             }
             else
             {
+                if (gameSoundLoop.State == SoundState.Stopped)
+                {
+                    gameSoundLoop.Play();
+                }
                 currLevel.populateQueue(difficulty, null);
             }
 
