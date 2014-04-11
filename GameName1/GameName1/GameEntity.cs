@@ -56,7 +56,7 @@ namespace GameName1
         protected Color defaultTint;
         private List<Animation> animations;
         private List<Animation> outgoingAnimations;
-        protected Rectangle? spriteSource = null;
+        public Rectangle? spriteSource = null;
 
 
 

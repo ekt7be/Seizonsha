@@ -55,23 +55,27 @@ namespace GameName1.AnimationTesting
                     {
                         //spriteSource = FramesToAnimation[RIGHT_ANIMATION];
                         swordSource = new Rectangle(64 * currentFrame, 3 * 64, 64, 64);
+                        target.spriteSource = new Rectangle(64 * currentFrame, 15 * 64, 64, 64);
 
                     }
                     else if (Math.Sin(target.direction) > .5)
                     {
                         swordSource = new Rectangle(64 * currentFrame, 2 * 64, 64, 64);
+                        target.spriteSource = new Rectangle(64 * currentFrame, 14 * 64, 64, 64);
 
                     }
                     else if (Math.Sin(target.direction) < -.5)
                     {
                         //spriteSource = FramesToAnimation[UP_ANIMATION];
                         swordSource = new Rectangle(64 * currentFrame, 0 * 64, 64, 64);
+                        target.spriteSource = new Rectangle(64 * currentFrame, 12 * 64, 64, 64);
 
                     }
                     else if (Math.Cos(target.direction) < -.5)
                     {
                         //spriteSource = FramesToAnimation[LEFT_ANIMATION];
                         swordSource = new Rectangle(64 * currentFrame, 1 * 64, 64, 64);
+                        target.spriteSource = new Rectangle(64 * currentFrame, 13 * 64, 64, 64);
                     }
                     sword.setSwordSource(swordSource);
                 
