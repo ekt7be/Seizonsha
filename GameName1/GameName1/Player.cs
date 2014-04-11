@@ -204,6 +204,14 @@ namespace GameName1
             Equip(healingtouch, Static.PLAYER_L2_SKILL_INDEX);
             addEquipable(healingtouch);
 
+            Bash bash = new Bash(game, this, 5, 40);
+            Equip(bash, Static.PLAYER_L2_SKILL_INDEX);
+            addEquipable(bash);
+
+            Kick kick = new Kick(game, this, 5, 60);
+            Equip(kick, Static.PLAYER_L2_SKILL_INDEX);
+            addEquipable(bash);
+
             /*
 
             Equip(new Sword(game, this, 30, 40), Static.PLAYER_R1_SKILL_INDEX);

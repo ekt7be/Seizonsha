@@ -69,7 +69,9 @@
     <Compile Include="Screens\PlayerMenuScreen.cs" />
     <Compile Include="Skills\AOEPolygon.cs" />
     <Compile Include="Skills\AOEStatus.cs" />
+    <Compile Include="Skills\Bash.cs" />
     <Compile Include="Skills\Blizzard.cs" />
+    <Compile Include="Skills\Kick.cs" />
     <Compile Include="Skills\StatusEffects\Burning.cs" />
     <Compile Include="Effects\Effect.cs" />
     <Compile Include="Interfaces\StatusEffect.cs" />
@@ -104,6 +106,7 @@
     <Compile Include="Skills\LifeDrain.cs" />
     <Compile Include="Skills\Skill.cs" />
     <Compile Include="Skills\StatusEffects\Slow.cs" />
+    <Compile Include="Skills\StatusEffects\Stun.cs" />
     <Compile Include="Skills\Weapons\Sword.cs" />
     <Compile Include="Skills\Teleport.cs" />
     <Compile Include="Skills\Weapons\Weapon.cs" />
