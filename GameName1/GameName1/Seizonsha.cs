@@ -172,6 +172,7 @@ namespace GameName1
 			SkillTree.SkillTree.nodeTextures.Add(Static.FIRELANCE_NAME, firelanceicon);
 			SkillTree.SkillTree.nodeTextures.Add(Static.BLIZZARD_NAME, nodeRect);
 			SkillTree.SkillTree.nodeTextures.Add(Static.TELEPORT_NAME, nodeRect);
+            SkillTree.SkillTree.nodeTextures.Add(Static.BASH_NAME, nodeRect);
 
 
 

@@ -145,6 +145,12 @@ namespace GameName1
         //Blizzard
         public static readonly string BLIZZARD_NAME = "Blizzard";
 
+        //Kick
+        public static readonly string KICK_NAME = "Kick";
+
+        //Bash
+        public static readonly string BASH_NAME = "Bash";
+
         //Healing Touch
         public static readonly string HEALING_TOUCH_NAME = "Healing Touch";
 
