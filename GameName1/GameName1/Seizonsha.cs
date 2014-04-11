@@ -929,6 +929,11 @@ namespace GameName1
         public void damageEntity(GameEntity user, GameEntity target, int amount, int damageType)
         {
 
+            //reduce damage based on shield
+
+            amount = (int)(amount * (1f - target.shield));
+
+
             if (amount == 0)
             {
                 return;

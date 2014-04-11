@@ -110,6 +110,7 @@
     <Compile Include="Skills\Weapons\Sword.cs" />
     <Compile Include="Skills\Teleport.cs" />
     <Compile Include="Skills\Weapons\Weapon.cs" />
+    <Compile Include="SkillTree\ArmorPlusUnlockable.cs" />
     <Compile Include="SkillTree\BlankNode.cs" />
     <Compile Include="SkillTree\HealthPlusUnlockable.cs" />
     <Compile Include="Skills\TargetedAbility.cs" />

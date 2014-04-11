@@ -201,5 +201,10 @@ namespace GameName1.SkillTree
             this.bottomNode.topWeight = weight;
             this.bottomWeight = weight;
         }
+
+        public Rectangle getBounds()
+        {
+            return bounds;
+        }
     }
 }

@@ -515,6 +515,7 @@ namespace GameName1
             this.outgoingAnimations.Clear();
             this.animations.Clear();
             this.scale = 1.0f;
+            this.shield = 0f;
             this.damageAnimation.reset(this);
         }
 

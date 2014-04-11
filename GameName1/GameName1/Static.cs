@@ -51,7 +51,18 @@ namespace GameName1
         public static readonly int PLAYER_L2_SKILL_INDEX = 1;
         public static readonly int PLAYER_R1_SKILL_INDEX = 2;
         public static readonly int PLAYER_R2_SKILL_INDEX = 3;
-		public static readonly int PLAYER_LEFTCLICK_SKILL_INDEX = 0; 
+		public static readonly int PLAYER_LEFTCLICK_SKILL_INDEX = 0;
+        public static readonly Color PLAYER_ARMOR_COLOR_0 = Color.White;
+        public static readonly float PLAYER_SHIELD_1 = .2f;
+        public static readonly Color PLAYER_ARMOR_COLOR_1 = Color.Cyan;
+        public static readonly float PLAYER_SHIELD_2 = .4f;
+        public static readonly Color PLAYER_ARMOR_COLOR_2 = Color.Gold;
+        public static readonly float PLAYER_SHIELD_3 = .7f;
+        public static readonly Color PLAYER_ARMOR_COLOR_3 = Color.Black;
+
+
+        
+
 
         //basic enemy
 		public static readonly int BASIC_ENEMY_HEIGHT = 50;

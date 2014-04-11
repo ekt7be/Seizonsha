@@ -58,11 +58,11 @@ namespace GameName1.SkillTree
             currNode = startNode;
                 
             //fight path
-            SkillTreeNode HpPlus2Node = new SkillTreeNode(this, startNode.getX() + Static.SKILL_TREE_NODE_WIDTH * 2, startNode.getY(), nodeTextures[Static.SKILL_TREE_NODE_ANY], new HealthPlusUnlockable(50), 300);
+            SkillTreeNode HpPlus2Node = new SkillTreeNode(this, startNode.getX() + Static.SKILL_TREE_NODE_WIDTH * 4, startNode.getY(), nodeTextures[Static.SKILL_TREE_NODE_ANY], new HealthPlusUnlockable(50), 300);
             nodes.Add(HpPlus2Node);
             startNode.attachRight(HpPlus2Node, Static.SKILL_TREE_WEIGHT_LOCKED);
 
-            SkillTreeNode HPplusNode = new SkillTreeNode(this, HpPlus2Node.getX() + Static.SKILL_TREE_NODE_WIDTH, startNode.getY()- Static.SKILL_TREE_NODE_WIDTH*2, nodeTextures[Static.SKILL_TREE_NODE_ANY], new HealthPlusUnlockable(100), 1000);
+            SkillTreeNode HPplusNode = new SkillTreeNode(this, HpPlus2Node.getX(), startNode.getY()- Static.SKILL_TREE_NODE_WIDTH*2, nodeTextures[Static.SKILL_TREE_NODE_ANY], new HealthPlusUnlockable(100), 1000);
             nodes.Add(HPplusNode);
             HpPlus2Node.attachTop(HPplusNode, Static.SKILL_TREE_WEIGHT_LOCKED);
 
@@ -70,36 +70,40 @@ namespace GameName1.SkillTree
             nodes.Add(dankSwordNode);
             HPplusNode.attachRight(dankSwordNode, Static.SKILL_TREE_WEIGHT_LOCKED);
 
+            SkillTreeNode armor1Node = new SkillTreeNode(this, HPplusNode.getX() - Static.SKILL_TREE_NODE_WIDTH * 2, HPplusNode.getY(), nodeTextures[Static.SKILL_TREE_NODE_ANY], new ArmorPlusUnlockable(), 500);
+            nodes.Add(armor1Node);
+            HPplusNode.attachLeft(armor1Node, Static.SKILL_TREE_WEIGHT_LOCKED);
+
             
 
             //magic path
-			SkillTreeNode ManaPlus2 = new SkillTreeNode(this, startNode.getX(), startNode.getY() + Static.SKILL_TREE_NODE_HEIGHT*2, nodeTextures[Static.SKILL_TREE_NODE_ANY], new ManaPlusUnlockable(30), 500); // 500
+			SkillTreeNode ManaPlus2 = new SkillTreeNode(this, startNode.getX(), startNode.getY() + Static.SKILL_TREE_NODE_HEIGHT*4, nodeTextures[Static.SKILL_TREE_NODE_ANY], new ManaPlusUnlockable(30), 500); // 500
             nodes.Add(ManaPlus2);
             startNode.attachBottom(ManaPlus2, Static.SKILL_TREE_WEIGHT_LOCKED);
 
-            SkillTreeNode ManaRegenPlusNode = new SkillTreeNode(this, ManaPlus2.getX() - Static.SKILL_TREE_NODE_WIDTH * 2, ManaPlus2.getY() + Static.SKILL_TREE_NODE_WIDTH * 2, nodeTextures[Static.SKILL_TREE_NODE_ANY], new ManaRegenPlusUnlockable(Static.PLAYER_START_MANA_REGEN / 2), 1500);
+            SkillTreeNode ManaRegenPlusNode = new SkillTreeNode(this, ManaPlus2.getX() - Static.SKILL_TREE_NODE_WIDTH * 2, ManaPlus2.getY(), nodeTextures[Static.SKILL_TREE_NODE_ANY], new ManaRegenPlusUnlockable(Static.PLAYER_START_MANA_REGEN / 2), 1500);
             nodes.Add(ManaRegenPlusNode);
             ManaPlus2.attachLeft(ManaRegenPlusNode, Static.SKILL_TREE_WEIGHT_LOCKED);
 
-			SkillTreeNode FirelanceNode = new SkillTreeNode(this, ManaPlus2.getX() + Static.SKILL_TREE_NODE_WIDTH * 2, ManaPlus2.getY() + Static.SKILL_TREE_NODE_WIDTH * 2, nodeTextures[Static.FIRELANCE_NAME], new FireLance(game,player,Static.FIRELANCE_DAMAGE, 30), 1500); //1500
+			SkillTreeNode FirelanceNode = new SkillTreeNode(this, ManaPlus2.getX() + Static.SKILL_TREE_NODE_WIDTH * 2, ManaPlus2.getY(), nodeTextures[Static.FIRELANCE_NAME], new FireLance(game,player,Static.FIRELANCE_DAMAGE, 30), 1500); //1500
             nodes.Add(FirelanceNode);
             ManaPlus2.attachRight(FirelanceNode, Static.SKILL_TREE_WEIGHT_LOCKED);
 
-            SkillTreeNode LifeDrainNode = new SkillTreeNode(this, ManaRegenPlusNode.getX() + Static.SKILL_TREE_NODE_WIDTH, ManaRegenPlusNode.getY() + Static.SKILL_TREE_NODE_WIDTH * 2, nodeTextures[Static.SKILL_TREE_NODE_ANY], new LifeDrain(game, player, 5, 6, 4), 5000);
+            SkillTreeNode LifeDrainNode = new SkillTreeNode(this, ManaRegenPlusNode.getX(), ManaRegenPlusNode.getY() + Static.SKILL_TREE_NODE_WIDTH * 2, nodeTextures[Static.SKILL_TREE_NODE_ANY], new LifeDrain(game, player, 5, 6, 4), 5000);
             nodes.Add(LifeDrainNode);
             ManaRegenPlusNode.attachBottom(LifeDrainNode, Static.SKILL_TREE_WEIGHT_LOCKED);
 
 
             //support
-			SkillTreeNode ManaRegen2Node = new SkillTreeNode(this, startNode.getX()-Static.SKILL_TREE_NODE_WIDTH * 2, startNode.getY(), nodeTextures[Static.SKILL_TREE_NODE_ANY], new ManaRegenPlusUnlockable(Static.PLAYER_START_MANA_REGEN/3), 500);
+			SkillTreeNode ManaRegen2Node = new SkillTreeNode(this, startNode.getX()-Static.SKILL_TREE_NODE_WIDTH * 4, startNode.getY(), nodeTextures[Static.SKILL_TREE_NODE_ANY], new ManaRegenPlusUnlockable(Static.PLAYER_START_MANA_REGEN/3), 500);
             nodes.Add(ManaRegen2Node);
             startNode.attachLeft(ManaRegen2Node, Static.SKILL_TREE_WEIGHT_LOCKED);
 
-            SkillTreeNode BlizzardNode = new SkillTreeNode(this, ManaRegen2Node.getX() - Static.SKILL_TREE_NODE_WIDTH, ManaRegen2Node.getY() - Static.SKILL_TREE_NODE_WIDTH*2, nodeTextures[Static.SKILL_TREE_NODE_ANY], new Blizzard(game, player, 0, 200, 200, 100), 2000);
+            SkillTreeNode BlizzardNode = new SkillTreeNode(this, ManaRegen2Node.getX(), ManaRegen2Node.getY() - Static.SKILL_TREE_NODE_WIDTH*2, nodeTextures[Static.SKILL_TREE_NODE_ANY], new Blizzard(game, player, 0, 200, 200, 100), 2000);
             nodes.Add(BlizzardNode);
             ManaRegen2Node.attachTop(BlizzardNode, Static.SKILL_TREE_WEIGHT_LOCKED);
 
-            SkillTreeNode ManaPlusNode = new SkillTreeNode(this, ManaRegen2Node.getX() - Static.SKILL_TREE_NODE_WIDTH, ManaRegen2Node.getY() + Static.SKILL_TREE_NODE_WIDTH*2, nodeTextures[Static.SKILL_TREE_NODE_ANY], new ManaPlusUnlockable(50), 2000);
+            SkillTreeNode ManaPlusNode = new SkillTreeNode(this, ManaRegen2Node.getX(), ManaRegen2Node.getY() + Static.SKILL_TREE_NODE_WIDTH*2, nodeTextures[Static.SKILL_TREE_NODE_ANY], new ManaPlusUnlockable(50), 2000);
             nodes.Add(ManaPlusNode);
             ManaRegen2Node.attachBottom(ManaPlusNode, Static.SKILL_TREE_WEIGHT_LOCKED);
 
@@ -165,6 +169,9 @@ namespace GameName1.SkillTree
                 Color tint = Color.White;
                 if (currNode == node)
                 {
+                    Rectangle highlight = node.getBounds();
+                    highlight.Inflate(5, 5);
+                    spriteBatch.Draw(Static.PIXEL_THIN, highlight, Color.Yellow);
                     tint = Color.Purple;
                 }
                 else if (node.isUnlocked())

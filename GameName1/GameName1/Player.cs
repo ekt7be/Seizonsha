@@ -27,6 +27,9 @@ namespace GameName1
         private float mana;
         public float maxMana;
 
+        private int armorLevel;
+        private Color armorColor;
+
         public bool keyboard = false;
         public KeyboardState oldKeyboardState;
         public GamePadState oldGamepadState;
@@ -131,15 +134,18 @@ namespace GameName1
             spriteBatch.Draw(game.getSpriteTexture(Static.SPRITE_RETICLE), rBounds, Color.Red);
             //draw armor and weapons equipped etc
 
-            
 
-
-            spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_PLATE_ARMOR_FEET], this.spriteBox, base.spriteSource, tint, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
-            spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_PLATE_ARMOR_PANTS], this.spriteBox, base.spriteSource, tint, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
-            spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_PLATE_ARMOR_GLOVES], this.spriteBox, base.spriteSource, tint, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
-            spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_PLATE_ARMOR_ARMS_SHOULDER], this.spriteBox, base.spriteSource, tint, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
-            spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_PLATE_ARMOR_TORSO], this.spriteBox, base.spriteSource, tint, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
-            spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_PLATE_ARMOR_HEAD], this.spriteBox, base.spriteSource, tint, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+            Color equipColor = tint;
+            if (tint == Color.White)
+            {
+                equipColor = armorColor;
+            }
+            spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_PLATE_ARMOR_FEET], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+            spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_PLATE_ARMOR_PANTS], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+            spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_PLATE_ARMOR_GLOVES], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+            spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_PLATE_ARMOR_ARMS_SHOULDER], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+            spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_PLATE_ARMOR_TORSO], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+            spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_PLATE_ARMOR_HEAD], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
 
             foreach (Skill skill in skillSlots)
             {
@@ -171,6 +177,8 @@ namespace GameName1
             this.health = Static.PLAYER_MAX_HEALTH;
             this.dead = false;
             this.playerIndex = playerIndex;
+            this.armorLevel = 0;
+            this.armorColor = Static.PLAYER_ARMOR_COLOR_0;
 
 			this.skillSlots = new Equipable[4]; //each slot is different skill, weapon, or item
             this.inventory = new List<Equipable>();
@@ -248,9 +256,46 @@ namespace GameName1
 
 
 
+            //incArmor(); incArmor(); incArmor();
 
 
 
+        }
+
+        public void incArmor()
+        {
+            if (armorLevel == 3)
+            {
+                return;
+            }
+            armorLevel++;
+            defaultShield();
+
+        }
+
+        private void defaultShield()
+        {
+            if (armorLevel == 0)
+            {
+                shield = 0;
+                armorColor = Static.PLAYER_ARMOR_COLOR_0;
+            }
+            else if (armorLevel == 1)
+            {
+                shield = Static.PLAYER_SHIELD_1;
+                armorColor = Static.PLAYER_ARMOR_COLOR_1;
+
+
+            } else if (armorLevel == 2){
+                shield = Static.PLAYER_SHIELD_2;
+                armorColor = Static.PLAYER_ARMOR_COLOR_2;
+
+            }
+            else if (armorLevel == 3)
+            {
+                shield = Static.PLAYER_SHIELD_3;
+                armorColor = Static.PLAYER_ARMOR_COLOR_3;
+            }
         }
 
         public Interactable findInteraction()
