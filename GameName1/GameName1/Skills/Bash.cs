@@ -53,7 +53,7 @@ namespace GameName1.Skills
         public override void Draw(SpriteBatch spriteBatch)
         {
             //base.Draw(spriteBatch);
-            spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_SWORD], user.hitbox, swordSource, user.tint, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1f);
+            //spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_SWORD], user.hitbox, swordSource, user.tint, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1f);
 
         }
 
