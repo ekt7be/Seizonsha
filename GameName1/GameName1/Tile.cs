@@ -19,6 +19,7 @@ namespace GameName1
 		public int tileType;
 
 		private bool drawCapacity = false;
+		private bool drawIndex = false;
 
 		// used in pathfinding
 		public int xIndex;
@@ -49,14 +50,26 @@ namespace GameName1
 			{
 				return;
 			}
-			spriteBatch.Draw(sprite, new Rectangle(x - cameraX, y - cameraY, Static.TILE_WIDTH, Static.TILE_WIDTH), Color.White);
+			if (!this.isObstacle()) 
+				spriteBatch.Draw(sprite, new Rectangle(x - cameraX, y - cameraY, Static.TILE_WIDTH, Static.TILE_WIDTH), new Color (Color.Black, 0.1f));
+			else 
+				spriteBatch.Draw(sprite, new Rectangle(x - cameraX, y - cameraY, Static.TILE_WIDTH, Static.TILE_WIDTH), new Color (Color.Red, 0.1f));
 
 			if (drawCapacity) {
 				spriteBatch.DrawString(
-					Static.SPRITE_FONT, 
+					Static.SPRITEFONT_Calibri14, 
 					this.capacity + "", 
 					new Vector2(this.x+2, this.y), 
-					Color.LightGreen
+					new Color (Color.Pink, 0.5f)
+				);
+			}
+
+			if (drawIndex) {
+				spriteBatch.DrawString(
+					Static.SPRITEFONT_Calibri10, 
+					xIndex + " " + yIndex, 
+					new Vector2(this.x+2, this.y+16), 
+					new Color (Color.Pink, 0.1f)
 				);
 			}
 		}

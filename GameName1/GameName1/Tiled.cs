@@ -800,7 +800,7 @@ namespace Squared.Tiled {
             foreach (var tileset in result.Tilesets.Values)
             {
                 tileset.Texture = content.Load<Texture2D>(
-                    Path.Combine(Path.GetDirectoryName(tileset.Image), Path.GetFileNameWithoutExtension(tileset.Image))
+					Path.Combine(Path.GetDirectoryName(tileset.Image).Substring(3)+"/", Path.GetFileNameWithoutExtension(tileset.Image))
                 );
             }
 
