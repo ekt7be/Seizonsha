@@ -24,6 +24,7 @@ namespace GameName1
         private bool dead;
         private Equipable[] skillSlots;
 		private List<Equipable> inventory;	// list of all usable weapons, skills, and items 
+        private List<Equipable> unEquippedSkills;
 		public SkillTree.SkillTree skilltree;
         public float manaRegen;
         private float mana;
@@ -68,7 +69,6 @@ namespace GameName1
 
 		public Camera camera;
 
-		List<Skill> reducedUnlockedSkills = new List<Skill>(); 
 
         public override void Update(GameTime gameTime)
         {
@@ -134,12 +134,7 @@ namespace GameName1
                 }
             }
 
-            int dist = 50;
-            int width = 30;
-            int height = 30;
-            Rectangle rBounds = new Rectangle((int)((float)this.getCenterX() + dist*this.vectorDirection.X - width/2), (int)((float)this.getCenterY() + dist*this.vectorDirection.Y - height/2), width, height);
 
-            spriteBatch.Draw(game.getSpriteTexture(Static.SPRITE_RETICLE), rBounds, Color.Red);
             //draw armor and weapons equipped etc
 
 
@@ -155,9 +150,22 @@ namespace GameName1
             spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_PLATE_ARMOR_TORSO], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
             spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_PLATE_ARMOR_HEAD], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
 
+            /*
+            //draw cursor
+            int dist = 50;
+            int width = 30;
+            int height = 30;
+            Rectangle rBounds = new Rectangle((int)((float)this.getCenterX() + dist * this.vectorDirection.X - width / 2), (int)((float)this.getCenterY() + dist * this.vectorDirection.Y - height / 2), width, height);
+
+            spriteBatch.Draw(game.getSpriteTexture(Static.SPRITE_RETICLE), rBounds, Color.Red);
+             * */
+
             foreach (Skill skill in skillSlots)
             {
-                skill.Draw(spriteBatch);
+                if (skill != null)
+                {
+                    skill.Draw(spriteBatch);
+                }
             }
         }
 
@@ -192,6 +200,8 @@ namespace GameName1
 
 			this.skillSlots = new Equipable[4]; //each slot is different skill, weapon, or item
             this.inventory = new List<Equipable>();
+            this.unEquippedSkills = new List<Equipable>();
+            this.unEquippedSkills.Add(null);
             this.skilltree = new SkillTree.SkillTree(game, this, Static.PIXEL_THIN);
 
 			//Equip(new Gun(game, this, 30, 10, 10f), Static.PLAYER_L1_SKILL_INDEX);
@@ -212,22 +222,25 @@ namespace GameName1
             addEquipable(gun);
              * */
 
+
+           // addEquipable(new Blizzard(game, this, 0, 200, 200, 100));
+
             Kick kick = new Kick(game, this, 5, 60);
-            Equip(kick, Static.PLAYER_L1_SKILL_INDEX);
             addEquipable(kick);
+            Equip(kick, Static.PLAYER_R1_SKILL_INDEX);
 
             Sword sword = new RustySword(game, this);
-            Equip(sword, Static.PLAYER_R1_SKILL_INDEX);
             addEquipable(sword);
+            Equip(sword, Static.PLAYER_L1_SKILL_INDEX);
             this.currentWeapon = sword;
 
             Fireball fireball = new Fireball(game, this, 40, 30, 10);
-            Equip(fireball, Static.PLAYER_R2_SKILL_INDEX);
             addEquipable(fireball);
+            Equip(fireball, Static.PLAYER_R2_SKILL_INDEX);
 
             HealingTouch healingtouch = new HealingTouch(game, this, 50, 60);
-            Equip(healingtouch, Static.PLAYER_L2_SKILL_INDEX);
             addEquipable(healingtouch);
+            Equip(healingtouch, Static.PLAYER_L2_SKILL_INDEX);
 
 
             /*
@@ -450,12 +463,20 @@ namespace GameName1
 
             this.viewportBounds = screenPortion;
 
+            //draw cursor
+            int dist = 50;
+            int width = 30;
+            int height = 30;
+            Rectangle rBounds = new Rectangle((int)camera.getScreenPositionX(((float)this.getCenterX() + dist * this.vectorDirection.X - width / 2)), (int)camera.getScreenPositionY(((float)this.getCenterY() + dist * this.vectorDirection.Y - height / 2)), width, height);
+
+            spriteBatch.Draw(game.getSpriteTexture(Static.SPRITE_RETICLE), rBounds, Color.Red);
+
+
             if (currentInteractable != null)
             {
                 if (currentInteractable is GameEntity)
                 {
                     spriteBatch.DrawString(game.getSpriteFont(), currentInteractable.Message(this), new Vector2(screenPortion.Width / 2, screenPortion.Height / 2), Color.White);
-                    //(GameEntity)currentInteractable
                 }
             }
 
@@ -464,6 +485,9 @@ namespace GameName1
                 DrawSkillTree(screenPortion, spriteBatch);
                 return;
             }
+
+         
+
 
             //draw Wave number
             spriteBatch.DrawString(game.getSpriteFont(), "WAVE: " + game.Wave, new Vector2(20, screenPortion.Height - 100), Color.White);
@@ -517,15 +541,6 @@ namespace GameName1
                 Color.Black
             );
 
-            /*
-            // draw skills text
-            string displaySkills = "L1(1 key): " + this.getSkill(Static.PLAYER_L1_SKILL_INDEX).getName() + "\n" +
-                "L2(2 key): " + this.getSkill(Static.PLAYER_L2_SKILL_INDEX).getName() + "\n" +
-                "R1(3 key): " + this.getSkill(Static.PLAYER_R1_SKILL_INDEX).getName() + "\n" +
-                "R2(4 key): " + this.getSkill(Static.PLAYER_R2_SKILL_INDEX).getName() + "\n" +
-                "P:  Pause/Quit Menu (temp)";
-            spriteBatch.DrawString(Static.SPRITEFONT_Calibri10, displaySkills, new Vector2(20, 100), Color.White);
-             * */
 
             if (game.waveCleared)
             {
@@ -540,15 +555,18 @@ namespace GameName1
 
                 if (!playerReady)
                 {
-                    nextWaveMessage = "Press Y(F Key) to start next wave";
+                    nextWaveMessage = "Press Y(F Key) to start next wave" +
+                "press space(start) to open skill tree! \n" +
+                "use arrow keys (DPad) to equip skills and weapons";
                 }
                 else
                 {
                     nextWaveMessage = "Waiting for other players";
                 }
 
+                //spriteBatch.Draw(Static.PIXEL_THIN, new Rectangle(0,screenPortion.Height - 170, viewportBounds.Width, 210), Color.Black*.3f);
                 spriteBatch.DrawString(Static.SPRITE_FONT, nextWaveMessage,
-                new Vector2(screenPortion.Width - 390, screenPortion.Height - 150), Color.White); 
+                new Vector2(0, screenPortion.Height - 150), Color.White); 
             }
 
             #region SKILL BAR
@@ -561,12 +579,16 @@ namespace GameName1
                 Skill skill = (Skill)skillSlots[s];
                 Texture2D icon = SkillTree.SkillTree.nodeTextures[Static.SKILL_TREE_NODE_ANY];
 
-                if (SkillTree.SkillTree.nodeTextures.ContainsKey(skill.getName()))
+                if (skill == null)
+                {
+                }
+                else if (SkillTree.SkillTree.nodeTextures.ContainsKey(skill.getName()))
                 {
                     icon = SkillTree.SkillTree.nodeTextures[skill.getName()];
                 }
 
                 spriteBatch.Draw(icon, skillBox, Color.White);
+
                 String Button;
 
                 if (s == 0){
@@ -582,10 +604,13 @@ namespace GameName1
 
                 if (skill is Gun)
                 {
-                    spriteBatch.DrawString(Static.SPRITEFONT_Calibri10, ((Gun)skill).ammo + "/"+((Gun)skill).clipSize , new Vector2(skillBox.Left, skillBox.Bottom), Color.White);
+                    spriteBatch.DrawString(Static.SPRITEFONT_Calibri10, ((Gun)skill).ammo + "/"+((Gun)skill).clipSize , new Vector2(skillBox.Left, skillBox.Bottom-20), Color.White);
                 }
 
-                if (!skill.Available())
+                if (skill == null)
+                {
+
+                } else if (!skill.Available())
                 {
                     if (skill.recharged < skill.rechargeTime)
                     {
@@ -616,46 +641,42 @@ namespace GameName1
                         spriteBatch.Draw(Static.PIXEL_THIN, skillBox, new Color(Color.DarkBlue, 0.10f));
                 }
 
-                /*
-
-				foreach (Skill sk in skilltree.allUnlockedSkills())  {
-					if (!inventory.Contains(sk))
-						inventory.Add(sk); 
-				}
-                 * */
-
                 if (selectingSkill)
                 {
                     highlightRect = new Rectangle(viewportBounds.Width / 2 + (skillbarIndex * (iconSize + 3)) - 2 * iconSize - 6, viewportBounds.Height - iconSize, iconSize, iconSize);
 
-                    spriteBatch.Draw(Static.PIXEL_THIN, highlightRect, new Color(Color.DarkOrchid, 0.1f));
+                    spriteBatch.Draw(Static.PIXEL_THIN, highlightRect, new Color(Color.DarkOrchid, 0.5f));
 
-                    if (selectingSkill2 && inventory.Count > 0)
+                    if (selectingSkill2)
                     {
 
                         int j = 0;
 
-                        foreach (Skill unlockedSkill in inventory)
+                        foreach (Skill unlockedSkill in unEquippedSkills)
                         {
 
-                            if (unlockedSkill != skillSlots[skillbarIndex])
-                            {
-
-                                if (!reducedUnlockedSkills.Contains(unlockedSkill))
-                                    reducedUnlockedSkills.Add(unlockedSkill);
-                                //System.Console.WriteLine(unlockedSkill.getName()); 
-
+                           
+                                
                                 Rectangle unlockedSkillRect = new Rectangle(viewportBounds.Width / 2 + (skillbarIndex * (iconSize + 3) + (j * (iconSize / 2)) + (j * 3)) - 2 * iconSize - 6, viewportBounds.Height - iconSize - (iconSize / 2 + 3), iconSize / 2, iconSize / 2);
-                                spriteBatch.Draw(SkillTree.SkillTree.nodeTextures[unlockedSkill.getName()], unlockedSkillRect, Color.White);
+
+                                if (unlockedSkill == null)
+                                {
+                                    spriteBatch.Draw(Static.PIXEL_THIN, unlockedSkillRect, Color.White);
+
+                                } else if (SkillTree.SkillTree.nodeTextures.ContainsKey(unlockedSkill.getName()))
+                                {
+                                    spriteBatch.Draw(SkillTree.SkillTree.nodeTextures[unlockedSkill.getName()], unlockedSkillRect, Color.White);
+                                } else 
+                                {
+                                    spriteBatch.Draw(Static.PIXEL_THIN, unlockedSkillRect, Color.White);
+                                }
                                 j++;
-                            }
 
                         }
 
-                        //System.Console.WriteLine(+ skillbarIndex + "." + skillbarIndex2); 
 
                         Rectangle unlockedSkillRect2 = new Rectangle(viewportBounds.Width / 2 + (skillbarIndex * (iconSize + 3) + (skillbarIndex2 * (iconSize / 2)) + (skillbarIndex2 * 3)) - 2 * iconSize - 6, viewportBounds.Height - iconSize - (iconSize / 2 + 3), iconSize / 2, iconSize / 2);
-                        spriteBatch.Draw(Static.PIXEL_THIN, unlockedSkillRect2, new Color(Color.DarkOrchid, 0.1f));
+                        spriteBatch.Draw(Static.PIXEL_THIN, unlockedSkillRect2, new Color(Color.DarkOrchid, 0.5f));
                     }
                 }
             #endregion
@@ -692,18 +713,21 @@ namespace GameName1
         public void addEquipable(Equipable equip)
         {
             inventory.Add(equip);
+            unEquippedSkills.Add(equip);
         }
 
         public void removeEquipable(Equipable equip)
         {
-            foreach (Equipable skill in skillSlots)
+            for (int i = 0; i < skillSlots.Length; i++ )
             {
-                if (skill == equip)
+                if (skillSlots[i] == equip)
                 {
-                    skill.OnUnequip();
+                    skillSlots[i].OnUnequip();
+                    skillSlots[i] = null;
                 }
             }
             inventory.Remove(equip);
+            unEquippedSkills.Remove(equip);
 
         }
 
@@ -733,10 +757,17 @@ namespace GameName1
             if (skillSlots[skillIndex] != null)
             {
                 skillSlots[skillIndex].OnUnequip();
+                unEquippedSkills.Add(skillSlots[skillIndex]);
+
             }
             //equip new skill
             skillSlots[skillIndex] = equip;
-            equip.OnEquip();
+            if (equip != null)
+            {
+                equip.OnEquip();
+                unEquippedSkills.Remove(equip);
+            }
+
         }
 
         public void incXP(int amount)
@@ -794,8 +825,8 @@ namespace GameName1
             }
 
 			if (selectingSkill2) {
-				skillSlots[skillbarIndex] = reducedUnlockedSkills[skillbarIndex2]; 
-				reducedUnlockedSkills.Clear();
+
+                Equip(unEquippedSkills[skillbarIndex2], skillbarIndex);
 				selectingSkill2 = false; 
 				skillbarIndex2 = 0; 
 				return;
@@ -808,7 +839,7 @@ namespace GameName1
 			}
 			*/
 
-			selectingSkill = false; 
+			//selectingSkill = false; 
 		}
 
 		public void UpArrow()
@@ -821,13 +852,15 @@ namespace GameName1
                 return;
             }
 
+            /*
 			if (!selectingSkill) {
 				selectingSkill = true; 
 				skillbarIndex = 0; 
 				return;
 			}
+             * */
 
-			if (selectingSkill) {
+			if (selectingSkill && unEquippedSkills.Count() > 0) {
 				selectingSkill2 = true; 
 				skillbarIndex2 = 0;
 			}
@@ -843,7 +876,7 @@ namespace GameName1
                 return;
             }
 			if (selectingSkill2) {
-				if (skillbarIndex2 < inventory.Count-1-1)
+				if (skillbarIndex2 < unEquippedSkills.Count() -1)
 					skillbarIndex2++;
 				else
 					skillbarIndex2 = 0;
@@ -870,7 +903,7 @@ namespace GameName1
 				if (skillbarIndex2 > 0)
 					skillbarIndex2--;
 				else
-					skillbarIndex2 = inventory.Count-1-1;
+					skillbarIndex2 = unEquippedSkills.Count() -1;
 				return; 
 			}
 
@@ -891,6 +924,11 @@ namespace GameName1
 
         public void Ybutton()
         {
+            if (SkillTreeOpen())
+            {
+                return;
+            }
+
             if (game.waveCleared)
             {
                 playerReady = !playerReady;
@@ -908,10 +946,7 @@ namespace GameName1
 			*/
 
 			if (selectingSkill2) {
-				skillSlots[skillbarIndex] = reducedUnlockedSkills[skillbarIndex2]; 
-				reducedUnlockedSkills.Clear();
-				selectingSkill2 = false; 
-				skillbarIndex2 = 0; 
+                DownButton();
 				return;
 			}
 
@@ -1179,6 +1214,18 @@ namespace GameName1
 
         }
 
+
+        public void waveClear()
+        {
+            revive();
+            selectingSkill = true;
+            skillbarIndex = 0;
+            playerReady = false;
+        }
+
+        public void waveBegin(){
+            selectingSkill = false;
+        }
 
     }
 }

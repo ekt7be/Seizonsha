@@ -40,7 +40,7 @@ namespace GameName1
 
         //player stuff
         public static readonly float PLAYER_SPRITE_SCALE = 1f;
-        public static readonly int PLAYER_INTERACTION_RANGE = 4;
+        public static readonly int PLAYER_INTERACTION_RANGE = 1;
 		public static readonly int PLAYER_HEIGHT = 50;
 		public static readonly int PLAYER_WIDTH = 50;
 		public static readonly int PLAYER_MOVE_SPEED = 5;

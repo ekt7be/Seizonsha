@@ -206,9 +206,14 @@ namespace GameName1.NPCs
             {
                 game.Spawn(new WeaponDrop(game, Static.PIXEL_THIN, 20, 20, new RustyShank(game, this)), x, y);
 
-            } else if (rand < .15)
+            }
+            else if (rand < .15)
             {
-                game.Spawn(new Food(game, "Chicken Nuggets", Static.PIXEL_THIN, 20),x ,y);
+                game.Spawn(new Food(game, "Chicken Nuggets", Static.PIXEL_THIN, 20), x, y);
+            }
+            else
+            {
+                game.Spawn( new WeaponDrop(game, Static.PIXEL_THIN, 20, 20, new OKGun(game, this)), x, y);
             }
 		}
 

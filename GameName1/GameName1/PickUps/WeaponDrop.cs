@@ -29,7 +29,7 @@ namespace GameName1.Skills.Weapons
 
                 int weaponSkillSlot = player.weaponEquipped();
 
-
+                //not equipped
                 if (weaponSkillSlot == -1)
                 {
                     player.removeEquipable(player.currentWeapon);

@@ -170,6 +170,8 @@ namespace GameName1
 			SkillTree.SkillTree.nodeTextures.Add(Static.WEAPON_RUSTY_SHANK_NAME, swordicon);
             SkillTree.SkillTree.nodeTextures.Add(Static.WEAPON_RUSTY_SWORD_NAME, swordicon);
             SkillTree.SkillTree.nodeTextures.Add(Static.WEAPON_DANK_SWORD_NAME, swordicon);
+            SkillTree.SkillTree.nodeTextures.Add(Static.WEAPON_OKGUN_NAME, gunicon);
+
 
 			SkillTree.SkillTree.nodeTextures.Add(Static.WEAPON_REVOLVER_NAME, gunicon);
 			SkillTree.SkillTree.nodeTextures.Add(Static.FIRELANCE_NAME, firelanceicon);
@@ -481,8 +483,12 @@ namespace GameName1
 
                 bool allPlayersReady = true;
 
-                foreach (Player player in getPlayers())
+                foreach (Player player in players)
                 {
+                    if (player == null)
+                    {
+                        continue;
+                    }
                     if (!player.playerReady){
                         allPlayersReady = false;
                     }
@@ -699,12 +705,14 @@ namespace GameName1
                 
                 if (Keyboard.GetState().IsKeyDown(Keys.Space))
                 {
+
+                    //remove unnecessary methods and flags from player
                     player.SkillTreeButtonDown();
                 } else if (Keyboard.GetState().IsKeyUp(Keys.Space)){
                     player.SkillTreeButtonRelease();
                 }
 
-                if (Keyboard.GetState().IsKeyDown(Keys.Enter))
+                if (player.oldKeyboardState.IsKeyUp(Keys.Enter) && Keyboard.GetState().IsKeyDown(Keys.Enter))
                 {
                     player.AButton();
                 }
@@ -1507,10 +1515,13 @@ namespace GameName1
 			sinceLastWaveCleared = 0; 
 
 			waveCleared = true;
-            foreach (Player player in getPlayers())
+            foreach (Player player in players)
             {
-                player.revive();
-                player.playerReady = false;
+                if (player == null)
+                {
+                    continue;
+                }
+                player.waveClear();
             }
             difficulty++;
             difficulty++;
@@ -1519,6 +1530,14 @@ namespace GameName1
 
         public void WaveBegin()
         {
+
+            foreach (Player player in players)
+            {
+                if (player != null)
+                {
+                    player.waveBegin();
+                }
+            }
 			waveCleared = false; 
             Wave++;
             //currLevel.spawnEnemies(difficulty);
