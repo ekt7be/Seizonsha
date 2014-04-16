@@ -62,13 +62,19 @@ namespace GameName1.SkillTree
             nodes.Add(HpPlus2Node);
             startNode.attachRight(HpPlus2Node, Static.SKILL_TREE_WEIGHT_LOCKED);
 
+            SkillTreeNode WeaponPlusNode = new SkillTreeNode(this, HpPlus2Node.getX(), startNode.getY() + Static.SKILL_TREE_NODE_WIDTH * 2, nodeTextures[Static.SKILL_TREE_NODE_ANY], new WeaponPlusUnlockable(), 1200);
+            nodes.Add(WeaponPlusNode);
+            HpPlus2Node.attachBottom(WeaponPlusNode, Static.SKILL_TREE_WEIGHT_LOCKED);
+
             SkillTreeNode HPplusNode = new SkillTreeNode(this, HpPlus2Node.getX(), startNode.getY()- Static.SKILL_TREE_NODE_WIDTH*2, nodeTextures[Static.SKILL_TREE_NODE_ANY], new HealthPlusUnlockable(100), 1000);
             nodes.Add(HPplusNode);
             HpPlus2Node.attachTop(HPplusNode, Static.SKILL_TREE_WEIGHT_LOCKED);
 
-            SkillTreeNode dankSwordNode = new SkillTreeNode(this, HPplusNode.getX() + Static.SKILL_TREE_NODE_WIDTH * 2, HPplusNode.getY(), nodeTextures[Static.SKILL_TREE_NODE_ANY], new Sword(game, player, 300, 10), 7000);
-            nodes.Add(dankSwordNode);
-            HPplusNode.attachRight(dankSwordNode, Static.SKILL_TREE_WEIGHT_LOCKED);
+
+
+            SkillTreeNode BashNode = new SkillTreeNode(this, HPplusNode.getX() + Static.SKILL_TREE_NODE_WIDTH * 2, HPplusNode.getY(), nodeTextures[Static.SKILL_TREE_NODE_ANY], new Bash(game, player,0,20), 7000);
+            nodes.Add(BashNode);
+            HPplusNode.attachRight(BashNode, Static.SKILL_TREE_WEIGHT_LOCKED);
 
             SkillTreeNode armor1Node = new SkillTreeNode(this, HPplusNode.getX() - Static.SKILL_TREE_NODE_WIDTH * 2, HPplusNode.getY(), nodeTextures[Static.SKILL_TREE_NODE_ANY], new ArmorPlusUnlockable(), 500);
             nodes.Add(armor1Node);

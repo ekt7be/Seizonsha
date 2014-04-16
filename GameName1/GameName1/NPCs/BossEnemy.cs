@@ -1,5 +1,6 @@
 ﻿using GameName1.Interfaces;
 using GameName1.Skills;
+using GameName1.Skills.Weapons;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -38,11 +39,13 @@ namespace GameName1.NPCs
 			base.scale = 1.0f;
 
 
-			sword = new Sword(game, this, 15, 20);
+			sword = new RustySword(game, this);
 			sword.OnEquip();
 
 			//gun = new Gun(game, this, 30, 10, 10f);
-			gun = new Gun(game, this, 20, 25, 0, 10f);
+            gun = new OKGun(game, this);
+            gun.setUnlimitedAmmo(true);
+            gun.setTint(Color.Black);
 
 			gun.OnEquip();
 		
@@ -171,11 +174,6 @@ namespace GameName1.NPCs
 		{
 		}
 
-		public override void OnSpawn()
-		{
-
-		}
-
         public override void Draw(SpriteBatch spriteBatch)
         {
 
@@ -217,7 +215,21 @@ namespace GameName1.NPCs
 
 		protected override void OnDie()
 		{
-			game.Spawn(new Food(game), x, y);
+
+            double rand = random.NextDouble();
+            if (rand < .1)
+            {
+                game.Spawn(new WeaponDrop(game, Static.PIXEL_THIN, 30, 30, new Revolver(game, this)), x + 40, y - 20);
+
+            }
+            else if (rand < .25)
+            {
+                game.Spawn(new WeaponDrop(game, Static.PIXEL_THIN, 30, 30, new DankSword(game, this)), x + 10, y);
+            }
+            else
+            {
+                game.Spawn(new Food(game, "Entire Turkey", Static.PIXEL_THIN, 100), x - 30, y - 30);
+            }
 
 			game.decreaseNumberEnemies();
 		}

@@ -61,7 +61,8 @@ namespace GameName1
         public static readonly Color PLAYER_ARMOR_COLOR_3 = Color.Black;
 
 
-        
+        //drops
+        public static readonly float DROP_DURATION = 20000;
 
 
         //basic enemy
@@ -73,14 +74,51 @@ namespace GameName1
         public static readonly float BASIC_ENEMY_SPRITE_SCALE = 1f;
         public static readonly int BASIC_ENEMY_XP = 100;
 		public static readonly float BASIC_ENEMY_PATH_REFRESH = 500f;
-
-		public static readonly int BOSS_ENEMY_HEIGHT = 32*3;
-		public static readonly int BOSS_ENEMY_WIDTH = 32*3;
-		public static readonly float BOSS_ENEMY_SPEED = 4f;
+        public static readonly float BASIC_ENEMY_EXTRA_ATTACK_RECHARGE = 2000f;
 
 
         //boss
         public static readonly int BOSS_ENEMY_XP = 1000;
+        public static readonly int BOSS_ENEMY_HEIGHT = 32 * 3;
+        public static readonly int BOSS_ENEMY_WIDTH = 32 * 3;
+        public static readonly float BOSS_ENEMY_SPEED = 4f;
+
+
+        //rusty shank
+        public static readonly string WEAPON_RUSTY_SHANK_NAME = "Rusty Shank";
+        public static readonly int WEAPON_RUSTY_SHANK_DAMAGE = 5;
+        public static readonly int WEAPON_RUSTY_SHANK_RECHARGE = 20;
+        public static readonly int WEAPON_RUSTY_SHANK_LEVEL = 1;
+
+        //rusty sword
+        public static readonly string WEAPON_RUSTY_SWORD_NAME = "Rusty Sword";
+        public static readonly int WEAPON_RUSTY_SWORD_DAMAGE = 20;
+        public static readonly int WEAPON_RUSTY_SWORD_RECHARGE = 70;
+        public static readonly int WEAPON_RUSTY_SWORD_LEVEL = 1;
+
+        //dank sword
+        public static readonly string WEAPON_DANK_SWORD_NAME = "Shadow Blade";
+        public static readonly int WEAPON_DANK_SWORD_DAMAGE = 40;
+        public static readonly int WEAPON_DANK_SWORD_RECHARGE = 50;
+        public static readonly int WEAPON_DANK_SWORD_LEVEL = 2;
+
+        //revolver
+        public static readonly string WEAPON_REVOLVER_NAME = "Revolver";
+        public static readonly int WEAPON_REVOLVER_DAMAGE = 100;
+        public static readonly int WEAPON_REVOLVER_RECHARGE = 150;
+        public static readonly int WEAPON_REVOLVER_FREEZE = 20;
+        public static readonly float WEAPON_REVOLVER_BULLET_SPEED = 10f;
+        public static readonly int WEAPON_REVOLVER_CLIP = 6;
+        public static readonly int WEAPON_REVOLVER_LEVEL = 1;
+
+        //OKGUN
+        public static readonly string WEAPON_OKGUN_NAME = "Glock";
+        public static readonly int WEAPON_OKGUN_DAMAGE = 10;
+        public static readonly int WEAPON_OKGUN_RECHARGE = 30;
+        public static readonly int WEAPON_OKGUN_FREEZE = 10;
+        public static readonly float WEAPON_OKGUN_BULLET_SPEED = 10f;
+        public static readonly int WEAPON_OKGUN_CLIP = 30;
+        public static readonly int WEAPON_OKGUN_LEVEL = 1;
 
         //dimensions
 		public static int SCREEN_WIDTH = 1280; // 640 x 480, 1280 x 640
@@ -98,10 +136,10 @@ namespace GameName1
         public static readonly int TILE_STONE = 1157;
 
         //spawn directions
-        public static readonly int SPAWN_POINT_UP = 0;
-        public static readonly int SPAWN_POINT_RIGHT = 1;
-        public static readonly int SPAWN_POINT_DOWN = 2;
-        public static readonly int SPAWN_POINT_LEFT = 3;
+        public static readonly int SPAWN_POINT_UP = 1;
+        public static readonly int SPAWN_POINT_RIGHT = 2;
+        public static readonly int SPAWN_POINT_DOWN = 3;
+        public static readonly int SPAWN_POINT_LEFT = 4;
 
 
         //Damage
@@ -168,11 +206,6 @@ namespace GameName1
         //skilltree sprites
 		public static readonly string SKILL_TREE_NODE_ANY = "Blank";
 
-        //Sword
-        public static readonly string SWORD_NAME = "Sword";
-
-        //Gun
-        public static readonly string GUN_NAME = "Gun";
 
         //Life Drain
         public static readonly string LIFE_DRAIN_NAME = "Life Drain";

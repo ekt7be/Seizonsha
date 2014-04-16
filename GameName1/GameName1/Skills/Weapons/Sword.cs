@@ -9,7 +9,7 @@ using System.Text;
 
 namespace GameName1.Skills
 {
-    class Sword : Weapon, Unlockable
+    abstract class Sword : Weapon, Unlockable
     {
 
         private int damage;
@@ -19,7 +19,7 @@ namespace GameName1.Skills
         SlashAnimation slashAnimation;
 
 
-        public Sword(Seizonsha game, GameEntity user,int damage, int recharge_time) : base(game, user, recharge_time, recharge_time/2)
+        public Sword(Seizonsha game, GameEntity user,int damage, int recharge_time, int level, string name, Color tint) : base(game, user, recharge_time, recharge_time/2, level, name, tint)
         {
             this.damage = damage;
             slashAnimation = new SlashAnimation(this, user, recharge_time);
@@ -55,7 +55,7 @@ namespace GameName1.Skills
         public override void Draw(SpriteBatch spriteBatch)
         {
             //base.Draw(spriteBatch);
-            spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_SWORD], user.hitbox, swordSource, user.tint, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1f);
+            spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_SWORD], user.hitbox, swordSource, tint, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1f);
 
         }
 
@@ -64,10 +64,6 @@ namespace GameName1.Skills
             return "A SWORD";
         }
 
-        public override string getName()
-        {
-			return Static.SWORD_NAME;
-        }
 
         public override void affect(GameEntity affected)
         {

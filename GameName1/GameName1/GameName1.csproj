@@ -57,10 +57,11 @@
     <Compile Include="AnimationTesting\SlashAnimation.cs" />
     <Compile Include="Collision.cs" />
     <Compile Include="EntityFactory.cs" />
-    <Compile Include="Food.cs" />
+    <Compile Include="PickUps\DeadPlayer.cs" />
+    <Compile Include="PickUps\Food.cs" />
     <Compile Include="Interfaces\Interactable.cs" />
     <Compile Include="NPCs\Enemy.cs" />
-    <Compile Include="PickUp.cs" />
+    <Compile Include="PickUps\PickUp.cs" />
     <Compile Include="PolygonStuff\MainForm.Collisions.cs" />
     <Compile Include="PolygonStuff\Point.cs" />
     <Compile Include="PolygonStuff\PointF.cs" />
@@ -74,7 +75,7 @@
     <Compile Include="Skills\Kick.cs" />
     <Compile Include="Skills\StatusEffects\Burning.cs" />
     <Compile Include="Effects\Effect.cs" />
-    <Compile Include="Interfaces\StatusEffect.cs" />
+    <Compile Include="Skills\StatusEffects\StatusEffect.cs" />
     <Compile Include="Effects\TextEffect.cs" />
     <Compile Include="Interfaces\AI.cs" />
     <Compile Include="Interfaces\Equipable.cs" />
@@ -107,15 +108,22 @@
     <Compile Include="Skills\Skill.cs" />
     <Compile Include="Skills\StatusEffects\Slow.cs" />
     <Compile Include="Skills\StatusEffects\Stun.cs" />
+    <Compile Include="Skills\Weapons\DankSword.cs" />
+    <Compile Include="Skills\Weapons\OKGun.cs" />
+    <Compile Include="Skills\Weapons\Revolver.cs" />
+    <Compile Include="Skills\Weapons\RustyShank.cs" />
+    <Compile Include="Skills\Weapons\RustySword.cs" />
     <Compile Include="Skills\Weapons\Sword.cs" />
     <Compile Include="Skills\Teleport.cs" />
     <Compile Include="Skills\Weapons\Weapon.cs" />
+    <Compile Include="PickUps\WeaponDrop.cs" />
     <Compile Include="SkillTree\ArmorPlusUnlockable.cs" />
     <Compile Include="SkillTree\BlankNode.cs" />
     <Compile Include="SkillTree\HealthPlusUnlockable.cs" />
     <Compile Include="Skills\TargetedAbility.cs" />
     <Compile Include="SkillTree\ManaPlusUnlockable.cs" />
     <Compile Include="SkillTree\ManaRegenPlusUnlockable.cs" />
+    <Compile Include="SkillTree\WeaponLevelPlusUnlockable.cs" />
     <Compile Include="SpawnTile.cs" />
     <Compile Include="SkillTree\SkillTree.cs" />
     <Compile Include="SkillTree\SkillTreeNode.cs" />
@@ -3148,8 +3156,6 @@
   <ItemGroup>
     <Folder Include="Content\Fonts\" />
     <Folder Include="obj\x86\Debug\TempPE\" />
-    <Folder Include="Content\tilesets\ff\" />
-    <Folder Include="Content\tilesets\mack\" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">

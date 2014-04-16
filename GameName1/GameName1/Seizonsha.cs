@@ -167,8 +167,11 @@ namespace GameName1
 			SkillTree.SkillTree.nodeTextures.Add(Static.SKILL_TREE_NODE_ANY, nodeRect);
 			SkillTree.SkillTree.nodeTextures.Add(Static.FIREBALL_NAME, fireballicon);
 			SkillTree.SkillTree.nodeTextures.Add(Static.HEALING_TOUCH_NAME, healingtouchicon);
-			SkillTree.SkillTree.nodeTextures.Add(Static.SWORD_NAME, swordicon);
-			SkillTree.SkillTree.nodeTextures.Add(Static.GUN_NAME, gunicon);
+			SkillTree.SkillTree.nodeTextures.Add(Static.WEAPON_RUSTY_SHANK_NAME, swordicon);
+            SkillTree.SkillTree.nodeTextures.Add(Static.WEAPON_RUSTY_SWORD_NAME, swordicon);
+            SkillTree.SkillTree.nodeTextures.Add(Static.WEAPON_DANK_SWORD_NAME, swordicon);
+
+			SkillTree.SkillTree.nodeTextures.Add(Static.WEAPON_REVOLVER_NAME, gunicon);
 			SkillTree.SkillTree.nodeTextures.Add(Static.FIRELANCE_NAME, firelanceicon);
 			SkillTree.SkillTree.nodeTextures.Add(Static.BLIZZARD_NAME, nodeRect);
 			SkillTree.SkillTree.nodeTextures.Add(Static.TELEPORT_NAME, nodeRect);
@@ -262,21 +265,10 @@ namespace GameName1
 			this.difficulty = 5;
             this.numberEnemies = 0;
             this.Wave = 0;
-            WaveBegin();
-            //Spawn(new Food(this), 500, 600);
+            //WaveBegin();
+			//waveCleared = false; 
+            WaveCleared();
 
-			waveCleared = false; 
-
-			//Spawn(new BasicEnemy(this), 500, 800);
-
-
-			//Spawn(new BossEnemy(this), 500, 800);
-
-			//Spawn(new BasicEnemy(this), 500, 800);
-
-			//Spawn(new BasicEnemy(this), 500, 800);
-
-			//Spawn(new BasicEnemy(this), 600, 800);
 
 
             base.Initialize();
@@ -476,7 +468,7 @@ namespace GameName1
             //check for wave completion
 			if (numberEnemies <= 0 && !waveCleared)
             {
-                WaveCleared(gameTime);
+                WaveCleared();
 
                 //check # of players and create appropriate number of player menus
               /*  for (int index = 0; index < Static.NUM_PLAYERS; index++)
@@ -486,11 +478,23 @@ namespace GameName1
             */   
             }
 			else if (waveCleared) {
+
+                bool allPlayersReady = true;
+
+                foreach (Player player in getPlayers())
+                {
+                    if (!player.playerReady){
+                        allPlayersReady = false;
+                    }
+                }
+
                 if(bossSoundLoop.State == SoundState.Playing)
                     bossSoundLoop.Stop();
                 if (gameSoundLoop.State == SoundState.Playing)
                     gameSoundLoop.Stop();
-				if (sinceLastWaveCleared >= Static.SECONDS_BETWEEN_WAVE * 1000) {
+				//if (sinceLastWaveCleared >= Static.SECONDS_BETWEEN_WAVE * 1000 ) 
+                if (allPlayersReady)
+                {
 					WaveBegin();
 				}
 			}
@@ -759,6 +763,7 @@ namespace GameName1
 				if (player.oldKeyboardState.IsKeyUp(Keys.F) && Keyboard.GetState().IsKeyDown(Keys.F))
 				{
 					//player.F(); 
+                    player.Ybutton();
 				}
 
 				if (player.oldKeyboardState.IsKeyUp(Keys.G) && Keyboard.GetState().IsKeyDown(Keys.G))
@@ -804,10 +809,15 @@ namespace GameName1
                     player.SkillTreeButtonRelease();
 
                 }
-                 
-                if (GamePad.GetState(player.playerIndex).Buttons.A == ButtonState.Pressed)
+
+                if (player.oldGamepadState.Buttons.A == ButtonState.Released && GamePad.GetState(player.playerIndex).Buttons.A == ButtonState.Pressed)
                 {
                     player.AButton();
+                }
+
+                if (player.oldGamepadState.Buttons.Y == ButtonState.Released && GamePad.GetState(player.playerIndex).Buttons.Y == ButtonState.Pressed)
+                {
+                    player.Ybutton();
                 }
 
                 if (GamePad.GetState(player.playerIndex).ThumbSticks.Left.Y > .5)
@@ -1492,12 +1502,16 @@ namespace GameName1
         }
 
 
-		public void WaveCleared(GameTime gameTime)
+		public void WaveCleared()
         {
 			sinceLastWaveCleared = 0; 
 
-			waveCleared = true; 
-
+			waveCleared = true;
+            foreach (Player player in getPlayers())
+            {
+                player.revive();
+                player.playerReady = false;
+            }
             difficulty++;
             difficulty++;
 

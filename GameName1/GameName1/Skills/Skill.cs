@@ -59,7 +59,7 @@ namespace GameName1.Skills
 
         public virtual void OnEquip()
         {
-
+            this.recharged = rechargeTime;
         }
 
         //INSTANTIATING IN HERE

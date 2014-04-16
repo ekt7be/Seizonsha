@@ -1,6 +1,8 @@
 ﻿using GameName1.Effects;
 using GameName1.Interfaces;
+using GameName1.PickUps;
 using GameName1.Skills;
+using GameName1.Skills.Weapons;
 using GameName1.SkillTree;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -30,6 +32,11 @@ namespace GameName1
         private int armorLevel;
         private Color armorColor;
 
+        public int weaponLevel;
+        public Weapon currentWeapon;
+
+        public bool playerReady;
+
         public bool keyboard = false;
         public KeyboardState oldKeyboardState;
         public GamePadState oldGamepadState;
@@ -40,6 +47,7 @@ namespace GameName1
         private Interactable currentInteractable;
 
 		List<Skill> unlockedSkills = new List<Skill>(); 
+
 
         private static float elapsed;
         private static float swordElapsed;
@@ -180,6 +188,8 @@ namespace GameName1
             this.armorLevel = 0;
             this.armorColor = Static.PLAYER_ARMOR_COLOR_0;
 
+            this.weaponLevel = 1;
+
 			this.skillSlots = new Equipable[4]; //each slot is different skill, weapon, or item
             this.inventory = new List<Equipable>();
             this.skilltree = new SkillTree.SkillTree(game, this, Static.PIXEL_THIN);
@@ -196,13 +206,20 @@ namespace GameName1
 
            // Equip(new Gun(game, this, 10, 30, 15), Static.PLAYER_L1_SKILL_INDEX);
 
+            /*
             Gun gun = new Gun(game, this, 10, 30,0, 15f);
             Equip(gun, Static.PLAYER_L1_SKILL_INDEX);
             addEquipable(gun);
+             * */
 
-            Sword sword = new Sword(game, this, 30, 40);
+            Kick kick = new Kick(game, this, 5, 60);
+            Equip(kick, Static.PLAYER_L1_SKILL_INDEX);
+            addEquipable(kick);
+
+            Sword sword = new RustySword(game, this);
             Equip(sword, Static.PLAYER_R1_SKILL_INDEX);
             addEquipable(sword);
+            this.currentWeapon = sword;
 
             Fireball fireball = new Fireball(game, this, 40, 30, 10);
             Equip(fireball, Static.PLAYER_R2_SKILL_INDEX);
@@ -212,13 +229,6 @@ namespace GameName1
             Equip(healingtouch, Static.PLAYER_L2_SKILL_INDEX);
             addEquipable(healingtouch);
 
-            Bash bash = new Bash(game, this, 5, 40);
-            Equip(bash, Static.PLAYER_L2_SKILL_INDEX);
-            addEquipable(bash);
-
-            Kick kick = new Kick(game, this, 5, 60);
-            Equip(kick, Static.PLAYER_L2_SKILL_INDEX);
-            addEquipable(bash);
 
             /*
 
@@ -271,6 +281,15 @@ namespace GameName1
             armorLevel++;
             defaultShield();
 
+        }
+
+        public void incWeaponSkill()
+        {
+            if (weaponLevel == 3)
+            {
+                return;
+            }
+            weaponLevel++;
         }
 
         private void defaultShield()
@@ -435,7 +454,7 @@ namespace GameName1
             {
                 if (currentInteractable is GameEntity)
                 {
-                    spriteBatch.DrawString(game.getSpriteFont(), "Press A(Enter) to " + currentInteractable.Message(this), new Vector2(screenPortion.Width / 2, screenPortion.Height / 2), Color.White);
+                    spriteBatch.DrawString(game.getSpriteFont(), currentInteractable.Message(this), new Vector2(screenPortion.Width / 2, screenPortion.Height / 2), Color.White);
                     //(GameEntity)currentInteractable
                 }
             }
@@ -509,11 +528,28 @@ namespace GameName1
              * */
 
             if (game.waveCleared)
-                spriteBatch.DrawString(Static.SPRITE_FONT, Static.SECONDS_BETWEEN_WAVE - (int)game.sinceLastWaveCleared / 1000 +
+            {
+
+                string nextWaveMessage;
+                /*
+                string nextWaveMessage = Static.SECONDS_BETWEEN_WAVE - (int)game.sinceLastWaveCleared / 1000 +
                 " seconds until next wave...\n" +
                 "press space(start) to open skill tree! \n" +
-                "use arrow keys (DPad) to equip skills and weapons",
+                "use arrow keys (DPad) to equip skills and weapons";
+                */
+
+                if (!playerReady)
+                {
+                    nextWaveMessage = "Press Y(F Key) to start next wave";
+                }
+                else
+                {
+                    nextWaveMessage = "Waiting for other players";
+                }
+
+                spriteBatch.DrawString(Static.SPRITE_FONT, nextWaveMessage,
                 new Vector2(screenPortion.Width - 390, screenPortion.Height - 150), Color.White); 
+            }
 
             #region SKILL BAR
 			int iconSize = screenPortion.Width/18;
@@ -543,6 +579,11 @@ namespace GameName1
                     Button = "4 (R2)";
                 }
                 spriteBatch.DrawString(Static.SPRITEFONT_Calibri10, Button, new Vector2(skillBox.Left, skillBox.Top), Color.White);
+
+                if (skill is Gun)
+                {
+                    spriteBatch.DrawString(Static.SPRITEFONT_Calibri10, ((Gun)skill).ammo + "/"+((Gun)skill).clipSize , new Vector2(skillBox.Left, skillBox.Bottom), Color.White);
+                }
 
                 if (!skill.Available())
                 {
@@ -666,6 +707,22 @@ namespace GameName1
 
         }
 
+        //returns skillIndex of currentWeapon
+        //-1 if not equipped
+        public int weaponEquipped()
+        {
+
+            for (int i = 0; i < skillSlots.Count(); i++)
+            {
+                if (skillSlots[i] == currentWeapon)
+                {
+                    return i;
+                }
+            }
+
+            return -1;
+        }
+
         public void Equip(Equipable equip, int skillIndex)
         {
 			if (skillIndex > 4 || skillIndex < 0)
@@ -728,6 +785,14 @@ namespace GameName1
 
 		public void DownArrow()
 		{
+
+            if (SkillTreeOpen())
+            {
+                skilltree.Down();
+
+                return;
+            }
+
 			if (selectingSkill2) {
 				skillSlots[skillbarIndex] = reducedUnlockedSkills[skillbarIndex2]; 
 				reducedUnlockedSkills.Clear();
@@ -749,6 +814,13 @@ namespace GameName1
 		public void UpArrow()
 		{
 
+            if (SkillTreeOpen())
+            {
+                skilltree.Up();
+
+                return;
+            }
+
 			if (!selectingSkill) {
 				selectingSkill = true; 
 				skillbarIndex = 0; 
@@ -763,6 +835,13 @@ namespace GameName1
 
 		public void RightArrow()
 		{
+
+            if (SkillTreeOpen())
+            {
+                skilltree.Right();
+
+                return;
+            }
 			if (selectingSkill2) {
 				if (skillbarIndex2 < inventory.Count-1-1)
 					skillbarIndex2++;
@@ -779,6 +858,14 @@ namespace GameName1
 
 		public void LeftArrow()
 		{
+
+            if (SkillTreeOpen())
+            {
+                skilltree.Left();
+
+                return;
+            }
+
 			if (selectingSkill2) {
 				if (skillbarIndex2 > 0)
 					skillbarIndex2--;
@@ -801,6 +888,15 @@ namespace GameName1
             }
 			UseSkill(Static.PLAYER_LEFTCLICK_SKILL_INDEX);
 		}
+
+        public void Ybutton()
+        {
+            if (game.waveCleared)
+            {
+                playerReady = !playerReady;
+            }
+            
+        }
 
         public void AButton()
         {
@@ -947,6 +1043,7 @@ namespace GameName1
         {
             this.skilltreescreen = false;
             dead = true;
+            game.Spawn(new DeadPlayer(game, this), x, y);
         }
 
         public bool isDead()
@@ -1067,5 +1164,21 @@ namespace GameName1
         {
             return Static.TYPE_PLAYER;
         }
+
+
+        public void revive()
+        {
+
+            this.health = maxHealth;
+            this.dead = false;   
+            this.mana = maxMana;
+            this.skilltreescreen = false;
+            this.skilltreebuttondown = false;
+            this.currentInteractable = null;
+            this.remove = false;
+
+        }
+
+
     }
 }

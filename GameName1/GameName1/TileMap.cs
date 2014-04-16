@@ -87,10 +87,35 @@ namespace GameName1
 								}
 
 								else if (type == "special") {
-									SpawnTile spawnTile = new SpawnTile(Static.SPAWN_POINT_LEFT ,i * Static.TILE_WIDTH, j * Static.TILE_WIDTH);
-									spawnTile.capacity = 0; 
-									level.AddSpawnPoint(spawnTile);
-									tiles[i, j] = spawnTile;
+                                    if (tileNum == Static.SPAWN_POINT_LEFT)
+                                    {
+                                        SpawnTile spawnTile = new SpawnTile(Static.SPAWN_POINT_LEFT, i * Static.TILE_WIDTH, j * Static.TILE_WIDTH);
+                                        spawnTile.capacity = 0;
+                                        level.AddSpawnPoint(spawnTile);
+                                        tiles[i, j] = spawnTile;
+                                    }
+                                    else if (tileNum == Static.SPAWN_POINT_RIGHT)
+                                    {
+                                        SpawnTile spawnTile = new SpawnTile(Static.SPAWN_POINT_RIGHT, i * Static.TILE_WIDTH, j * Static.TILE_WIDTH);
+                                        spawnTile.capacity = 0;
+                                        level.AddSpawnPoint(spawnTile);
+                                        tiles[i, j] = spawnTile;
+                                    }
+                                    else if (tileNum == Static.SPAWN_POINT_UP)
+                                    {
+                                        SpawnTile spawnTile = new SpawnTile(Static.SPAWN_POINT_UP, i * Static.TILE_WIDTH, j * Static.TILE_WIDTH);
+                                        spawnTile.capacity = 0;
+                                        level.AddSpawnPoint(spawnTile);
+                                        tiles[i, j] = spawnTile;
+                                    }
+                                    else if (tileNum == Static.SPAWN_POINT_DOWN)
+                                    {
+                                        SpawnTile spawnTile = new SpawnTile(Static.SPAWN_POINT_DOWN, i * Static.TILE_WIDTH, j * Static.TILE_WIDTH);
+                                        spawnTile.capacity = 0;
+                                        level.AddSpawnPoint(spawnTile);
+                                        tiles[i, j] = spawnTile;
+                                    }
+
 								}
 							}
 						}

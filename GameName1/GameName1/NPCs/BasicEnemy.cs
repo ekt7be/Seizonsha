@@ -1,5 +1,6 @@
 ﻿using GameName1.Interfaces;
 using GameName1.Skills;
+using GameName1.Skills.Weapons;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -14,14 +15,11 @@ namespace GameName1.NPCs
 	{
 
         float elapsed;
-        float elapsed2;
 		double closestDistance;
 
         Tile enemyTile;
         Tile playerTile;
 
-		bool drawPath = true;  
-		bool drawHitbox = true; 
 
 
 		private static readonly float delay = 200f;
@@ -29,6 +27,8 @@ namespace GameName1.NPCs
 
 		private int currentFrame = 0;
 		private Sword sword;
+
+        private float extraSwordRecharge;
 
 
         private GameEntity closest;
@@ -46,8 +46,9 @@ namespace GameName1.NPCs
 		{
 			base.scale = Static.BASIC_ENEMY_SPRITE_SCALE;
 
-			sword = new Sword(game, this, 5, 40);
+			sword = new RustyShank(game, this);
 			sword.OnEquip();
+            this.extraSwordRecharge = Static.BASIC_ENEMY_EXTRA_ATTACK_RECHARGE;
 
 		}
 
@@ -79,8 +80,11 @@ namespace GameName1.NPCs
 
 
 			// attack with sword if in range
-			if (closestDistance < this.width*1.2)
-				sword.Use();
+            if (closestDistance < this.width * 1.2 && this.extraSwordRecharge > Static.BASIC_ENEMY_EXTRA_ATTACK_RECHARGE)
+            {
+                sword.Use();
+                this.extraSwordRecharge = 0f;
+            }
 
             base.AI(gameTime);
 			
@@ -158,10 +162,6 @@ namespace GameName1.NPCs
 		{
 		}
 
-		public override void OnSpawn()
-		{
-
-		}
 
 	
 
@@ -178,12 +178,9 @@ namespace GameName1.NPCs
 			sword.Update();
 
 			elapsed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-			elapsed2 += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
 
+            this.extraSwordRecharge += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
 
-			if (elapsed2 >= 10000) {
-				elapsed2 = 0;			
-			}
 
 			if (elapsed > delay)
 			{
@@ -203,6 +200,16 @@ namespace GameName1.NPCs
 		protected override void OnDie()
 		{
 			game.decreaseNumberEnemies();
+            double rand = random.NextDouble();
+
+            if (rand < .05)
+            {
+                game.Spawn(new WeaponDrop(game, Static.PIXEL_THIN, 20, 20, new RustyShank(game, this)), x, y);
+
+            } else if (rand < .15)
+            {
+                game.Spawn(new Food(game, "Chicken Nuggets", Static.PIXEL_THIN, 20),x ,y);
+            }
 		}
 
 		public override void rotateToAngle(float angle) //animation is based on rotation which is used by both movement and aiming

@@ -9,51 +9,17 @@ using System.Text;
 
 namespace GameName1.Skills
 {
-    class Kick : Weapon, Unlockable
+    class Kick : Skill, Unlockable
     {
 
         private int damage;
 
-        protected Rectangle? swordSource;
 
 
         public Kick(Seizonsha game, GameEntity user, int damage, int recharge_time)
-            : base(game, user, recharge_time, recharge_time / 2)
+            : base(game, user, 0, recharge_time, recharge_time / 2, 0)
         {
             this.damage = damage;
-
-
-            if (Math.Cos(user.direction) > .5)
-            {
-                //spriteSource = FramesToAnimation[RIGHT_ANIMATION];
-                swordSource = new Rectangle(64 * 0, 3 * 64, 64, 64);
-
-            }
-            else if (Math.Sin(user.direction) > .5)
-            {
-                swordSource = new Rectangle(64 * 0, 2 * 64, 64, 64);
-
-            }
-            else if (Math.Sin(user.direction) < -.5)
-            {
-                //spriteSource = FramesToAnimation[UP_ANIMATION];
-                swordSource = new Rectangle(64 * 0, 0 * 64, 64, 64);
-
-            }
-            else if (Math.Cos(user.direction) < -.5)
-            {
-                //spriteSource = FramesToAnimation[LEFT_ANIMATION];
-                swordSource = new Rectangle(64 * 0, 1 * 64, 64, 64);
-            }
-
-
-
-        }
-
-        public override void Draw(SpriteBatch spriteBatch)
-        {
-            //base.Draw(spriteBatch);
-            //spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_SWORD], user.hitbox, swordSource, user.tint, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1f);
 
         }
 
@@ -86,49 +52,13 @@ namespace GameName1.Skills
             game.Spawn(attack, slashBounds.Left, slashBounds.Top);
         }
 
-        public override void Update()
-        {
-            base.Update();
 
-            if (Math.Cos(user.direction) > .5)
-            {
-                //spriteSource = FramesToAnimation[RIGHT_ANIMATION];
-                swordSource = new Rectangle(64 * 0, 3 * 64, 64, 64);
-
-            }
-            else if (Math.Sin(user.direction) > .5)
-            {
-                swordSource = new Rectangle(64 * 0, 2 * 64, 64, 64);
-
-            }
-            else if (Math.Sin(user.direction) < -.5)
-            {
-                //spriteSource = FramesToAnimation[UP_ANIMATION];
-                swordSource = new Rectangle(64 * 0, 0 * 64, 64, 64);
-
-            }
-            else if (Math.Cos(user.direction) < -.5)
-            {
-                //spriteSource = FramesToAnimation[LEFT_ANIMATION];
-                swordSource = new Rectangle(64 * 0, 1 * 64, 64, 64);
-            }
-
-
-        }
         public void OnUnlock(Player player)
         {
             player.addEquipable(this);
         }
 
-        public Rectangle? getSwordSource()
-        {
-            return swordSource;
-        }
 
-        public void setSwordSource(Rectangle? updatedSource)
-        {
-            swordSource = updatedSource;
-        }
     }
 }
 

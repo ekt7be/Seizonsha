@@ -30,7 +30,7 @@ namespace GameName1.NPCs
         HashSet<Tile> closed;
         HashSet<Tile> open;
 
-        Random random;
+        protected Random random;
 
 
 
@@ -42,8 +42,9 @@ namespace GameName1.NPCs
             open = new HashSet<Tile>();
 
             path = new List<Tile>();
-
             random = new Random();
+
+            
 
             tilesWide = (int)Math.Floor((double)(width / Static.TILE_WIDTH)) + 1;
             tilesHigh = (int)Math.Floor((double)(height / Static.TILE_WIDTH)) + 1;
@@ -222,16 +223,20 @@ namespace GameName1.NPCs
                            
                             bool willCollide = tileAtThisDir.isObstacle();
 
-                            /*
+                            
                             //(!(tileAtThisDir.isObstacle())
-                            if (targetEntity != null)
+
+                            /*
+                            //willCollide pathfinding start
+                            if (target != null)
                             {
-                                if (!(tileAtThisDir.isTouching(targetEntity)))
+                                if (!(tileAtThisDir.isTouching(target)))
                                 {
                                     willCollide = game.willCollide(this, tileAtThisDir.x, tileAtThisDir.y);
                                 }
                             }
-                             * */
+                            //willCollide pathfinding end
+                            */
 
                             if (!willCollide && !(closed.Contains(tileAtThisDir)))
                             {
@@ -363,7 +368,11 @@ namespace GameName1.NPCs
         public abstract override void collideWithWall();
 
 
-        public abstract override void OnSpawn();
+        public override void OnSpawn()
+        {
+            int seed = DateTime.Now.Millisecond;
+            random = new Random(seed);
+        }
 
        
         public void DrawPath(SpriteBatch spriteBatch)

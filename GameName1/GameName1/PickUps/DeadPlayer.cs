@@ -1,29 +1,30 @@
-﻿using Microsoft.Xna.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace GameName1
+namespace GameName1.PickUps
 {
-    class Food: PickUp
+    class DeadPlayer : PickUp
     {
+        private Player deadPlayer;
 
-        public Food(Seizonsha game)
-            : base(game, Static.PIXEL_THIN, 20, 20)
+        public DeadPlayer(Seizonsha game, Player deadPlayer) : base(game, Static.PIXEL_THIN, Static.PLAYER_WIDTH,Static.PLAYER_HEIGHT)
         {
-            this.tint = Color.Brown;
-            setCollidable(false);
+            this.deadPlayer = deadPlayer; 
+            setCollidable(true);
+
         }
         public override void Interact(Player player)
         {
+            deadPlayer.revive();
+            game.Spawn(deadPlayer, x, y);
             setRemove(true);
-            game.healEntity(null, player, 100, Static.DAMAGE_TYPE_ALL);
         }
 
         public override string Message(Player player)
         {
-            return "EAT FOOD";
+           return "Press A(Enter) to Revive Player " + player.playerIndex.ToString();
         }
 
         public override bool Available(Player player)
@@ -32,11 +33,6 @@ namespace GameName1
         }
 
         protected override void OnDie()
-        {
-            
-        }
-
-        public override void OnSpawn()
         {
         }
 
@@ -50,7 +46,7 @@ namespace GameName1
 
         public override string getName()
         {
-            return "FOOD";
+            return "Dead Player Drop";
         }
     }
 }
