@@ -586,7 +586,7 @@ namespace GameName1
                 }
 
                 //spriteBatch.Draw(Static.PIXEL_THIN, new Rectangle(0,screenPortion.Height - 170, viewportBounds.Width, 210), Color.Black*.3f);
-                DrawBorderedText(spriteBatch, nextWaveMessage,0, screenPortion.Height - 150, Color.Black, Color.White);
+                Static.DrawBorderedText(spriteBatch, Static.SPRITE_FONT, nextWaveMessage,0, screenPortion.Height - 150, Color.Black, Color.White);
             }
 
             #region SKILL BAR
@@ -1211,7 +1211,6 @@ namespace GameName1
 
         }
 
-
         public void waveClear()
         {
             revive();
@@ -1224,14 +1223,5 @@ namespace GameName1
             selectingSkill = false;
         }
 
-        private void DrawBorderedText(SpriteBatch spriteBatch, string message, int x, int y, Color out_color, Color in_color)
-        {
-            SpriteFont font = Static.SPRITE_FONT;
-            spriteBatch.DrawString(font, message, new Vector2(x + 1, y + 1), out_color);
-            spriteBatch.DrawString(font, message, new Vector2(x + 1, y - 1), out_color);
-            spriteBatch.DrawString(font, message, new Vector2(x - 1, y + 1), out_color);
-            spriteBatch.DrawString(font, message, new Vector2(x - 1, y - 1), out_color);
-            spriteBatch.DrawString(font, message, new Vector2(x, y), in_color);
-        }
     }
 }

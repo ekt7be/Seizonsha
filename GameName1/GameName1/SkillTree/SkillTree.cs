@@ -170,30 +170,24 @@ namespace GameName1.SkillTree
 
             foreach (SkillTreeNode node in nodes)
             {
-
-
                 Color tint = Color.White;
                 if (currNode == node)
                 {
                     Rectangle highlight = node.getBounds();
                     highlight.Inflate(5, 5);
                     spriteBatch.Draw(Static.PIXEL_THIN, highlight, Color.Yellow);
-                    tint = Color.Purple;
+                    tint = Color.Pink;
                 }
                 else if (node.isUnlocked())
                 {
 					tint = Color.Pink;
-
                 }
                 else
                 {
-					tint = Color.LightGray;
+					tint = Color.Gray;
                 }
-
                 node.Draw(spriteBatch, cameraOffset, tint);
-
-
-            }
+           }
 
 
 
@@ -219,7 +213,7 @@ namespace GameName1.SkillTree
 
             if (!currNode.isUnlocked() && !currNode.Available(player))
             {
-                spriteBatch.DrawString(Static.SPRITEFONT_Calibri12, "Not enough XP", new Vector2(30, bounds.Height - 100), Color.White);
+                spriteBatch.DrawString(Static.SPRITEFONT_Calibri12, "Not enough XP!", new Vector2(30, bounds.Height - 100), Color.White);
             }
 
         }
