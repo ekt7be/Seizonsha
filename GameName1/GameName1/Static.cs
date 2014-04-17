@@ -273,7 +273,15 @@ namespace GameName1
 
         }
 
-
+        public static void DrawBorderedText(SpriteBatch spriteBatch, SpriteFont font1, string message, int x, int y, Color out_color, Color in_color)
+        {
+            SpriteFont font = font1;
+            spriteBatch.DrawString(font, message, new Vector2(x + 1, y + 1), out_color);
+            spriteBatch.DrawString(font, message, new Vector2(x + 1, y - 1), out_color);
+            spriteBatch.DrawString(font, message, new Vector2(x - 1, y + 1), out_color);
+            spriteBatch.DrawString(font, message, new Vector2(x - 1, y - 1), out_color);
+            spriteBatch.DrawString(font, message, new Vector2(x, y), in_color);
+        }
         public static void Debug(string line)
         {
             System.Diagnostics.Debug.Write(line +"\n");
