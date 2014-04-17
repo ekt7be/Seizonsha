@@ -16,6 +16,7 @@ namespace GameName1
 {
     public class Player : GameEntity
     {
+        #region Fields
         public int cameraX { get; set; }
         public int cameraY { get; set; }
         public int xp { get; set; }
@@ -70,7 +71,7 @@ namespace GameName1
         public bool drawWeapon = true;
 
 		public Camera camera;
-
+        #endregion
 
         public override void Update(GameTime gameTime)
         {
@@ -203,15 +204,12 @@ namespace GameName1
             }
         }
 
-
-
         public override void OnSpawn()
         {
         }
 
         public override void collide(GameEntity entity)
         {
-
         }
 
         public override void collideWithWall()
@@ -305,19 +303,12 @@ namespace GameName1
 
 			this.camera = camera;
 
-
             base.scale = Static.PLAYER_SPRITE_SCALE;
 
             this.rotateToAngle(0f); //sets correct animation
 
-
-
-
            incArmor(); //incArmor();
-
-
-
-        }
+   }
 
         public void incArmor()
         {
@@ -493,11 +484,8 @@ namespace GameName1
 
             this.viewportBounds = screenPortion;
 
-
-
             if (!dead)
             {
-
                 //draw cursor
                 int dist = 50;
                 int width = 30;
@@ -517,17 +505,11 @@ namespace GameName1
                 }
             }
 
-
-
-
             if (SkillTreeOpen())
             {
                 DrawSkillTree(screenPortion, spriteBatch);
                 return;
             }
-
-         
-
 
             //draw Wave number
             spriteBatch.DrawString(game.getSpriteFont(), "WAVE: " + game.Wave, new Vector2(20, screenPortion.Height - 100), Color.White);
@@ -581,7 +563,6 @@ namespace GameName1
                 Color.Black
             );
 
-
             if (game.waveCleared)
             {
 
@@ -605,8 +586,7 @@ namespace GameName1
                 }
 
                 //spriteBatch.Draw(Static.PIXEL_THIN, new Rectangle(0,screenPortion.Height - 170, viewportBounds.Width, 210), Color.Black*.3f);
-                spriteBatch.DrawString(Static.SPRITE_FONT, nextWaveMessage,
-                new Vector2(0, screenPortion.Height - 150), Color.White); 
+                DrawBorderedText(spriteBatch, nextWaveMessage,0, screenPortion.Height - 150, Color.Black, Color.White);
             }
 
             #region SKILL BAR
@@ -664,9 +644,6 @@ namespace GameName1
 
                         spriteBatch.Draw(Static.PIXEL_THIN, cooldown, new Color(Color.Black, 0.5f));
 
-
-
-
                         //to draw cooldown time
                         /*
                         spriteBatch.DrawString(
@@ -694,9 +671,6 @@ namespace GameName1
 
                         foreach (Skill unlockedSkill in unEquippedSkills)
                         {
-
-                           
-                                
                                 Rectangle unlockedSkillRect = new Rectangle(viewportBounds.Width / 2 + (skillbarIndex * (iconSize + 3) + (j * (iconSize / 2)) + (j * 3)) - 2 * iconSize - 6, viewportBounds.Height - iconSize - (iconSize / 2 + 3), iconSize / 2, iconSize / 2);
 
                                 if (unlockedSkill == null)
@@ -711,10 +685,7 @@ namespace GameName1
                                     spriteBatch.Draw(Static.PIXEL_THIN, unlockedSkillRect, Color.White);
                                 }
                                 j++;
-
                         }
-
-
                         Rectangle unlockedSkillRect2 = new Rectangle(viewportBounds.Width / 2 + (skillbarIndex * (iconSize + 3) + (skillbarIndex2 * (iconSize / 2)) + (skillbarIndex2 * 3)) - 2 * iconSize - 6, viewportBounds.Height - iconSize - (iconSize / 2 + 3), iconSize / 2, iconSize / 2);
                         spriteBatch.Draw(Static.PIXEL_THIN, unlockedSkillRect2, new Color(Color.DarkOrchid, 0.5f));
                     }
@@ -1139,23 +1110,18 @@ namespace GameName1
 
         public override void rotateToAngle(float angle) //animation is based on rotation which is used by both movement and aiming
         {
-
             if (SkillTreeOpen())
             {
                 return;
             }
-
             base.rotateToAngle(angle);
-
         }
 
         public override void UpdateAnimation(GameTime gameTime)
         {
-
             // Animation stuff
             elapsed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
             swordElapsed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-
             if (elapsed > delay)
             {
                 if (walkFrame >= WALK_ANIMATION_FRAMES - 1)
@@ -1170,13 +1136,8 @@ namespace GameName1
                 elapsed = 0;
             }
 
-
-
-
             if (this.getLastMovement().X != 0 || this.getLastMovement().Y != 0)
             {
-
-
                 if (Math.Cos(this.direction) > .5)
                 {
                     base.spriteSource = new Rectangle(64 * walkFrame, RIGHT_ANIMATION * 64, 64, 64);
@@ -1198,13 +1159,9 @@ namespace GameName1
                     //spriteSource = FramesToAnimation[LEFT_ANIMATION];
                     base.spriteSource = new Rectangle(64 * walkFrame, LEFT_ANIMATION * 64, 64, 64);
                 }
-
-
             }
-
             else
             {
-
                 if (Math.Cos(this.direction) > .5)
                 {
                     //spriteSource = FramesToAnimation[RIGHT_ANIMATION];
@@ -1267,5 +1224,14 @@ namespace GameName1
             selectingSkill = false;
         }
 
+        private void DrawBorderedText(SpriteBatch spriteBatch, string message, int x, int y, Color out_color, Color in_color)
+        {
+            SpriteFont font = Static.SPRITE_FONT;
+            spriteBatch.DrawString(font, message, new Vector2(x + 1, y + 1), out_color);
+            spriteBatch.DrawString(font, message, new Vector2(x + 1, y - 1), out_color);
+            spriteBatch.DrawString(font, message, new Vector2(x - 1, y + 1), out_color);
+            spriteBatch.DrawString(font, message, new Vector2(x - 1, y - 1), out_color);
+            spriteBatch.DrawString(font, message, new Vector2(x, y), in_color);
+        }
     }
 }

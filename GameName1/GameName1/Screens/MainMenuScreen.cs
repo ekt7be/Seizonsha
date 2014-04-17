@@ -38,6 +38,7 @@ namespace GameName1
             MenuEntry playGameMenuEntry = new MenuEntry("Play Game");
             numPlayersMenuEntry = new MenuEntry(string.Empty);
             MenuEntry optionsMenuEntry = new MenuEntry("Options");
+            MenuEntry creditsMenuEntry = new MenuEntry("Credits");
             MenuEntry exitMenuEntry = new MenuEntry("Exit");
             SetMenuEntryText();
 
@@ -46,11 +47,12 @@ namespace GameName1
             optionsMenuEntry.Selected += OptionsMenuEntrySelected;
             exitMenuEntry.Selected += OnCancel;
             numPlayersMenuEntry.Selected += NumPlayersMenuEntrySelected;
-
+            creditsMenuEntry.Selected += CreditsMenuEntrySelected;
             // Add entries to the menu.
             MenuEntries.Add(playGameMenuEntry);
             MenuEntries.Add(numPlayersMenuEntry);
             MenuEntries.Add(optionsMenuEntry);
+            MenuEntries.Add(creditsMenuEntry);
             MenuEntries.Add(exitMenuEntry);
         }
 
@@ -88,6 +90,11 @@ namespace GameName1
             Static.NUM_PLAYERS = currentNumPlayers + 1;
         }
 
+
+        void CreditsMenuEntrySelected(object sender, PlayerIndexEventArgs e)
+        {
+            ScreenManager.AddScreen(new CreditsMenuScreen(), e.PlayerIndex);
+        }
         /// <summary>
         /// Event handler for when the numplayers menu entry is selected.
         /// </summary>
