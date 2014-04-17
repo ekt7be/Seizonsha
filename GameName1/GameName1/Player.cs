@@ -135,8 +135,8 @@ namespace GameName1
                     Skill skill = (Skill)equip;
                     if (skill.percentCasted() < .99 && skill.percentCasted() > .01)
                     {
-
-                        spriteBatch.DrawString(game.getSpriteFont(), skill.getName(), new Vector2(this.getCenterX() - 50, this.hitbox.Y + this.hitbox.Height), Color.White);
+                        Static.DrawBorderedText(spriteBatch, game.getSpriteFont(), skill.getName(), this.getCenterX()-50, this.hitbox.Y + this.hitbox.Height, Color.Black, Color.White);
+                        //spriteBatch.DrawString(game.getSpriteFont(), skill.getName(), new Vector2(this.getCenterX() - 50, this.hitbox.Y + this.hitbox.Height), Color.White);
                         Rectangle cBounds = new Rectangle(this.getCenterX() - 30, this.hitbox.Y + this.hitbox.Height + 30, (int)(skill.percentCasted()*60), 5);
                         Rectangle tBounds = new Rectangle(this.getCenterX() - 30, this.hitbox.Y + this.hitbox.Height + 30, 60, 5);
                         
@@ -500,7 +500,8 @@ namespace GameName1
                 {
                     if (currentInteractable is GameEntity)
                     {
-                        spriteBatch.DrawString(game.getSpriteFont(), currentInteractable.Message(this), new Vector2(screenPortion.Width / 2, screenPortion.Height / 2), Color.White);
+                        Static.DrawBorderedText(spriteBatch, game.getSpriteFont(),currentInteractable.Message(this), screenPortion.Width / 2, screenPortion.Height / 2, Color.Black, Color.White);
+                        //spriteBatch.DrawString(game.getSpriteFont(), currentInteractable.Message(this), new Vector2(screenPortion.Width / 2, screenPortion.Height / 2), Color.White);
                     }
                 }
             }
@@ -512,8 +513,10 @@ namespace GameName1
             }
 
             //draw Wave number
-            spriteBatch.DrawString(game.getSpriteFont(), "WAVE: " + game.Wave, new Vector2(20, screenPortion.Height - 100), Color.White);
+            Static.DrawBorderedText(spriteBatch, game.getSpriteFont(), "WAVE: " + game.Wave, 20, screenPortion.Height - 100, Color.Black, Color.White);
 
+            //spriteBatch.DrawString(game.getSpriteFont(), "WAVE: " + game.Wave, new Vector2(20, screenPortion.Height - 100), Color.White);
+      
             Texture2D texture = Static.PIXEL_THIN;
 
             int barLength = screenPortion.Width / 3;
@@ -542,26 +545,36 @@ namespace GameName1
             spriteBatch.Draw(texture, xp, Color.Yellow);
 
             // draw HP text
-            spriteBatch.DrawString(
+            Static.DrawBorderedText(spriteBatch, Static.SPRITEFONT_Calibri14, "HP : " + this.health + "/" + this.maxHealth,
+                offsetFromLeft, hpHeight, Color.Black, Color.White);
+          /*  spriteBatch.DrawString(
                 Static.SPRITEFONT_Calibri14,
                 "HP : " + this.health + "/" + this.maxHealth,
                 new Vector2(offsetFromLeft, hpHeight),
                 Color.White
-            );
+            );*/
+
             // draw Mana text
+            Static.DrawBorderedText(spriteBatch, Static.SPRITEFONT_Calibri14, "Mana : " + (int)this.mana + "/" + this.maxMana,
+                offsetFromLeft, manaHeight, Color.Black, Color.White);
+          /*
             spriteBatch.DrawString(
                 Static.SPRITEFONT_Calibri14,
                 "Mana : " + (int)this.mana + "/" + this.maxMana,
                 new Vector2(offsetFromLeft, manaHeight),
                 Color.White
-            );
+            );*/
+
             // draw XP text
+            Static.DrawBorderedText(spriteBatch, Static.SPRITEFONT_Calibri14, "XP : " + this.xp,
+                offsetFromLeft, xpHeight, Color.Black, Color.White);
+            /*
             spriteBatch.DrawString(
                 Static.SPRITEFONT_Calibri14,
                 "XP : " + this.xp,
                 new Vector2(offsetFromLeft, xpHeight),
                 Color.Black
-            );
+            );*/
 
             if (game.waveCleared)
             {

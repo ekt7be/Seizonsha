@@ -128,12 +128,12 @@ namespace GameName1.SkillTree
             }
             if (unlocked)
             {
-                Static.DrawBorderedText(spriteBatch, Static.SPRITEFONT_Calibri12, unlockable.getName(), bounds.Left, bounds.Top, Color.Black, Color.White);
+                Static.DrawBorderedText(spriteBatch, Static.SPRITEFONT_Calibri12, unlockable.getName(), bounds.Left, bounds.Top, Color.Black, Color.Ivory);
                 //spriteBatch.DrawString(Static.SPRITEFONT_Calibri12, unlockable.getName(), new Vector2(bounds.Left, bounds.Top), Color.Green);
             }
             else
             {
-                Static.DrawBorderedText(spriteBatch, Static.SPRITEFONT_Calibri12, unlockable.getName() + "\n" + cost + " XP", bounds.Left, bounds.Top, Color.Black, Color.White);
+                Static.DrawBorderedText(spriteBatch, Static.SPRITEFONT_Calibri12, unlockable.getName() + "\n" + cost + " XP", bounds.Left, bounds.Top, Color.Black, Color.Ivory);
                 
                 //spriteBatch.DrawString(Static.SPRITEFONT_Calibri12, unlockable.getName() + "\n" + cost + " XP", new Vector2(bounds.Left, bounds.Top), Color.Green);
             }
