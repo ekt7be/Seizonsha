@@ -24,8 +24,10 @@ namespace GameName1
     {
         #region Initialization
         ContentManager Content;
-        static int currentNumPlayers = 0;
+        int currentNumPlayers = 0;
+        int keyboardPlayer = 0;
         MenuEntry numPlayersMenuEntry;
+        MenuEntry keyboardPlayerMenuEntry;
         SoundEffect menuSound;
         SoundEffectInstance menuSoundLoop;
         /// <summary>
@@ -37,6 +39,7 @@ namespace GameName1
             // Create our menu entries.
             MenuEntry playGameMenuEntry = new MenuEntry("Play Game");
             numPlayersMenuEntry = new MenuEntry(string.Empty);
+            keyboardPlayerMenuEntry = new MenuEntry(string.Empty);
             MenuEntry optionsMenuEntry = new MenuEntry("Options");
             MenuEntry creditsMenuEntry = new MenuEntry("Credits");
             MenuEntry exitMenuEntry = new MenuEntry("Exit");
@@ -47,10 +50,12 @@ namespace GameName1
             optionsMenuEntry.Selected += OptionsMenuEntrySelected;
             exitMenuEntry.Selected += OnCancel;
             numPlayersMenuEntry.Selected += NumPlayersMenuEntrySelected;
+            keyboardPlayerMenuEntry.Selected += KeyboardPlayerMenuEntrySelected;
             creditsMenuEntry.Selected += CreditsMenuEntrySelected;
             // Add entries to the menu.
             MenuEntries.Add(playGameMenuEntry);
             MenuEntries.Add(numPlayersMenuEntry);
+            MenuEntries.Add(keyboardPlayerMenuEntry);
             MenuEntries.Add(optionsMenuEntry);
             MenuEntries.Add(creditsMenuEntry);
             MenuEntries.Add(exitMenuEntry);
@@ -81,15 +86,15 @@ namespace GameName1
             game.spawnInitialEntities();
             menuSoundLoop.Stop();
             game.gameSoundLoop.Play();
-
+            game.players[keyboardPlayer].keyboard = true;
         }
 
         void SetMenuEntryText()
         {
-            numPlayersMenuEntry.Text = "Number of Players: " + (currentNumPlayers + 1);
+            numPlayersMenuEntry.Text = "Number of Players: \"" + (currentNumPlayers + 1) + "\"";
+            keyboardPlayerMenuEntry.Text = "Using Keyboard: \"Player " + (keyboardPlayer + 1) + "\"";
             Static.NUM_PLAYERS = currentNumPlayers + 1;
         }
-
 
         void CreditsMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
@@ -104,6 +109,11 @@ namespace GameName1
             SetMenuEntryText();
         }
 
+        void KeyboardPlayerMenuEntrySelected(object sender, PlayerIndexEventArgs e)
+        {
+            keyboardPlayer = (keyboardPlayer + 1) % 4;
+            SetMenuEntryText();
+        }
         /// <summary>
         /// Event handler for when the Options menu entry is selected.
         /// </summary>
