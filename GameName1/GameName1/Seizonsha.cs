@@ -28,7 +28,7 @@ namespace GameName1
         Texture2D playerRect;
         private SpriteFont spriteFont;
         private static readonly Random randomGen = new Random();
-        private Player[] players;
+        public Player[] players;
         private List<GameEntity> entities;
         private Queue<GameEntity> removalQueue;
         private Queue<Spawnable> spawnQueue;
@@ -288,7 +288,7 @@ namespace GameName1
                 Spawn(players[i], 500, 100 + (i * 40));
             }
 
-			players[0].keyboard = true;
+			//players[0].keyboard = true;
 
             //below code makes player two controlled by keyboard.  just comment player 1s flag
             
