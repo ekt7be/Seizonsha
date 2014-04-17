@@ -131,16 +131,16 @@ namespace GameName1
             //just for testing -- makes a rectangle
             //Texture2D playerRect = new Texture2D(GraphicsDevice, Static.PLAYER_HEIGHT, Static.PLAYER_WIDTH);
 
-            playerRect = Content.Load<Texture2D>("Sprites/HumanSpriteSheetUpdated");
+            playerRect = Content.Load<Texture2D>("Sprites/Bodies/HumanSpriteSheetLight");
             Texture2D npcRect = Content.Load<Texture2D>("Sprites/player");
-            Texture2D basicEnemyRect = Content.Load<Texture2D>("Sprites/SkeletonWalkingSpritesheet");
+            Texture2D basicEnemyRect = Content.Load<Texture2D>("Sprites/Bodies/SkeletonSpriteSheet");
 
-            Texture2D plateArmorHead = Content.Load<Texture2D>("Sprites/PlateArmorHead");
-            Texture2D plateArmorFeet = Content.Load<Texture2D>("Sprites/PlateArmorFeet");
-            Texture2D plateArmorGloves = Content.Load<Texture2D>("Sprites/PlateArmorGloves");
-            Texture2D plateArmorPants = Content.Load<Texture2D>("Sprites/PlateArmorPants");
-            Texture2D plateArmorArmsShoulder = Content.Load<Texture2D>("Sprites/PlateArmorShoulders");
-            Texture2D plateArmorTorso = Content.Load<Texture2D>("Sprites/PlateArmorTorso");
+            Texture2D plateArmorHead = Content.Load<Texture2D>("Sprites/Armor/Cloth/ClothHoodSpriteSheet");
+            Texture2D plateArmorFeet = Content.Load<Texture2D>("Sprites/Armor/Other/BasicShoesSpriteSheet");
+            Texture2D plateArmorGloves = Content.Load<Texture2D>("Sprites/Armor/Leather/LeatherBracersSpriteSheet");
+            Texture2D plateArmorPants = Content.Load<Texture2D>("Sprites/Armor/Metal/MetalPantsSpriteSheet");
+            Texture2D plateArmorArmsShoulder = Content.Load<Texture2D>("Sprites/Armor/Leather/LeatherShouldersSpriteSheet");
+            Texture2D plateArmorTorso = Content.Load<Texture2D>("Sprites/Armor/Leather/LeatherTorsoSpriteSheet");
             Texture2D fireball = Content.Load<Texture2D>("Sprites/fireballsprite");
             Texture2D heal = Content.Load<Texture2D>("Sprites/healsprite");
             Texture2D bullet = Content.Load<Texture2D>("Sprites/bulletsprite");

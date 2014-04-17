@@ -55,10 +55,10 @@ namespace GameName1
         private static readonly float delay = 200f;
         private static int walkFrame = 0;
 
-        private static readonly int UP_ANIMATION = 0;
-        private static readonly int DOWN_ANIMATION = 2;
-        private static readonly int LEFT_ANIMATION = 1;
-        private static readonly int RIGHT_ANIMATION = 3;
+        private static readonly int UP_ANIMATION = 8;
+        private static readonly int DOWN_ANIMATION = 10;
+        private static readonly int LEFT_ANIMATION = 9;
+        private static readonly int RIGHT_ANIMATION = 11;
         private static readonly int WALK_ANIMATION_FRAMES = 9;
 
 		public int skillbarIndex = 0;
