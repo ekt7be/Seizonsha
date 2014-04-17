@@ -288,7 +288,7 @@ namespace GameName1
                 Spawn(players[i], 500, 100 + (i * 40));
             }
 
-			//players[0].keyboard = true;
+			players[0].keyboard = true;
 
             //below code makes player two controlled by keyboard.  just comment player 1s flag
             
@@ -428,8 +428,6 @@ namespace GameName1
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public void UpdateGame(GameTime gameTime)
         {
-
-
 			sinceLastWaveCleared += (float)gameTime.ElapsedGameTime.TotalMilliseconds; 
 
             //flag entities to be removed
@@ -469,8 +467,6 @@ namespace GameName1
                 entity.ClearAnimations();
             }
 
-
-
             //spawn Spawnables
             while (spawnQueue.Count > 0)
             {
@@ -478,8 +474,6 @@ namespace GameName1
                 Vector2 spawnPoint = spawnPointQueue.Dequeue();
                 if (spawn is GameEntity)
                 {
-
-
                     entities.Add((GameEntity)spawn);
 
                     if (spawn is AI)
@@ -492,16 +486,11 @@ namespace GameName1
                     {
                         BindEntityToTiles((GameEntity)spawn, true);
                     }
-
                 }
                 else
                 {
                     spawn.OnSpawn();
                 }
-
-			
-
-
             }
 
             //check for wave completion
@@ -584,11 +573,23 @@ namespace GameName1
             }
             collisions.Clear();
 
-
             //update animations
             foreach (GameEntity entity in entities)
             {
                 entity.UpdateAnimation(gameTime);
+            }
+
+            if (allPlayersDead())
+            {
+                if (gameSoundLoop.State == SoundState.Playing)
+                {
+                    gameSoundLoop.Stop();
+                }
+                if (bossSoundLoop.State == SoundState.Playing)
+                {
+                    bossSoundLoop.Stop();
+                }
+                screenManager.AddScreen(new GameOverMenuScreen(), null);
             }
 
 			fps.Update(gameTime); 
@@ -1578,14 +1579,17 @@ namespace GameName1
             Wave++;
             //currLevel.spawnEnemies(difficulty);
 
-            if (this.Wave % 3 == 0)
+            if (this.Wave % 1 == 0)
             {
                 List<GameEntity> enemyList = new List<GameEntity>();
                 enemyList.Add(new BossEnemy(this));
                 //Spawn(new BossEnemy(this), 500, 800);
                 currLevel.populateQueue(difficulty, enemyList);
-                gameSoundLoop.Stop();
-                bossSoundLoop.Play();
+                if (gameSoundLoop.State == SoundState.Playing)
+                {
+                    gameSoundLoop.Stop();
+                }
+                    bossSoundLoop.Play();
             }
             else
             {
@@ -1616,5 +1620,15 @@ namespace GameName1
             return spriteMappings[x];
         }
 
+        private bool allPlayersDead()
+        {
+            bool allDead = true;
+            foreach (Player player in players)
+            {
+                if(player!=null)
+                   allDead = allDead && player.isDead(); //if any player is alive, allDead returns false
+            }
+            return allDead;
+        }
     }
 }
