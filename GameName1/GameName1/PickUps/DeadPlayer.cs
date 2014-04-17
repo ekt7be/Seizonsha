@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace GameName1.PickUps
 {
@@ -13,6 +15,7 @@ namespace GameName1.PickUps
         {
             this.deadPlayer = deadPlayer; 
             setCollidable(true);
+            deadPlayer.drawWeapon = false;
 
         }
         public override void Interact(Player player)
@@ -30,6 +33,12 @@ namespace GameName1.PickUps
         public override bool Available(Player player)
         {
             return player != deadPlayer;
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            deadPlayer.spriteSource = new Rectangle(5 * 64, 20 * 64, 64, 64);              
+            deadPlayer.Draw(spriteBatch);
         }
 
         protected override void OnDie()

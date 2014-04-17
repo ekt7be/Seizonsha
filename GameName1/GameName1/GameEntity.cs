@@ -46,6 +46,7 @@ namespace GameName1
 
 
         private DamageAnimation damageAnimation;
+        private CastAnimation castAnimation;
 
         protected int frozen; // stop entity from moving for a period of time
         protected List<StatusEffect> statusEffects;
@@ -73,7 +74,7 @@ namespace GameName1
                 return;
             }
 
-            if(this.hasHealth){
+            if(this.hasHealth && this.health > 0){
                 int barWidth = 60;
                 //Debug.WriteLine(this.health);
                 double green = ((double)this.health/(double)this.maxHealth) * barWidth;

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using GameName1.AnimationTesting;
 
 namespace GameName1.Skills
 {
@@ -22,6 +23,7 @@ namespace GameName1.Skills
         protected Vector2 bufferedVectorDirection;
         protected float bufferedDirection;
         protected int damageType;
+        private CastAnimation castAnimation;
         
 
         public Skill(Seizonsha game, GameEntity user, int manaCost, int rechargeTime, int castingTime, int freezeTime)
@@ -35,6 +37,7 @@ namespace GameName1.Skills
             this.user = user;
             this.game = game;
             bufferedDirection = 0;
+            castAnimation = new CastAnimation(user, castingTime);
 
             this.damageType = Static.DAMAGE_TYPE_NO_DAMAGE;
             if (user.getTargetType() == Static.TARGET_TYPE_GOOD)
@@ -65,6 +68,7 @@ namespace GameName1.Skills
         //INSTANTIATING IN HERE
         public virtual void Use()
         {
+
             this.bufferedDirection = user.direction;
             this.bufferedVectorDirection = new Vector2(user.vectorDirection.X, user.vectorDirection.Y);
 
@@ -75,6 +79,11 @@ namespace GameName1.Skills
             user.Freeze(freezeTime);
             if (castingTime > 0)
             {
+                castAnimation.reset(user);
+                if (!user.HasAnimation(castAnimation))
+                {
+                    user.AddAnimation(castAnimation);
+                }
                 casting = 0;
                 waitingForCast = true;
             }

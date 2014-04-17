@@ -134,10 +134,10 @@ namespace GameName1
             Texture2D npcRect = Content.Load<Texture2D>("Sprites/player");
             Texture2D basicEnemyRect = Content.Load<Texture2D>("Sprites/Bodies/SkeletonSpriteSheet");
 
-            Texture2D plateArmorHead = Content.Load<Texture2D>("Sprites/Armor/Plate/PlateArmorHead");
-            Texture2D plateArmorFeet = Content.Load<Texture2D>("Sprites/Armor/Other/BasicShoesSpriteSheet");
-            Texture2D plateArmorGloves = Content.Load<Texture2D>("Sprites/Armor/Plate/PlateArmorGloves");
-            Texture2D plateArmorPants = Content.Load<Texture2D>("Sprites/Armor/Plate/PlateArmorPants");
+            Texture2D plateArmorHead = Content.Load<Texture2D>("Sprites/Armor/Metal/MetalHelmSpriteSheet");
+            Texture2D plateArmorFeet = Content.Load<Texture2D>("Sprites/Armor/Metal/MetalBootsSpriteSheet");
+            Texture2D plateArmorGloves = Content.Load<Texture2D>("Sprites/Armor/Metal/MetalGlovesSpriteSheet");
+            Texture2D plateArmorPants = Content.Load<Texture2D>("Sprites/Armor/Metal/MetalPantsSpriteSheet");
             Texture2D plateArmorArmsShoulder = Content.Load<Texture2D>("Sprites/Armor/Plate/PlateShouldersSpriteSheet");
             Texture2D plateArmorTorso = Content.Load<Texture2D>("Sprites/Armor/Plate/PlateTorsoSpriteSheet");
 

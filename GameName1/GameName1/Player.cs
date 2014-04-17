@@ -65,7 +65,9 @@ namespace GameName1
 		public int skillbarIndex2 = 0; 
 		public Rectangle highlightRect; 
 		bool selectingSkill, selectingSkill2; 
-		Rectangle viewportBounds; 
+		Rectangle viewportBounds;
+
+        public bool drawWeapon = true;
 
 		public Camera camera;
 
@@ -194,7 +196,7 @@ namespace GameName1
 
             foreach (Skill skill in skillSlots)
             {
-                if (skill != null)
+                if (skill != null && drawWeapon)
                 {
                     skill.Draw(spriteBatch);
                 }
@@ -311,7 +313,7 @@ namespace GameName1
 
 
 
-           incArmor(); incArmor();
+           incArmor(); //incArmor();
 
 
 
@@ -1241,7 +1243,7 @@ namespace GameName1
 
         public void revive()
         {
-
+            this.drawWeapon = true;
             this.health = maxHealth;
             this.dead = false;   
             this.mana = maxMana;
