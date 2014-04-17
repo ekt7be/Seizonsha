@@ -69,6 +69,7 @@
     <Compile Include="PolygonStuff\Polygon.cs" />
     <Compile Include="PolygonStuff\Vector.cs" />
     <Compile Include="Screens\CreditsMenuScreen.cs" />
+    <Compile Include="Screens\GameOverMenuScreen.cs" />
     <Compile Include="Screens\PlayerMenuScreen.cs" />
     <Compile Include="Skills\AOEPolygon.cs" />
     <Compile Include="Skills\AOEStatus.cs" />
