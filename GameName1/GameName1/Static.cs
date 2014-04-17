@@ -66,22 +66,29 @@ namespace GameName1
 
 
         //basic enemy
-		public static readonly int BASIC_ENEMY_HEIGHT = 50;
-		public static readonly int BASIC_ENEMY_WIDTH = 50;
-        public static readonly int BASIC_ENEMY_DAMAGE = 5;
-		public static readonly float BASIC_ENEMY_SPEED = 2f;
-        public static readonly int BASIC_ENEMY_HEALTH = 30;
+
+        public static readonly int BASIC_ENEMY_HEIGHT = 50;
+        public static readonly int BASIC_ENEMY_WIDTH = 50;
         public static readonly float BASIC_ENEMY_SPRITE_SCALE = 1f;
-        public static readonly int BASIC_ENEMY_XP = 100;
-		public static readonly float BASIC_ENEMY_PATH_REFRESH = 500f;
-        public static readonly float BASIC_ENEMY_EXTRA_ATTACK_RECHARGE = 2000f;
+        public static readonly float BASIC_ENEMY_PATH_REFRESH = 500f;
+        public static readonly int BASIC_ENEMY_XP_1 = 100;
+        public static readonly int BASIC_ENEMY_DAMAGE_1 = 5;
+        public static readonly float BASIC_ENEMY_SPEED_1 = 2f;
+        public static readonly int BASIC_ENEMY_HEALTH_1 = 30;
+        public static readonly int BASIC_ENEMY_EXTRA_ATTACK_RECHARGE_1 = 200;
+
+        public static readonly int BASIC_ENEMY_XP_2 = 300;
+        public static readonly int BASIC_ENEMY_DAMAGE_2 = 15;
+        public static readonly float BASIC_ENEMY_SPEED_2 = 2f;
+        public static readonly int BASIC_ENEMY_HEALTH_2 = 60;
+        public static readonly int BASIC_ENEMY_EXTRA_ATTACK_RECHARGE_2 = 120;
 
 
         //boss
         public static readonly int BOSS_ENEMY_XP = 1000;
         public static readonly int BOSS_ENEMY_HEIGHT = 32 * 3;
         public static readonly int BOSS_ENEMY_WIDTH = 32 * 3;
-        public static readonly float BOSS_ENEMY_SPEED = 4f;
+        public static readonly float BOSS_ENEMY_SPEED = 3f;
 
 
         //rusty shank
@@ -169,6 +176,21 @@ namespace GameName1
         public static readonly int SPRITE_PLATE_ARMOR_PANTS = 5;
         public static readonly int SPRITE_PLATE_ARMOR_ARMS_SHOULDER = 6;
         public static readonly int SPRITE_PLATE_ARMOR_TORSO = 7;
+
+        public static readonly int SPRITE_GOLD_ARMOR_HEAD = 13;
+        public static readonly int SPRITE_GOLD_ARMOR_FEET = 14;
+        public static readonly int SPRITE_GOLD_ARMOR_GLOVES = 15;
+        public static readonly int SPRITE_GOLD_ARMOR_PANTS = 16;
+        public static readonly int SPRITE_GOLD_ARMOR_ARMS_SHOULDER = 17;
+        public static readonly int SPRITE_GOLD_ARMOR_TORSO = 18;
+
+        public static readonly int SPRITE_REG_ARMOR_HEAD = 19;
+        public static readonly int SPRITE_REG_ARMOR_FEET = 20;
+        public static readonly int SPRITE_REG_ARMOR_GLOVES = 21;
+        public static readonly int SPRITE_REG_ARMOR_PANTS = 22;
+        public static readonly int SPRITE_REG_ARMOR_ARMS_SHOULDER = 23;
+        public static readonly int SPRITE_REG_ARMOR_TORSO = 24;
+
         public static readonly int SPRITE_FIREBALL = 8;
         public static readonly int SPRITE_BULLET = 9;
         public static readonly int SPRITE_HEAL = 10;

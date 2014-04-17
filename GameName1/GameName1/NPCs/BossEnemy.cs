@@ -34,7 +34,7 @@ namespace GameName1.NPCs
 		private static readonly int WALK_ANIMATION_FRAMES = 9;
 
 		public BossEnemy(Seizonsha game)
-			: base(game, Seizonsha.spriteMappings[Static.SPRITE_BASIC_ENEMY_INT], Static.BOSS_ENEMY_WIDTH-1, Static.BOSS_ENEMY_HEIGHT-1, 200, Static.BOSS_ENEMY_XP)
+			: base(game, Seizonsha.spriteMappings[Static.SPRITE_BASIC_ENEMY_INT], Static.BOSS_ENEMY_WIDTH-1, Static.BOSS_ENEMY_HEIGHT-1, 200, Static.BOSS_ENEMY_SPEED, Static.BOSS_ENEMY_XP)
 		{
 			base.scale = 1.0f;
 

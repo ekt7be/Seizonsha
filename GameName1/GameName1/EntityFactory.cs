@@ -126,17 +126,17 @@ namespace GameName1
         }
 
 
-        public static BasicEnemy getBasicEnemy(Seizonsha game)
+        public static BasicEnemy getBasicEnemy(Seizonsha game, int level)
         {
             GameEntity recycled = tryRecycleInstance(Static.TYPE_BASIC_ENEMY);
             if (recycled != null)
             {
                 BasicEnemy recycledEnemy = (BasicEnemy)recycled;
-                recycledEnemy.reset(Static.BASIC_ENEMY_XP);
+                recycledEnemy.reset(level);
                 return recycledEnemy;
             }
 
-            BasicEnemy newEnemy = new BasicEnemy(game);
+            BasicEnemy newEnemy = new BasicEnemy(game, level);
             addToActive(newEnemy);
             return newEnemy;
         }

@@ -107,7 +107,18 @@ namespace GameName1
             for (int i = 0; i < totalDifficulty; i++)
             {
                 SpawnTile spawn = getRandomSpawnPoint();
-                enemyQueue.Enqueue(EntityFactory.getBasicEnemy(game));
+                if (totalDifficulty % 2 == 0)
+                {
+
+                    enemyQueue.Enqueue(EntityFactory.getBasicEnemy(game, 1));
+
+                }
+                else
+                {
+
+                    enemyQueue.Enqueue(EntityFactory.getBasicEnemy(game, 2));
+
+                }
                 game.increaseNumberEnemies();
             }
 

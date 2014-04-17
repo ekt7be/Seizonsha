@@ -29,7 +29,7 @@ namespace GameName1.PickUps
 
         public override bool Available(Player player)
         {
-            return true;
+            return player != deadPlayer;
         }
 
         protected override void OnDie()

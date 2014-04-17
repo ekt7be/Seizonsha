@@ -28,7 +28,6 @@ namespace GameName1.NPCs
 		private int currentFrame = 0;
 		private Sword sword;
 
-        private float extraSwordRecharge;
 
 
         private GameEntity closest;
@@ -41,19 +40,40 @@ namespace GameName1.NPCs
 		private static readonly int WALK_ANIMATION_FRAMES = 9;
 
 
-		public BasicEnemy(Seizonsha game)
-			: base(game, Seizonsha.spriteMappings[Static.SPRITE_BASIC_ENEMY_INT], Static.BASIC_ENEMY_WIDTH-1, Static.BASIC_ENEMY_HEIGHT-1, Static.BASIC_ENEMY_HEALTH, Static.BASIC_ENEMY_XP)
+		public BasicEnemy(Seizonsha game, int level)
+			: base(game, Seizonsha.spriteMappings[Static.SPRITE_BASIC_ENEMY_INT], Static.BASIC_ENEMY_WIDTH-1, Static.BASIC_ENEMY_HEIGHT-1, Static.BASIC_ENEMY_HEALTH_1, Static.BASIC_ENEMY_SPEED_1, Static.BASIC_ENEMY_XP_1)
 		{
 			base.scale = Static.BASIC_ENEMY_SPRITE_SCALE;
-
-			sword = new RustyShank(game, this);
-			sword.OnEquip();
-            this.extraSwordRecharge = Static.BASIC_ENEMY_EXTRA_ATTACK_RECHARGE;
-
+            init(level);
 		}
 
-		float speed_x, speed_y;
-		bool stop = false;
+
+        public void init(int level)
+        {
+            if (level == 1)
+            {
+                sword = new Sword(game, this, Static.BASIC_ENEMY_DAMAGE_1, Static.BASIC_ENEMY_EXTRA_ATTACK_RECHARGE_1, 1, "Skeleton sword 1", Color.White);
+                sword.OnEquip();
+                this.speed = Static.BASIC_ENEMY_SPEED_1;
+                this.maxHealth = Static.BASIC_ENEMY_HEALTH_1;
+                this.health = maxHealth;
+
+            }
+            else
+            {
+
+                sword = new Sword(game, this, Static.BASIC_ENEMY_DAMAGE_2, Static.BASIC_ENEMY_EXTRA_ATTACK_RECHARGE_2, 1, "Skeleton sword 2", Color.White);
+                sword.OnEquip();
+                this.speed = Static.BASIC_ENEMY_SPEED_2;
+               // this.defaultTint = Color.Green;
+               // setDefaultTint();
+                this.maxHealth = Static.BASIC_ENEMY_HEALTH_2;
+                this.health = maxHealth;
+            }
+        }
+
+
+
 
 		public override void AI(GameTime gameTime)
 		{
@@ -80,10 +100,9 @@ namespace GameName1.NPCs
 
 
 			// attack with sword if in range
-            if (closestDistance < this.width * 1.2 && this.extraSwordRecharge > Static.BASIC_ENEMY_EXTRA_ATTACK_RECHARGE)
+            if (closestDistance < this.width * 1.2)
             {
                 sword.Use();
-                this.extraSwordRecharge = 0f;
             }
 
             base.AI(gameTime);
@@ -179,7 +198,6 @@ namespace GameName1.NPCs
 
 			elapsed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
 
-            this.extraSwordRecharge += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
 
 
 			if (elapsed > delay)
@@ -230,6 +248,20 @@ namespace GameName1.NPCs
 
         }
 
+        public void reset(int level)
+        {
+            if (level == 1)
+            {
+                base.reset(Static.BASIC_ENEMY_XP_1, Static.BASIC_ENEMY_SPEED_1);
+            }
+            else
+            {
+                base.reset(Static.BASIC_ENEMY_XP_2, Static.BASIC_ENEMY_SPEED_2);
+
+            }
+            sword.OnUnequip();
+            init(level);
+        }
 
     }
 }

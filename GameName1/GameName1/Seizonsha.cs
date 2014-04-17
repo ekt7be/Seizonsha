@@ -128,19 +128,35 @@ namespace GameName1
             graphics.PreferredBackBufferHeight = Static.SCREEN_HEIGHT;
             graphics.PreferredBackBufferWidth = Static.SCREEN_WIDTH;
 
-            //just for testing -- makes a rectangle
-            //Texture2D playerRect = new Texture2D(GraphicsDevice, Static.PLAYER_HEIGHT, Static.PLAYER_WIDTH);
+
 
             playerRect = Content.Load<Texture2D>("Sprites/Bodies/HumanSpriteSheetLight");
             Texture2D npcRect = Content.Load<Texture2D>("Sprites/player");
             Texture2D basicEnemyRect = Content.Load<Texture2D>("Sprites/Bodies/SkeletonSpriteSheet");
 
-            Texture2D plateArmorHead = Content.Load<Texture2D>("Sprites/Armor/Cloth/ClothHoodSpriteSheet");
+            Texture2D plateArmorHead = Content.Load<Texture2D>("Sprites/Armor/Plate/PlateArmorHead");
             Texture2D plateArmorFeet = Content.Load<Texture2D>("Sprites/Armor/Other/BasicShoesSpriteSheet");
-            Texture2D plateArmorGloves = Content.Load<Texture2D>("Sprites/Armor/Leather/LeatherBracersSpriteSheet");
-            Texture2D plateArmorPants = Content.Load<Texture2D>("Sprites/Armor/Metal/MetalPantsSpriteSheet");
-            Texture2D plateArmorArmsShoulder = Content.Load<Texture2D>("Sprites/Armor/Leather/LeatherShouldersSpriteSheet");
-            Texture2D plateArmorTorso = Content.Load<Texture2D>("Sprites/Armor/Leather/LeatherTorsoSpriteSheet");
+            Texture2D plateArmorGloves = Content.Load<Texture2D>("Sprites/Armor/Plate/PlateArmorGloves");
+            Texture2D plateArmorPants = Content.Load<Texture2D>("Sprites/Armor/Plate/PlateArmorPants");
+            Texture2D plateArmorArmsShoulder = Content.Load<Texture2D>("Sprites/Armor/Plate/PlateShouldersSpriteSheet");
+            Texture2D plateArmorTorso = Content.Load<Texture2D>("Sprites/Armor/Plate/PlateTorsoSpriteSheet");
+
+
+            Texture2D regArmorHead = Content.Load<Texture2D>("Sprites/Armor/Cloth/ClothHoodSpriteSheet");
+            Texture2D regArmorFeet = Content.Load<Texture2D>("Sprites/Armor/Other/BasicShoesSpriteSheet");
+            Texture2D regArmorGloves = Content.Load<Texture2D>("Sprites/Armor/Leather/LeatherBracersSpriteSheet");
+            Texture2D regArmorPants = Content.Load<Texture2D>("Sprites/Armor/Metal/MetalPantsSpriteSheet");
+            Texture2D regArmorArmsShoulder = Content.Load<Texture2D>("Sprites/Armor/Leather/LeatherShouldersSpriteSheet");
+            Texture2D regArmorTorso = Content.Load<Texture2D>("Sprites/Armor/Leather/LeatherTorsoSpriteSheet");
+
+            Texture2D goldArmorHead = Content.Load<Texture2D>("Sprites/Armor/Golden/GoldenHelmSpriteSheet");
+            Texture2D goldArmorFeet = Content.Load<Texture2D>("Sprites/Armor/Golden/GoldenBootsSpriteSheet");
+            Texture2D goldArmorGloves = Content.Load<Texture2D>("Sprites/Armor/Golden/GoldenGlovesSpriteSheet");
+            Texture2D goldArmorPants = Content.Load<Texture2D>("Sprites/Armor/Golden/GoldenPantsSpriteSheet");
+            Texture2D goldArmorArmsShoulder = Content.Load<Texture2D>("Sprites/Armor/Golden/GoldenShouldersSpriteSheet");
+            Texture2D goldArmorTorso = Content.Load<Texture2D>("Sprites/Armor/Golden/GoldenTorsoSpriteSheet");
+
+
             Texture2D fireball = Content.Load<Texture2D>("Sprites/fireballsprite");
             Texture2D heal = Content.Load<Texture2D>("Sprites/healsprite");
             Texture2D bullet = Content.Load<Texture2D>("Sprites/bulletsprite");
@@ -189,12 +205,28 @@ namespace GameName1
 
             spriteMappings.Add(Static.SPRITE_BASIC_ENEMY_INT, basicEnemyRect);
             spriteMappings.Add(Static.SPRITE_PLAYER_INT, playerRect);
+
             spriteMappings.Add(Static.SPRITE_PLATE_ARMOR_HEAD, plateArmorHead);
             spriteMappings.Add(Static.SPRITE_PLATE_ARMOR_FEET, plateArmorFeet);
             spriteMappings.Add(Static.SPRITE_PLATE_ARMOR_GLOVES, plateArmorGloves);
             spriteMappings.Add(Static.SPRITE_PLATE_ARMOR_PANTS, plateArmorPants);
             spriteMappings.Add(Static.SPRITE_PLATE_ARMOR_ARMS_SHOULDER, plateArmorArmsShoulder);
             spriteMappings.Add(Static.SPRITE_PLATE_ARMOR_TORSO, plateArmorTorso);
+
+            spriteMappings.Add(Static.SPRITE_GOLD_ARMOR_HEAD, goldArmorHead);
+            spriteMappings.Add(Static.SPRITE_GOLD_ARMOR_FEET, goldArmorFeet);
+            spriteMappings.Add(Static.SPRITE_GOLD_ARMOR_GLOVES, goldArmorGloves);
+            spriteMappings.Add(Static.SPRITE_GOLD_ARMOR_PANTS, goldArmorPants);
+            spriteMappings.Add(Static.SPRITE_GOLD_ARMOR_ARMS_SHOULDER, goldArmorArmsShoulder);
+            spriteMappings.Add(Static.SPRITE_GOLD_ARMOR_TORSO, goldArmorTorso);
+
+            spriteMappings.Add(Static.SPRITE_REG_ARMOR_HEAD, regArmorHead);
+            spriteMappings.Add(Static.SPRITE_REG_ARMOR_FEET, regArmorFeet);
+            spriteMappings.Add(Static.SPRITE_REG_ARMOR_GLOVES, regArmorGloves);
+            spriteMappings.Add(Static.SPRITE_REG_ARMOR_PANTS, regArmorPants);
+            spriteMappings.Add(Static.SPRITE_REG_ARMOR_ARMS_SHOULDER, regArmorArmsShoulder);
+            spriteMappings.Add(Static.SPRITE_REG_ARMOR_TORSO, regArmorTorso);
+
             spriteMappings.Add(Static.SPRITE_FIREBALL, fireball);
             spriteMappings.Add(Static.SPRITE_HEAL, heal);
             spriteMappings.Add(Static.SPRITE_BULLET, bullet);
@@ -1524,7 +1556,6 @@ namespace GameName1
                 player.waveClear();
             }
             difficulty++;
-            difficulty++;
 
         }
 
@@ -1542,7 +1573,7 @@ namespace GameName1
             Wave++;
             //currLevel.spawnEnemies(difficulty);
 
-            if (this.Wave % 2 == 0)
+            if (this.Wave % 3 == 0)
             {
                 List<GameEntity> enemyList = new List<GameEntity>();
                 enemyList.Add(new BossEnemy(this));

@@ -9,7 +9,7 @@ using System.Text;
 
 namespace GameName1.Skills
 {
-    abstract class Sword : Weapon, Unlockable
+    public class Sword : Weapon, Unlockable
     {
 
         private int damage;

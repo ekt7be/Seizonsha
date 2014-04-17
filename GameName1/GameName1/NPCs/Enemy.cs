@@ -22,7 +22,7 @@ namespace GameName1.NPCs
 
         protected bool stopped;
 
-
+        protected float speed;
         protected float sinceLastPathFind;
 
         protected GameEntity target;
@@ -34,7 +34,7 @@ namespace GameName1.NPCs
 
 
 
-        public Enemy(Seizonsha game, Texture2D sprite, int width, int height, int health, int XPReward)
+        public Enemy(Seizonsha game, Texture2D sprite, int width, int height, int health, float speed, int XPReward)
             : base(game, sprite, width, height, Static.DAMAGE_TYPE_BAD, health)
         {
             setXPReward(XPReward);
@@ -43,7 +43,7 @@ namespace GameName1.NPCs
 
             path = new List<Tile>();
             random = new Random();
-
+            this.speed = speed;
             
 
             tilesWide = (int)Math.Floor((double)(width / Static.TILE_WIDTH)) + 1;
@@ -99,7 +99,7 @@ namespace GameName1.NPCs
                     Vector2 allSpeed = new Vector2(speed_x, speed_y);
 
                     allSpeed.Normalize();
-                    allSpeed = allSpeed * Static.BASIC_ENEMY_SPEED;
+                    allSpeed = allSpeed * speed;
                     //System.Console.Write(" | vec speed: " + allSpeed.X + " " + allSpeed.Y + "\n"); 
 
                     this.move(allSpeed.X, allSpeed.Y);
@@ -438,13 +438,14 @@ namespace GameName1.NPCs
 
         public abstract override string getName();
 
-        public virtual void reset(int XPReward)
+        public virtual void reset(int XPReward, float speed)
         {
             base.reset();
             path.Clear();
             open.Clear();
             closed.Clear();
             setXPReward(XPReward);
+            this.speed = speed;
 
         }
 

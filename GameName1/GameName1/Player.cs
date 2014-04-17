@@ -89,7 +89,16 @@ namespace GameName1
             base.Update(gameTime);
             //base.source = new Rectangle(sprite.Width / 4 * currentAnimationFrame, 0, sprite.Width / 4, sprite.Height);
 
-            this.currentInteractable = findInteraction();
+            Interactable foundInteraction = findInteraction();
+
+            if (foundInteraction!=null){
+                if (foundInteraction.Available(this))
+                {
+                    this.currentInteractable = foundInteraction;
+                }
+            } else {
+                this.currentInteractable = null;
+            }
 
          
         }
@@ -143,12 +152,35 @@ namespace GameName1
             {
                 equipColor = armorColor;
             }
-            spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_PLATE_ARMOR_FEET], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
-            spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_PLATE_ARMOR_PANTS], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
-            spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_PLATE_ARMOR_GLOVES], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
-            spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_PLATE_ARMOR_ARMS_SHOULDER], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
-            spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_PLATE_ARMOR_TORSO], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
-            spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_PLATE_ARMOR_HEAD], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+
+            if (armorLevel == 1)
+            {
+                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_REG_ARMOR_FEET], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_REG_ARMOR_PANTS], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_REG_ARMOR_GLOVES], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_REG_ARMOR_ARMS_SHOULDER], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_REG_ARMOR_TORSO], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_REG_ARMOR_HEAD], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+            }
+            else if (armorLevel == 2)
+            {
+                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_PLATE_ARMOR_FEET], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_PLATE_ARMOR_PANTS], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_PLATE_ARMOR_GLOVES], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_PLATE_ARMOR_ARMS_SHOULDER], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_PLATE_ARMOR_TORSO], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_PLATE_ARMOR_HEAD], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+            }
+            else if (armorLevel == 3)
+            {
+                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_GOLD_ARMOR_FEET], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_GOLD_ARMOR_PANTS], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_GOLD_ARMOR_GLOVES], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_GOLD_ARMOR_ARMS_SHOULDER], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_GOLD_ARMOR_TORSO], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_GOLD_ARMOR_HEAD], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+            }
+
 
             /*
             //draw cursor
@@ -193,7 +225,7 @@ namespace GameName1
             this.health = Static.PLAYER_MAX_HEALTH;
             this.dead = false;
             this.playerIndex = playerIndex;
-            this.armorLevel = 0;
+            this.armorLevel = 1;
             this.armorColor = Static.PLAYER_ARMOR_COLOR_0;
 
             this.weaponLevel = 1;
@@ -279,7 +311,7 @@ namespace GameName1
 
 
 
-            //incArmor(); incArmor(); incArmor();
+           incArmor(); incArmor();
 
 
 
@@ -307,26 +339,22 @@ namespace GameName1
 
         private void defaultShield()
         {
-            if (armorLevel == 0)
-            {
-                shield = 0;
-                armorColor = Static.PLAYER_ARMOR_COLOR_0;
-            }
-            else if (armorLevel == 1)
+
+            if (armorLevel == 1)
             {
                 shield = Static.PLAYER_SHIELD_1;
-                armorColor = Static.PLAYER_ARMOR_COLOR_1;
+               // armorColor = Static.PLAYER_ARMOR_COLOR_1;
 
 
             } else if (armorLevel == 2){
                 shield = Static.PLAYER_SHIELD_2;
-                armorColor = Static.PLAYER_ARMOR_COLOR_2;
+               // armorColor = Static.PLAYER_ARMOR_COLOR_2;
 
             }
             else if (armorLevel == 3)
             {
                 shield = Static.PLAYER_SHIELD_3;
-                armorColor = Static.PLAYER_ARMOR_COLOR_3;
+               // armorColor = Static.PLAYER_ARMOR_COLOR_3;
             }
         }
 
@@ -463,22 +491,32 @@ namespace GameName1
 
             this.viewportBounds = screenPortion;
 
-            //draw cursor
-            int dist = 50;
-            int width = 30;
-            int height = 30;
-            Rectangle rBounds = new Rectangle((int)camera.getScreenPositionX(((float)this.getCenterX() + dist * this.vectorDirection.X - width / 2)), (int)camera.getScreenPositionY(((float)this.getCenterY() + dist * this.vectorDirection.Y - height / 2)), width, height);
-
-            spriteBatch.Draw(game.getSpriteTexture(Static.SPRITE_RETICLE), rBounds, Color.Red);
 
 
-            if (currentInteractable != null)
+            if (!dead)
             {
-                if (currentInteractable is GameEntity)
+
+                //draw cursor
+                int dist = 50;
+                int width = 30;
+                int height = 30;
+                Rectangle rBounds = new Rectangle((int)camera.getScreenPositionX(((float)this.getCenterX() + dist * this.vectorDirection.X - width / 2)), (int)camera.getScreenPositionY(((float)this.getCenterY() + dist * this.vectorDirection.Y - height / 2)), width, height);
+
+                spriteBatch.Draw(game.getSpriteTexture(Static.SPRITE_RETICLE), rBounds, Color.Red);
+
+
+                //interaction message
+                if (currentInteractable != null)
                 {
-                    spriteBatch.DrawString(game.getSpriteFont(), currentInteractable.Message(this), new Vector2(screenPortion.Width / 2, screenPortion.Height / 2), Color.White);
+                    if (currentInteractable is GameEntity)
+                    {
+                        spriteBatch.DrawString(game.getSpriteFont(), currentInteractable.Message(this), new Vector2(screenPortion.Width / 2, screenPortion.Height / 2), Color.White);
+                    }
                 }
             }
+
+
+
 
             if (SkillTreeOpen())
             {

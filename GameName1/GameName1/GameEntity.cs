@@ -506,6 +506,7 @@ namespace GameName1
             this.velocityX = 0;
             this.velocityY = 0;
             this.collidable = true;
+            this.defaultTint = Color.White;
             this.tint = Color.White;
             this.frozen = 0;
             this.xpReward = 0;
