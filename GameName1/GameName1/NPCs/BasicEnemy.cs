@@ -220,12 +220,12 @@ namespace GameName1.NPCs
 			game.decreaseNumberEnemies();
             double rand = random.NextDouble();
 
-            if (rand < .05)
+            if (rand < .95)
             {
                 game.Spawn(new WeaponDrop(game, Static.PIXEL_THIN, 20, 20, new RustyShank(game, this)), x, y);
 
             }
-            else if (rand < .15)
+            else if (rand < .99)
             {
                 game.Spawn(new Food(game, "Chicken Nuggets", Static.PIXEL_THIN, 20), x, y);
             }

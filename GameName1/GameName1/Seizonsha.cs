@@ -161,7 +161,10 @@ namespace GameName1
             Texture2D heal = Content.Load<Texture2D>("Sprites/healsprite");
             Texture2D bullet = Content.Load<Texture2D>("Sprites/bulletsprite");
             Texture2D sword = Content.Load<Texture2D>("Sprites/swordspritesheetfull3");
+            Texture2D dagger = Content.Load<Texture2D>("Sprites/Weapons/DaggerSpriteSheet");
+
             Texture2D reticle = Content.Load<Texture2D>("Sprites/reticle");
+
             gameSound = Content.Load<SoundEffect>("sound/antique_market");
             gameSoundLoop = gameSound.CreateInstance();
             gameSoundLoop.IsLooped = true;
@@ -231,6 +234,8 @@ namespace GameName1
             spriteMappings.Add(Static.SPRITE_HEAL, heal);
             spriteMappings.Add(Static.SPRITE_BULLET, bullet);
             spriteMappings.Add(Static.SPRITE_SWORD, sword);
+            spriteMappings.Add(Static.SPRITE_DAGGER, dagger);
+
             spriteMappings.Add(Static.SPRITE_RETICLE, reticle);
 
 

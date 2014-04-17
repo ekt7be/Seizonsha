@@ -16,13 +16,15 @@ namespace GameName1.Skills
 
         protected Rectangle? swordSource;
 
-        SlashAnimation slashAnimation;
+        protected Animation slashAnimation;
 
+        protected Texture2D sprite;
 
         public Sword(Seizonsha game, GameEntity user,int damage, int recharge_time, int level, string name, Color tint) : base(game, user, recharge_time, recharge_time/2, level, name, tint)
         {
             this.damage = damage;
             slashAnimation = new SlashAnimation(this, user, recharge_time);
+            this.sprite = Seizonsha.spriteMappings[Static.SPRITE_SWORD];
 
 
             if (Math.Cos(user.direction) > .5)
@@ -55,7 +57,7 @@ namespace GameName1.Skills
         public override void Draw(SpriteBatch spriteBatch)
         {
             //base.Draw(spriteBatch);
-            spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_SWORD], user.hitbox, swordSource, tint, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1f);
+            spriteBatch.Draw(sprite, user.hitbox, swordSource, tint, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1f);
 
         }
 
@@ -74,7 +76,14 @@ namespace GameName1.Skills
         protected override void UseSkill()
         {
 
-            slashAnimation.reset(user);
+            if (slashAnimation is SlashAnimation)
+            {
+                ((SlashAnimation)slashAnimation).reset(user);
+            }
+            else if (slashAnimation is StabAnimation)
+            {
+                ((StabAnimation)slashAnimation).reset(user);
+            }
             if (!user.HasAnimation(slashAnimation)){
                 user.AddAnimation(slashAnimation);
             }
