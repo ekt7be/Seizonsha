@@ -30,6 +30,7 @@ namespace GameName1
         public static readonly string TYPE_AOE_POLYGON = "AOE Polygon";
         public static readonly string TYPE_ARROW = "Arrow";
 
+        public static int KEYBOARD_PLAYER = 4;
 
 		public static int NUM_PLAYERS = 1;
 

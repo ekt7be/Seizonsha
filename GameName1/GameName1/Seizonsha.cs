@@ -252,7 +252,6 @@ namespace GameName1
             playerToController.Add(2, PlayerIndex.Two);
             playerToController.Add(3, PlayerIndex.Three);
             playerToController.Add(4, PlayerIndex.Four);
-
             base.Initialize();
         }
 
@@ -268,7 +267,7 @@ namespace GameName1
 
             paused = false;
             this.players = new Player[4];
-
+           
             initViewports(Static.NUM_PLAYERS);
 
 			fps = new FPSCounterComponent(this, spriteBatch, spriteFont);
@@ -284,7 +283,12 @@ namespace GameName1
                 Spawn(players[i], 500, 100 + (i * 40));
             }
 
-			players[0].keyboard = true;
+
+            if (Static.KEYBOARD_PLAYER != 4)
+            {
+                players[Static.KEYBOARD_PLAYER].keyboard = true;
+            }
+			//players[0].keyboard = true;
 
             //below code makes player two controlled by keyboard.  just comment player 1s flag
             
