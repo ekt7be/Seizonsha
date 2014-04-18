@@ -169,12 +169,10 @@ namespace GameName1.NPCs
 		{
 		}
 
-
-
-
         protected override void OnDie()
         {
             base.OnDie();
+            game.orcDeathSound.Play();
             double rand = random.NextDouble();
 
             if (exploded)

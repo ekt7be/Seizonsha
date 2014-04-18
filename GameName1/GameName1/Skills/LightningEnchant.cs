@@ -43,6 +43,8 @@ namespace GameName1.Skills
             else
             {
                 affect(nextTarget, count + 1);
+
+                game.lightningEnchantSound.Play();
             }
         }
 

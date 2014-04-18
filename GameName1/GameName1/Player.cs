@@ -319,7 +319,6 @@ namespace GameName1
             base.scale = Static.PLAYER_SPRITE_SCALE;
 
             this.rotateToAngle(0f); //sets correct animation
-
            //incArmor(); //incArmor();
    }
 

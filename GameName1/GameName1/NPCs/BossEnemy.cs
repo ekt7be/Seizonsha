@@ -17,8 +17,6 @@ namespace GameName1.NPCs
 
 		double closestDistance;
 
-
-
 		private Sword sword;
 		private Gun gun; 
 

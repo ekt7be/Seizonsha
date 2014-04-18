@@ -51,7 +51,7 @@ namespace GameName1.Skills
 
         protected override void UseSkill()
         {
-
+            game.healingRainSound.Play();
             int damageType = Static.DAMAGE_TYPE_NO_DAMAGE;
 
             damageType = Static.DAMAGE_TYPE_ALL;

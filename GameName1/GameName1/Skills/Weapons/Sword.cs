@@ -68,7 +68,7 @@ namespace GameName1.Skills
 
         protected override void UseSkill()
         {
-
+            game.swordSlashSound.Play(2f,1f,1f);
             if (slashAnimation is SlashAnimation)
             {
                 ((SlashAnimation)slashAnimation).reset(user);
