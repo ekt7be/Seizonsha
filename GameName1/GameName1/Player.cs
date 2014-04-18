@@ -628,7 +628,7 @@ namespace GameName1
                     if (!playerReady)
                     {
                      nextWaveMessage = "Y: Start Next Wave \n" +
-                    "Start: Skill Tree \n"; ;
+                    "Back: Skill Tree \n"; ;
                     }
                     else
                     {
@@ -1245,7 +1245,7 @@ namespace GameName1
                 }
                 TextEffect xpEffect = EntityFactory.getXPEffect(game, reward);
                 game.Spawn(xpEffect, player.getCenterX(), player.getCenterY());
-                incXP(reward);
+                player.incXP(reward);
             }
 
         }

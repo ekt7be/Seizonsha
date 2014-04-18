@@ -41,7 +41,6 @@ namespace GameName1.Skills
             }
         }
 
-
         protected override void UseSkill()
         {
             game.fireballSound.Play();
