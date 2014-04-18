@@ -1235,7 +1235,7 @@ namespace GameName1
                 }
                 totalPlayers++;
             }
-            int reward = entity.getXPReward() / totalPlayers;
+            int reward = entity.getXPReward();//  totalPlayers;
             foreach (Player player in game.players)
             {
 
