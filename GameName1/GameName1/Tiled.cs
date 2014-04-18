@@ -738,6 +738,7 @@ namespace Squared.Tiled {
                                             {
                                                 st.Read();
                                                 var tileset = Tileset.Load(st);
+									Console.WriteLine(tileset.Name); 
                                                 result.Tilesets.Add(tileset.Name, tileset);
                                             }
                                         } break;
