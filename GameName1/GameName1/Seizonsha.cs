@@ -933,8 +933,8 @@ namespace GameName1
 				// calculates mouse aim angle and rotation 
                 MouseState mouse = Mouse.GetState();
                 Vector2 playerMouseDistance; // distance between player and mouse
-				playerMouseDistance.X = player.camera.getWorldPositionX(mouse.X) - player.x;
-				playerMouseDistance.Y = player.camera.getWorldPositionY(mouse.Y) - player.y;
+				playerMouseDistance.X = player.camera.getWorldPositionX(mouse.X) - player.x - player.viewportBounds.X;
+				playerMouseDistance.Y = player.camera.getWorldPositionY(mouse.Y) - player.y - player.viewportBounds.Y;
 				player.rotateToAngle((float)Math.Atan2(playerMouseDistance.Y, playerMouseDistance.X)); // angle to point at	
 
                 if (mouse.LeftButton == ButtonState.Pressed)
