@@ -54,6 +54,7 @@
     <Compile Include="AnimationTesting\AnimationHelper.cs" />
     <Compile Include="AnimationTesting\CastAnimation.cs" />
     <Compile Include="AnimationTesting\DamageAnimation.cs" />
+    <Compile Include="AnimationTesting\HealAnimation.cs" />
     <Compile Include="AnimationTesting\SlashAnimation.cs" />
     <Compile Include="AnimationTesting\StabAnimation.cs" />
     <Compile Include="Collision.cs" />
@@ -115,6 +116,7 @@
     <Compile Include="Skills\Skill.cs" />
     <Compile Include="Skills\StatusEffects\Slow.cs" />
     <Compile Include="Skills\StatusEffects\Stun.cs" />
+    <Compile Include="Skills\SwordSlash.cs" />
     <Compile Include="Skills\Weapons\DankSword.cs" />
     <Compile Include="Skills\Weapons\OKGun.cs" />
     <Compile Include="Skills\Weapons\Revolver.cs" />
@@ -647,6 +649,51 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Sprites\Armor\Cloth\ClothBeltSpriteSheet.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sprites\Drops\apple.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sprites\Drops\bacon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sprites\Drops\banana.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sprites\Drops\beer.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sprites\Drops\bow.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sprites\Drops\carrot.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sprites\Drops\cheese.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sprites\Drops\taco.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sprites\Drops\dagger.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sprites\Drops\grilledcheese.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sprites\Drops\meat.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sprites\Drops\pineapple.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sprites\Drops\sword.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sprites\SpellEffects\Heal.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Sprites\SpellEffects\MagicPuff.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Sprites\Weapons\BowSpriteSheet.png">

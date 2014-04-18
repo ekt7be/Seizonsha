@@ -4,12 +4,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using GameName1.AnimationTesting;
 
 namespace GameName1.Skills
 {
     class HealingTouch : Skill, Unlockable
     {
         private int healing;
+
 
         public HealingTouch(Seizonsha game, GameEntity user, int damage, int recharge_time) : base(game, user, 20,recharge_time, 30, 30)
         {
@@ -56,7 +58,7 @@ namespace GameName1.Skills
 
             Rectangle healBounds = new Rectangle((int)(user.getCenterX() + user.vectorDirection.X * user.width / 2 - Static.PLAYER_WIDTH / 4), (int)(user.getCenterY() + user.vectorDirection.Y * user.height / 2 - Static.PLAYER_WIDTH / 4), Static.PLAYER_WIDTH / 2, Static.PLAYER_HEIGHT / 2);
 
-            game.Spawn(EntityFactory.getAOECone(game, Static.PIXEL_THIN, this, healBounds, healing, damageType, 10), healBounds.Left, healBounds.Top);
+            game.Spawn(new HealAnimation(game, Seizonsha.spriteMappings[Static.SPRITE_HEAL], this, healBounds, healing, damageType, 30), healBounds.Left, healBounds.Top);
         }
 
     }

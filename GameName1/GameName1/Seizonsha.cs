@@ -158,7 +158,7 @@ namespace GameName1
 
 
             Texture2D fireball = Content.Load<Texture2D>("Sprites/fireballsprite");
-            Texture2D heal = Content.Load<Texture2D>("Sprites/healsprite");
+            Texture2D heal = Content.Load<Texture2D>("Sprites/SpellEffects/Heal");
             Texture2D bullet = Content.Load<Texture2D>("Sprites/bulletsprite");
             Texture2D sword = Content.Load<Texture2D>("Sprites/swordspritesheetfull3");
             Texture2D dagger = Content.Load<Texture2D>("Sprites/Weapons/DaggerSpriteSheet");
