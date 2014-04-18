@@ -58,52 +58,54 @@ namespace GameName1.SkillTree
             currNode = startNode;
                 
             //fight path
-            SkillTreeNode HpPlus50Node = new SkillTreeNode(this, nodeTextures[Static.SKILL_TREE_NODE_ANY], new HealthPlusUnlockable(50), 300);
+            SkillTreeNode HpPlus50Node = new SkillTreeNode(this, nodeTextures[Static.HEALTH_INCREASE_NAME], new HealthPlusUnlockable(50), 300);
             nodes.Add(HpPlus50Node);
-            SkillTreeNode HPplus100Node = new SkillTreeNode(this, nodeTextures[Static.SKILL_TREE_NODE_ANY], new HealthPlusUnlockable(100), 1000);
+            SkillTreeNode HPplus100Node = new SkillTreeNode(this, nodeTextures[Static.HEALTH_INCREASE_NAME], new HealthPlusUnlockable(100), 1000);
             nodes.Add(HPplus100Node);
-            SkillTreeNode HPplus50Node2 = new SkillTreeNode(this, nodeTextures[Static.SKILL_TREE_NODE_ANY], new HealthPlusUnlockable(50), 1000);
+            SkillTreeNode HPplus50Node2 = new SkillTreeNode(this, nodeTextures[Static.HEALTH_INCREASE_NAME], new HealthPlusUnlockable(50), 1000);
             nodes.Add(HPplus50Node2);
 
 
-            SkillTreeNode WeaponPlusNode = new SkillTreeNode(this, nodeTextures[Static.SKILL_TREE_NODE_ANY], new WeaponPlusUnlockable(), 1200);
+            SkillTreeNode WeaponPlusNode = new SkillTreeNode(this, nodeTextures[Static.WEAPON_PLUS_NAME], new WeaponPlusUnlockable(), 1200);
             nodes.Add(WeaponPlusNode);
-            SkillTreeNode WeaponPlusNode2 = new SkillTreeNode(this, nodeTextures[Static.SKILL_TREE_NODE_ANY], new WeaponPlusUnlockable(), 2000);
+            SkillTreeNode WeaponPlusNode2 = new SkillTreeNode(this, nodeTextures[Static.WEAPON_PLUS_NAME], new WeaponPlusUnlockable(), 2000);
             nodes.Add(WeaponPlusNode2);
-            SkillTreeNode WeaponPlusNode3 = new SkillTreeNode(this, nodeTextures[Static.SKILL_TREE_NODE_ANY], new WeaponPlusUnlockable(), 5000);
+            SkillTreeNode WeaponPlusNode3 = new SkillTreeNode(this, nodeTextures[Static.WEAPON_PLUS_NAME], new WeaponPlusUnlockable(), 5000);
             nodes.Add(WeaponPlusNode3);
 
+           // SkillTreeNode AOETauntNode = new SkillTreeNode(this, nodeTextures[Static.BATTLECRY_NAME], new BattleCry(game, player, 0, 250), 2000);
             SkillTreeNode AOETauntNode = new SkillTreeNode(this, nodeTextures[Static.SKILL_TREE_NODE_ANY], new BattleCry(game, player, 0, 250), 2000);
             nodes.Add(AOETauntNode);
 
-            SkillTreeNode EnchantTauntNode = new SkillTreeNode(this, nodeTextures[Static.SKILL_TREE_NODE_ANY], new TauntingEnchant(game,player,250), 2000);
+            //SkillTreeNode EnchantTauntNode = new SkillTreeNode(this, nodeTextures[Static.TAUNTINGENCHANT_NAME], new TauntingEnchant(game, player, 250), 2000);
+            SkillTreeNode EnchantTauntNode = new SkillTreeNode(this, nodeTextures[Static.TAUNTINGENCHANT_NAME], new TauntingEnchant(game, player, 250), 2000);
             nodes.Add(EnchantTauntNode);
  
 
-            SkillTreeNode BashNode = new SkillTreeNode(this, nodeTextures[Static.SKILL_TREE_NODE_ANY], new Bash(game, player, 0, 20), 7000);
+            SkillTreeNode BashNode = new SkillTreeNode(this, nodeTextures[Static.BASH_NAME], new Bash(game, player, 0, 20), 7000);
             nodes.Add(BashNode);
 
-            SkillTreeNode armor1Node = new SkillTreeNode(this, nodeTextures[Static.SKILL_TREE_NODE_ANY], new ArmorPlusUnlockable(), 500);
+            SkillTreeNode armor1Node = new SkillTreeNode(this, nodeTextures[Static.ARMOR_INCREASE_NAME], new ArmorPlusUnlockable(), 500);
             nodes.Add(armor1Node);
-            SkillTreeNode armor2Node = new SkillTreeNode(this, nodeTextures[Static.SKILL_TREE_NODE_ANY], new ArmorPlusUnlockable(), 2000);
+            SkillTreeNode armor2Node = new SkillTreeNode(this, nodeTextures[Static.ARMOR_INCREASE_NAME], new ArmorPlusUnlockable(), 2000);
             nodes.Add(armor2Node);
-            SkillTreeNode armor3Node = new SkillTreeNode(this, nodeTextures[Static.SKILL_TREE_NODE_ANY], new ArmorPlusUnlockable(), 5000);
+            SkillTreeNode armor3Node = new SkillTreeNode(this, nodeTextures[Static.ARMOR_INCREASE_NAME], new ArmorPlusUnlockable(), 5000);
             nodes.Add(armor3Node);
 
-            SkillTreeNode kickNode = new SkillTreeNode(this, nodeTextures[Static.SKILL_TREE_NODE_ANY], new Kick(game, player, 5, 60), 1000);
+            SkillTreeNode kickNode = new SkillTreeNode(this, nodeTextures[Static.KICK_NAME], new Kick(game, player, 5, 60), 1000);
             nodes.Add(kickNode);
-            SkillTreeNode getBigNode = new SkillTreeNode(this, nodeTextures[Static.SKILL_TREE_NODE_ANY], new GetBigUnlockable(), 1000);
+            SkillTreeNode getBigNode = new SkillTreeNode(this, nodeTextures[Static.GET_BIG_NAME], new GetBigUnlockable(), 1000);
             nodes.Add(getBigNode);
 
             startNode.attachRight(HpPlus50Node, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH *4);
             HpPlus50Node.attachBottom(WeaponPlusNode, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH*2);
-            HpPlus50Node.attachTop(armor1Node, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 3);
+            HpPlus50Node.attachTop(armor1Node, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 5);
             armor1Node.attachLeft(HPplus100Node, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
             armor1Node.attachRight(BashNode, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
             HPplus100Node.attachBottom(WeaponPlusNode2, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
             HPplus100Node.attachTop(kickNode, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH *2);
             kickNode.attachTop(armor3Node, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
-            armor3Node.attachLeft(HPplus50Node2, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
+            armor3Node.attachLeft(HPplus50Node2, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 4);
             armor3Node.attachRight(WeaponPlusNode3, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
             HPplus50Node2.attachTop(AOETauntNode, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
             WeaponPlusNode3.attachRight(EnchantTauntNode, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
@@ -115,62 +117,110 @@ namespace GameName1.SkillTree
             
 
             //magic path
-			SkillTreeNode ManaPlusMagic1 = new SkillTreeNode(this, nodeTextures[Static.SKILL_TREE_NODE_ANY], new ManaPlusUnlockable(30), 500); // 500
+            SkillTreeNode ManaPlusMagic1 = new SkillTreeNode(this, nodeTextures[Static.MANA_PLUS_NAME], new ManaPlusUnlockable(30), 500); // 500
             nodes.Add(ManaPlusMagic1);
-            SkillTreeNode ManaPlusMagic2 = new SkillTreeNode(this, nodeTextures[Static.SKILL_TREE_NODE_ANY], new ManaPlusUnlockable(50), 1200);
+            SkillTreeNode ManaPlusMagic2 = new SkillTreeNode(this, nodeTextures[Static.MANA_PLUS_NAME], new ManaPlusUnlockable(20), 1200);
             nodes.Add(ManaPlusMagic2);
+            SkillTreeNode ManaPlusMagic3 = new SkillTreeNode(this, nodeTextures[Static.MANA_PLUS_NAME], new ManaPlusUnlockable(50), 3000);
+            nodes.Add(ManaPlusMagic3);
 
 
-            SkillTreeNode ManaRegenMagic1 = new SkillTreeNode(this, nodeTextures[Static.SKILL_TREE_NODE_ANY], new ManaRegenPlusUnlockable(Static.PLAYER_START_MANA_REGEN / 2), 1500);
+            SkillTreeNode ManaRegenMagic1 = new SkillTreeNode(this, nodeTextures[Static.MANA_REGEN_NAME], new ManaRegenPlusUnlockable(Static.PLAYER_START_MANA_REGEN / 2), 1500);
             nodes.Add(ManaRegenMagic1);
+            SkillTreeNode ManaRegenMagic2 = new SkillTreeNode(this, nodeTextures[Static.MANA_REGEN_NAME], new ManaRegenPlusUnlockable(Static.PLAYER_START_MANA_REGEN / 2), 1500);
+            nodes.Add(ManaRegenMagic2);
 
-            SkillTreeNode MissileNode = new SkillTreeNode(this, nodeTextures[Static.FIRELANCE_NAME], new MagicMissile(game, player, 15, 20), 500); 
+            SkillTreeNode MissileNode = new SkillTreeNode(this, nodeTextures[Static.MAGIC_MISSILE_NAME], new MagicMissile(game, player, 15, 20), 500); 
             nodes.Add(MissileNode);
 
 			SkillTreeNode FirelanceNode = new SkillTreeNode(this, nodeTextures[Static.FIRELANCE_NAME], new FireLance(game,player,Static.FIRELANCE_DAMAGE, 30), 1500); //1500
             nodes.Add(FirelanceNode);
-            SkillTreeNode LifeDrainNode = new SkillTreeNode(this, nodeTextures[Static.SKILL_TREE_NODE_ANY], new LifeDrain(game, player, 5, 6, 4), 5000);
+            SkillTreeNode LifeDrainNode = new SkillTreeNode(this, nodeTextures[Static.LIFE_DRAIN_NAME], new LifeDrain(game, player, 5, 6, 4), 5000);
             nodes.Add(LifeDrainNode);
-            SkillTreeNode FireballNode = new SkillTreeNode(this, nodeTextures[Static.SKILL_TREE_NODE_ANY], new Fireball(game, player, 40, 40, 10f), 5000);
+            SkillTreeNode FireballNode = new SkillTreeNode(this, nodeTextures[Static.FIREBALL_NAME], new Fireball(game, player, 40, 40, 10f), 5000);
             nodes.Add(FireballNode);
-            SkillTreeNode BlizzardNode = new SkillTreeNode(this, nodeTextures[Static.SKILL_TREE_NODE_ANY], new Blizzard(game, player, 0, 200, 200, 100), 2000);
+            SkillTreeNode BlizzardNode = new SkillTreeNode(this, nodeTextures[Static.BLIZZARD_NAME], new Blizzard(game, player, 0, 200, 200, 100), 2000);
             nodes.Add(BlizzardNode);
-            SkillTreeNode LightningArrowNode = new SkillTreeNode(this, nodeTextures[Static.SKILL_TREE_NODE_ANY], new LightningArrow(game,player,0,50), 5000);
+            SkillTreeNode LightningArrowNode = new SkillTreeNode(this, nodeTextures[Static.LIGHTNING_ARROW_NAME], new LightningArrow(game,player,0,50), 5000);
             nodes.Add(LightningArrowNode);
-            SkillTreeNode TeleportNode = new SkillTreeNode(this, nodeTextures[Static.SKILL_TREE_NODE_ANY], new Teleport(game, player, 40, 40, 20), 2000);
+            SkillTreeNode TeleportNode = new SkillTreeNode(this, nodeTextures[Static.TELEPORT_NAME], new Teleport(game, player, 40, 40, 20), 2000);
             nodes.Add(TeleportNode);
 
-            SkillTreeNode DrainEnchantNode = new SkillTreeNode(this, nodeTextures[Static.SKILL_TREE_NODE_ANY], new DrainEnchant(game,player,100), 2000);
-            nodes.Add(DrainEnchantNode);
 
-            SkillTreeNode BurnEnchantNode = new SkillTreeNode(this, nodeTextures[Static.SKILL_TREE_NODE_ANY], new BurningEnchant(game, player, 2, 100), 2000);
+
+            SkillTreeNode BurnEnchantNode = new SkillTreeNode(this, nodeTextures[Static.BURNINGENCHANT_NAME], new BurningEnchant(game, player, 2, 100), 2000);
             nodes.Add(BurnEnchantNode);
 
-            SkillTreeNode LightningEnchantNode = new SkillTreeNode(this, nodeTextures[Static.SKILL_TREE_NODE_ANY], new LightningEnchant(game, player, 7, 100), 2000);
+            SkillTreeNode LightningEnchantNode = new SkillTreeNode(this, nodeTextures[Static.LIGHTNINGENCHANT_NAME], new LightningEnchant(game, player, 7, 100), 2000);
             nodes.Add(LightningEnchantNode);
 
             startNode.attachBottom(MissileNode, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 4);
             MissileNode.attachBottom(ManaPlusMagic1, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
-            ManaPlusMagic1.attachLeft(ManaRegenMagic1, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
-            ManaPlusMagic1.attachRight(FirelanceNode, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
+            ManaPlusMagic1.attachRight(FireballNode, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
+            FireballNode.attachBottom(ManaPlusMagic2, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
+            ManaPlusMagic1.attachBottom(ManaRegenMagic1, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
+            ManaRegenMagic1.attachRight(ManaPlusMagic2, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
+            //FirelanceNode.attachRight(FireballNode, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
+            ManaRegenMagic1.attachLeft(BlizzardNode, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 4);
+            BlizzardNode.attachLeft(TeleportNode, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 4);
             ManaRegenMagic1.attachBottom(LifeDrainNode, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
+            //BurnEnchantNode.attachBottom(ManaPlusMagic2, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
+            ManaPlusMagic2.attachRight(BurnEnchantNode, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 4);
+            BurnEnchantNode.attachTop(BashNode, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 13);
+            LifeDrainNode.attachBottom(ManaPlusMagic3, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
+            LifeDrainNode.attachLeft(LightningEnchantNode, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
+            ManaPlusMagic3.attachRight(FirelanceNode, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
+            ManaPlusMagic3.attachLeft(LightningArrowNode, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
+            ManaPlusMagic3.attachBottom(ManaRegenMagic2, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
+
+
+
+
+
+
 
 
             //support
-			SkillTreeNode ManaRegen2Node = new SkillTreeNode(this, nodeTextures[Static.SKILL_TREE_NODE_ANY], new ManaRegenPlusUnlockable(Static.PLAYER_START_MANA_REGEN/3), 500);
-            nodes.Add(ManaRegen2Node);
+            SkillTreeNode ManaRegenSupport1 = new SkillTreeNode(this, nodeTextures[Static.MANA_PLUS_NAME], new ManaRegenPlusUnlockable(Static.PLAYER_START_MANA_REGEN / 3), 500);
+            nodes.Add(ManaRegenSupport1);
+            SkillTreeNode ManaRegenSupport2 = new SkillTreeNode(this, nodeTextures[Static.MANA_PLUS_NAME], new ManaRegenPlusUnlockable(Static.PLAYER_START_MANA_REGEN / 3), 500);
+            nodes.Add(ManaRegenSupport2);
+
+            SkillTreeNode ManaPlusSupport1 = new SkillTreeNode(this, nodeTextures[Static.MANA_REGEN_NAME], new ManaPlusUnlockable(30), 500); // 500
+            nodes.Add(ManaPlusSupport1);
+            SkillTreeNode ManaPlusSupport2 = new SkillTreeNode(this, nodeTextures[Static.MANA_REGEN_NAME], new ManaPlusUnlockable(20), 1200);
+            nodes.Add(ManaPlusSupport2);
 
 
+            SkillTreeNode DrainEnchantNode = new SkillTreeNode(this, nodeTextures[Static.DRAINENCHANT_NAME], new DrainEnchant(game, player, 100), 2000);
+            nodes.Add(DrainEnchantNode);
 
-            SkillTreeNode ManaPlusNode = new SkillTreeNode(this, nodeTextures[Static.SKILL_TREE_NODE_ANY], new ManaPlusUnlockable(50), 2000);
-            nodes.Add(ManaPlusNode);
+            SkillTreeNode HealingTouchNode = new SkillTreeNode(this, nodeTextures[Static.HEALING_TOUCH_NAME], new HealingTouch(game,player,50,40), 2000);
+            nodes.Add(HealingTouchNode);
+
+            SkillTreeNode HealingRainNode = new SkillTreeNode(this, nodeTextures[Static.HEALING_RAIN_NAME], new HealingRain(game,player,15,200, 300), 2000);
+            nodes.Add(HealingRainNode);
+
+            SkillTreeNode RegrowthNode = new SkillTreeNode(this, nodeTextures[Static.REGROWTH_NAME], new Regrowth(game,player,30,400), 2000);
+            nodes.Add(RegrowthNode);
 
 
+            startNode.attachLeft(HealingTouchNode, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 4);
+            HealingTouchNode.attachTop(ManaRegenSupport1, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 4);
+            ManaRegenSupport1.attachLeft(ManaPlusSupport1, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
+            ManaPlusSupport1.attachTop(DrainEnchantNode, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 5);
+            HealingTouchNode.attachLeft(RegrowthNode, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
+            RegrowthNode.attachTop(ManaPlusSupport1, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 4);
+           // ManaPlusSupport1.attachRight(HealingTouchNode, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
+            DrainEnchantNode.attachRight(HPplus50Node2, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 4);
+            RegrowthNode.attachLeft(ManaRegenSupport2, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
+            ManaRegenSupport2.attachLeft(HealingRainNode, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
+            ManaRegenSupport2.attachBottom(TeleportNode, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 8);
+            HealingRainNode.attachLeft(ManaPlusSupport2, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
+            //ManaRegenSupport2.attachLeft(HealingRain
+            //ManaRegenSupport2.attachBottom(
+            //DrainEnchantNode.attachRight(HPplus50Node2, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 4);
 
-            startNode.attachLeft(ManaRegen2Node, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 4);
-            ManaRegen2Node.attachTop(BlizzardNode, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
-            ManaRegen2Node.attachBottom(ManaPlusNode, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
-            ManaPlusNode.attachLeft(TeleportNode, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
 
         
         }
