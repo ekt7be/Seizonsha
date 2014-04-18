@@ -79,7 +79,10 @@
     <Compile Include="Skills\AOEStatus.cs" />
     <Compile Include="Skills\Arrow.cs" />
     <Compile Include="Skills\Bash.cs" />
+    <Compile Include="Skills\BattleCry.cs" />
     <Compile Include="Skills\Blizzard.cs" />
+    <Compile Include="Skills\BurningEnchant.cs" />
+    <Compile Include="Skills\DrainEnchant.cs" />
     <Compile Include="Skills\HealingRain.cs" />
     <Compile Include="Skills\Kick.cs" />
     <Compile Include="Skills\LightningArrow.cs" />
@@ -88,6 +91,7 @@
     <Compile Include="Skills\StatusEffects\Burning.cs" />
     <Compile Include="Effects\Effect.cs" />
     <Compile Include="Skills\StatusEffects\HealOverTime.cs" />
+    <Compile Include="Skills\StatusEffects\MagicMissile.cs" />
     <Compile Include="Skills\StatusEffects\StatusEffect.cs" />
     <Compile Include="Effects\TextEffect.cs" />
     <Compile Include="Interfaces\AI.cs" />
@@ -121,7 +125,9 @@
     <Compile Include="Skills\Skill.cs" />
     <Compile Include="Skills\StatusEffects\Slow.cs" />
     <Compile Include="Skills\StatusEffects\Stun.cs" />
+    <Compile Include="Skills\StatusEffects\Taunt.cs" />
     <Compile Include="Skills\SwordSlash.cs" />
+    <Compile Include="Skills\TauntingEnchant.cs" />
     <Compile Include="Skills\Weapons\DankSword.cs" />
     <Compile Include="Skills\Weapons\OKGun.cs" />
     <Compile Include="Skills\Weapons\Revolver.cs" />

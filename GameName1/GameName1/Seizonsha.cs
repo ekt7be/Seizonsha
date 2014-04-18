@@ -969,7 +969,7 @@ namespace GameName1
             if (ShouldHeal(damageType, target.getTargetType())){
                 incEntityHealth(target,amount);
 
-                TextEffect text = EntityFactory.getTextEffect(this, amount + "", 10, new Vector2(0, -2), Color.Green); //new TextEffect(this, amount + "", 10, new Vector2(0, -2), Color.Green);
+                TextEffect text = EntityFactory.getTextEffect(this, amount + "", 10, new Vector2(0, -1), Color.Green); //new TextEffect(this, amount + "", 10, new Vector2(0, -2), Color.Green);
                 Spawn(text,target.getCenterX(), target.getCenterY() - 60);
             }
         }

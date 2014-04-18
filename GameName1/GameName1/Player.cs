@@ -281,8 +281,6 @@ namespace GameName1
             Equip(blizzard, Static.PLAYER_R2_SKILL_INDEX);
              * */
 
-         
-
             
 
             LightningArrow la = new LightningArrow(game, this, 20, 120);
@@ -292,6 +290,10 @@ namespace GameName1
             HealingRain healingrain = new HealingRain(game, this, 15, 60, 5*60);
             addEquipable(healingrain);
             Equip(healingrain, Static.PLAYER_R1_SKILL_INDEX);
+
+            MagicMissile mm = new MagicMissile(game, this, 10, 5 * 60);
+            addEquipable(mm);
+            Equip(mm, Static.PLAYER_R1_SKILL_INDEX);
 
             /*LightningEnchant lightningenchant = new LightningEnchant(game, this, 5, 0);
             addEquipable(lightningenchant);

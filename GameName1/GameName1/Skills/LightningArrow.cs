@@ -16,7 +16,7 @@ namespace GameName1.Skills
 
 
         public LightningArrow(Seizonsha game, GameEntity user, int damage, int recharge_time)
-            : base(game, user, Static.LIGHTNING_ARROW_COST, Static.FIRELANCE_RECHARGE, 30, 30)
+            : base(game, user, Static.LIGHTNING_ARROW_COST, Static.LIGHTNING_ARROW_RECHARGE, 30, 30)
         {
             this.damage = damage;
             hit = new List<GameEntity>();
@@ -74,7 +74,7 @@ namespace GameName1.Skills
 
             PolygonIntersection.Polygon polygon = new PolygonIntersection.Polygon(points);
             //game.Spawn(new SwordSlash(game, user, Static.PIXEL_THIN, slashBounds, damage, damageType, 10, user.vectorDirection), slashBounds.Left, slashBounds.Top);
-            Arrow attack = new Arrow(game, user, Seizonsha.spriteMappings[Static.SPRITE_FIREBALL], this, slashBounds, polygon, damage, damageType, 20, new Vector2(bufferedVectorDirection.X * 50, bufferedVectorDirection.Y * 50), bufferedDirection);
+            Arrow attack = new Arrow(game, user, Seizonsha.spriteMappings[Static.SPRITE_FIREBALL], this, slashBounds, polygon, damage, damageType, 20, new Vector2(bufferedVectorDirection.X * 50, bufferedVectorDirection.Y * 50), bufferedDirection, true);
             attack.rotateToAngle(this.bufferedDirection);
 
             game.Spawn(attack, slashBounds.Left, slashBounds.Top);
