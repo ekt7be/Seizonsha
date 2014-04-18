@@ -222,7 +222,7 @@ namespace GameName1
             this.cameraX = 0;
             this.cameraY = 0;
             this.skillPoints = 0;
-            this.xp = 0;
+			this.xp = 100000;
             this.health = Static.PLAYER_MAX_HEALTH;
             this.dead = false;
             this.playerIndex = playerIndex;

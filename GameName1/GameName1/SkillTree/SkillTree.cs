@@ -315,7 +315,13 @@ namespace GameName1.SkillTree
             
             if (!currNode.isUnlocked() && currNode.Available(player))
             {
-                spriteBatch.DrawString(Static.SPRITEFONT_Calibri12, "Press A(Enter) to Unlock", new Vector2(30, bounds.Height - 100), Color.White);
+				if (player.keyboard){
+					spriteBatch.DrawString(Static.SPRITEFONT_Calibri12, "Press E to Unlock", new Vector2(30, bounds.Height - 100), Color.White);
+
+				} else {
+					spriteBatch.DrawString(Static.SPRITEFONT_Calibri12, "Press A to Unlock", new Vector2(30, bounds.Height - 100), Color.White);
+
+				}
             }
 
             if (!currNode.isUnlocked() && !currNode.Available(player))

@@ -30,7 +30,13 @@ namespace GameName1
 
         public override string Message(Player player)
         {
-            return "Press A(Enter) to eat " + getName();
+			if (player.keyboard){
+				return "Press E to eat " + getName();
+
+			} else {
+				return "Press A to eat " + getName();
+			}
+
         }
 
         public override bool Available(Player player)

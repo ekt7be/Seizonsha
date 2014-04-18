@@ -66,11 +66,23 @@ namespace GameName1.Skills.Weapons
             {
                 if (player.currentWeapon == null)
                 {
-                    return "Press A(Enter) to pick up " + weapon.getName() + ".";
+					if (player.keyboard){
+						return "Press E to pick up " + weapon.getName() + ".";
+
+					} else {
+						return "Press A to pick up " + weapon.getName() + ".";
+
+					}
                 }
                 else
                 {
-                    return "Press A(Enter) to swap " + player.currentWeapon.getName() + " for " + weapon.getName() + ".";
+					if (player.keyboard){
+						return "Press E to swap " + player.currentWeapon.getName() + " for " + weapon.getName() + ".";
+
+					} else {
+						return "Press A to swap " + player.currentWeapon.getName() + " for " + weapon.getName() + ".";
+
+					}
 
                 }
             }

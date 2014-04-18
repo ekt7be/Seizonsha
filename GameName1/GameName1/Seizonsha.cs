@@ -103,6 +103,8 @@ namespace GameName1
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferWidth = 853;
             graphics.PreferredBackBufferHeight = 480;
+			graphics.IsFullScreen = true; 
+
 
             // Create the screen manager component.
             screenManager = new ScreenManager(this);
@@ -892,7 +894,7 @@ namespace GameName1
                     player.SkillTreeButton();
                 }
 
-                if (player.oldKeyboardState.IsKeyUp(Keys.Enter) && Keyboard.GetState().IsKeyDown(Keys.Enter))
+				if (player.oldKeyboardState.IsKeyUp(Keys.E) && Keyboard.GetState().IsKeyDown(Keys.E))
                 {
                     player.AButton();
                 }
