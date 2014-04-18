@@ -73,6 +73,7 @@ namespace GameName1
             menuSoundLoop.IsLooped = true;
             menuSoundLoop.Play();
         }
+
         #region Handle Input
 
         /// <summary>
