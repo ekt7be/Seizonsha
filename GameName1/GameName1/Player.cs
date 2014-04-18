@@ -776,6 +776,10 @@ namespace GameName1
 
         public void removeEquipable(Equipable equip)
         {
+            if (equip == null)
+            {
+                return;
+            }
             for (int i = 0; i < skillSlots.Length; i++ )
             {
                 if (skillSlots[i] == equip)
@@ -837,6 +841,18 @@ namespace GameName1
             return skilltreescreen;
         }
 
+        public void SkillTreeButton()
+        {
+            if (!game.waveCleared)
+            {
+                skilltreescreen = false;
+                return;
+            }
+
+            OpenSkillTree();
+        }
+
+        /*
         public void SkillTreeButtonDown()
         {
             if (!skilltreebuttondown)
@@ -861,6 +877,7 @@ namespace GameName1
                 return;
             }
         }
+         * */
 
         public void DrawSkillTree(Rectangle screenPortion, SpriteBatch spriteBatch)
         {

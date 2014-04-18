@@ -64,7 +64,15 @@ namespace GameName1.Skills.Weapons
             }
             else
             {
-                return "Press A(Enter) to swap " + player.currentWeapon.getName() + " for " + weapon.getName() + ".";
+                if (player.currentWeapon == null)
+                {
+                    return "Press A(Enter) to pick up " + weapon.getName() + ".";
+                }
+                else
+                {
+                    return "Press A(Enter) to swap " + player.currentWeapon.getName() + " for " + weapon.getName() + ".";
+
+                }
             }
         }
 
