@@ -60,7 +60,7 @@ namespace GameName1.AnimationTesting
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(sprite, this.hitbox, healSource, Color.White, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+			spriteBatch.Draw(sprite, this.hitbox, healSource, Color.White, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
         }
 
         public void reset(GameEntity target){

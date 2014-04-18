@@ -29,7 +29,13 @@ namespace GameName1.PickUps
 
         public override string Message(Player player)
         {
-           return "Press A(Enter) to Revive Player " + player.playerIndex.ToString();
+			if (player.keyboard)
+			{
+				return "Press E to Revive Player " + player.playerIndex.ToString();
+
+			} else {
+				return "Press A to Revive Player " + player.playerIndex.ToString();
+			}
         }
 
         public override bool Available(Player player)
