@@ -52,6 +52,7 @@ namespace GameName1
         public SoundEffect healingRainSound;
         public SoundEffect enchantSound;
         public SoundEffect lightningArrowSound;
+        public SoundEffect teleportSound;
 
 		public float sinceLastWaveCleared;
 
@@ -128,8 +129,6 @@ namespace GameName1
             graphics.PreferredBackBufferHeight = Static.SCREEN_HEIGHT;
             graphics.PreferredBackBufferWidth = Static.SCREEN_WIDTH;
 
-
-
             playerRect = Content.Load<Texture2D>("Sprites/Bodies/HumanSpriteSheetLight");
             Texture2D npcRect = Content.Load<Texture2D>("Sprites/player");
             Texture2D basicEnemyRect = Content.Load<Texture2D>("Sprites/Bodies/SkeletonSpriteSheet");
@@ -181,6 +180,7 @@ namespace GameName1
             healingRainSound = Content.Load<SoundEffect>("sound/healing rain sound");
             enchantSound = Content.Load<SoundEffect>("sound/enchant sound");
             lightningArrowSound = Content.Load<SoundEffect>("sound/lightning arrow sound");
+            teleportSound = Content.Load<SoundEffect>("sound/teleport sound");
 
             gameSoundLoop = gameSound.CreateInstance();
             gameSoundLoop.IsLooped = true;
