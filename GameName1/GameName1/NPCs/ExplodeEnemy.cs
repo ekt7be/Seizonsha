@@ -133,8 +133,8 @@ namespace GameName1.NPCs
         {
             setRemove(true);
             this.OnDie();
-            int explosionWidth = 80;
-            int explosionHeight = 80;
+            int explosionWidth = 200;
+            int explosionHeight = 200;
             Rectangle expBounds = new Rectangle((int)(getCenterX() - explosionWidth / 2), (int)(getCenterY() - explosionWidth / 2), explosionWidth, explosionHeight);
             if (level == 1)
             {

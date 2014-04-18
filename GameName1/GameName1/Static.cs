@@ -9,7 +9,6 @@ namespace GameName1
 {
     class Static
     {
-
         //Animations
         public static readonly int ANIMATION_DAMAGE_DURATION = 20;
 
@@ -65,7 +64,7 @@ namespace GameName1
         public static readonly float DROP_DURATION = 20000;
 
         //difficulties
-        public static readonly int MAX_DIFFICULTY = 8;
+        public static readonly int MAX_DIFFICULTY = 20;
         public static readonly int BASIC_ENEMY_DIFFICULTY_1 = 1;
         public static readonly int BASIC_ENEMY_DIFFICULTY_2 = 8;
         public static readonly int BASIC_ENEMY_DIFFICULTY_3 = 20;
@@ -114,7 +113,7 @@ namespace GameName1
         public static readonly int EXPLODE_ENEMY_TIMER_2 = 70;
         public static readonly int EXPLODE_ENEMY_XP_2 = 400;
         public static readonly float EXPLODE_ENEMY_SPEED_2 = 4.5f;
-        public static readonly int EXPLODE_ENEMY_HEALTH_2 = 60;
+        public static readonly int EXPLODE_ENEMY_HEALTH_2 = 40;
         public static readonly int EXPLODE_ENEMY_EXPLOSION_DAMAGE_2 = 70;
 
         public static readonly int EXPLODE_ENEMY_TIMER_3 = 70;
@@ -279,6 +278,7 @@ namespace GameName1
         public static readonly int FIRELANCE_DAMAGE = 5;
         public static readonly int FIRELANCE_DOT_TICK = 5;
         public static readonly int FIRELANCE_DOT_DUR = 4 * 60;
+
         public static readonly string FIRELANCE_NAME = "Fire Lance";
 
         //Fireball
@@ -303,7 +303,7 @@ namespace GameName1
         public static readonly string MAGIC_MISSILE_NAME = "Magic Missile";
         public static readonly int MAGIC_MISSILE_COST = 20;
         public static readonly int MAGIC_MISSILE_RECHARGE = 60*2;
-        public static readonly int MAGIC_MISSILE_CASTING_TIME = 30;
+        public static readonly int MAGIC_MISSILE_CASTING_TIME = 20;
         public static readonly int MAGIC_MISSILE_FREEZE_TIME = MAGIC_MISSILE_CASTING_TIME;
 
         //get big
