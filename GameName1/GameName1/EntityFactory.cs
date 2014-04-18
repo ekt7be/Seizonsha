@@ -121,8 +121,12 @@ namespace GameName1
         private static Tuple<int,Enemy> RandomEnemy(Seizonsha game, int difficulty)
         {
 
+            if (difficulty >= Static.BOSS_ENEMY_DIFFICULTY_1)
+            {
+                return new Tuple<int, Enemy>(Static.EXPLODE_ENEMY_DIFFICULTY_1, new BossEnemy(game));
 
-            if (difficulty > Static.EXPLODE_ENEMY_DIFFICULTY_2)
+            }
+            else if (difficulty > Static.EXPLODE_ENEMY_DIFFICULTY_2)
             {
                 return new Tuple<int, Enemy>(Static.EXPLODE_ENEMY_DIFFICULTY_2, new ExplodeEnemy(game, 2));
             }

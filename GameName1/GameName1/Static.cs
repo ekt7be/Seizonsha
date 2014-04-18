@@ -64,7 +64,11 @@ namespace GameName1
         public static readonly float DROP_DURATION = 20000;
 
         //difficulties
-        public static readonly int MAX_DIFFICULTY = 20;
+        public static readonly int MAX_DIFFICULTY = 25;
+
+        public static readonly int BOSS_ENEMY_DIFFICULTY_1 = 25;
+
+
         public static readonly int BASIC_ENEMY_DIFFICULTY_1 = 1;
         public static readonly int BASIC_ENEMY_DIFFICULTY_2 = 8;
         public static readonly int BASIC_ENEMY_DIFFICULTY_3 = 20;
