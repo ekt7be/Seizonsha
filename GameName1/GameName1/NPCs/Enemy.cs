@@ -17,7 +17,7 @@ namespace GameName1.NPCs
         protected int tilesWide;
         protected int tilesHigh;
 
-		protected bool drawPath = true;
+		protected bool drawPath = false;
         protected bool drawHitbox = false;
 
         protected bool stopped;
