@@ -45,6 +45,7 @@ namespace GameName1.Skills
 
         protected override void UseSkill()
         {
+            game.healingRainSound.Play();
             float dist = 100;
             int sW = 100;
             int sH = 100;

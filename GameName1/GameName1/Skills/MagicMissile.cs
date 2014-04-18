@@ -123,6 +123,7 @@ namespace GameName1.Skills
 
         protected override void UseSkill()
         {
+            game.enchantSound.Play();
             fired = true;
             this.time = 0;
             int width = 30;

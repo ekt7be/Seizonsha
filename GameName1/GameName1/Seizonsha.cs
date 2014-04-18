@@ -49,8 +49,9 @@ namespace GameName1
         public SoundEffect swordSlashSound;
         public SoundEffectInstance swordSlashSoundInstance;
         public SoundEffect regrowthSound;
-        public SoundEffectInstance regrowthSoundInstance;
-        
+        public SoundEffect healingRainSound;
+        public SoundEffect enchantSound;
+        public SoundEffect lightningArrowSound;
 
 		public float sinceLastWaveCleared;
 
@@ -177,6 +178,9 @@ namespace GameName1
             swordSlashSound = Content.Load<SoundEffect>("sound/sword sound");
             swordSlashSoundInstance = swordSlashSound.CreateInstance();
             regrowthSound = Content.Load<SoundEffect>("sound/regrowth sound");
+            healingRainSound = Content.Load<SoundEffect>("sound/healing rain sound");
+            enchantSound = Content.Load<SoundEffect>("sound/enchant sound");
+            lightningArrowSound = Content.Load<SoundEffect>("sound/lightning arrow sound");
 
             gameSoundLoop = gameSound.CreateInstance();
             gameSoundLoop.IsLooped = true;
