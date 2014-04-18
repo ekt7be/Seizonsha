@@ -153,8 +153,10 @@ namespace GameName1
 
 
             Texture2D fireball = Content.Load<Texture2D>("Sprites/fireballsprite");
-            Texture2D blizzard = Content.Load<Texture2D>("Sprites/SpellEffects/blizzardeffect");
+            Texture2D blizzard = Content.Load<Texture2D>("Sprites/SpellEffects/blizzard");
             Texture2D shock = Content.Load<Texture2D>("Sprites/SpellEffects/shock");
+            Texture2D lightningarrow = Content.Load<Texture2D>("Sprites/SpellEffects/lightningarrow");
+            Texture2D healingrain = Content.Load<Texture2D>("Sprites/SpellEffects/healingrain");
             Texture2D burn = Content.Load<Texture2D>("Sprites/SpellEffects/burneffect");
             Texture2D magicmissile = Content.Load<Texture2D>("Sprites/SpellEffects/magicmissile");
             Texture2D heal = Content.Load<Texture2D>("Sprites/SpellEffects/Heal");
@@ -263,6 +265,8 @@ namespace GameName1
 
             spriteMappings.Add(Static.SPRITE_FIREBALL, fireball);
             spriteMappings.Add(Static.SPRITE_BLIZZARD, blizzard);
+            spriteMappings.Add(Static.SPRITE_HEALING_RAIN, healingrain);
+            spriteMappings.Add(Static.SPRITE_LIGHTNING_ARROW, lightningarrow);
             spriteMappings.Add(Static.SPRITE_SHOCK, shock);
             spriteMappings.Add(Static.SPRITE_BURN, burn);
             spriteMappings.Add(Static.SPRITE_MAGIC_MISSILE, magicmissile);

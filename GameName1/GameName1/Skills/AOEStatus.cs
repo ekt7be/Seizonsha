@@ -38,8 +38,28 @@ namespace GameName1.Skills
 
         public override void Draw(SpriteBatch spriteBatch)
         {
+            if (origin is Blizzard)
+            {
+                ((Blizzard)origin).Draw(spriteBatch, hitbox);
+            }
+            else if (origin is HealingRain)
+            {
+                ((HealingRain)origin).Draw(spriteBatch, hitbox);
+            }
+            //base.Draw(spriteBatch);
+        }
 
-            base.Draw(spriteBatch);
+        public override void UpdateAnimation(GameTime gameTime)
+        {
+            if (origin is Blizzard)
+            {
+                ((Blizzard)origin).UpdateAnimation(gameTime);
+            }
+            else if (origin is HealingRain)
+            {
+                ((HealingRain)origin).UpdateAnimation(gameTime);
+            }
+                base.UpdateAnimation(gameTime);
         }
 
         
