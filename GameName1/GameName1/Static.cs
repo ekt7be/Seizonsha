@@ -84,22 +84,22 @@ namespace GameName1
         public static readonly float BASIC_ENEMY_SPRITE_SCALE = 1f;
         public static readonly float BASIC_ENEMY_PATH_REFRESH = 500f;
         public static readonly int BASIC_ENEMY_XP_1 = 100;
-        public static readonly int BASIC_ENEMY_DAMAGE_1 = 5;
+        public static readonly int BASIC_ENEMY_DAMAGE_1 = 10;
         public static readonly float BASIC_ENEMY_SPEED_1 = 2f;
         public static readonly int BASIC_ENEMY_HEALTH_1 = 30;
-        public static readonly int BASIC_ENEMY_EXTRA_ATTACK_RECHARGE_1 = 200;
+        public static readonly int BASIC_ENEMY_EXTRA_ATTACK_RECHARGE_1 = 150;
 
         public static readonly int BASIC_ENEMY_XP_2 = 300;
-        public static readonly int BASIC_ENEMY_DAMAGE_2 = 15;
-        public static readonly float BASIC_ENEMY_SPEED_2 = 2f;
+        public static readonly int BASIC_ENEMY_DAMAGE_2 = 25;
+        public static readonly float BASIC_ENEMY_SPEED_2 = 2.5f;
         public static readonly int BASIC_ENEMY_HEALTH_2 = 60;
         public static readonly int BASIC_ENEMY_EXTRA_ATTACK_RECHARGE_2 = 120;
 
-        public static readonly int BASIC_ENEMY_XP_3 = 800;
-        public static readonly int BASIC_ENEMY_DAMAGE_3 = 30;
+        public static readonly int BASIC_ENEMY_XP_3 = 1200;
+        public static readonly int BASIC_ENEMY_DAMAGE_3 = 60;
         public static readonly float BASIC_ENEMY_SPEED_3 = 3.5f;
         public static readonly int BASIC_ENEMY_HEALTH_3 = 250;
-        public static readonly int BASIC_ENEMY_EXTRA_ATTACK_RECHARGE_3 = 60;
+        public static readonly int BASIC_ENEMY_EXTRA_ATTACK_RECHARGE_3 = 100;
 
         //explode enemy
 
