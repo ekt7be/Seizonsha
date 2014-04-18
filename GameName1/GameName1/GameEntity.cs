@@ -101,6 +101,11 @@ namespace GameName1
                 spriteBatch.Draw(sprite, spriteBox, spriteSource, tint, 0.0f, new Vector2(0, 0), SpriteEffects.None, depth);
             }
 
+            foreach (StatusEffect s in statusEffects)
+            {
+                s.Draw(spriteBatch);
+            }
+
         }
 
         public void setTint(Color tint)
@@ -532,6 +537,16 @@ namespace GameName1
 
        public abstract String getName();
 
+       public void setWidth(int width)
+       {
+           this.width = width;
+           this.hitbox = new Rectangle(x, y, width, height);
+       }
+       public void setHeight(int height)
+       {
+           this.height = height;
+           this.hitbox = new Rectangle(x, y, width, height);
+       }
 
 
        public int CompareTo(GameEntity y)

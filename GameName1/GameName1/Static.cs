@@ -95,7 +95,7 @@ namespace GameName1
         public static readonly float EXPLODE_ENEMY_PATH_REFRESH = 500f;
         public static readonly int EXPLODE_ENEMY_XP_1 = 150;
         public static readonly float EXPLODE_ENEMY_SPEED_1 = 2f;
-        public static readonly int EXPLODE_ENEMY_HEALTH_1 = 10;
+        public static readonly int EXPLODE_ENEMY_HEALTH_1 = 100;
 
         public static readonly int EXPLODE_ENEMY_TIMER_2 = 100;
         public static readonly int EXPLODE_ENEMY_XP_2 = 400;
@@ -187,7 +187,7 @@ namespace GameName1
 
         //Int to Sprite Mappings
         public static readonly int SPRITE_BASIC_ENEMY_INT = 0;
-        public static readonly int SPRITE_EXPLODE_ENEMY_INT = 26;  //MOST RECENT
+        public static readonly int SPRITE_EXPLODE_ENEMY_INT = 26; 
         public static readonly int SPRITE_PLAYER_INT = 1;
 
         public static readonly int SPRITE_PLATE_ARMOR_HEAD = 2;
@@ -212,6 +212,10 @@ namespace GameName1
         public static readonly int SPRITE_REG_ARMOR_TORSO = 24;
 
         public static readonly int SPRITE_FIREBALL = 8;
+        public static readonly int SPRITE_BLIZZARD = 27; 
+        public static readonly int SPRITE_SHOCK = 28;
+        public static readonly int SPRITE_BURN = 29; 
+        public static readonly int SPRITE_MAGIC_MISSILE = 30; // MOST RECENT
         public static readonly int SPRITE_BULLET = 9;
         public static readonly int SPRITE_HEAL = 10;
         public static readonly int SPRITE_SWORD = 11;
@@ -253,6 +257,10 @@ namespace GameName1
 
         //Magic Missle
         public static readonly string MAGIC_MISSILE_NAME = "Magic Missile";
+        public static readonly int MAGIC_MISSILE_COST = 20;
+        public static readonly int MAGIC_MISSILE_RECHARGE = 60*2;
+        public static readonly int MAGIC_MISSILE_CASTING_TIME = 30;
+        public static readonly int MAGIC_MISSILE_FREEZE_TIME = MAGIC_MISSILE_CASTING_TIME;
 
         //Drain Enchant
         public static readonly string DRAINENCHANT_NAME = "Drain Enchant";
@@ -286,6 +294,30 @@ namespace GameName1
 
         //Teleport
         public static readonly string TELEPORT_NAME = "Teleport";
+
+        //Health Increase
+        public static readonly string HEALTH_INCREASE_NAME = "Health Increase";
+
+        //Health Increase 2
+        public static readonly string HEALTH_INCREASE_2_NAME = "Health Increase 2";
+
+        //Mana Increase
+        public static readonly string MANA_PLUS_NAME = "Mana Increase";
+
+        //Mana Increase 2
+        public static readonly string MANA_PLUS_2_NAME = "Mana Increase 2";
+
+        //Mana Regen
+        public static readonly string MANA_REGEN_NAME = "Increased Mana Regen";
+
+        //Mana Regen Plus
+        public static readonly string MANA_REGEN_PLUS_NAME = "Increased Mana Regen";
+
+        //Armor Enhancement 
+        public static readonly string ARMOR_INCREASE_NAME = "Armor Enhancement";
+
+        //Weapon Enhancement 
+        public static readonly string WEAPON_PLUS_NAME = "Weapon Enhancement";
 
         //spritefont
         public static SpriteFont SPRITE_FONT = null;

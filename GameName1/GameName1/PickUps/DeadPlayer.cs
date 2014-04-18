@@ -11,9 +11,11 @@ namespace GameName1.PickUps
     {
         private Player deadPlayer;
 
-        public DeadPlayer(Seizonsha game, Player deadPlayer) : base(game, Static.PIXEL_THIN, Static.PLAYER_WIDTH,Static.PLAYER_HEIGHT)
+        public DeadPlayer(Seizonsha game, Player deadPlayer) : base(game, Static.PIXEL_THIN, Static.PLAYER_WIDTH,Static.PLAYER_HEIGHT, true)
         {
-            this.deadPlayer = deadPlayer; 
+            this.deadPlayer = deadPlayer;
+            this.setHeight(deadPlayer.height + 20);
+            this.setWidth(deadPlayer.width + 20);
             setCollidable(true);
             deadPlayer.drawWeapon = false;
 

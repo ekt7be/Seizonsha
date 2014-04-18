@@ -12,17 +12,23 @@ namespace GameName1
     abstract class PickUp : GameEntity, Interactable
     {
         private float elapsedTime;
+        private bool permanent;
 
-        public PickUp(Seizonsha game, Texture2D sprite, int width, int height)
+        public PickUp(Seizonsha game, Texture2D sprite, int width, int height, bool permanent)
             : base(game, sprite, width, height, Static.TARGET_TYPE_NOT_DAMAGEABLE, 0)
         {
             this.setCollidable(false);
-            this.depth = .2f;
+            this.depth = .7f;
+            this.permanent = permanent;
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+            if (permanent)
+            {
+                return;
+            }
             this.elapsedTime += gameTime.ElapsedGameTime.Milliseconds;
             if (elapsedTime > Static.DROP_DURATION)
             {

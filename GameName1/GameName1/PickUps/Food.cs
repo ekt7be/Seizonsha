@@ -14,7 +14,7 @@ namespace GameName1
         private int amount;
 
         public Food(Seizonsha game, String name, Texture2D sprite, int amount)
-            : base(game, sprite, 20, 20)
+            : base(game, sprite, 20, 20, false)
         {
             this.tint = Color.Brown;
             this.sprite = sprite;

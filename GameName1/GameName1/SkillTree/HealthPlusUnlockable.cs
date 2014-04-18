@@ -18,6 +18,7 @@ namespace GameName1.SkillTree
         public void OnUnlock(Player player)
         {
             player.maxHealth += amount;
+            player.health = player.maxHealth;
         }
 
         public string getDescription()

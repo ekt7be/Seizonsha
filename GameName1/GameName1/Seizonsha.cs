@@ -159,6 +159,10 @@ namespace GameName1
 
 
             Texture2D fireball = Content.Load<Texture2D>("Sprites/fireballsprite");
+            Texture2D blizzard = Content.Load<Texture2D>("Sprites/SpellEffects/blizzardeffect");
+            Texture2D shock = Content.Load<Texture2D>("Sprites/SpellEffects/shock");
+            Texture2D burn = Content.Load<Texture2D>("Sprites/SpellEffects/burneffect");
+            Texture2D magicmissile = Content.Load<Texture2D>("Sprites/SpellEffects/magicmissile");
             Texture2D heal = Content.Load<Texture2D>("Sprites/SpellEffects/Heal");
             Texture2D bullet = Content.Load<Texture2D>("Sprites/bulletsprite");
             Texture2D sword = Content.Load<Texture2D>("Sprites/swordspritesheetfull3");
@@ -185,11 +189,28 @@ namespace GameName1
 
 			#region ADD SKILL ICONS (remember to add in SkillTree.cs too)
 			Texture2D nodeRect = Content.Load<Texture2D>("Sprites/SkillNode");
-			Texture2D fireballicon = Content.Load<Texture2D>("Sprites/skill_icons/fireball-red-1");
-			Texture2D healingtouchicon = Content.Load<Texture2D>("Sprites/skill_icons/heal-jade-1");
-			Texture2D swordicon = Content.Load<Texture2D>("Sprites/skill_icons/enchant-blue-3");
+			Texture2D fireballicon = Content.Load<Texture2D>("Sprites/skill_icons/fireball");
+			Texture2D healingtouchicon = Content.Load<Texture2D>("Sprites/skill_icons/healingtouch");
+			Texture2D swordicon = Content.Load<Texture2D>("Sprites/skill_icons/sword");
 			Texture2D gunicon = Content.Load<Texture2D>("Sprites/skill_icons/pistol-gun");
 			Texture2D firelanceicon = Content.Load<Texture2D>("Sprites/skill_icons/fire_lance");
+            Texture2D blizzardicon = Content.Load<Texture2D>("Sprites/skill_icons/blizzard");
+            Texture2D teleporticon = Content.Load<Texture2D>("Sprites/skill_icons/teleport");
+            Texture2D bashicon = Content.Load<Texture2D>("Sprites/skill_icons/bash");
+            Texture2D lightningarrowicon = Content.Load<Texture2D>("Sprites/skill_icons/lightningarrow");
+            Texture2D healingrainicon = Content.Load<Texture2D>("Sprites/skill_icons/healingrain");
+            Texture2D kickicon = Content.Load<Texture2D>("Sprites/skill_icons/kick");
+            Texture2D lifedrainicon = Content.Load<Texture2D>("Sprites/skill_icons/lifedrain");
+            Texture2D lightningenchanticon = Content.Load<Texture2D>("Sprites/skill_icons/lightningenchant");
+            Texture2D regrowthicon = Content.Load<Texture2D>("Sprites/skill_icons/regrowth");
+            Texture2D healthincreaseicon = Content.Load<Texture2D>("Sprites/skill_icons/healthincrease");
+            Texture2D healthincreaseicon2 = Content.Load<Texture2D>("Sprites/skill_icons/healthincrease2");
+            Texture2D weaponplusicon = Content.Load<Texture2D>("Sprites/skill_icons/weaponplus");
+            Texture2D armorincreaseicon = Content.Load<Texture2D>("Sprites/skill_icons/armorincrease");
+            Texture2D manaplusicon = Content.Load<Texture2D>("Sprites/skill_icons/manaplus");
+            Texture2D manaplusicon2 = Content.Load<Texture2D>("Sprites/skill_icons/manaplus2");
+            Texture2D manaregenicon = Content.Load<Texture2D>("Sprites/skill_icons/manaregen");
+            Texture2D manaregenplusicon = Content.Load<Texture2D>("Sprites/skill_icons/manaregenplus");
 
 
 			SkillTree.SkillTree.nodeTextures.Add(Static.SKILL_TREE_NODE_ANY, nodeRect);
@@ -203,9 +224,23 @@ namespace GameName1
 
 			SkillTree.SkillTree.nodeTextures.Add(Static.WEAPON_REVOLVER_NAME, gunicon);
 			SkillTree.SkillTree.nodeTextures.Add(Static.FIRELANCE_NAME, firelanceicon);
-			SkillTree.SkillTree.nodeTextures.Add(Static.BLIZZARD_NAME, nodeRect);
-			SkillTree.SkillTree.nodeTextures.Add(Static.TELEPORT_NAME, nodeRect);
-            SkillTree.SkillTree.nodeTextures.Add(Static.BASH_NAME, nodeRect);
+			SkillTree.SkillTree.nodeTextures.Add(Static.BLIZZARD_NAME, blizzardicon);
+			SkillTree.SkillTree.nodeTextures.Add(Static.TELEPORT_NAME, teleporticon);
+            SkillTree.SkillTree.nodeTextures.Add(Static.BASH_NAME, bashicon);
+            SkillTree.SkillTree.nodeTextures.Add(Static.LIGHTNING_ARROW_NAME, lightningarrowicon);
+            SkillTree.SkillTree.nodeTextures.Add(Static.HEALING_RAIN_NAME, healingrainicon);
+            SkillTree.SkillTree.nodeTextures.Add(Static.KICK_NAME, kickicon);
+            SkillTree.SkillTree.nodeTextures.Add(Static.LIFE_DRAIN_NAME, lifedrainicon);
+            SkillTree.SkillTree.nodeTextures.Add(Static.LIGHTNINGENCHANT_NAME, lightningenchanticon);
+            SkillTree.SkillTree.nodeTextures.Add(Static.REGROWTH_NAME, regrowthicon);
+            SkillTree.SkillTree.nodeTextures.Add(Static.HEALTH_INCREASE_NAME, healthincreaseicon);
+            SkillTree.SkillTree.nodeTextures.Add(Static.HEALTH_INCREASE_2_NAME, healthincreaseicon2);
+            SkillTree.SkillTree.nodeTextures.Add(Static.WEAPON_PLUS_NAME, weaponplusicon);
+            SkillTree.SkillTree.nodeTextures.Add(Static.ARMOR_INCREASE_NAME, armorincreaseicon);
+            SkillTree.SkillTree.nodeTextures.Add(Static.MANA_PLUS_NAME, manaplusicon);
+            SkillTree.SkillTree.nodeTextures.Add(Static.MANA_PLUS_2_NAME, manaplusicon2);
+            SkillTree.SkillTree.nodeTextures.Add(Static.MANA_REGEN_NAME, manaregenicon);
+            //SkillTree.SkillTree.nodeTextures.Add(Static.MANA_REGEN_PLUS_NAME, manaregenplusicon);
 
 
 
@@ -241,6 +276,10 @@ namespace GameName1
             spriteMappings.Add(Static.SPRITE_REG_ARMOR_TORSO, regArmorTorso);
 
             spriteMappings.Add(Static.SPRITE_FIREBALL, fireball);
+            spriteMappings.Add(Static.SPRITE_BLIZZARD, blizzard);
+            spriteMappings.Add(Static.SPRITE_SHOCK, shock);
+            spriteMappings.Add(Static.SPRITE_BURN, burn);
+            spriteMappings.Add(Static.SPRITE_MAGIC_MISSILE, magicmissile);
             spriteMappings.Add(Static.SPRITE_HEAL, heal);
             spriteMappings.Add(Static.SPRITE_BULLET, bullet);
             spriteMappings.Add(Static.SPRITE_SWORD, sword);

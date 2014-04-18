@@ -13,7 +13,7 @@ namespace GameName1.Skills.Weapons
 
         private Weapon weapon;
 
-        public WeaponDrop(Seizonsha game, Texture2D sprite, int width, int height, Weapon weapon) :base(game, sprite, width, height)
+        public WeaponDrop(Seizonsha game, Texture2D sprite, int width, int height, Weapon weapon) :base(game, sprite, width, height, false)
         {
             this.weapon = weapon;
         }
