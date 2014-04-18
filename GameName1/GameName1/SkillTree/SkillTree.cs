@@ -97,13 +97,13 @@ namespace GameName1.SkillTree
 
             startNode.attachRight(HpPlus50Node, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH *4);
             HpPlus50Node.attachBottom(WeaponPlusNode, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH*2);
-            HpPlus50Node.attachTop(armor1Node, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 3);
+            HpPlus50Node.attachTop(armor1Node, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 5);
             armor1Node.attachLeft(HPplus100Node, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
             armor1Node.attachRight(BashNode, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
             HPplus100Node.attachBottom(WeaponPlusNode2, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
             HPplus100Node.attachTop(kickNode, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH *2);
             kickNode.attachTop(armor3Node, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
-            armor3Node.attachLeft(HPplus50Node2, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
+            armor3Node.attachLeft(HPplus50Node2, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 4);
             armor3Node.attachRight(WeaponPlusNode3, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
             HPplus50Node2.attachTop(AOETauntNode, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
             WeaponPlusNode3.attachRight(EnchantTauntNode, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
@@ -117,12 +117,16 @@ namespace GameName1.SkillTree
             //magic path
 			SkillTreeNode ManaPlusMagic1 = new SkillTreeNode(this, nodeTextures[Static.SKILL_TREE_NODE_ANY], new ManaPlusUnlockable(30), 500); // 500
             nodes.Add(ManaPlusMagic1);
-            SkillTreeNode ManaPlusMagic2 = new SkillTreeNode(this, nodeTextures[Static.SKILL_TREE_NODE_ANY], new ManaPlusUnlockable(50), 1200);
+            SkillTreeNode ManaPlusMagic2 = new SkillTreeNode(this, nodeTextures[Static.SKILL_TREE_NODE_ANY], new ManaPlusUnlockable(20), 1200);
             nodes.Add(ManaPlusMagic2);
+            SkillTreeNode ManaPlusMagic3 = new SkillTreeNode(this, nodeTextures[Static.SKILL_TREE_NODE_ANY], new ManaPlusUnlockable(50), 3000);
+            nodes.Add(ManaPlusMagic3);
 
 
             SkillTreeNode ManaRegenMagic1 = new SkillTreeNode(this, nodeTextures[Static.SKILL_TREE_NODE_ANY], new ManaRegenPlusUnlockable(Static.PLAYER_START_MANA_REGEN / 2), 1500);
             nodes.Add(ManaRegenMagic1);
+            SkillTreeNode ManaRegenMagic2 = new SkillTreeNode(this, nodeTextures[Static.SKILL_TREE_NODE_ANY], new ManaRegenPlusUnlockable(Static.PLAYER_START_MANA_REGEN / 2), 1500);
+            nodes.Add(ManaRegenMagic2);
 
             SkillTreeNode MissileNode = new SkillTreeNode(this, nodeTextures[Static.FIRELANCE_NAME], new MagicMissile(game, player, 15, 20), 500); 
             nodes.Add(MissileNode);
@@ -140,8 +144,7 @@ namespace GameName1.SkillTree
             SkillTreeNode TeleportNode = new SkillTreeNode(this, nodeTextures[Static.SKILL_TREE_NODE_ANY], new Teleport(game, player, 40, 40, 20), 2000);
             nodes.Add(TeleportNode);
 
-            SkillTreeNode DrainEnchantNode = new SkillTreeNode(this, nodeTextures[Static.SKILL_TREE_NODE_ANY], new DrainEnchant(game,player,100), 2000);
-            nodes.Add(DrainEnchantNode);
+
 
             SkillTreeNode BurnEnchantNode = new SkillTreeNode(this, nodeTextures[Static.SKILL_TREE_NODE_ANY], new BurningEnchant(game, player, 2, 100), 2000);
             nodes.Add(BurnEnchantNode);
@@ -151,26 +154,71 @@ namespace GameName1.SkillTree
 
             startNode.attachBottom(MissileNode, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 4);
             MissileNode.attachBottom(ManaPlusMagic1, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
-            ManaPlusMagic1.attachLeft(ManaRegenMagic1, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
-            ManaPlusMagic1.attachRight(FirelanceNode, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
+            ManaPlusMagic1.attachRight(FireballNode, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
+            FireballNode.attachBottom(ManaPlusMagic2, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
+            ManaPlusMagic1.attachBottom(ManaRegenMagic1, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
+            ManaRegenMagic1.attachRight(ManaPlusMagic2, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
+            //FirelanceNode.attachRight(FireballNode, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
+            ManaRegenMagic1.attachLeft(BlizzardNode, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 4);
+            BlizzardNode.attachLeft(TeleportNode, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 4);
             ManaRegenMagic1.attachBottom(LifeDrainNode, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
+            //BurnEnchantNode.attachBottom(ManaPlusMagic2, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
+            ManaPlusMagic2.attachRight(BurnEnchantNode, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 4);
+            BurnEnchantNode.attachTop(BashNode, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 13);
+            LifeDrainNode.attachBottom(ManaPlusMagic3, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
+            LifeDrainNode.attachLeft(LightningEnchantNode, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
+            ManaPlusMagic3.attachRight(FirelanceNode, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
+            ManaPlusMagic3.attachLeft(LightningArrowNode, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
+            ManaPlusMagic3.attachBottom(ManaRegenMagic2, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
+
+
+
+
+
+
 
 
             //support
-			SkillTreeNode ManaRegen2Node = new SkillTreeNode(this, nodeTextures[Static.SKILL_TREE_NODE_ANY], new ManaRegenPlusUnlockable(Static.PLAYER_START_MANA_REGEN/3), 500);
-            nodes.Add(ManaRegen2Node);
+			SkillTreeNode ManaRegenSupport1 = new SkillTreeNode(this, nodeTextures[Static.SKILL_TREE_NODE_ANY], new ManaRegenPlusUnlockable(Static.PLAYER_START_MANA_REGEN/3), 500);
+            nodes.Add(ManaRegenSupport1);
+            SkillTreeNode ManaRegenSupport2 = new SkillTreeNode(this, nodeTextures[Static.SKILL_TREE_NODE_ANY], new ManaRegenPlusUnlockable(Static.PLAYER_START_MANA_REGEN / 3), 500);
+            nodes.Add(ManaRegenSupport2);
+
+            SkillTreeNode ManaPlusSupport1 = new SkillTreeNode(this, nodeTextures[Static.SKILL_TREE_NODE_ANY], new ManaPlusUnlockable(30), 500); // 500
+            nodes.Add(ManaPlusSupport1);
+            SkillTreeNode ManaPlusSupport2 = new SkillTreeNode(this, nodeTextures[Static.SKILL_TREE_NODE_ANY], new ManaPlusUnlockable(20), 1200);
+            nodes.Add(ManaPlusSupport2);
 
 
+            SkillTreeNode DrainEnchantNode = new SkillTreeNode(this, nodeTextures[Static.SKILL_TREE_NODE_ANY], new DrainEnchant(game, player, 100), 2000);
+            nodes.Add(DrainEnchantNode);
 
-            SkillTreeNode ManaPlusNode = new SkillTreeNode(this, nodeTextures[Static.SKILL_TREE_NODE_ANY], new ManaPlusUnlockable(50), 2000);
-            nodes.Add(ManaPlusNode);
+            SkillTreeNode HealingTouchNode = new SkillTreeNode(this, nodeTextures[Static.SKILL_TREE_NODE_ANY], new HealingTouch(game,player,50,40), 2000);
+            nodes.Add(HealingTouchNode);
+
+            SkillTreeNode HealingRainNode = new SkillTreeNode(this, nodeTextures[Static.SKILL_TREE_NODE_ANY], new HealingRain(game,player,15,200, 300), 2000);
+            nodes.Add(HealingRainNode);
+
+            SkillTreeNode RegrowthNode = new SkillTreeNode(this, nodeTextures[Static.SKILL_TREE_NODE_ANY], new Regrowth(game,player,30,400), 2000);
+            nodes.Add(RegrowthNode);
 
 
+            startNode.attachLeft(HealingTouchNode, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 4);
+            HealingTouchNode.attachTop(ManaRegenSupport1, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 4);
+            ManaRegenSupport1.attachLeft(ManaPlusSupport1, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
+            ManaPlusSupport1.attachTop(DrainEnchantNode, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 5);
+            HealingTouchNode.attachLeft(RegrowthNode, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
+            RegrowthNode.attachTop(ManaPlusSupport1, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 4);
+           // ManaPlusSupport1.attachRight(HealingTouchNode, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
+            DrainEnchantNode.attachRight(HPplus50Node2, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 4);
+            RegrowthNode.attachLeft(ManaRegenSupport2, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
+            ManaRegenSupport2.attachLeft(HealingRainNode, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
+            ManaRegenSupport2.attachBottom(TeleportNode, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 8);
+            HealingRainNode.attachLeft(ManaPlusSupport2, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
+            //ManaRegenSupport2.attachLeft(HealingRain
+            //ManaRegenSupport2.attachBottom(
+            //DrainEnchantNode.attachRight(HPplus50Node2, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 4);
 
-            startNode.attachLeft(ManaRegen2Node, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 4);
-            ManaRegen2Node.attachTop(BlizzardNode, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
-            ManaRegen2Node.attachBottom(ManaPlusNode, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
-            ManaPlusNode.attachLeft(TeleportNode, Static.SKILL_TREE_WEIGHT_LOCKED, Static.SKILL_TREE_NODE_WIDTH * 2);
 
         
         }
