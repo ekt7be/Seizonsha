@@ -182,7 +182,12 @@ namespace GameName1.NPCs
 
 		protected override void OnDie()
 		{
+            base.OnDie();
             double rand = random.NextDouble();
+
+            game.Spawn(new WeaponDrop(game, Seizonsha.spriteMappings[Static.SPRITE_SWORD_DROP], 20, 20, new RustyShank(game, this)), x, y);
+            return;
+
             if (level == 1)
             {
                 if (rand < .3)

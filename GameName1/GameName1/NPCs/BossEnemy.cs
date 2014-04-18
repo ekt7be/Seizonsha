@@ -31,7 +31,7 @@ namespace GameName1.NPCs
 			sword = new RustySword(game, this);
 			sword.OnEquip();
 
-            fireball = new Fireball(game, this, 30, 10, 10f);
+            fireball = new Fireball(game, this, 30, 50, 10f);
 			//gun = new Gun(game, this, 30, 10, 10f);
             /*
             gun = new OKGun(game, this);
@@ -126,7 +126,7 @@ namespace GameName1.NPCs
 
 		protected override void OnDie()
 		{
-
+            base.OnDie();
             double rand = random.NextDouble();
             if (rand < .1)
             {

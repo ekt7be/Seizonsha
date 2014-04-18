@@ -1359,7 +1359,7 @@ namespace GameName1
 
         public void waveClear()
         {
-            revive();
+           // revive();
             selectingSkill = true;
             skillbarIndex = 0;
             playerReady = false;

@@ -321,7 +321,7 @@ namespace GameName1
             spriteMappings.Add(Static.SPRITE_GRILLEDCHEESE_DROP, grilledcheese);
             spriteMappings.Add(Static.SPRITE_MEAT_DROP, meat);
             spriteMappings.Add(Static.SPRITE_PINEAPPLE_DROP, pineapple);
-            spriteMappings.Add(Static.SPRITE_SWORD_DROP, sword);
+            spriteMappings.Add(Static.SPRITE_SWORD_DROP, swordDrop);
             spriteMappings.Add(Static.SPRITE_TACO_DROP, taco);
             
 
