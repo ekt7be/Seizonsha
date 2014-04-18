@@ -67,7 +67,7 @@ namespace GameName1
 		public int skillbarIndex2 = 0; 
 		public Rectangle highlightRect; 
 		bool selectingSkill, selectingSkill2; 
-		Rectangle viewportBounds;
+		public Rectangle viewportBounds;
 
         public bool drawWeapon = true;
 
