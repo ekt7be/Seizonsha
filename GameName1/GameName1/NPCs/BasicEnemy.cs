@@ -3,6 +3,7 @@ using GameName1.Skills;
 using GameName1.Skills.Weapons;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Audio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -163,7 +164,6 @@ namespace GameName1.NPCs
 
 		protected override void OnDie()
 		{
-			game.decreaseNumberEnemies();
             double rand = random.NextDouble();
 
             if (rand < .95)

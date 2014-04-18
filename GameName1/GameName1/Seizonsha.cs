@@ -40,11 +40,17 @@ namespace GameName1
         private bool paused;
 		FPSCounterComponent fps;
 		private bool showFPS = false;
+        public SoundEffect deathSound;
+        public SoundEffectInstance deathSoundInstance;
         public SoundEffect bossSound;
         public SoundEffectInstance bossSoundLoop;
         public SoundEffect gameSound;
         public SoundEffectInstance gameSoundLoop;
-
+        public SoundEffect swordSlashSound;
+        public SoundEffectInstance swordSlashSoundInstance;
+        public SoundEffect regrowthSound;
+        public SoundEffectInstance regrowthSoundInstance;
+        
 
 		public float sinceLastWaveCleared;
 
@@ -160,9 +166,17 @@ namespace GameName1
 
             Texture2D reticle = Content.Load<Texture2D>("Sprites/reticle");
 
+            //sounds
             gameSound = Content.Load<SoundEffect>("sound/antique_market");
+            deathSound = Content.Load<SoundEffect>("sound/orc_die");
+            deathSoundInstance = deathSound.CreateInstance();
+            swordSlashSound = Content.Load<SoundEffect>("sound/sword sound");
+            swordSlashSoundInstance = swordSlashSound.CreateInstance();
+            regrowthSound = Content.Load<SoundEffect>("sound/regrowth sound");
+
             gameSoundLoop = gameSound.CreateInstance();
             gameSoundLoop.IsLooped = true;
+            gameSoundLoop.Volume = .5f;
             bossSound = Content.Load<SoundEffect>("sound/armageddon");
             bossSoundLoop = bossSound.CreateInstance();
             bossSoundLoop.IsLooped = true;
