@@ -440,7 +440,6 @@ namespace GameName1.NPCs
 
         protected override void OnDie()
         {
-            game.deathSoundInstance.Play();
             game.decreaseNumberEnemies();
         }
 

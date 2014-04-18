@@ -53,6 +53,7 @@ namespace GameName1
         public SoundEffect enchantSound;
         public SoundEffect lightningArrowSound;
         public SoundEffect teleportSound;
+        public SoundEffect orcDeathSound;
 
 		public float sinceLastWaveCleared;
 
@@ -172,7 +173,7 @@ namespace GameName1
 
             //sounds
             gameSound = Content.Load<SoundEffect>("sound/antique_market");
-            deathSound = Content.Load<SoundEffect>("sound/orc_die");
+            deathSound = Content.Load<SoundEffect>("sound/simple death");
             deathSoundInstance = deathSound.CreateInstance();
             swordSlashSound = Content.Load<SoundEffect>("sound/sword sound");
             swordSlashSoundInstance = swordSlashSound.CreateInstance();
@@ -181,6 +182,7 @@ namespace GameName1
             enchantSound = Content.Load<SoundEffect>("sound/enchant sound");
             lightningArrowSound = Content.Load<SoundEffect>("sound/lightning arrow sound");
             teleportSound = Content.Load<SoundEffect>("sound/teleport sound");
+            orcDeathSound = Content.Load<SoundEffect>("sound/orc death sound");
 
             gameSoundLoop = gameSound.CreateInstance();
             gameSoundLoop.IsLooped = true;
