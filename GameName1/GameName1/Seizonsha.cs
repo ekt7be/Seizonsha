@@ -54,6 +54,7 @@ namespace GameName1
         public SoundEffect lightningArrowSound;
         public SoundEffect teleportSound;
         public SoundEffect orcDeathSound;
+        public SoundEffect battleCrySound;
 
 		public float sinceLastWaveCleared;
 
@@ -168,7 +169,6 @@ namespace GameName1
             Texture2D bullet = Content.Load<Texture2D>("Sprites/bulletsprite");
             Texture2D sword = Content.Load<Texture2D>("Sprites/swordspritesheetfull3");
             Texture2D dagger = Content.Load<Texture2D>("Sprites/Weapons/DaggerSpriteSheet");
-
             Texture2D reticle = Content.Load<Texture2D>("Sprites/reticle");
 
             //sounds
@@ -183,6 +183,7 @@ namespace GameName1
             lightningArrowSound = Content.Load<SoundEffect>("sound/lightning arrow sound");
             teleportSound = Content.Load<SoundEffect>("sound/teleport sound");
             orcDeathSound = Content.Load<SoundEffect>("sound/orc death sound");
+            battleCrySound = Content.Load<SoundEffect>("sound/battle cry sound");
 
             gameSoundLoop = gameSound.CreateInstance();
             gameSoundLoop.IsLooped = true;
