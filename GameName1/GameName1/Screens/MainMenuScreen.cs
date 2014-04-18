@@ -25,7 +25,7 @@ namespace GameName1
         #region Initialization
         ContentManager Content;
         int currentNumPlayers = 0;
-        int keyboardPlayer = 0;
+        int keyboardPlayer = 4;
         MenuEntry numPlayersMenuEntry;
         MenuEntry keyboardPlayerMenuEntry;
         SoundEffect menuSound;
@@ -86,20 +86,32 @@ namespace GameName1
             game.spawnInitialEntities();
             menuSoundLoop.Stop();
             game.gameSoundLoop.Play();
-            game.players[keyboardPlayer].keyboard = true;
+            if (keyboardPlayer != 4)
+            {
+                game.players[keyboardPlayer].keyboard = true;
+            }
         }
 
         void SetMenuEntryText()
         {
             numPlayersMenuEntry.Text = "Number of Players: \"" + (currentNumPlayers + 1) + "\"";
-            keyboardPlayerMenuEntry.Text = "Using Keyboard: \"Player " + (keyboardPlayer + 1) + "\"";
+            if (keyboardPlayer == 4)
+            {
+                keyboardPlayerMenuEntry.Text = "Using Keyboard: \"Nobody" + "\"";
+            }
+            else
+            {
+                keyboardPlayerMenuEntry.Text = "Using Keyboard: \"Player " + (keyboardPlayer+1) + "\"";
+            }
             Static.NUM_PLAYERS = currentNumPlayers + 1;
+            Static.KEYBOARD_PLAYER = keyboardPlayer;
         }
 
         void CreditsMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
             ScreenManager.AddScreen(new CreditsMenuScreen(), e.PlayerIndex);
         }
+
         /// <summary>
         /// Event handler for when the numplayers menu entry is selected.
         /// </summary>
@@ -111,7 +123,7 @@ namespace GameName1
 
         void KeyboardPlayerMenuEntrySelected(object sender, PlayerIndexEventArgs e)
         {
-            keyboardPlayer = (keyboardPlayer + 1) % 4;
+            keyboardPlayer = (keyboardPlayer + 1) % 5; //0,1,2,3,4
             SetMenuEntryText();
         }
         /// <summary>
@@ -121,7 +133,6 @@ namespace GameName1
         {
             ScreenManager.AddScreen(new OptionsMenuScreen(), e.PlayerIndex);
         }
-
 
         /// <summary>
         /// When the user cancels the main menu, ask if they want to exit the sample.
