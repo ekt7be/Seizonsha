@@ -183,7 +183,8 @@ namespace GameName1
             Texture2D blizzardicon = Content.Load<Texture2D>("Sprites/skill_icons/blizzard");
             Texture2D teleporticon = Content.Load<Texture2D>("Sprites/skill_icons/teleport");
             Texture2D bashicon = Content.Load<Texture2D>("Sprites/skill_icons/bash");
-            Texture2D lightningarrowicon = Content.Load<Texture2D>("Sprites/skill_icons/lightningarrow");
+            Texture2D magicMissileIcon = Content.Load<Texture2D>("Sprites/skill_icons/lightningarrow");
+            Texture2D lightningarrowicon = Content.Load<Texture2D>("Sprites/skill_icons/lightningenchant");
             Texture2D healingrainicon = Content.Load<Texture2D>("Sprites/skill_icons/healingrain");
             Texture2D kickicon = Content.Load<Texture2D>("Sprites/skill_icons/kick");
             Texture2D lifedrainicon = Content.Load<Texture2D>("Sprites/skill_icons/lifedrain");
@@ -213,12 +214,27 @@ namespace GameName1
 			SkillTree.SkillTree.nodeTextures.Add(Static.BLIZZARD_NAME, blizzardicon);
 			SkillTree.SkillTree.nodeTextures.Add(Static.TELEPORT_NAME, teleporticon);
             SkillTree.SkillTree.nodeTextures.Add(Static.BASH_NAME, bashicon);
-            SkillTree.SkillTree.nodeTextures.Add(Static.LIGHTNING_ARROW_NAME, lightningarrowicon);
             SkillTree.SkillTree.nodeTextures.Add(Static.HEALING_RAIN_NAME, healingrainicon);
             SkillTree.SkillTree.nodeTextures.Add(Static.KICK_NAME, kickicon);
+            SkillTree.SkillTree.nodeTextures.Add(Static.MAGIC_MISSILE_NAME, magicMissileIcon);
             SkillTree.SkillTree.nodeTextures.Add(Static.LIFE_DRAIN_NAME, lifedrainicon);
             SkillTree.SkillTree.nodeTextures.Add(Static.LIGHTNINGENCHANT_NAME, lightningenchanticon);
             SkillTree.SkillTree.nodeTextures.Add(Static.REGROWTH_NAME, regrowthicon);
+
+
+
+
+            SkillTree.SkillTree.nodeTextures.Add(Static.GET_BIG_NAME, nodeRect); //
+            SkillTree.SkillTree.nodeTextures.Add(Static.LIGHTNING_ARROW_NAME, nodeRect); //
+            SkillTree.SkillTree.nodeTextures.Add(Static.BATTLECRY_NAME, nodeRect);
+            SkillTree.SkillTree.nodeTextures.Add(Static.BURNINGENCHANT_NAME, nodeRect);
+            SkillTree.SkillTree.nodeTextures.Add(Static.DRAINENCHANT_NAME, nodeRect);
+            SkillTree.SkillTree.nodeTextures.Add(Static.TAUNTINGENCHANT_NAME, nodeRect);
+
+
+
+
+
             SkillTree.SkillTree.nodeTextures.Add(Static.HEALTH_INCREASE_NAME, healthincreaseicon);
             SkillTree.SkillTree.nodeTextures.Add(Static.HEALTH_INCREASE_2_NAME, healthincreaseicon2);
             SkillTree.SkillTree.nodeTextures.Add(Static.WEAPON_PLUS_NAME, weaponplusicon);

@@ -262,6 +262,9 @@ namespace GameName1
         public static readonly int MAGIC_MISSILE_CASTING_TIME = 30;
         public static readonly int MAGIC_MISSILE_FREEZE_TIME = MAGIC_MISSILE_CASTING_TIME;
 
+        //get big
+        public static readonly string GET_BIG_NAME = "Get Big";
+
         //Drain Enchant
         public static readonly string DRAINENCHANT_NAME = "Drain Enchant";
 
