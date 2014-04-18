@@ -1605,7 +1605,8 @@ namespace GameName1
 
 		public void WaveCleared()
         {
-			sinceLastWaveCleared = 0; 
+			sinceLastWaveCleared = 0;
+            totalEnemies = 0;
 
 			waveCleared = true;
             foreach (Player player in players)
@@ -1616,7 +1617,8 @@ namespace GameName1
                 }
                 player.waveClear();
             }
-            difficulty++;
+            //difficulty++;
+            difficulty = (int)Math.Pow((double)difficulty, 1 + Static.NUM_PLAYERS * .2);
 
         }
 

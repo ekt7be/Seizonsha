@@ -528,7 +528,16 @@ namespace GameName1
             //draw Wave number
             if (game.Wave != 0)
             {
-                Static.DrawBorderedText(spriteBatch, game.getSpriteFont(), "WAVE: " + game.Wave + " (" + game.numberEnemies + " / " + game.totalEnemies + ")", 20, screenPortion.Height - 100, Color.Black, Color.White);
+                if (game.waveCleared)
+                {
+                    Static.DrawBorderedText(spriteBatch, game.getSpriteFont(), "Wave " + game.Wave + " Complete", 20, screenPortion.Height - 100, Color.Black, Color.White);
+
+                }
+                else
+                {
+                    Static.DrawBorderedText(spriteBatch, game.getSpriteFont(), "Wave: " + game.Wave + " (" + (game.totalEnemies - game.numberEnemies) + " / " + game.totalEnemies + ")", 20, screenPortion.Height - 100, Color.Black, Color.White);
+
+                }
             }
             //spriteBatch.DrawString(game.getSpriteFont(), "WAVE: " + game.Wave, new Vector2(20, screenPortion.Height - 100), Color.White);
       
@@ -602,19 +611,33 @@ namespace GameName1
                 "use arrow keys (DPad) to equip skills and weapons";
                 */
 
-                if (!playerReady)
+                if (keyboard)
                 {
-                    nextWaveMessage = "Press Y(F Key) to start next wave" +
-                "press space(start) to open skill tree! \n" +
-                "use arrow keys (DPad) to equip skills and weapons";
+                    if (!playerReady)
+                    {
+                        nextWaveMessage = "F: Start Next Wave \n" +
+                    "Space: Skill Tree \n";
+                    }
+                    else
+                    {
+                        nextWaveMessage = "Waiting for other players";
+                    }
                 }
                 else
                 {
-                    nextWaveMessage = "Waiting for other players";
+                    if (!playerReady)
+                    {
+                     nextWaveMessage = "Y: Start Next Wave \n" +
+                    "Start: Skill Tree \n"; ;
+                    }
+                    else
+                    {
+                        nextWaveMessage = "Waiting for other players";
+                    }
                 }
 
                 //spriteBatch.Draw(Static.PIXEL_THIN, new Rectangle(0,screenPortion.Height - 170, viewportBounds.Width, 210), Color.Black*.3f);
-                Static.DrawBorderedText(spriteBatch, Static.SPRITE_FONT, nextWaveMessage,0, screenPortion.Height - 150, Color.Black, Color.White);
+                Static.DrawBorderedText(spriteBatch, Static.SPRITE_FONT, nextWaveMessage,offsetFromLeft, screenPortion.Height - 150, Color.Black, Color.White);
             }
 
             #region SKILL BAR
