@@ -211,16 +211,36 @@ namespace GameName1
         public static readonly int SPRITE_REG_ARMOR_ARMS_SHOULDER = 23;
         public static readonly int SPRITE_REG_ARMOR_TORSO = 24;
 
+        public static readonly int SPRITE_ARROW = 46;
+
         public static readonly int SPRITE_FIREBALL = 8;
         public static readonly int SPRITE_BLIZZARD = 27; 
         public static readonly int SPRITE_SHOCK = 28;
         public static readonly int SPRITE_BURN = 29; 
-        public static readonly int SPRITE_MAGIC_MISSILE = 30; // MOST RECENT
+        public static readonly int SPRITE_MAGIC_MISSILE = 30; 
+        public static readonly int SPRITE_HEALING_RAIN = 31; 
+        public static readonly int SPRITE_LIGHTNING_ARROW = 32; // MOST RECENT
         public static readonly int SPRITE_BULLET = 9;
         public static readonly int SPRITE_HEAL = 10;
         public static readonly int SPRITE_SWORD = 11;
         public static readonly int SPRITE_DAGGER = 25;
         public static readonly int SPRITE_RETICLE = 12;
+
+
+        //Drops
+        public static readonly int SPRITE_APPLE_DROP = 33;
+        public static readonly int SPRITE_BACON_DROP = 34;
+        public static readonly int SPRITE_BANANA_DROP = 35;
+        public static readonly int SPRITE_BEER_DROP = 36;
+        public static readonly int SPRITE_BOW_DROP = 37;
+        public static readonly int SPRITE_CARROT_DROP = 38;
+        public static readonly int SPRITE_CHEESE_DROP = 39;
+        public static readonly int SPRITE_DAGGER_DROP = 40;
+        public static readonly int SPRITE_GRILLEDCHEESE_DROP = 41;
+        public static readonly int SPRITE_MEAT_DROP = 42;
+        public static readonly int SPRITE_PINEAPPLE_DROP = 43;
+        public static readonly int SPRITE_SWORD_DROP = 44;
+        public static readonly int SPRITE_TACO_DROP = 45;
 
         //Skilltree
         public static readonly int SKILL_TREE_WEIGHT_UNLOCKED = 1;
@@ -321,6 +341,8 @@ namespace GameName1
 
         //Weapon Enhancement 
         public static readonly string WEAPON_PLUS_NAME = "Weapon Enhancement";
+
+
 
         //spritefont
         public static SpriteFont SPRITE_FONT = null;

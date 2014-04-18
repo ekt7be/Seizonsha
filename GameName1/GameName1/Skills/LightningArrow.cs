@@ -1,6 +1,7 @@
 ﻿using GameName1.Effects;
 using GameName1.Interfaces;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,14 @@ namespace GameName1.Skills
 
         private int damage;
         private List<GameEntity> hit;
+
+        Rectangle? arrowSource;
+
+        private float elapsed;
+        private float delay = 60f;
+        private int currentFrame = 0;
+        private static readonly int arrowFrames = 8;
+        private int recharge_time;
 
 
         public LightningArrow(Seizonsha game, GameEntity user, int damage, int recharge_time)
@@ -44,13 +53,40 @@ namespace GameName1.Skills
             }
         }
 
+        public void UpdateAnimation(GameTime gameTime, Texture2D sprite)
+        {
+            elapsed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+
+            if (elapsed > delay)
+            {
+                if (currentFrame >= arrowFrames - 1)
+                {
+                    currentFrame = 0;
+                }
+
+                else
+                {
+                    currentFrame++;
+                }
+
+                elapsed = 0;
+            }
+
+
+            arrowSource = new Rectangle(256 * currentFrame, 0 * 64, 64, 64);
+        }
+
+        public void Draw(SpriteBatch spriteBatch, Rectangle hitbox, float pDirection)
+        {
+            spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_LIGHTNING_ARROW], hitbox, arrowSource, Color.White, pDirection, new Vector2(0, 0), SpriteEffects.None, 1f);
+        }
 
         protected override void UseSkill()
         {
             game.lightningArrowSound.Play(1f, 1f, 1f);
             this.hit = new List<GameEntity>();
-            int width = 20;
-            int length = 200;
+            int width = 50;
+            int length = 125;
             Rectangle slashBounds = new Rectangle((int)(user.getCenterX()), (int)(user.getCenterY() - 5), length, width);
             List<PolygonIntersection.Vector> points = new List<PolygonIntersection.Vector>();
             float theta = bufferedDirection;
@@ -75,7 +111,7 @@ namespace GameName1.Skills
 
             PolygonIntersection.Polygon polygon = new PolygonIntersection.Polygon(points);
             //game.Spawn(new SwordSlash(game, user, Static.PIXEL_THIN, slashBounds, damage, damageType, 10, user.vectorDirection), slashBounds.Left, slashBounds.Top);
-            Arrow attack = new Arrow(game, user, Seizonsha.spriteMappings[Static.SPRITE_FIREBALL], this, slashBounds, polygon, damage, damageType, 20, new Vector2(bufferedVectorDirection.X * 50, bufferedVectorDirection.Y * 50), bufferedDirection, true);
+            Arrow attack = new Arrow(game, user, null, this, slashBounds, polygon, damage, damageType, 50, new Vector2(bufferedVectorDirection.X * 25, bufferedVectorDirection.Y * 25), bufferedDirection, true);
             attack.rotateToAngle(this.bufferedDirection);
 
             game.Spawn(attack, slashBounds.Left, slashBounds.Top);

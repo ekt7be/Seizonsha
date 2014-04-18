@@ -84,6 +84,7 @@ namespace GameName1
 
 
         public int Wave { get; set; }
+        public int totalEnemies;
         public int numberEnemies;
         private int difficulty;
 
@@ -159,10 +160,14 @@ namespace GameName1
             Texture2D goldArmorArmsShoulder = Content.Load<Texture2D>("Sprites/Armor/Golden/GoldenShouldersSpriteSheet");
             Texture2D goldArmorTorso = Content.Load<Texture2D>("Sprites/Armor/Golden/GoldenTorsoSpriteSheet");
 
+            Texture2D arrow = Content.Load<Texture2D>("Sprites/arrowfullspritesheet.png");
+
 
             Texture2D fireball = Content.Load<Texture2D>("Sprites/fireballsprite");
-            Texture2D blizzard = Content.Load<Texture2D>("Sprites/SpellEffects/blizzardeffect");
+            Texture2D blizzard = Content.Load<Texture2D>("Sprites/SpellEffects/blizzard");
             Texture2D shock = Content.Load<Texture2D>("Sprites/SpellEffects/shock");
+            Texture2D lightningarrow = Content.Load<Texture2D>("Sprites/SpellEffects/lightningarrow");
+            Texture2D healingrain = Content.Load<Texture2D>("Sprites/SpellEffects/healingrain");
             Texture2D burn = Content.Load<Texture2D>("Sprites/SpellEffects/burneffect");
             Texture2D magicmissile = Content.Load<Texture2D>("Sprites/SpellEffects/magicmissile");
             Texture2D heal = Content.Load<Texture2D>("Sprites/SpellEffects/Heal");
@@ -205,8 +210,8 @@ namespace GameName1
             Texture2D blizzardicon = Content.Load<Texture2D>("Sprites/skill_icons/blizzard");
             Texture2D teleporticon = Content.Load<Texture2D>("Sprites/skill_icons/teleport");
             Texture2D bashicon = Content.Load<Texture2D>("Sprites/skill_icons/bash");
-            Texture2D magicMissileIcon = Content.Load<Texture2D>("Sprites/skill_icons/lightningarrow");
-            Texture2D lightningarrowicon = Content.Load<Texture2D>("Sprites/skill_icons/lightningenchant");
+            Texture2D magicMissileIcon = Content.Load<Texture2D>("Sprites/skill_icons/magicmissile");
+            Texture2D lightningarrowicon = Content.Load<Texture2D>("Sprites/skill_icons/lightningarrow");
             Texture2D healingrainicon = Content.Load<Texture2D>("Sprites/skill_icons/healingrain");
             Texture2D kickicon = Content.Load<Texture2D>("Sprites/skill_icons/kick");
             Texture2D lifedrainicon = Content.Load<Texture2D>("Sprites/skill_icons/lifedrain");
@@ -220,6 +225,11 @@ namespace GameName1
             Texture2D manaplusicon2 = Content.Load<Texture2D>("Sprites/skill_icons/manaplus2");
             Texture2D manaregenicon = Content.Load<Texture2D>("Sprites/skill_icons/manaregen");
             Texture2D manaregenplusicon = Content.Load<Texture2D>("Sprites/skill_icons/manaregenplus");
+            Texture2D burnenchant = Content.Load<Texture2D>("Sprites/skill_icons/burnenchant");
+            Texture2D getbig = Content.Load<Texture2D>("Sprites/skill_icons/getbig");
+            Texture2D tauntingenchant = Content.Load<Texture2D>("Sprites/skill_icons/tauntingenchant");
+            Texture2D battlecry = Content.Load<Texture2D>("Sprites/skill_icons/battlecry");
+            Texture2D drainingenchant = Content.Load<Texture2D>("Sprites/skill_icons/drainingenchant");
 
 
 			SkillTree.SkillTree.nodeTextures.Add(Static.SKILL_TREE_NODE_ANY, nodeRect);
@@ -246,12 +256,12 @@ namespace GameName1
 
 
 
-            SkillTree.SkillTree.nodeTextures.Add(Static.GET_BIG_NAME, nodeRect); //
-            SkillTree.SkillTree.nodeTextures.Add(Static.LIGHTNING_ARROW_NAME, nodeRect); //
-            SkillTree.SkillTree.nodeTextures.Add(Static.BATTLECRY_NAME, nodeRect);
-            SkillTree.SkillTree.nodeTextures.Add(Static.BURNINGENCHANT_NAME, nodeRect);
-            SkillTree.SkillTree.nodeTextures.Add(Static.DRAINENCHANT_NAME, nodeRect);
-            SkillTree.SkillTree.nodeTextures.Add(Static.TAUNTINGENCHANT_NAME, nodeRect);
+            SkillTree.SkillTree.nodeTextures.Add(Static.GET_BIG_NAME, getbig); //
+            SkillTree.SkillTree.nodeTextures.Add(Static.LIGHTNING_ARROW_NAME, lightningarrowicon); //
+            SkillTree.SkillTree.nodeTextures.Add(Static.BATTLECRY_NAME, battlecry);
+            SkillTree.SkillTree.nodeTextures.Add(Static.BURNINGENCHANT_NAME, burnenchant);
+            SkillTree.SkillTree.nodeTextures.Add(Static.DRAINENCHANT_NAME, drainingenchant);
+            SkillTree.SkillTree.nodeTextures.Add(Static.TAUNTINGENCHANT_NAME, tauntingenchant);
 
 
 
@@ -269,8 +279,36 @@ namespace GameName1
 
 
 			#endregion
-            
 
+
+            Texture2D apple = Content.Load<Texture2D>("Sprites/Drops/apple");
+            Texture2D bacon = Content.Load<Texture2D>("Sprites/Drops/bacon");
+            Texture2D banana = Content.Load<Texture2D>("Sprites/Drops/banana");
+            Texture2D beer = Content.Load<Texture2D>("Sprites/Drops/beer");
+            Texture2D bowDrop = Content.Load<Texture2D>("Sprites/Drops/bow");
+            Texture2D carrot = Content.Load<Texture2D>("Sprites/Drops/carrot");
+            Texture2D cheese = Content.Load<Texture2D>("Sprites/Drops/cheese");
+            Texture2D daggerDrop = Content.Load<Texture2D>("Sprites/Drops/dagger");
+            Texture2D grilledcheese = Content.Load<Texture2D>("Sprites/Drops/grilledcheese");
+            Texture2D meat = Content.Load<Texture2D>("Sprites/Drops/meat");
+            Texture2D pineapple = Content.Load<Texture2D>("Sprites/Drops/pineapple");
+            Texture2D swordDrop = Content.Load<Texture2D>("Sprites/Drops/sword");
+            Texture2D taco = Content.Load<Texture2D>("Sprites/Drops/taco");
+
+            spriteMappings.Add(Static.SPRITE_APPLE_DROP, apple);
+            spriteMappings.Add(Static.SPRITE_BACON_DROP, bacon); 
+            spriteMappings.Add(Static.SPRITE_BANANA_DROP, banana);
+            spriteMappings.Add(Static.SPRITE_BEER_DROP, beer);
+            spriteMappings.Add(Static.SPRITE_BOW_DROP, bowDrop);
+            spriteMappings.Add(Static.SPRITE_CARROT_DROP, carrot);
+            spriteMappings.Add(Static.SPRITE_CHEESE_DROP, cheese);
+            spriteMappings.Add(Static.SPRITE_DAGGER_DROP, dagger);
+            spriteMappings.Add(Static.SPRITE_GRILLEDCHEESE_DROP, grilledcheese);
+            spriteMappings.Add(Static.SPRITE_MEAT_DROP, meat);
+            spriteMappings.Add(Static.SPRITE_PINEAPPLE_DROP, pineapple);
+            spriteMappings.Add(Static.SPRITE_SWORD_DROP, sword);
+            spriteMappings.Add(Static.SPRITE_TACO_DROP, taco);
+            
 
             initTileSprites();
 
@@ -299,8 +337,12 @@ namespace GameName1
             spriteMappings.Add(Static.SPRITE_REG_ARMOR_ARMS_SHOULDER, regArmorArmsShoulder);
             spriteMappings.Add(Static.SPRITE_REG_ARMOR_TORSO, regArmorTorso);
 
+            spriteMappings.Add(Static.SPRITE_ARROW, arrow);
+
             spriteMappings.Add(Static.SPRITE_FIREBALL, fireball);
             spriteMappings.Add(Static.SPRITE_BLIZZARD, blizzard);
+            spriteMappings.Add(Static.SPRITE_HEALING_RAIN, healingrain);
+            spriteMappings.Add(Static.SPRITE_LIGHTNING_ARROW, lightningarrow);
             spriteMappings.Add(Static.SPRITE_SHOCK, shock);
             spriteMappings.Add(Static.SPRITE_BURN, burn);
             spriteMappings.Add(Static.SPRITE_MAGIC_MISSILE, magicmissile);
@@ -1488,6 +1530,7 @@ namespace GameName1
         public void increaseNumberEnemies()
         {
             numberEnemies++;
+            totalEnemies++;
         }
 
         public void decreaseNumberEnemies()
@@ -1625,7 +1668,8 @@ namespace GameName1
 
 		public void WaveCleared()
         {
-			sinceLastWaveCleared = 0; 
+			sinceLastWaveCleared = 0;
+            totalEnemies = 0;
 
 			waveCleared = true;
             foreach (Player player in players)
@@ -1636,7 +1680,8 @@ namespace GameName1
                 }
                 player.waveClear();
             }
-            difficulty++;
+            //difficulty++;
+            difficulty = (int)Math.Pow((double)difficulty, 1 + Static.NUM_PLAYERS * .2);
 
         }
 

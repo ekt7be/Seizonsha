@@ -95,6 +95,8 @@ namespace GameName1
         public void populateQueue(int totalDifficulty, List<GameEntity> list)
         {
 
+            Static.Debug("DIFFICULTY: " + totalDifficulty);
+
             if (list != null)
             {
                 foreach (GameEntity entity in list)
@@ -104,6 +106,13 @@ namespace GameName1
                 }
             }
 
+            foreach (Enemy enemy in EntityFactory.getEnemies(game,totalDifficulty))
+            {
+                enemyQueue.Enqueue(enemy);
+                game.increaseNumberEnemies();
+            }
+
+            /*
             for (int i = 0; i < totalDifficulty; i++)
             {
                 SpawnTile spawn = getRandomSpawnPoint();
@@ -123,6 +132,7 @@ namespace GameName1
                 }
                 game.increaseNumberEnemies();
             }
+             * */
 
         }
 

@@ -239,17 +239,8 @@ namespace GameName1
             this.unEquippedSkills.Add(null);
             this.skilltree = new SkillTree.SkillTree(game, this, Static.PIXEL_THIN);
 
-			//Equip(new Gun(game, this, 30, 10, 10f), Static.PLAYER_L1_SKILL_INDEX);
-            //Equip(new LifeDrain(game, this, 3, 40, 40), Static.PLAYER_L1_SKILL_INDEX);
-            //Equip(new FireLance(game, this, 10, 5), Static.PLAYER_L1_SKILL_INDEX);
-            //Equip(new Fireball(game, this, 120, 100, 5f), Static.PLAYER_R1_SKILL_INDEX);
-            //Equip(new LifeDrain(game, this, 2, 2, 40), Static.PLAYER_L2_SKILL_INDEX);
-            //Equip(new Teleport(game, this, 180, 3, 1), Static.PLAYER_L2_SKILL_INDEX);
-            //Equip(new HealingTouch(game, this, -50, 100), Static.PLAYER_R1_SKILL_INDEX);
-            //Equip(new Sword(game, this, 300, 10), Static.PLAYER_R2_SKILL_INDEX);
 
 
-           // Equip(new Gun(game, this, 10, 30, 15), Static.PLAYER_L1_SKILL_INDEX);
 
             /*
             Gun gun = new Gun(game, this, 10, 30,0, 15f);
@@ -265,10 +256,7 @@ namespace GameName1
             addEquipable(kick);
             Equip(kick, Static.PLAYER_R1_SKILL_INDEX);
 
-            Sword sword = new RustySword(game, this);
-            addEquipable(sword);
-            Equip(sword, Static.PLAYER_L1_SKILL_INDEX);
-            this.currentWeapon = sword;
+
 
             Fireball fireball = new Fireball(game, this, 40, 30, 10);
             addEquipable(fireball);
@@ -282,7 +270,7 @@ namespace GameName1
              * */
 
             
-
+            /*
             LightningArrow la = new LightningArrow(game, this, 20, 120);
             addEquipable(la);
             Equip(la, Static.PLAYER_L1_SKILL_INDEX);
@@ -298,36 +286,25 @@ namespace GameName1
             LightningEnchant lightningenchant = new LightningEnchant(game, this, 5, 0);
             addEquipable(lightningenchant);
             Equip(lightningenchant, Static.PLAYER_R2_SKILL_INDEX);
-            
+            */
 
             /*
             HealingTouch healingtouch = new HealingTouch(game, this, 50, 60);
             addEquipable(healingtouch);
             Equip(healingtouch, Static.PLAYER_L2_SKILL_INDEX);
              * */
-
+            /*
             Regrowth regrowth = new Regrowth(game, this, 30, 120);
             addEquipable(regrowth);
             Equip(regrowth, Static.PLAYER_L2_SKILL_INDEX);
-
-
-            /*
-
-            Equip(new Sword(game, this, 30, 40), Static.PLAYER_R1_SKILL_INDEX);
-            Equip(new Fireball(game, this, 40, 30, 10), Static.PLAYER_R2_SKILL_INDEX);
-            Equip(new HealingTouch(game, this, -50, 60), Static.PLAYER_L2_SKILL_INDEX);
-             * */
-
-
-            /*
-			for (int s = 0; s < skillSlots.Length; s++) {
-				Skill skill = (Skill)skillSlots[s];
-	
-				if (!unlockedSkills.Contains(skill)) 
-					unlockedSkills.Add(skill); 
-			}
             */
+         
 
+
+            Sword sword = new RustySword(game, this);
+            addEquipable(sword);
+            Equip(sword, Static.PLAYER_L1_SKILL_INDEX);
+            this.currentWeapon = sword;
 
             this.maxMana = Static.PLAYER_MAX_MANA;
             this.mana = maxMana;
@@ -548,8 +525,19 @@ namespace GameName1
             }
 
             //draw Wave number
-            Static.DrawBorderedText(spriteBatch, game.getSpriteFont(), "WAVE: " + game.Wave, 20, screenPortion.Height - 100, Color.Black, Color.White);
+            if (game.Wave != 0)
+            {
+                if (game.waveCleared)
+                {
+                    Static.DrawBorderedText(spriteBatch, game.getSpriteFont(), "Wave " + game.Wave + " Complete", 20, screenPortion.Height - 100, Color.Black, Color.White);
 
+                }
+                else
+                {
+                    Static.DrawBorderedText(spriteBatch, game.getSpriteFont(), "Wave: " + game.Wave + " (" + (game.totalEnemies - game.numberEnemies) + " / " + game.totalEnemies + ")", 20, screenPortion.Height - 100, Color.Black, Color.White);
+
+                }
+            }
             //spriteBatch.DrawString(game.getSpriteFont(), "WAVE: " + game.Wave, new Vector2(20, screenPortion.Height - 100), Color.White);
       
             Texture2D texture = Static.PIXEL_THIN;
@@ -622,19 +610,33 @@ namespace GameName1
                 "use arrow keys (DPad) to equip skills and weapons";
                 */
 
-                if (!playerReady)
+                if (keyboard)
                 {
-                    nextWaveMessage = "Press Y(F Key) to start next wave" +
-                "press space(start) to open skill tree! \n" +
-                "use arrow keys (DPad) to equip skills and weapons";
+                    if (!playerReady)
+                    {
+                        nextWaveMessage = "F: Start Next Wave \n" +
+                    "Space: Skill Tree \n";
+                    }
+                    else
+                    {
+                        nextWaveMessage = "Waiting for other players";
+                    }
                 }
                 else
                 {
-                    nextWaveMessage = "Waiting for other players";
+                    if (!playerReady)
+                    {
+                     nextWaveMessage = "Y: Start Next Wave \n" +
+                    "Start: Skill Tree \n"; ;
+                    }
+                    else
+                    {
+                        nextWaveMessage = "Waiting for other players";
+                    }
                 }
 
                 //spriteBatch.Draw(Static.PIXEL_THIN, new Rectangle(0,screenPortion.Height - 170, viewportBounds.Width, 210), Color.Black*.3f);
-                Static.DrawBorderedText(spriteBatch, Static.SPRITE_FONT, nextWaveMessage,0, screenPortion.Height - 150, Color.Black, Color.White);
+                Static.DrawBorderedText(spriteBatch, Static.SPRITE_FONT, nextWaveMessage,offsetFromLeft, screenPortion.Height - 150, Color.Black, Color.White);
             }
 
             #region SKILL BAR
@@ -646,27 +648,58 @@ namespace GameName1
 
                 Skill skill = (Skill)skillSlots[s];
                 Texture2D icon = SkillTree.SkillTree.nodeTextures[Static.SKILL_TREE_NODE_ANY];
+                Color iconTint = Color.White;
 
                 if (skill == null)
                 {
+                    iconTint = Color.Black * .5f;
                 }
                 else if (SkillTree.SkillTree.nodeTextures.ContainsKey(skill.getName()))
                 {
                     icon = SkillTree.SkillTree.nodeTextures[skill.getName()];
                 }
 
-                spriteBatch.Draw(icon, skillBox, Color.White);
+                spriteBatch.Draw(icon, skillBox, iconTint);
 
                 String Button;
 
-                if (s == 0){
-                    Button = "1 (L1)";
-                } else if (s ==1){
-                    Button = "2 (L2)";
-                } else if (s ==2 ){
-                    Button = "3 (R1)";
-                } else {
-                    Button = "4 (R2)";
+                if (keyboard)
+                {
+                    if (s == 0)
+                    {
+                        Button = "1";
+                    }
+                    else if (s == 1)
+                    {
+                        Button = "2";
+                    }
+                    else if (s == 2)
+                    {
+                        Button = "3";
+                    }
+                    else
+                    {
+                        Button = "4";
+                    }
+                }
+                else
+                {
+                    if (s == 0)
+                    {
+                        Button = "LB)";
+                    }
+                    else if (s == 1)
+                    {
+                        Button = "LT";
+                    }
+                    else if (s == 2)
+                    {
+                        Button = "3 RT";
+                    }
+                    else
+                    {
+                        Button = "4 RB";
+                    }
                 }
                 spriteBatch.DrawString(Static.SPRITEFONT_Calibri10, Button, new Vector2(skillBox.Left, skillBox.Top), Color.White);
 
@@ -711,6 +744,16 @@ namespace GameName1
                     highlightRect = new Rectangle(viewportBounds.Width / 2 + (skillbarIndex * (iconSize + 3)) - 2 * iconSize - 6, viewportBounds.Height - iconSize, iconSize, iconSize);
 
                     spriteBatch.Draw(Static.PIXEL_THIN, highlightRect, new Color(Color.DarkOrchid, 0.5f));
+                    if (!selectingSkill2)
+                    {
+                        Static.DrawBorderedText(spriteBatch, game.getSpriteFont(), "^", highlightRect.X, highlightRect.Y, Color.Black, this.tint);
+                    }
+                    else
+                    {
+                        Static.DrawBorderedText(spriteBatch, game.getSpriteFont(), "v", highlightRect.X, highlightRect.Y, Color.Black, this.tint);
+
+                    }
+
 
                     if (selectingSkill2)
                     {
@@ -723,7 +766,7 @@ namespace GameName1
 
                                 if (unlockedSkill == null)
                                 {
-                                    spriteBatch.Draw(Static.PIXEL_THIN, unlockedSkillRect, Color.White);
+                                    spriteBatch.Draw(Static.PIXEL_THIN, unlockedSkillRect, Color.Black*.5f);
 
                                 } else if (SkillTree.SkillTree.nodeTextures.ContainsKey(unlockedSkill.getName()))
                                 {

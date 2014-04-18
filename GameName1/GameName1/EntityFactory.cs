@@ -16,6 +16,8 @@ namespace GameName1
         public static Dictionary<String, List<GameEntity>> active = new Dictionary<String, List<GameEntity>>();
         public static Dictionary<String, List<GameEntity>> dead = new Dictionary<String, List<GameEntity>>();
 
+        private static Random rand = new Random(1337);
+
         public static void createLists(String type)
         {
             if (!active.ContainsKey(type))
@@ -90,6 +92,53 @@ namespace GameName1
 
 
 
+        public static List<Enemy> getEnemies(Seizonsha game, int difficulty){
+            List<Enemy> returnList = new List<Enemy>();
+            addRandomEnemy(game, difficulty,returnList);
+            return returnList;
+        }
+
+        private static void addRandomEnemy(Seizonsha game, int difficulty, List<Enemy> collection)
+        {
+            if (difficulty == 0)
+            {
+                return;
+            }
+            else
+            {
+                int num = rand.Next(difficulty+1);
+                if (num != 0)
+                {
+                    Static.Debug("NUM: " + num);
+                }
+
+                collection.Add(RandomEnemy(game, num));
+                addRandomEnemy(game, difficulty - num, collection);
+            }
+        }
+
+        private static Enemy RandomEnemy(Seizonsha game, int difficulty)
+        {
+
+
+            if (difficulty > Static.EXPLODE_ENEMY_DIFFICULTY_2)
+            {
+                return new ExplodeEnemy(game, 2);
+            }
+            else if (difficulty > Static.BASIC_ENEMY_DIFFICULTY_2)
+            {
+                return new BasicEnemy(game, 2);
+            }
+            else if (difficulty > Static.EXPLODE_ENEMY_DIFFICULTY_1)
+            {
+                return new ExplodeEnemy(game, 1);
+
+           }
+            else
+            {
+                return new ExplodeEnemy(game, 1);
+            }
+        }
 
         //instance generation
 
