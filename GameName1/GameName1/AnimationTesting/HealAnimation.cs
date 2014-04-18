@@ -23,7 +23,7 @@ namespace GameName1.AnimationTesting
         private Rectangle? healSource;
 
         public HealAnimation(Seizonsha game, Texture2D sprite, Skill origin, Rectangle bounds, int amount, int damageType, int duration)
-            : base(game, sprite, origin, bounds, amount, damageType, duration)
+            : base(game, sprite, origin, bounds, amount, damageType, duration, 1f)
         {
             this.delay = 40; //make durations based on time (floats)
             this.healSource = new Rectangle(0, 0, 64, 64);
@@ -38,7 +38,6 @@ namespace GameName1.AnimationTesting
 
                 if (elapsed > delay)
                 {
-                    Static.Debug("JSFH LJHfjlad;HGHj;ghjl;ashgdfjla");
                     if (currentFrame >= healFrames - 1)
                     {
                         currentFrame = 0;

@@ -159,30 +159,30 @@ namespace GameName1
 
             if (armorLevel == 1)
             {
-                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_REG_ARMOR_FEET], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
-                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_REG_ARMOR_PANTS], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
-                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_REG_ARMOR_GLOVES], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
-                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_REG_ARMOR_ARMS_SHOULDER], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
-                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_REG_ARMOR_TORSO], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
-                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_REG_ARMOR_HEAD], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_REG_ARMOR_FEET], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, depth);
+                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_REG_ARMOR_PANTS], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, depth);
+                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_REG_ARMOR_GLOVES], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, depth);
+                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_REG_ARMOR_ARMS_SHOULDER], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, depth);
+                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_REG_ARMOR_TORSO], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, depth);
+                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_REG_ARMOR_HEAD], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, depth);
             }
             else if (armorLevel == 2)
             {
-                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_PLATE_ARMOR_FEET], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
-                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_PLATE_ARMOR_PANTS], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
-                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_PLATE_ARMOR_GLOVES], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
-                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_PLATE_ARMOR_ARMS_SHOULDER], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
-                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_PLATE_ARMOR_TORSO], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
-                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_PLATE_ARMOR_HEAD], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_PLATE_ARMOR_FEET], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, depth);
+                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_PLATE_ARMOR_PANTS], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, depth);
+                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_PLATE_ARMOR_GLOVES], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, depth);
+                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_PLATE_ARMOR_ARMS_SHOULDER], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, depth);
+                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_PLATE_ARMOR_TORSO], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, depth);
+                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_PLATE_ARMOR_HEAD], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, depth);
             }
             else if (armorLevel == 3)
             {
-                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_GOLD_ARMOR_FEET], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
-                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_GOLD_ARMOR_PANTS], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
-                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_GOLD_ARMOR_GLOVES], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
-                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_GOLD_ARMOR_ARMS_SHOULDER], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
-                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_GOLD_ARMOR_TORSO], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
-                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_GOLD_ARMOR_HEAD], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_GOLD_ARMOR_FEET], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, depth);
+                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_GOLD_ARMOR_PANTS], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, depth);
+                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_GOLD_ARMOR_GLOVES], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, depth);
+                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_GOLD_ARMOR_ARMS_SHOULDER], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, depth);
+                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_GOLD_ARMOR_TORSO], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, depth);
+                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_GOLD_ARMOR_HEAD], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, depth);
             }
 
 
@@ -230,6 +230,7 @@ namespace GameName1
             this.armorColor = Static.PLAYER_ARMOR_COLOR_0;
             this.onHitEffects = new List<Skill>();
 
+
             this.weaponLevel = 1;
 
 			this.skillSlots = new Equipable[4]; //each slot is different skill, weapon, or item
@@ -246,7 +247,7 @@ namespace GameName1
             //Equip(new Teleport(game, this, 180, 3, 1), Static.PLAYER_L2_SKILL_INDEX);
             //Equip(new HealingTouch(game, this, -50, 100), Static.PLAYER_R1_SKILL_INDEX);
             //Equip(new Sword(game, this, 300, 10), Static.PLAYER_R2_SKILL_INDEX);
-            //Equip(new Blizzard(game, this, 0, 200, 200, 100), Static.PLAYER_R2_SKILL_INDEX);
+
 
            // Equip(new Gun(game, this, 10, 30, 15), Static.PLAYER_L1_SKILL_INDEX);
 
@@ -259,6 +260,7 @@ namespace GameName1
 
            // addEquipable(new Blizzard(game, this, 0, 200, 200, 100));
 
+            /*
             Kick kick = new Kick(game, this, 5, 60);
             addEquipable(kick);
             Equip(kick, Static.PLAYER_R1_SKILL_INDEX);
@@ -271,14 +273,21 @@ namespace GameName1
             Fireball fireball = new Fireball(game, this, 40, 30, 10);
             addEquipable(fireball);
             Equip(fireball, Static.PLAYER_R2_SKILL_INDEX);
+             * */
 
-            Regrowth regrowth = new Regrowth(game, this, 30, 120);
-            addEquipable(regrowth);
-            Equip(regrowth, Static.PLAYER_R2_SKILL_INDEX);
+            /*
+            Blizzard blizzard = new Blizzard(game, this, 0, 200, 200, 100);
+            addEquipable(blizzard);
+            Equip(blizzard, Static.PLAYER_R2_SKILL_INDEX);
+             * */
+
+         
+
+            
 
             LightningArrow la = new LightningArrow(game, this, 20, 120);
             addEquipable(la);
-            Equip(la, Static.PLAYER_R2_SKILL_INDEX);
+            Equip(la, Static.PLAYER_L1_SKILL_INDEX);
 
             HealingRain healingrain = new HealingRain(game, this, 15, 60, 5*60);
             addEquipable(healingrain);
@@ -286,11 +295,17 @@ namespace GameName1
 
             LightningEnchant lightningenchant = new LightningEnchant(game, this, 5, 0);
             addEquipable(lightningenchant);
-            Equip(lightningenchant, Static.PLAYER_R1_SKILL_INDEX);
+            Equip(lightningenchant, Static.PLAYER_R2_SKILL_INDEX);
 
+            /*
             HealingTouch healingtouch = new HealingTouch(game, this, 50, 60);
             addEquipable(healingtouch);
             Equip(healingtouch, Static.PLAYER_L2_SKILL_INDEX);
+             * */
+
+            Regrowth regrowth = new Regrowth(game, this, 30, 120);
+            addEquipable(regrowth);
+            Equip(regrowth, Static.PLAYER_L2_SKILL_INDEX);
 
 
             /*
@@ -325,7 +340,7 @@ namespace GameName1
 
             this.rotateToAngle(0f); //sets correct animation
 
-           incArmor(); //incArmor();
+           //incArmor(); //incArmor();
    }
 
         public void incArmor()

@@ -18,20 +18,10 @@ namespace GameName1.NPCs
 		double closestDistance;
 
 
-		private static float elapsed;
-		private float elapsed2;
-		private static readonly float delay = 200f;
 
-		private int currentFrame = 0;
 		private Sword sword;
 		private Gun gun; 
 
-
-		private static readonly int UP_ANIMATION = 0;
-		private static readonly int DOWN_ANIMATION = 2;
-		private static readonly int LEFT_ANIMATION = 1;
-		private static readonly int RIGHT_ANIMATION = 3;
-		private static readonly int WALK_ANIMATION_FRAMES = 9;
 
 		public BossEnemy(Seizonsha game)
 			: base(game, Seizonsha.spriteMappings[Static.SPRITE_BASIC_ENEMY_INT], Static.BOSS_ENEMY_WIDTH-1, Static.BOSS_ENEMY_HEIGHT-1, 200, Static.BOSS_ENEMY_SPEED, Static.BOSS_ENEMY_XP)
@@ -106,69 +96,7 @@ namespace GameName1.NPCs
 
 		}
 
-		public override void UpdateAnimation(GameTime gameTime)
-		{
-			base.UpdateAnimation(gameTime);
-
-			if (this.getLastMovement().X!=0 || this.getLastMovement().Y!=0)
-			{
-
-
-				if (Math.Cos(this.direction) > .5)
-				{
-					//spriteSource = FramesToAnimation[RIGHT_ANIMATION];
-					base.spriteSource = new Rectangle(64 * currentFrame, RIGHT_ANIMATION * 64, 64, 64);
-
-				}
-				else if (Math.Sin(this.direction) > .5)
-				{
-					base.spriteSource = new Rectangle(64 * currentFrame, DOWN_ANIMATION * 64, 64, 64);
-
-				}
-				else if (Math.Sin(direction) < -.5)
-				{
-					//spriteSource = FramesToAnimation[UP_ANIMATION];
-					base.spriteSource = new Rectangle(64 * currentFrame, UP_ANIMATION * 64, 64, 64);
-
-				}
-				else if (Math.Cos(direction) < -.5)
-				{
-					//spriteSource = FramesToAnimation[LEFT_ANIMATION];
-					base.spriteSource = new Rectangle(64 * currentFrame, LEFT_ANIMATION * 64, 64, 64);      
-				}
-
-
-			}
-
-			else
-			{
-
-				if (Math.Cos(this.direction) > .5)
-				{
-					//spriteSource = FramesToAnimation[RIGHT_ANIMATION];
-					base.spriteSource = new Rectangle(64 * 0, RIGHT_ANIMATION * 64, 64, 64);
-
-				}
-				else if (Math.Sin(this.direction) > .5)
-				{
-					base.spriteSource = new Rectangle(64 * 0, DOWN_ANIMATION * 64, 64, 64);
-
-				}
-				else if (Math.Sin(direction) < -.5)
-				{
-					//spriteSource = FramesToAnimation[UP_ANIMATION];
-					base.spriteSource = new Rectangle(64 * 0, UP_ANIMATION * 64, 64, 64);
-
-				}
-				else if (Math.Cos(direction) < -.5)
-				{
-					//spriteSource = FramesToAnimation[LEFT_ANIMATION];
-					base.spriteSource = new Rectangle(64 * 0, LEFT_ANIMATION * 64, 64, 64);
-				}
-
-			}
-
-		}
+	
 
 		public override void collideWithWall()
 		{
@@ -188,28 +116,6 @@ namespace GameName1.NPCs
 			base.Update(gameTime);
 			sword.Update();
 			gun.Update();
-
-			elapsed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-			elapsed2 += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-
-
-
-			if (elapsed2 >= 10000) {
-				elapsed2 = 0;			
-			}
-
-			if (elapsed > delay)
-			{
-				if (currentFrame >= WALK_ANIMATION_FRAMES - 1)
-				{
-					currentFrame = 0;
-				}
-				else
-				{
-					currentFrame++;
-				}
-				elapsed = 0;
-			}
 
 		}
 

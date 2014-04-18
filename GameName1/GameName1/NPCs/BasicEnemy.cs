@@ -14,18 +14,14 @@ namespace GameName1.NPCs
 	class BasicEnemy : Enemy, AI
 	{
 
-        float elapsed;
+        //float elapsed;
 		double closestDistance;
 
-        Tile enemyTile;
-        Tile playerTile;
 
 
 
-		private static readonly float delay = 200f;
 
-
-		private int currentFrame = 0;
+		//private int currentFrame = 0;
 		private Sword sword;
 
 
@@ -33,11 +29,8 @@ namespace GameName1.NPCs
         private GameEntity closest;
 
 
-		private static readonly int UP_ANIMATION = 8;
-		private static readonly int DOWN_ANIMATION = 10;
-		private static readonly int LEFT_ANIMATION = 9;
-		private static readonly int RIGHT_ANIMATION = 11;
-		private static readonly int WALK_ANIMATION_FRAMES = 9;
+
+        private int level;
 
 
 		public BasicEnemy(Seizonsha game, int level)
@@ -50,6 +43,8 @@ namespace GameName1.NPCs
 
         public void init(int level)
         {
+
+            this.level = level;
             if (level == 1)
             {
                 sword = new Sword(game, this, Static.BASIC_ENEMY_DAMAGE_1, Static.BASIC_ENEMY_EXTRA_ATTACK_RECHARGE_1, 1, "Skeleton sword 1", Color.White);
@@ -113,69 +108,6 @@ namespace GameName1.NPCs
 		{
 		}
 
-        public override void UpdateAnimation(GameTime gameTime)
-        {
-            base.UpdateAnimation(gameTime);
-
-            if (this.getLastMovement().X!=0 || this.getLastMovement().Y!=0)
-            {
-
-
-                if (Math.Cos(this.direction) > .5)
-                {
-                    //spriteSource = FramesToAnimation[RIGHT_ANIMATION];
-                    base.spriteSource = new Rectangle(64 * currentFrame, RIGHT_ANIMATION * 64, 64, 64);
-
-                }
-                else if (Math.Sin(this.direction) > .5)
-                {
-                      base.spriteSource = new Rectangle(64 * currentFrame, DOWN_ANIMATION * 64, 64, 64);
-
-                }
-                else if (Math.Sin(direction) < -.5)
-                {
-                    //spriteSource = FramesToAnimation[UP_ANIMATION];
-                    base.spriteSource = new Rectangle(64 * currentFrame, UP_ANIMATION * 64, 64, 64);
-
-                }
-                else if (Math.Cos(direction) < -.5)
-                {
-                    //spriteSource = FramesToAnimation[LEFT_ANIMATION];
-                    base.spriteSource = new Rectangle(64 * currentFrame, LEFT_ANIMATION * 64, 64, 64);      
-                }
-
-
-            }
-
-            else
-            {
-
-                if (Math.Cos(this.direction) > .5)
-                {
-                    //spriteSource = FramesToAnimation[RIGHT_ANIMATION];
-                    base.spriteSource = new Rectangle(64 * 0, RIGHT_ANIMATION * 64, 64, 64);
-
-                }
-                else if (Math.Sin(this.direction) > .5)
-                {
-                    base.spriteSource = new Rectangle(64 * 0, DOWN_ANIMATION * 64, 64, 64);
-
-                }
-                else if (Math.Sin(direction) < -.5)
-                {
-                    //spriteSource = FramesToAnimation[UP_ANIMATION];
-                    base.spriteSource = new Rectangle(64 * 0, UP_ANIMATION * 64, 64, 64);
-
-                }
-                else if (Math.Cos(direction) < -.5)
-                {
-                    //spriteSource = FramesToAnimation[LEFT_ANIMATION];
-                    base.spriteSource = new Rectangle(64 * 0, LEFT_ANIMATION * 64, 64, 64);
-                }
-
-            }
-
-        }
 
 		public override void collideWithWall()
 		{
@@ -189,6 +121,17 @@ namespace GameName1.NPCs
 
 			base.Draw(spriteBatch);
             sword.Draw(spriteBatch);
+
+            if (this.level == 2)
+            {
+                Color equipColor = Color.White;
+                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_REG_ARMOR_FEET], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_REG_ARMOR_PANTS], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_REG_ARMOR_GLOVES], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_REG_ARMOR_ARMS_SHOULDER], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_REG_ARMOR_TORSO], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_REG_ARMOR_HEAD], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+            }
 		}
 
 		public override void Update(GameTime gameTime)
@@ -196,6 +139,7 @@ namespace GameName1.NPCs
 			base.Update(gameTime);
 			sword.Update();
 
+            /*
 			elapsed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
 
 
@@ -212,6 +156,8 @@ namespace GameName1.NPCs
 				}
 				elapsed = 0;
 			}
+             * 
+             * */
 				
 		}
 
@@ -235,12 +181,6 @@ namespace GameName1.NPCs
             }
 		}
 
-		public override void rotateToAngle(float angle) //animation is based on rotation which is used by both movement and aiming
-		{
-			base.rotateToAngle(angle);
-
-
-		}
 
         public override string getName()
         {

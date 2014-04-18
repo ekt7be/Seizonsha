@@ -63,6 +63,10 @@ namespace GameName1.Skills
             }
         }
 
+        public override bool Available()
+        {
+            return false;
+        }
 
         protected override void UseSkill()
         {

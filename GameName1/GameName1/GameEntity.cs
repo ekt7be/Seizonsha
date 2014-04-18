@@ -12,7 +12,7 @@ using GameName1.Skills;
 
 namespace GameName1
 {
-    public abstract class GameEntity : Spawnable
+    public abstract class GameEntity : Spawnable, IComparable<GameEntity>
     {
 
         public Vector2 movement;
@@ -43,7 +43,9 @@ namespace GameName1
         public int accelY { get; set; }
         protected Seizonsha game;
         public Texture2D sprite { get; set; }
-        protected float scale = 1.0f;
+        public float scale = 1.0f;
+        public float defaultScale = 1.0f;
+        public float depth = .9f;
 
 
         private DamageAnimation damageAnimation;
@@ -92,11 +94,11 @@ namespace GameName1
 
             if (spriteSource == null)
             {
-                spriteBatch.Draw(sprite, spriteBox, spriteSource, tint, this.direction, new Vector2(0, 0), SpriteEffects.None, 1f);
+                spriteBatch.Draw(sprite, spriteBox, spriteSource, tint, this.direction, new Vector2(0, 0), SpriteEffects.None, depth);
             }
             else
             {
-                spriteBatch.Draw(sprite, spriteBox, spriteSource, tint, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1f);
+                spriteBatch.Draw(sprite, spriteBox, spriteSource, tint, 0.0f, new Vector2(0, 0), SpriteEffects.None, depth);
             }
 
         }
@@ -519,6 +521,7 @@ namespace GameName1
             this.animations.Clear();
             this.scale = 1.0f;
             this.shield = 0f;
+            this.depth = 1f;
             this.damageAnimation.reset(this);
         }
 
@@ -530,5 +533,21 @@ namespace GameName1
        public abstract String getName();
 
 
+
+       public int CompareTo(GameEntity y)
+       {
+           if (depth > y.depth)
+           {
+               return 1;
+           }
+           else if (depth < y.depth)
+           {
+               return -1;
+           }
+           else
+           {
+               return 0;
+           }
+       }
     }
 }

@@ -17,6 +17,7 @@ namespace GameName1
             : base(game, sprite, width, height, Static.TARGET_TYPE_NOT_DAMAGEABLE, 0)
         {
             this.setCollidable(false);
+            this.depth = .2f;
         }
 
         public override void Update(GameTime gameTime)

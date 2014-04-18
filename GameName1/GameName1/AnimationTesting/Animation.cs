@@ -10,7 +10,7 @@ namespace GameName1.AnimationTesting
     {
 
         private GameEntity target;
-        private int duration;
+        protected int duration;
         private bool remove;
 
         public Animation(GameEntity target, int duration)

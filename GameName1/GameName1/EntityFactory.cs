@@ -175,17 +175,17 @@ namespace GameName1
 
 
 
-        public static AOECone getAOECone(Seizonsha game, Texture2D sprite, Skill origin, Rectangle bounds, int amount, int damageType, int duration)
+        public static AOECone getAOECone(Seizonsha game, Texture2D sprite, Skill origin, Rectangle bounds, int amount, int damageType, int duration, float depth)
         {
             GameEntity recycled = tryRecycleInstance(Static.TYPE_AOE_CONE);
             if (recycled != null)
             {
                 AOECone recycledAOE = (AOECone)recycled;
-                recycledAOE.reset(sprite,origin,bounds,amount,damageType,duration);
+                recycledAOE.reset(sprite,origin,bounds,amount,damageType,duration, depth);
                 return recycledAOE;
             }
 
-            AOECone newAOE = new AOECone(game, sprite, origin, bounds, amount, damageType, duration);
+            AOECone newAOE = new AOECone(game, sprite, origin, bounds, amount, damageType, duration, depth);
             addToActive(newAOE);
             return newAOE;
         }

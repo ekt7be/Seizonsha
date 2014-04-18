@@ -55,11 +55,13 @@
     <Compile Include="AnimationTesting\CastAnimation.cs" />
     <Compile Include="AnimationTesting\DamageAnimation.cs" />
     <Compile Include="AnimationTesting\HealAnimation.cs" />
+    <Compile Include="AnimationTesting\PulseAnimation.cs" />
     <Compile Include="AnimationTesting\SlashAnimation.cs" />
     <Compile Include="AnimationTesting\StabAnimation.cs" />
     <Compile Include="Collision.cs" />
     <Compile Include="Effects\LightningEffect.cs" />
     <Compile Include="EntityFactory.cs" />
+    <Compile Include="NPCs\ExplodeEnemy.cs" />
     <Compile Include="PickUps\DeadPlayer.cs" />
     <Compile Include="PickUps\Food.cs" />
     <Compile Include="Interfaces\Interactable.cs" />

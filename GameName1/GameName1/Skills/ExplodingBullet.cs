@@ -33,7 +33,7 @@ namespace GameName1.Skills
                 int explosionWidth = 80;
                 int explosionHeight = 80;
                 Rectangle slashBounds = new Rectangle((int)(entity.getCenterX() - explosionWidth / 2), (int)(entity.getCenterY() - explosionWidth / 2), explosionWidth, explosionHeight);
-                game.Spawn(new AOECone(game, sprite, this.origin, slashBounds, amount, this.damageType, 10), slashBounds.Left, slashBounds.Top);
+                game.Spawn(EntityFactory.getAOECone(game, sprite, this.origin, slashBounds, amount, this.damageType, 10, 1f), slashBounds.Left, slashBounds.Top);
                 setRemove(true);
             }
 
@@ -44,7 +44,7 @@ namespace GameName1.Skills
             int explosionWidth = 80;
             int explosionHeight = 80;
             Rectangle slashBounds = new Rectangle((int)(getCenterX() - explosionWidth / 2), (int)(getCenterY() - explosionWidth / 2), explosionWidth, explosionHeight);
-            game.Spawn(EntityFactory.getAOECone(game, sprite, this.origin, slashBounds, amount, this.damageType, 10), slashBounds.Left, slashBounds.Top);
+            game.Spawn(EntityFactory.getAOECone(game, sprite, this.origin, slashBounds, amount, this.damageType, 10, 1f), slashBounds.Left, slashBounds.Top);
             setRemove(true);
         }
 

@@ -10,16 +10,16 @@ namespace GameName1.Skills
 {
     class AOEStatus : GameName1.Effects.Effect
     {
-        private int amount;
         private GameEntity user;
         private Skill origin;
 
 
-        public AOEStatus(Seizonsha game, GameEntity user, Texture2D sprite, Skill origin, Rectangle bounds, int duration)
+        public AOEStatus(Seizonsha game, GameEntity user, Texture2D sprite, Skill origin, Rectangle bounds, int duration, float depth)
             : base(game, sprite, bounds.Width, bounds.Height, duration)
         {
             this.user = user;
             this.origin = origin;
+            this.depth = depth;
         }
 
         protected override void OnDie()
@@ -34,7 +34,7 @@ namespace GameName1.Skills
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(Static.PIXEL_THIN, this.hitbox, null, Color.White, 0, new Vector2(0, 0), SpriteEffects.None, 1f);
+            spriteBatch.Draw(Static.PIXEL_THIN, this.hitbox, null, tint, 0, new Vector2(0, 0), SpriteEffects.None, depth);
             base.Draw(spriteBatch);
         }
 

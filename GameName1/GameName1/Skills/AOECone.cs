@@ -15,12 +15,13 @@ namespace GameName1.Skills
         private Skill origin;
 
 
-        public AOECone(Seizonsha game, Texture2D sprite, Skill origin, Rectangle bounds, int amount, int damageType, int duration)
+        public AOECone(Seizonsha game, Texture2D sprite, Skill origin, Rectangle bounds, int amount, int damageType, int duration, float depth)
             : base(game, sprite, bounds.Width, bounds.Height, duration)
         {
             this.amount = amount;
             this.damageType = damageType;
             this.origin = origin;
+            this.depth = depth;
         }
 
         protected override void OnDie()
@@ -30,7 +31,16 @@ namespace GameName1.Skills
 
         public override void OnSpawn()
         {
-            game.affectArea(origin, this.hitbox);
+
+            if (origin == null)
+            {
+                game.damageArea(null, this.hitbox, amount, damageType);
+            }
+            else
+            {
+                game.affectArea(origin, this.hitbox);
+
+            }
         }
 
 
@@ -40,7 +50,7 @@ namespace GameName1.Skills
         }
 
 
-        public void reset(Texture2D sprite, Skill origin, Rectangle bounds, int amount, int damageType, int duration)
+        public void reset(Texture2D sprite, Skill origin, Rectangle bounds, int amount, int damageType, int duration, float depth)
         {
             base.reset(duration);
             setSprite(sprite);
@@ -49,6 +59,7 @@ namespace GameName1.Skills
             this.height = bounds.Height;
             this.damageType = damageType;
             this.amount = amount;
+            this.depth = depth;
 
 
         }

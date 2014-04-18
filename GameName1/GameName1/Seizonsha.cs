@@ -97,13 +97,6 @@ namespace GameName1
             screenManager.AddScreen(new MainMenuScreen(), null);
         }
 			
-	    //does not handle boundary cases and causes bugs
-        /*
-		// for pathfinding 
-		public Tile getTileFromCoord(int x, int y) {
-			return currLevel.getTileFromIndex(getTileIndexFromLeftEdgeX(x), getTileIndexFromTopEdgeY(y)); 
-		}
-         * */
 
 		public Tile getTileFromIndex(int x, int y) {
 			return currLevel.getTileFromIndex(x, y); 
@@ -133,6 +126,8 @@ namespace GameName1
             playerRect = Content.Load<Texture2D>("Sprites/Bodies/HumanSpriteSheetLight");
             Texture2D npcRect = Content.Load<Texture2D>("Sprites/player");
             Texture2D basicEnemyRect = Content.Load<Texture2D>("Sprites/Bodies/SkeletonSpriteSheet");
+            Texture2D orcEnemyRect = Content.Load<Texture2D>("Sprites/Bodies/OrcSpriteSheet");
+
 
             Texture2D plateArmorHead = Content.Load<Texture2D>("Sprites/Armor/Metal/MetalHelmSpriteSheet");
             Texture2D plateArmorFeet = Content.Load<Texture2D>("Sprites/Armor/Metal/MetalBootsSpriteSheet");
@@ -207,6 +202,7 @@ namespace GameName1
             initTileSprites();
 
             spriteMappings.Add(Static.SPRITE_BASIC_ENEMY_INT, basicEnemyRect);
+            spriteMappings.Add(Static.SPRITE_EXPLODE_ENEMY_INT, orcEnemyRect);
             spriteMappings.Add(Static.SPRITE_PLAYER_INT, playerRect);
 
             spriteMappings.Add(Static.SPRITE_PLATE_ARMOR_HEAD, plateArmorHead);
@@ -638,6 +634,10 @@ namespace GameName1
                         break;
                 }
 
+
+                //sort entity list
+                entities.Sort();
+
                 spriteBatch.Begin(
                     //was Deferred
                     SpriteSortMode.Deferred,
@@ -657,6 +657,7 @@ namespace GameName1
                 }
                 // DISPLAY TEXT FOR LIST OF SKILLS 
                 spriteBatch.End();
+
             }
 
 
@@ -1036,6 +1037,7 @@ namespace GameName1
                     return true;
 
                 }
+
                 return false;
             }
             return false;
@@ -1579,7 +1581,7 @@ namespace GameName1
             Wave++;
             //currLevel.spawnEnemies(difficulty);
 
-            if (this.Wave % 1 == 0)
+            if (this.Wave % 3 == 0)
             {
                 List<GameEntity> enemyList = new List<GameEntity>();
                 enemyList.Add(new BossEnemy(this));

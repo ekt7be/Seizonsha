@@ -31,7 +31,7 @@ namespace GameName1.Skills
 
         public override string getName()
         {
-            return "Healing Rain";
+            return Static.HEALING_RAIN_NAME;
         }
 
         public override void affect(GameEntity affected)
@@ -57,7 +57,8 @@ namespace GameName1.Skills
             int sH = 100;
             Rectangle slashBounds = new Rectangle((int)(user.getCenterX() + this.bufferedVectorDirection.X * dist - sW / 2), (int)(user.getCenterY() + this.bufferedVectorDirection.Y * dist - sH / 2), sW, sH);
             //game.Spawn(new SwordSlash(game, user, Static.PIXEL_THIN, slashBounds, damage, damageType, 10, user.vectorDirection), slashBounds.Left, slashBounds.Top);
-            AOEStatus rain = new AOEStatus(game, user, Static.PIXEL_THIN, this, slashBounds, this.duration);
+            AOEStatus rain = new AOEStatus(game, user, Static.PIXEL_THIN, this, slashBounds, this.duration, 1f);
+            rain.setTint(Color.White * .5f);
             game.Spawn(rain, slashBounds.Left, slashBounds.Top);
         }
 

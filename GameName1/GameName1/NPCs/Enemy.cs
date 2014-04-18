@@ -22,6 +22,12 @@ namespace GameName1.NPCs
 
         protected bool stopped;
 
+        float elapsed;
+
+        private static readonly float delay = 200f;
+
+
+
         protected float speed;
         protected float sinceLastPathFind;
 
@@ -32,6 +38,14 @@ namespace GameName1.NPCs
 
         protected Random random;
 
+
+        private int currentFrame = 0;
+
+        private static readonly int UP_ANIMATION = 8;
+        private static readonly int DOWN_ANIMATION = 10;
+        private static readonly int LEFT_ANIMATION = 9;
+        private static readonly int RIGHT_ANIMATION = 11;
+        private static readonly int WALK_ANIMATION_FRAMES = 9;
 
 
         public Enemy(Seizonsha game, Texture2D sprite, int width, int height, int health, float speed, int XPReward)
@@ -125,7 +139,7 @@ namespace GameName1.NPCs
         {
             if (target == null)
             {
-                return;
+
             }
             else
             {
@@ -433,6 +447,90 @@ namespace GameName1.NPCs
         {
             base.rotateToAngle(angle);
 
+
+        }
+
+
+        public override void UpdateAnimation(GameTime gameTime)
+        {
+            base.UpdateAnimation(gameTime);
+
+
+            elapsed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+
+
+
+            if (elapsed > delay)
+            {
+                if (currentFrame >= WALK_ANIMATION_FRAMES - 1)
+                {
+                    currentFrame = 0;
+                }
+                else
+                {
+                    currentFrame++;
+                }
+                elapsed = 0;
+            }
+
+
+            if (this.getLastMovement().X != 0 || this.getLastMovement().Y != 0)
+            {
+
+
+                if (Math.Cos(this.direction) > .5)
+                {
+                    //spriteSource = FramesToAnimation[RIGHT_ANIMATION];
+                    base.spriteSource = new Rectangle(64 * currentFrame, RIGHT_ANIMATION * 64, 64, 64);
+
+                }
+                else if (Math.Sin(this.direction) > .5)
+                {
+                    base.spriteSource = new Rectangle(64 * currentFrame, DOWN_ANIMATION * 64, 64, 64);
+
+                }
+                else if (Math.Sin(direction) < -.5)
+                {
+                    //spriteSource = FramesToAnimation[UP_ANIMATION];
+                    base.spriteSource = new Rectangle(64 * currentFrame, UP_ANIMATION * 64, 64, 64);
+
+                }
+                else if (Math.Cos(direction) < -.5)
+                {
+                    //spriteSource = FramesToAnimation[LEFT_ANIMATION];
+                    base.spriteSource = new Rectangle(64 * currentFrame, LEFT_ANIMATION * 64, 64, 64);
+                }
+
+
+            }
+
+            else
+            {
+
+                if (Math.Cos(this.direction) > .5)
+                {
+                    //spriteSource = FramesToAnimation[RIGHT_ANIMATION];
+                    base.spriteSource = new Rectangle(64 * 0, RIGHT_ANIMATION * 64, 64, 64);
+
+                }
+                else if (Math.Sin(this.direction) > .5)
+                {
+                    base.spriteSource = new Rectangle(64 * 0, DOWN_ANIMATION * 64, 64, 64);
+
+                }
+                else if (Math.Sin(direction) < -.5)
+                {
+                    //spriteSource = FramesToAnimation[UP_ANIMATION];
+                    base.spriteSource = new Rectangle(64 * 0, UP_ANIMATION * 64, 64, 64);
+
+                }
+                else if (Math.Cos(direction) < -.5)
+                {
+                    //spriteSource = FramesToAnimation[LEFT_ANIMATION];
+                    base.spriteSource = new Rectangle(64 * 0, LEFT_ANIMATION * 64, 64, 64);
+                }
+
+            }
 
         }
 

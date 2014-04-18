@@ -110,13 +110,15 @@ namespace GameName1
                 if (totalDifficulty % 2 == 0)
                 {
 
-                    enemyQueue.Enqueue(EntityFactory.getBasicEnemy(game, 1));
+                    //enemyQueue.Enqueue(EntityFactory.getBasicEnemy(game, 1));
+                    enemyQueue.Enqueue(new ExplodeEnemy(game,1));
+
 
                 }
                 else
                 {
-
-                    enemyQueue.Enqueue(EntityFactory.getBasicEnemy(game, 2));
+                    enemyQueue.Enqueue(new ExplodeEnemy(game, 1));
+                   // enemyQueue.Enqueue(EntityFactory.getBasicEnemy(game, 2));
 
                 }
                 game.increaseNumberEnemies();

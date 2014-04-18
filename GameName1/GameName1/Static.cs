@@ -21,7 +21,7 @@ namespace GameName1
         public static readonly string TYPE_TEXT_EFFECT = "Text Effect";
         public static readonly string TYPE_BASIC_ENEMY = "Basic Enemy";
 		public static readonly string TYPE_BOSS_ENEMY = "Boss Enemy";
-
+        public static readonly string TYPE_EXPLODE_ENEMY = "Explode Enemy";
         public static readonly string TYPE_AOE_CIRCLE = "AOE Circle";
         public static readonly string TYPE_AOE_CONE = "AOE Cone";
         public static readonly string TYPE_SWORD_SLASH= "Sword Slash";
@@ -65,7 +65,8 @@ namespace GameName1
 
 
         //basic enemy
-
+        public static readonly int BASIC_ENEMY_DIFFICULTY_1 = 1;
+        public static readonly int BASIC_ENEMY_DIFFICULTY_2 = 5;
         public static readonly int BASIC_ENEMY_HEIGHT = 50;
         public static readonly int BASIC_ENEMY_WIDTH = 50;
         public static readonly float BASIC_ENEMY_SPRITE_SCALE = 1f;
@@ -75,13 +76,31 @@ namespace GameName1
         public static readonly float BASIC_ENEMY_SPEED_1 = 2f;
         public static readonly int BASIC_ENEMY_HEALTH_1 = 30;
         public static readonly int BASIC_ENEMY_EXTRA_ATTACK_RECHARGE_1 = 200;
-
         public static readonly int BASIC_ENEMY_XP_2 = 300;
         public static readonly int BASIC_ENEMY_DAMAGE_2 = 15;
         public static readonly float BASIC_ENEMY_SPEED_2 = 2f;
         public static readonly int BASIC_ENEMY_HEALTH_2 = 60;
         public static readonly int BASIC_ENEMY_EXTRA_ATTACK_RECHARGE_2 = 120;
 
+        //explode enemy
+        public static readonly int EXPLODE_ENEMY_DIFFICULTY_1 = 2;
+        public static readonly int EXPLODE_ENEMY_DIFFICULTY_2 = 8;
+        public static readonly int EXPLODE_ENEMY_HEIGHT = 50;
+        public static readonly int EXPLODE_ENEMY_WIDTH = 50;
+        public static readonly float EXPLODE_ENEMY_SPRITE_SCALE = 1f;
+        public static readonly float EXPLODE_ENEMY_TILE_DISTANCE_EXPLODE = 3f;
+        public static readonly int EXPLODE_ENEMY_TIMER_1 = 100;
+        public static readonly int EXPLODE_ENEMY_EXPLOSION_DAMAGE_1 = 50;
+        public static readonly float EXPLODE_ENEMY_PATH_REFRESH = 500f;
+        public static readonly int EXPLODE_ENEMY_XP_1 = 150;
+        public static readonly float EXPLODE_ENEMY_SPEED_1 = 2f;
+        public static readonly int EXPLODE_ENEMY_HEALTH_1 = 10;
+
+        public static readonly int EXPLODE_ENEMY_TIMER_2 = 100;
+        public static readonly int EXPLODE_ENEMY_XP_2 = 400;
+        public static readonly float EXPLODE_ENEMY_SPEED_2 = 4f;
+        public static readonly int EXPLODE_ENEMY_HEALTH_2 = 60;
+        public static readonly int EXPLODE_ENEMY_EXPLOSION_DAMAGE_2 = 70;
 
         //boss
         public static readonly int BOSS_ENEMY_XP = 1000;
@@ -167,6 +186,7 @@ namespace GameName1
 
         //Int to Sprite Mappings
         public static readonly int SPRITE_BASIC_ENEMY_INT = 0;
+        public static readonly int SPRITE_EXPLODE_ENEMY_INT = 26;  //MOST RECENT
         public static readonly int SPRITE_PLAYER_INT = 1;
 
         public static readonly int SPRITE_PLATE_ARMOR_HEAD = 2;
