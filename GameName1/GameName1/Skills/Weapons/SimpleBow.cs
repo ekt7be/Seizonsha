@@ -1,5 +1,6 @@
 ﻿using GameName1.Interfaces;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,12 +8,14 @@ using System.Text;
 
 namespace GameName1.Skills
 {
-    abstract class SimpleBow : Weapon
+    public class SimpleBow : Weapon
     {
 
         private float bulletSpeed;
         public int ammo;
         public int clipSize;
+        private Texture2D sprite;
+        Rectangle? bowSource;
 
         //for enemies
         private Boolean unlimitedAmmo;
@@ -21,10 +24,65 @@ namespace GameName1.Skills
         public SimpleBow(Seizonsha game, GameEntity user, int damage, int recharge_time, int freezeTime, float bulletSpeed, int level, string name, int clipSize, Color tint)
             : base(game, user, recharge_time, freezeTime, level, damage, name, tint)
         {
+            this.sprite = Seizonsha.spriteMappings[Static.SPRITE_BOW];
             this.bulletSpeed = bulletSpeed;
             this.clipSize = clipSize;
             this.ammo = clipSize;
             this.unlimitedAmmo = false;
+
+
+             if (Math.Cos(user.direction) > .5)
+            {
+                //spriteSource = FramesToAnimation[RIGHT_ANIMATION];
+                bowSource = new Rectangle(64 * 0, 20 * 64, 64, 64);
+
+            }
+            else if (Math.Sin(user.direction) > .5)
+            {
+                bowSource = new Rectangle(64 * 0, 19 * 64, 64, 64);
+
+            }
+            else if (Math.Sin(user.direction) < -.5)
+            {
+                //spriteSource = FramesToAnimation[UP_ANIMATION];
+                bowSource = new Rectangle(64 * 0, 17 * 64, 64, 64);
+
+            }
+            else if (Math.Cos(user.direction) < -.5)
+            {
+                //spriteSource = FramesToAnimation[LEFT_ANIMATION];
+                bowSource = new Rectangle(64 * 0, 18 * 64, 64, 64);
+            }
+        }
+
+        public override void Update()
+        {
+            base.Update();
+
+            if (Math.Cos(user.direction) > .5)
+            {
+                //spriteSource = FramesToAnimation[RIGHT_ANIMATION];
+                bowSource = new Rectangle(64 * 0, 20 * 64, 64, 64);
+
+            }
+            else if (Math.Sin(user.direction) > .5)
+            {
+                bowSource = new Rectangle(64 * 0, 19 * 64, 64, 64);
+
+            }
+            else if (Math.Sin(user.direction) < -.5)
+            {
+                //spriteSource = FramesToAnimation[UP_ANIMATION];
+                bowSource = new Rectangle(64 * 0, 17 * 64, 64, 64);
+
+            }
+            else if (Math.Cos(user.direction) < -.5)
+            {
+                //spriteSource = FramesToAnimation[LEFT_ANIMATION];
+                bowSource = new Rectangle(64 * 0, 18 * 64, 64, 64);
+            }
+
+
         }
 
         public void refillAmmo()
@@ -45,8 +103,8 @@ namespace GameName1.Skills
         {
 
 
-            int width = 5;
-            int length = 15;
+            int width = 15;
+            int length = 45;
             Rectangle slashBounds = new Rectangle((int)(user.getCenterX()), (int)(user.getCenterY() - 5), length, width);
             List<PolygonIntersection.Vector> points = new List<PolygonIntersection.Vector>();
             float theta = bufferedDirection;
@@ -71,7 +129,7 @@ namespace GameName1.Skills
 
             PolygonIntersection.Polygon polygon = new PolygonIntersection.Polygon(points);
             //game.Spawn(new SwordSlash(game, user, Static.PIXEL_THIN, slashBounds, damage, damageType, 10, user.vectorDirection), slashBounds.Left, slashBounds.Top);
-            Arrow attack = new Arrow(game, user, Seizonsha.spriteMappings[Static.SPRITE_FIREBALL], this, slashBounds, polygon, damage, damageType, 20, new Vector2(bufferedVectorDirection.X * 50, bufferedVectorDirection.Y * 50), bufferedDirection, false);
+            Arrow attack = new Arrow(game, user, Seizonsha.spriteMappings[Static.SPRITE_ARROW], this, slashBounds, polygon, damage, damageType, 20, new Vector2(bufferedVectorDirection.X * 50, bufferedVectorDirection.Y * 50), bufferedDirection, false);
             attack.rotateToAngle(this.bufferedDirection);
 
             game.Spawn(attack, slashBounds.Left, slashBounds.Top);
@@ -84,8 +142,14 @@ namespace GameName1.Skills
 
         public override string getDescription()
         {
-            return "A Bow";
+            return Static.WEAPON_BOW_NAME;
         }
+
+        public override string getName()
+        {
+            return Static.WEAPON_BOW_NAME;
+        }
+
 
         public override bool Available()
         {
@@ -95,6 +159,15 @@ namespace GameName1.Skills
             }
             return base.Available();
         }
+
+        /*
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            //base.Draw(spriteBatch);
+            spriteBatch.Draw(sprite, user.hitbox, bowSource, tint, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1f);
+
+        }
+         * */
 
     }
 }

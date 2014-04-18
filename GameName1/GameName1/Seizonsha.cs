@@ -178,6 +178,8 @@ namespace GameName1
             Texture2D heal = Content.Load<Texture2D>("Sprites/SpellEffects/Heal");
             Texture2D bullet = Content.Load<Texture2D>("Sprites/bulletsprite");
             Texture2D sword = Content.Load<Texture2D>("Sprites/swordspritesheetfull3");
+            Texture2D bowWeapon = Content.Load<Texture2D>("Sprites/Weapons/RecurveBowSpriteSheet");
+
             Texture2D dagger = Content.Load<Texture2D>("Sprites/Weapons/DaggerSpriteSheet");
             Texture2D reticle = Content.Load<Texture2D>("Sprites/reticle");
 
@@ -216,7 +218,11 @@ namespace GameName1
 			Texture2D fireballicon = Content.Load<Texture2D>("Sprites/skill_icons/fireball");
 			Texture2D healingtouchicon = Content.Load<Texture2D>("Sprites/skill_icons/healingtouch");
 			Texture2D swordicon = Content.Load<Texture2D>("Sprites/skill_icons/sword");
+            //Texture2D swordicon = Content.Load<Texture2D>("Sprites/Drops/sword");
+
 			Texture2D gunicon = Content.Load<Texture2D>("Sprites/skill_icons/pistol-gun");
+            Texture2D bowicon = Content.Load<Texture2D>("Sprites/skill_icons/pistol-gun");
+
 			Texture2D firelanceicon = Content.Load<Texture2D>("Sprites/skill_icons/fire_lance");
             Texture2D blizzardicon = Content.Load<Texture2D>("Sprites/skill_icons/blizzard");
             Texture2D teleporticon = Content.Load<Texture2D>("Sprites/skill_icons/teleport");
@@ -250,6 +256,8 @@ namespace GameName1
             SkillTree.SkillTree.nodeTextures.Add(Static.WEAPON_RUSTY_SWORD_NAME, swordicon);
             SkillTree.SkillTree.nodeTextures.Add(Static.WEAPON_DANK_SWORD_NAME, swordicon);
             SkillTree.SkillTree.nodeTextures.Add(Static.WEAPON_OKGUN_NAME, gunicon);
+            SkillTree.SkillTree.nodeTextures.Add(Static.WEAPON_BOW_NAME, bowicon);
+
 
 
 			SkillTree.SkillTree.nodeTextures.Add(Static.WEAPON_REVOLVER_NAME, gunicon);
@@ -317,7 +325,7 @@ namespace GameName1
             spriteMappings.Add(Static.SPRITE_GRILLEDCHEESE_DROP, grilledcheese);
             spriteMappings.Add(Static.SPRITE_MEAT_DROP, meat);
             spriteMappings.Add(Static.SPRITE_PINEAPPLE_DROP, pineapple);
-            spriteMappings.Add(Static.SPRITE_SWORD_DROP, sword);
+            spriteMappings.Add(Static.SPRITE_SWORD_DROP, swordDrop);
             spriteMappings.Add(Static.SPRITE_TACO_DROP, taco);
             
 
@@ -360,6 +368,8 @@ namespace GameName1
             spriteMappings.Add(Static.SPRITE_HEAL, heal);
             spriteMappings.Add(Static.SPRITE_BULLET, bullet);
             spriteMappings.Add(Static.SPRITE_SWORD, sword);
+            spriteMappings.Add(Static.SPRITE_BOW, bowWeapon);
+
             spriteMappings.Add(Static.SPRITE_DAGGER, dagger);
 
             spriteMappings.Add(Static.SPRITE_RETICLE, reticle);

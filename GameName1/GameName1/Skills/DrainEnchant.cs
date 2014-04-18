@@ -35,7 +35,7 @@ namespace GameName1.Skills
             {
                 int amount = 5;
                 game.damageEntity(user, affected, amount, damageType);
-                game.healEntity(user, affected, amount, damageType);
+                game.healEntity(user, user, amount, damageType);
             }
         }
 

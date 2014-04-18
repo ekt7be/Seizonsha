@@ -64,10 +64,18 @@ namespace GameName1
         //drops
         public static readonly float DROP_DURATION = 20000;
 
+        //difficulties
+        public static readonly int MAX_DIFFICULTY = 8;
+        public static readonly int BASIC_ENEMY_DIFFICULTY_1 = 1;
+        public static readonly int BASIC_ENEMY_DIFFICULTY_2 = 7;
+        public static readonly int BASIC_ENEMY_DIFFICULTY_3 = 20;
+
+        public static readonly int EXPLODE_ENEMY_DIFFICULTY_1 = 3;
+        public static readonly int EXPLODE_ENEMY_DIFFICULTY_2 = 8;
+        public static readonly int EXPLODE_ENEMY_DIFFICULTY_3 = 16;
 
         //basic enemy
-        public static readonly int BASIC_ENEMY_DIFFICULTY_1 = 1;
-        public static readonly int BASIC_ENEMY_DIFFICULTY_2 = 5;
+
         public static readonly int BASIC_ENEMY_HEIGHT = 50;
         public static readonly int BASIC_ENEMY_WIDTH = 50;
         public static readonly float BASIC_ENEMY_SPRITE_SCALE = 1f;
@@ -77,37 +85,52 @@ namespace GameName1
         public static readonly float BASIC_ENEMY_SPEED_1 = 2f;
         public static readonly int BASIC_ENEMY_HEALTH_1 = 30;
         public static readonly int BASIC_ENEMY_EXTRA_ATTACK_RECHARGE_1 = 200;
+
         public static readonly int BASIC_ENEMY_XP_2 = 300;
         public static readonly int BASIC_ENEMY_DAMAGE_2 = 15;
         public static readonly float BASIC_ENEMY_SPEED_2 = 2f;
         public static readonly int BASIC_ENEMY_HEALTH_2 = 60;
         public static readonly int BASIC_ENEMY_EXTRA_ATTACK_RECHARGE_2 = 120;
 
+        public static readonly int BASIC_ENEMY_XP_3 = 800;
+        public static readonly int BASIC_ENEMY_DAMAGE_3 = 30;
+        public static readonly float BASIC_ENEMY_SPEED_3 = 3.5f;
+        public static readonly int BASIC_ENEMY_HEALTH_3 = 250;
+        public static readonly int BASIC_ENEMY_EXTRA_ATTACK_RECHARGE_3 = 60;
+
         //explode enemy
-        public static readonly int EXPLODE_ENEMY_DIFFICULTY_1 = 2;
-        public static readonly int EXPLODE_ENEMY_DIFFICULTY_2 = 8;
+
         public static readonly int EXPLODE_ENEMY_HEIGHT = 50;
         public static readonly int EXPLODE_ENEMY_WIDTH = 50;
         public static readonly float EXPLODE_ENEMY_SPRITE_SCALE = 1f;
         public static readonly float EXPLODE_ENEMY_TILE_DISTANCE_EXPLODE = 3f;
-        public static readonly int EXPLODE_ENEMY_TIMER_1 = 100;
+        public static readonly int EXPLODE_ENEMY_TIMER_1 = 70;
         public static readonly int EXPLODE_ENEMY_EXPLOSION_DAMAGE_1 = 50;
         public static readonly float EXPLODE_ENEMY_PATH_REFRESH = 500f;
         public static readonly int EXPLODE_ENEMY_XP_1 = 150;
-        public static readonly float EXPLODE_ENEMY_SPEED_1 = 2f;
-        public static readonly int EXPLODE_ENEMY_HEALTH_1 = 100;
+        public static readonly float EXPLODE_ENEMY_SPEED_1 = 3f;
+        public static readonly int EXPLODE_ENEMY_HEALTH_1 = 20;
 
-        public static readonly int EXPLODE_ENEMY_TIMER_2 = 100;
+        public static readonly int EXPLODE_ENEMY_TIMER_2 = 70;
         public static readonly int EXPLODE_ENEMY_XP_2 = 400;
-        public static readonly float EXPLODE_ENEMY_SPEED_2 = 4f;
+        public static readonly float EXPLODE_ENEMY_SPEED_2 = 4.5f;
         public static readonly int EXPLODE_ENEMY_HEALTH_2 = 60;
         public static readonly int EXPLODE_ENEMY_EXPLOSION_DAMAGE_2 = 70;
+
+        public static readonly int EXPLODE_ENEMY_TIMER_3 = 70;
+        public static readonly int EXPLODE_ENEMY_XP_3 = 800;
+        public static readonly float EXPLODE_ENEMY_SPEED_3 = 4.5f;
+        public static readonly int EXPLODE_ENEMY_HEALTH_3 = 200;
+        public static readonly int EXPLODE_ENEMY_EXPLOSION_DAMAGE_3 = 100;
 
         //boss
         public static readonly int BOSS_ENEMY_XP = 1000;
         public static readonly int BOSS_ENEMY_HEIGHT = 32 * 3;
         public static readonly int BOSS_ENEMY_WIDTH = 32 * 3;
         public static readonly float BOSS_ENEMY_SPEED = 3f;
+
+        //bow
+        public static readonly string WEAPON_BOW_NAME = "Bow";
 
 
         //rusty shank
@@ -219,7 +242,8 @@ namespace GameName1
         public static readonly int SPRITE_BURN = 29; 
         public static readonly int SPRITE_MAGIC_MISSILE = 30; 
         public static readonly int SPRITE_HEALING_RAIN = 31; 
-        public static readonly int SPRITE_LIGHTNING_ARROW = 32; // MOST RECENT
+        public static readonly int SPRITE_LIGHTNING_ARROW = 32;
+        public static readonly int SPRITE_BOW = 47; //most recetn
         public static readonly int SPRITE_BULLET = 9;
         public static readonly int SPRITE_HEAL = 10;
         public static readonly int SPRITE_SWORD = 11;

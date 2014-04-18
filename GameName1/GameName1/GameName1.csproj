@@ -626,7 +626,10 @@
     <Content Include="Content\sound\healing rain sound.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\sound\orc_die.wav">
+    <Content Include="Content\sound\skeleton death sound1.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\sound\boss death sound.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\sound\sword sound.wav">

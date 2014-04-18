@@ -300,11 +300,12 @@ namespace GameName1
             */
          
 
-
             Sword sword = new RustySword(game, this);
             addEquipable(sword);
             Equip(sword, Static.PLAYER_L1_SKILL_INDEX);
             this.currentWeapon = sword;
+
+
 
             this.maxMana = Static.PLAYER_MAX_MANA;
             this.mana = maxMana;
@@ -707,6 +708,10 @@ namespace GameName1
                 {
                     spriteBatch.DrawString(Static.SPRITEFONT_Calibri10, ((Gun)skill).ammo + "/"+((Gun)skill).clipSize , new Vector2(skillBox.Left, skillBox.Bottom-20), Color.White);
                 }
+                if (skill is SimpleBow)
+                {
+                    spriteBatch.DrawString(Static.SPRITEFONT_Calibri10, ((SimpleBow)skill).ammo + "/" + ((SimpleBow)skill).clipSize, new Vector2(skillBox.Left, skillBox.Bottom - 20), Color.White);
+                }
 
                 if (skill == null)
                 {
@@ -779,6 +784,16 @@ namespace GameName1
                         }
                         Rectangle unlockedSkillRect2 = new Rectangle(viewportBounds.Width / 2 + (skillbarIndex * (iconSize + 3) + (skillbarIndex2 * (iconSize / 2)) + (skillbarIndex2 * 3)) - 2 * iconSize - 6, viewportBounds.Height - iconSize - (iconSize / 2 + 3), iconSize / 2, iconSize / 2);
                         spriteBatch.Draw(Static.PIXEL_THIN, unlockedSkillRect2, new Color(Color.DarkOrchid, 0.5f));
+
+                        if (unEquippedSkills[skillbarIndex2] == null)
+                        {
+                            Static.DrawBorderedText(spriteBatch, game.getSpriteFont(), "None", viewportBounds.Width / 2 + (skillbarIndex * (iconSize + 3) + (skillbarIndex2 * (iconSize / 2)) + (skillbarIndex2 * 3)) - 2 * iconSize - 6, viewportBounds.Height - iconSize - (iconSize / 2 + 3) - 50, Color.Black, Color.White);
+                        }
+                        else
+                        {
+                            Static.DrawBorderedText(spriteBatch, game.getSpriteFont(), unEquippedSkills[skillbarIndex2].getName(), viewportBounds.Width / 2 + (skillbarIndex * (iconSize + 3) + (skillbarIndex2 * (iconSize / 2)) + (skillbarIndex2 * 3)) - 2 * iconSize - 6, viewportBounds.Height - iconSize - (iconSize / 2 + 3) - 50, Color.Black, Color.White);
+
+                        }
                     }
                 }
             #endregion
@@ -1064,15 +1079,18 @@ namespace GameName1
 			}
 			*/
 
+            if (SkillTreeOpen())
+            {
+                skilltree.Unlock();
+                return;
+            }
+
 			if (selectingSkill2) {
                 DownButton();
 				return;
 			}
 
-            if (SkillTreeOpen())
-            {
-                skilltree.Unlock();
-            }
+
 				
             if (currentInteractable != null)
             {
@@ -1207,9 +1225,29 @@ namespace GameName1
 
         public override void OnKillOther(GameEntity entity)
         {
-            TextEffect xpEffect = EntityFactory.getXPEffect(game,entity.getXPReward());
-            game.Spawn(xpEffect,getCenterX(), getCenterY());
-            incXP(entity.getXPReward());
+            int totalPlayers = 0;
+            foreach (Player player in game.players)
+            {
+
+                if (player == null || player.isDead())
+                {
+                    continue;
+                }
+                totalPlayers++;
+            }
+            int reward = entity.getXPReward() / totalPlayers;
+            foreach (Player player in game.players)
+            {
+
+                if (player == null || player.isDead())
+                {
+                    continue;
+                }
+                TextEffect xpEffect = EntityFactory.getXPEffect(game, reward);
+                game.Spawn(xpEffect, player.getCenterX(), player.getCenterY());
+                incXP(reward);
+            }
+
         }
 
         public override void OnDamageOther(GameEntity entity, int amount)
@@ -1321,7 +1359,7 @@ namespace GameName1
 
         public void waveClear()
         {
-            revive();
+           // revive();
             selectingSkill = true;
             skillbarIndex = 0;
             playerReady = false;

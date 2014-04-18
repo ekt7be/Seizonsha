@@ -67,8 +67,13 @@ namespace GameName1
 
 			int reserved = 100; 
 
+            /*
 			if (cameraY < 0 - reserved) 
 				cameraY = 0 - reserved;
+             * */
+            if (cameraY < 0)
+                cameraY = 0;
+
 			else if (cameraY + cameraHeight > worldHeight + reserved)	// add reserved here and player won't be able to move past center
 				cameraY = worldHeight - cameraHeight + reserved;
 				

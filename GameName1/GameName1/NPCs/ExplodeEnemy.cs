@@ -43,10 +43,14 @@ namespace GameName1.NPCs
             }
             else if (level == 2)
             {
-                this.speed = Static.BASIC_ENEMY_SPEED_2;
-               // this.defaultTint = Color.Green;
-               // setDefaultTint();
-                this.maxHealth = Static.BASIC_ENEMY_HEALTH_2;
+                this.speed = Static.EXPLODE_ENEMY_SPEED_2;
+                this.maxHealth = Static.EXPLODE_ENEMY_HEALTH_2;
+                this.health = maxHealth;
+            }
+            else if (level == 3)
+            {
+                this.speed = Static.EXPLODE_ENEMY_SPEED_3;
+                this.maxHealth = Static.EXPLODE_ENEMY_HEALTH_2;
                 this.health = maxHealth;
             }
 
@@ -116,6 +120,12 @@ namespace GameName1.NPCs
                 this.Freeze(Static.EXPLODE_ENEMY_TIMER_2);
                 this.AddAnimation(new PulseAnimation(this, Static.EXPLODE_ENEMY_TIMER_2));
             }
+            else if (this.level == 3)
+            {
+                this.ExplosionCountdown = Static.EXPLODE_ENEMY_TIMER_3;
+                this.Freeze(Static.EXPLODE_ENEMY_TIMER_3);
+                this.AddAnimation(new PulseAnimation(this, Static.EXPLODE_ENEMY_TIMER_3));
+            }
             this.Stop();
             this.readyExplode = true;
         }
@@ -136,6 +146,11 @@ namespace GameName1.NPCs
                 game.Spawn(new AOECone(game, Seizonsha.spriteMappings[Static.SPRITE_FIREBALL], null, expBounds, Static.EXPLODE_ENEMY_EXPLOSION_DAMAGE_2, Static.DAMAGE_TYPE_BAD, 10, 1f), expBounds.Left, expBounds.Top);
 
             }
+            else if (level == 3)
+            {
+                game.Spawn(new AOECone(game, Seizonsha.spriteMappings[Static.SPRITE_FIREBALL], null, expBounds, Static.EXPLODE_ENEMY_EXPLOSION_DAMAGE_3, Static.DAMAGE_TYPE_BAD, 10, 1f), expBounds.Left, expBounds.Top);
+
+            }
             exploded = true;
         }
 
@@ -152,6 +167,16 @@ namespace GameName1.NPCs
                 spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_REG_ARMOR_GLOVES], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
                 spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_REG_ARMOR_ARMS_SHOULDER], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
                 spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_PLATE_ARMOR_TORSO], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+                //spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_REG_ARMOR_HEAD], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+            }
+            if (this.level == 3)
+            {
+                Color equipColor = Color.White;
+                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_GOLD_ARMOR_FEET], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_GOLD_ARMOR_PANTS], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_GOLD_ARMOR_GLOVES], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_GOLD_ARMOR_ARMS_SHOULDER], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
+                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_GOLD_ARMOR_TORSO], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
                 //spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_REG_ARMOR_HEAD], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
             }
         }
@@ -176,19 +201,62 @@ namespace GameName1.NPCs
                 return;
             }
 
-            if (rand < .95)
+            if (level == 1)
             {
-                game.Spawn(new WeaponDrop(game, Static.PIXEL_THIN, 20, 20, new RustyShank(game, this)), x, y);
+                if (rand < .2)
+                {
+                    game.Spawn(new WeaponDrop(game, Seizonsha.spriteMappings[Static.SPRITE_SWORD_DROP], 20, 20, new RustyShank(game, this)), x, y);
 
+                }
+                else if (rand < .1)
+                {
+                    game.Spawn(new Food(game, "Taco", Seizonsha.spriteMappings[Static.SPRITE_TACO_DROP], 20), x, y);
+                }
+                    /*
+                else
+                {
+                    game.Spawn(new WeaponDrop(game, Static.PIXEL_THIN, 20, 20, new OKGun(game, this)), x, y);
+                }
+                     * */
             }
-            else if (rand < .99)
+            else if (level == 2)
             {
-                game.Spawn(new Food(game, "Chicken Nuggets", Static.PIXEL_THIN, 20), x, y);
+                if (rand < .2)
+                {
+                    game.Spawn(new WeaponDrop(game, Seizonsha.spriteMappings[Static.SPRITE_SWORD_DROP], 20, 20, new DankSword(game, this)), x, y);
+
+                }
+                else if (rand < .1)
+                {
+                    game.Spawn(new Food(game, "Bacon", Seizonsha.spriteMappings[Static.SPRITE_BACON_DROP], 50), x, y);
+                }
+                    /*
+                else
+                {
+                    game.Spawn(new WeaponDrop(game, Static.PIXEL_THIN, 20, 20, new OKGun(game, this)), x, y);
+                }
+                     * */
             }
+            else if (level == 3)
+            {
+                if (rand < .2)
+                {
+                    game.Spawn(new WeaponDrop(game, Seizonsha.spriteMappings[Static.SPRITE_SWORD_DROP], 20, 20, new DankSword(game, this)), x, y);
+
+                }
+                else if (rand < .1)
+                {
+                    game.Spawn(new Food(game, "Bacon", Seizonsha.spriteMappings[Static.SPRITE_BACON_DROP], 50), x, y);
+                }
+                /*
             else
             {
                 game.Spawn(new WeaponDrop(game, Static.PIXEL_THIN, 20, 20, new OKGun(game, this)), x, y);
             }
+                 * */
+            }
+
+
         }
 
         public override string getName()
