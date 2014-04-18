@@ -24,8 +24,8 @@ namespace GameName1
     {
         #region Initialization
         ContentManager Content;
-        int currentNumPlayers = 0;
-        int keyboardPlayer = 4;
+        int currentNumPlayers = Static.NUM_PLAYERS-1;
+        int keyboardPlayer = Static.KEYBOARD_PLAYER;
         MenuEntry numPlayersMenuEntry;
         MenuEntry keyboardPlayerMenuEntry;
         SoundEffect menuSound;
@@ -56,7 +56,7 @@ namespace GameName1
             MenuEntries.Add(playGameMenuEntry);
             MenuEntries.Add(numPlayersMenuEntry);
             MenuEntries.Add(keyboardPlayerMenuEntry);
-            MenuEntries.Add(optionsMenuEntry);
+            //MenuEntries.Add(optionsMenuEntry);
             MenuEntries.Add(creditsMenuEntry);
             MenuEntries.Add(exitMenuEntry);
         }

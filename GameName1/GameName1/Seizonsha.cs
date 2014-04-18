@@ -56,6 +56,8 @@ namespace GameName1
         public SoundEffect orcDeathSound;
         public SoundEffect battleCrySound;
         public SoundEffect lightningEnchantSound;
+        public SoundEffect fireballSound;
+        public SoundEffect fireballHitSound;
 
 		public float sinceLastWaveCleared;
 
@@ -162,7 +164,6 @@ namespace GameName1
 
             Texture2D arrow = Content.Load<Texture2D>("Sprites/arrowfullspritesheet.png");
 
-
             Texture2D fireball = Content.Load<Texture2D>("Sprites/fireballsprite");
             Texture2D blizzard = Content.Load<Texture2D>("Sprites/SpellEffects/blizzard");
             Texture2D shock = Content.Load<Texture2D>("Sprites/SpellEffects/shock");
@@ -190,10 +191,12 @@ namespace GameName1
             orcDeathSound = Content.Load<SoundEffect>("sound/orc death sound");
             battleCrySound = Content.Load<SoundEffect>("sound/battle cry sound");
             lightningEnchantSound = Content.Load<SoundEffect>("sound/lightning enchant sound");
+            fireballSound = Content.Load<SoundEffect>("sound/fireball sound");
+            fireballHitSound = Content.Load<SoundEffect>("sound/fireball hit sound");
 
             gameSoundLoop = gameSound.CreateInstance();
             gameSoundLoop.IsLooped = true;
-            gameSoundLoop.Volume = .5f;
+            gameSoundLoop.Volume = .1f;
             bossSound = Content.Load<SoundEffect>("sound/armageddon");
             bossSoundLoop = bossSound.CreateInstance();
             bossSoundLoop.IsLooped = true;

@@ -169,9 +169,6 @@ namespace GameName1.NPCs
 		{
 		}
 
-
-
-
         protected override void OnDie()
         {
             base.OnDie();

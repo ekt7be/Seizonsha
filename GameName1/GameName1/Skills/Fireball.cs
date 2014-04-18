@@ -27,11 +27,14 @@ namespace GameName1.Skills
            if (game.ShouldDamage(this.damageType,affected.getTargetType())){
                 affected.addStatusEffect(new GameName1.Effects.Burning(game, user, this, null, affected, 5, damageType, 2*60));
            }
+
         }
 
 
         protected override void UseSkill()
         {
+
+            game.fireballSound.Play();
 
             int bulletWidth = 20;
             int bulletHeight = 20;
