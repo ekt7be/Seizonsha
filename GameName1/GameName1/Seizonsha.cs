@@ -59,6 +59,7 @@ namespace GameName1
         public SoundEffect fireballSound;
         public SoundEffect fireballHitSound;
         public SoundEffect gameOverSound;
+        public SoundEffect blizzardSound;
 
 		public float sinceLastWaveCleared;
 
@@ -195,6 +196,7 @@ namespace GameName1
             fireballSound = Content.Load<SoundEffect>("sound/fireball sound");
             fireballHitSound = Content.Load<SoundEffect>("sound/fireball hit sound");
             gameOverSound = Content.Load<SoundEffect>("sound/game over sound1");
+            blizzardSound = Content.Load<SoundEffect>("sound/blizzard sound 4");
 
             gameSoundLoop = gameSound.CreateInstance();
             gameSoundLoop.IsLooped = true;
