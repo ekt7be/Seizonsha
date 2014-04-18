@@ -60,6 +60,8 @@ namespace GameName1
         public SoundEffect fireballHitSound;
         public SoundEffect gameOverSound;
         public SoundEffect blizzardSound;
+        public SoundEffect skeletonDeathSound;
+        public SoundEffect bossDeathSound;
 
 		public float sinceLastWaveCleared;
 
@@ -197,6 +199,8 @@ namespace GameName1
             fireballHitSound = Content.Load<SoundEffect>("sound/fireball hit sound");
             gameOverSound = Content.Load<SoundEffect>("sound/game over sound1");
             blizzardSound = Content.Load<SoundEffect>("sound/blizzard sound 4");
+            bossDeathSound = Content.Load<SoundEffect>("sound/boss death sound");
+            skeletonDeathSound = Content.Load<SoundEffect>("sound/skeleton death sound1");
 
             gameSoundLoop = gameSound.CreateInstance();
             gameSoundLoop.IsLooped = true;
@@ -204,8 +208,8 @@ namespace GameName1
             bossSound = Content.Load<SoundEffect>("sound/armageddon");
             bossSoundLoop = bossSound.CreateInstance();
             bossSoundLoop.IsLooped = true;
-            
             initializeVariables();
+
 
 			#region ADD SKILL ICONS (remember to add in SkillTree.cs too)
 			Texture2D nodeRect = Content.Load<Texture2D>("Sprites/SkillNode");

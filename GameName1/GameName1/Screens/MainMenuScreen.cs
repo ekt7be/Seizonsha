@@ -54,8 +54,8 @@ namespace GameName1
             creditsMenuEntry.Selected += CreditsMenuEntrySelected;
             // Add entries to the menu.
             MenuEntries.Add(playGameMenuEntry);
-            MenuEntries.Add(numPlayersMenuEntry);
             MenuEntries.Add(keyboardPlayerMenuEntry);
+            MenuEntries.Add(numPlayersMenuEntry);
             //MenuEntries.Add(optionsMenuEntry);
             MenuEntries.Add(creditsMenuEntry);
             MenuEntries.Add(exitMenuEntry);

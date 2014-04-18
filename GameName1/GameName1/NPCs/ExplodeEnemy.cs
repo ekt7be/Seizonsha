@@ -15,10 +15,6 @@ namespace GameName1.NPCs
 
 		double closestDistance;
 
-
-
-
-
         private GameEntity closest;
         private int ExplosionCountdown;
         private bool readyExplode;

@@ -119,7 +119,7 @@ namespace GameName1.NPCs
 
 		protected override void OnDie()
 		{
-
+            game.bossDeathSound.Play();
             double rand = random.NextDouble();
             if (rand < .1)
             {
