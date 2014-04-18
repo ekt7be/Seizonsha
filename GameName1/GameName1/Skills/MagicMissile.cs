@@ -51,8 +51,8 @@ namespace GameName1.Skills
                 time++;
                 if (time == 10)
                 {
-                    int width = 10;
-                    int length = 30;
+                    int width = 30;
+                    int length = 90;
                     Rectangle slashBounds = new Rectangle((int)(user.getCenterX()), (int)(user.getCenterY() - 5), length, width);
                     List<PolygonIntersection.Vector> points = new List<PolygonIntersection.Vector>();
                     float theta = user.getDirectionAngle();
@@ -77,15 +77,15 @@ namespace GameName1.Skills
 
                     PolygonIntersection.Polygon polygon = new PolygonIntersection.Polygon(points);
                     //game.Spawn(new SwordSlash(game, user, Static.PIXEL_THIN, slashBounds, damage, damageType, 10, user.vectorDirection), slashBounds.Left, slashBounds.Top);
-                    Arrow attack = new Arrow(game, user, Seizonsha.spriteMappings[Static.SPRITE_FIREBALL], this, slashBounds, polygon, damage, damageType, 30, new Vector2(user.vectorDirection.X * 20, user.vectorDirection.Y * 20), user.getDirectionAngle(), false);
+                    Arrow attack = new Arrow(game, user, Seizonsha.spriteMappings[Static.SPRITE_MAGIC_MISSILE], this, slashBounds, polygon, damage, damageType, 30, new Vector2(user.vectorDirection.X * 20, user.vectorDirection.Y * 20), user.getDirectionAngle(), false);
                     attack.rotateToAngle(this.bufferedDirection);
 
                     game.Spawn(attack, slashBounds.Left, slashBounds.Top);
                 }
                 else if (time == 20)
                 {
-                    int width = 10;
-                    int length = 30;
+                    int width = 30;
+                    int length = 90;
                     Rectangle slashBounds = new Rectangle((int)(user.getCenterX()), (int)(user.getCenterY() - 5), length, width);
                     List<PolygonIntersection.Vector> points = new List<PolygonIntersection.Vector>();
                     float theta = user.getDirectionAngle();
@@ -110,7 +110,7 @@ namespace GameName1.Skills
 
                     PolygonIntersection.Polygon polygon = new PolygonIntersection.Polygon(points);
                     //game.Spawn(new SwordSlash(game, user, Static.PIXEL_THIN, slashBounds, damage, damageType, 10, user.vectorDirection), slashBounds.Left, slashBounds.Top);
-                    Arrow attack = new Arrow(game, user, Seizonsha.spriteMappings[Static.SPRITE_FIREBALL], this, slashBounds, polygon, damage, damageType, 30, new Vector2(user.vectorDirection.X * 20, user.vectorDirection.Y * 20), user.getDirectionAngle(), false);
+                    Arrow attack = new Arrow(game, user, Seizonsha.spriteMappings[Static.SPRITE_MAGIC_MISSILE], this, slashBounds, polygon, damage, damageType, 30, new Vector2(user.vectorDirection.X * 20, user.vectorDirection.Y * 20), user.getDirectionAngle(), false);
                     attack.rotateToAngle(this.bufferedDirection);
 
                     game.Spawn(attack, slashBounds.Left, slashBounds.Top);
@@ -125,8 +125,8 @@ namespace GameName1.Skills
         {
             fired = true;
             this.time = 0;
-            int width = 10;
-            int length = 30;
+            int width = 30;
+            int length = 90;
             Rectangle slashBounds = new Rectangle((int)(user.getCenterX()), (int)(user.getCenterY() - 5), length, width);
             List<PolygonIntersection.Vector> points = new List<PolygonIntersection.Vector>();
             float theta = bufferedDirection;
@@ -151,7 +151,7 @@ namespace GameName1.Skills
 
             PolygonIntersection.Polygon polygon = new PolygonIntersection.Polygon(points);
             //game.Spawn(new SwordSlash(game, user, Static.PIXEL_THIN, slashBounds, damage, damageType, 10, user.vectorDirection), slashBounds.Left, slashBounds.Top);
-            Arrow attack = new Arrow(game, user, Seizonsha.spriteMappings[Static.SPRITE_FIREBALL], this, slashBounds, polygon, damage, damageType, 30, new Vector2(bufferedVectorDirection.X * 20, bufferedVectorDirection.Y * 20), bufferedDirection, false);
+            Arrow attack = new Arrow(game, user, Seizonsha.spriteMappings[Static.SPRITE_MAGIC_MISSILE], this, slashBounds, polygon, damage, damageType, 30, new Vector2(bufferedVectorDirection.X * 20, bufferedVectorDirection.Y * 20), bufferedDirection, false);
             attack.rotateToAngle(this.bufferedDirection);
 
             game.Spawn(attack, slashBounds.Left, slashBounds.Top);

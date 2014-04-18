@@ -155,6 +155,8 @@ namespace GameName1
             Texture2D fireball = Content.Load<Texture2D>("Sprites/fireballsprite");
             Texture2D blizzard = Content.Load<Texture2D>("Sprites/SpellEffects/blizzardeffect");
             Texture2D shock = Content.Load<Texture2D>("Sprites/SpellEffects/shock");
+            Texture2D burn = Content.Load<Texture2D>("Sprites/SpellEffects/burneffect");
+            Texture2D magicmissile = Content.Load<Texture2D>("Sprites/SpellEffects/magicmissile");
             Texture2D heal = Content.Load<Texture2D>("Sprites/SpellEffects/Heal");
             Texture2D bullet = Content.Load<Texture2D>("Sprites/bulletsprite");
             Texture2D sword = Content.Load<Texture2D>("Sprites/swordspritesheetfull3");
@@ -261,7 +263,9 @@ namespace GameName1
 
             spriteMappings.Add(Static.SPRITE_FIREBALL, fireball);
             spriteMappings.Add(Static.SPRITE_BLIZZARD, blizzard);
-            spriteMappings.Add(Static.SPRITE_SHOCK, blizzard);
+            spriteMappings.Add(Static.SPRITE_SHOCK, shock);
+            spriteMappings.Add(Static.SPRITE_BURN, burn);
+            spriteMappings.Add(Static.SPRITE_MAGIC_MISSILE, magicmissile);
             spriteMappings.Add(Static.SPRITE_HEAL, heal);
             spriteMappings.Add(Static.SPRITE_BULLET, bullet);
             spriteMappings.Add(Static.SPRITE_SWORD, sword);
