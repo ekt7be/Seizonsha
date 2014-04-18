@@ -74,6 +74,7 @@ namespace GameName1
 
 
         public int Wave { get; set; }
+        public int totalEnemies;
         public int numberEnemies;
         private int difficulty;
 
@@ -1466,6 +1467,7 @@ namespace GameName1
         public void increaseNumberEnemies()
         {
             numberEnemies++;
+            totalEnemies++;
         }
 
         public void decreaseNumberEnemies()
