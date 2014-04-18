@@ -40,7 +40,12 @@ namespace GameName1
 
 			Static.TILES_ON_SCREEN_X = map.Width; 			
 			Static.TILES_ON_SCREEN_Y = map.Height; 			
-			Static.TILE_WIDTH = map.TileWidth; 				
+			Static.TILE_WIDTH = map.TileWidth; 
+
+			List<int> spawn_tiles_up = new List<int>(new int[] {1033, 1157});
+			List<int> spawn_tiles_right = new List<int>(new int[] {1033, 1157});
+			List<int> spawn_tiles_down = new List<int>(new int[] {1033, 1157});
+			List<int> spawn_tiles_left = new List<int>(new int[] {1033, 1157});
 
 			string line;
 			System.IO.StreamReader file = new System.IO.StreamReader(Path.Combine(game.Content.RootDirectory, "maps/"+mapname+".txt"));
@@ -89,6 +94,7 @@ namespace GameName1
 								}
 
 								else if (type == "special") {
+
                                     if (tileNum == Static.SPAWN_POINT_LEFT)
                                     {
                                         SpawnTile spawnTile = new SpawnTile(Static.SPAWN_POINT_LEFT, i * Static.TILE_WIDTH, j * Static.TILE_WIDTH);
