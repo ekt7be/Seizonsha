@@ -255,6 +255,10 @@ namespace GameName1
 
         //Magic Missle
         public static readonly string MAGIC_MISSILE_NAME = "Magic Missile";
+        public static readonly int MAGIC_MISSILE_COST = 20;
+        public static readonly int MAGIC_MISSILE_RECHARGE = 60*2;
+        public static readonly int MAGIC_MISSILE_CASTING_TIME = 30;
+        public static readonly int MAGIC_MISSILE_FREEZE_TIME = MAGIC_MISSILE_CASTING_TIME;
 
         //Drain Enchant
         public static readonly string DRAINENCHANT_NAME = "Drain Enchant";

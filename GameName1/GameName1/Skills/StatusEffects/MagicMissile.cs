@@ -17,7 +17,7 @@ namespace GameName1.Skills
 
 
         public MagicMissile(Seizonsha game, GameEntity user, int damage, int recharge_time)
-            : base(game, user, Static.LIGHTNING_ARROW_COST, Static.FIRELANCE_RECHARGE, 30, 30)
+            : base(game, user, Static.MAGIC_MISSILE_COST, Static.MAGIC_MISSILE_RECHARGE, Static.MAGIC_MISSILE_CASTING_TIME, Static.MAGIC_MISSILE_FREEZE_TIME)
         {
             this.damage = damage;
             time = 0;
@@ -51,11 +51,11 @@ namespace GameName1.Skills
                 time++;
                 if (time == 10)
                 {
-                    int width = 20;
-                    int length = 60;
+                    int width = 10;
+                    int length = 30;
                     Rectangle slashBounds = new Rectangle((int)(user.getCenterX()), (int)(user.getCenterY() - 5), length, width);
                     List<PolygonIntersection.Vector> points = new List<PolygonIntersection.Vector>();
-                    float theta = bufferedDirection;
+                    float theta = user.getDirectionAngle();
                     //if(theta < (float)(2.0*Math.PI)) theta += 2.0f*(float)Math.PI;
                     float ox = user.getCenterX();
                     float oy = user.getCenterY() - (int)(width / 2);
@@ -77,18 +77,18 @@ namespace GameName1.Skills
 
                     PolygonIntersection.Polygon polygon = new PolygonIntersection.Polygon(points);
                     //game.Spawn(new SwordSlash(game, user, Static.PIXEL_THIN, slashBounds, damage, damageType, 10, user.vectorDirection), slashBounds.Left, slashBounds.Top);
-                    Arrow attack = new Arrow(game, user, Seizonsha.spriteMappings[Static.SPRITE_FIREBALL], this, slashBounds, polygon, damage, damageType, 20, new Vector2(bufferedVectorDirection.X * 50, bufferedVectorDirection.Y * 50), bufferedDirection, false);
+                    Arrow attack = new Arrow(game, user, Seizonsha.spriteMappings[Static.SPRITE_FIREBALL], this, slashBounds, polygon, damage, damageType, 30, new Vector2(user.vectorDirection.X * 20, user.vectorDirection.Y * 20), user.getDirectionAngle(), false);
                     attack.rotateToAngle(this.bufferedDirection);
 
                     game.Spawn(attack, slashBounds.Left, slashBounds.Top);
                 }
                 else if (time == 20)
                 {
-                    int width = 20;
-                    int length = 60;
+                    int width = 10;
+                    int length = 30;
                     Rectangle slashBounds = new Rectangle((int)(user.getCenterX()), (int)(user.getCenterY() - 5), length, width);
                     List<PolygonIntersection.Vector> points = new List<PolygonIntersection.Vector>();
-                    float theta = bufferedDirection;
+                    float theta = user.getDirectionAngle();
                     //if(theta < (float)(2.0*Math.PI)) theta += 2.0f*(float)Math.PI;
                     float ox = user.getCenterX();
                     float oy = user.getCenterY() - (int)(width / 2);
@@ -110,7 +110,7 @@ namespace GameName1.Skills
 
                     PolygonIntersection.Polygon polygon = new PolygonIntersection.Polygon(points);
                     //game.Spawn(new SwordSlash(game, user, Static.PIXEL_THIN, slashBounds, damage, damageType, 10, user.vectorDirection), slashBounds.Left, slashBounds.Top);
-                    Arrow attack = new Arrow(game, user, Seizonsha.spriteMappings[Static.SPRITE_FIREBALL], this, slashBounds, polygon, damage, damageType, 20, new Vector2(bufferedVectorDirection.X * 50, bufferedVectorDirection.Y * 50), bufferedDirection, false);
+                    Arrow attack = new Arrow(game, user, Seizonsha.spriteMappings[Static.SPRITE_FIREBALL], this, slashBounds, polygon, damage, damageType, 30, new Vector2(user.vectorDirection.X * 20, user.vectorDirection.Y * 20), user.getDirectionAngle(), false);
                     attack.rotateToAngle(this.bufferedDirection);
 
                     game.Spawn(attack, slashBounds.Left, slashBounds.Top);
@@ -125,8 +125,8 @@ namespace GameName1.Skills
         {
             fired = true;
             this.time = 0;
-            int width = 20;
-            int length = 60;
+            int width = 10;
+            int length = 30;
             Rectangle slashBounds = new Rectangle((int)(user.getCenterX()), (int)(user.getCenterY() - 5), length, width);
             List<PolygonIntersection.Vector> points = new List<PolygonIntersection.Vector>();
             float theta = bufferedDirection;
@@ -151,7 +151,7 @@ namespace GameName1.Skills
 
             PolygonIntersection.Polygon polygon = new PolygonIntersection.Polygon(points);
             //game.Spawn(new SwordSlash(game, user, Static.PIXEL_THIN, slashBounds, damage, damageType, 10, user.vectorDirection), slashBounds.Left, slashBounds.Top);
-            Arrow attack = new Arrow(game, user, Seizonsha.spriteMappings[Static.SPRITE_FIREBALL], this, slashBounds, polygon, damage, damageType, 20, new Vector2(bufferedVectorDirection.X * 30, bufferedVectorDirection.Y * 30), bufferedDirection, false);
+            Arrow attack = new Arrow(game, user, Seizonsha.spriteMappings[Static.SPRITE_FIREBALL], this, slashBounds, polygon, damage, damageType, 30, new Vector2(bufferedVectorDirection.X * 20, bufferedVectorDirection.Y * 20), bufferedDirection, false);
             attack.rotateToAngle(this.bufferedDirection);
 
             game.Spawn(attack, slashBounds.Left, slashBounds.Top);
