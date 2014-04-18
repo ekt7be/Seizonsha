@@ -295,10 +295,10 @@ namespace GameName1
             addEquipable(mm);
             Equip(mm, Static.PLAYER_R1_SKILL_INDEX);
 
-            /*LightningEnchant lightningenchant = new LightningEnchant(game, this, 5, 0);
+            LightningEnchant lightningenchant = new LightningEnchant(game, this, 5, 0);
             addEquipable(lightningenchant);
             Equip(lightningenchant, Static.PLAYER_R2_SKILL_INDEX);
-            */
+            
 
             /*
             HealingTouch healingtouch = new HealingTouch(game, this, 50, 60);

@@ -123,7 +123,7 @@ namespace GameName1.SkillTree
             SkillTreeNode ManaPlusNode = new SkillTreeNode(this, nodeTextures[Static.SKILL_TREE_NODE_ANY], new ManaPlusUnlockable(50), 2000);
             nodes.Add(ManaPlusNode);
 
-            SkillTreeNode TeleportNode = new SkillTreeNode(this, nodeTextures[Static.SKILL_TREE_NODE_ANY], new Teleport(game,player,40,40,20), 2000);
+            SkillTreeNode TeleportNode = new SkillTreeNode(this, nodeTextures[Static.TELEPORT_NAME], new Teleport(game,player,40,40,20), 2000);
             nodes.Add(TeleportNode);
 
 
