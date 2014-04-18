@@ -67,11 +67,11 @@ namespace GameName1
         //difficulties
         public static readonly int MAX_DIFFICULTY = 8;
         public static readonly int BASIC_ENEMY_DIFFICULTY_1 = 1;
-        public static readonly int BASIC_ENEMY_DIFFICULTY_2 = 7;
+        public static readonly int BASIC_ENEMY_DIFFICULTY_2 = 8;
         public static readonly int BASIC_ENEMY_DIFFICULTY_3 = 20;
 
         public static readonly int EXPLODE_ENEMY_DIFFICULTY_1 = 3;
-        public static readonly int EXPLODE_ENEMY_DIFFICULTY_2 = 8;
+        public static readonly int EXPLODE_ENEMY_DIFFICULTY_2 = 7;
         public static readonly int EXPLODE_ENEMY_DIFFICULTY_3 = 16;
 
         //basic enemy
