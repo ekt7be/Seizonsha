@@ -187,8 +187,6 @@ namespace GameName1.NPCs
 
             double rand = random.NextDouble();
 
-            game.Spawn(new WeaponDrop(game, Seizonsha.spriteMappings[Static.SPRITE_SWORD_DROP], 20, 20, new RustyShank(game, this)), x, y);
-            return;
 
             if (level == 1)
             {
