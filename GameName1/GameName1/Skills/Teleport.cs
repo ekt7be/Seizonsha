@@ -39,6 +39,7 @@ namespace GameName1.Skills
 
         protected override void UseSkill()
         {
+            game.teleportSound.Play();
                 Vector2 unitV = Vector2.Normalize(user.vectorDirection);
                 float dist = 200f;
                 game.moveGameEntity(user,unitV.X*dist, unitV.Y*dist);

@@ -83,6 +83,7 @@ namespace GameName1.Skills
 
         protected override void UseSkill()
         {
+            game.lightningArrowSound.Play(1f, 1f, 1f);
             this.hit = new List<GameEntity>();
             int width = 50;
             int length = 125;

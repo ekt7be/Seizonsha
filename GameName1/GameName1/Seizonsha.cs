@@ -40,15 +40,29 @@ namespace GameName1
         private bool paused;
 		FPSCounterComponent fps;
 		private bool showFPS = false;
+        public SoundEffect deathSound;
+        public SoundEffectInstance deathSoundInstance;
         public SoundEffect bossSound;
         public SoundEffectInstance bossSoundLoop;
         public SoundEffect gameSound;
         public SoundEffectInstance gameSoundLoop;
-
+        public SoundEffect swordSlashSound;
+        public SoundEffectInstance swordSlashSoundInstance;
+        public SoundEffect regrowthSound;
+        public SoundEffect healingRainSound;
+        public SoundEffect enchantSound;
+        public SoundEffect lightningArrowSound;
+        public SoundEffect teleportSound;
+        public SoundEffect orcDeathSound;
+        public SoundEffect battleCrySound;
+        public SoundEffect lightningEnchantSound;
+        public SoundEffect fireballSound;
+        public SoundEffect fireballHitSound;
+        public SoundEffect gameOverSound;
+        public SoundEffect blizzardSound;
 
 		public float sinceLastWaveCleared;
 
-	
         // By preloading any assets used by UI rendering, we avoid framerate glitches
         // when they suddenly need to be loaded in the middle of a menu transition.
         static readonly string[] preloadAssets =
@@ -122,8 +136,6 @@ namespace GameName1
             graphics.PreferredBackBufferHeight = Static.SCREEN_HEIGHT;
             graphics.PreferredBackBufferWidth = Static.SCREEN_WIDTH;
 
-
-
             playerRect = Content.Load<Texture2D>("Sprites/Bodies/HumanSpriteSheetLight");
             Texture2D npcRect = Content.Load<Texture2D>("Sprites/player");
             Texture2D basicEnemyRect = Content.Load<Texture2D>("Sprites/Bodies/SkeletonSpriteSheet");
@@ -154,7 +166,6 @@ namespace GameName1
 
             Texture2D arrow = Content.Load<Texture2D>("Sprites/arrowfullspritesheet.png");
 
-
             Texture2D fireball = Content.Load<Texture2D>("Sprites/fireballsprite");
             Texture2D blizzard = Content.Load<Texture2D>("Sprites/SpellEffects/blizzard");
             Texture2D shock = Content.Load<Texture2D>("Sprites/SpellEffects/shock");
@@ -168,12 +179,30 @@ namespace GameName1
             Texture2D bowWeapon = Content.Load<Texture2D>("Sprites/Weapons/RecurveBowSpriteSheet");
 
             Texture2D dagger = Content.Load<Texture2D>("Sprites/Weapons/DaggerSpriteSheet");
-
             Texture2D reticle = Content.Load<Texture2D>("Sprites/reticle");
 
+            //sounds
             gameSound = Content.Load<SoundEffect>("sound/antique_market");
+            deathSound = Content.Load<SoundEffect>("sound/simple death");
+            deathSoundInstance = deathSound.CreateInstance();
+            swordSlashSound = Content.Load<SoundEffect>("sound/sword sound");
+            swordSlashSoundInstance = swordSlashSound.CreateInstance();
+            regrowthSound = Content.Load<SoundEffect>("sound/regrowth sound");
+            healingRainSound = Content.Load<SoundEffect>("sound/healing rain sound");
+            enchantSound = Content.Load<SoundEffect>("sound/enchant sound");
+            lightningArrowSound = Content.Load<SoundEffect>("sound/lightning arrow sound");
+            teleportSound = Content.Load<SoundEffect>("sound/teleport sound");
+            orcDeathSound = Content.Load<SoundEffect>("sound/orc death sound");
+            battleCrySound = Content.Load<SoundEffect>("sound/battle cry sound");
+            lightningEnchantSound = Content.Load<SoundEffect>("sound/lightning enchant sound");
+            fireballSound = Content.Load<SoundEffect>("sound/fireball sound");
+            fireballHitSound = Content.Load<SoundEffect>("sound/fireball hit sound");
+            gameOverSound = Content.Load<SoundEffect>("sound/game over sound1");
+            blizzardSound = Content.Load<SoundEffect>("sound/blizzard sound 4");
+
             gameSoundLoop = gameSound.CreateInstance();
             gameSoundLoop.IsLooped = true;
+            gameSoundLoop.Volume = .1f;
             bossSound = Content.Load<SoundEffect>("sound/armageddon");
             bossSoundLoop = bossSound.CreateInstance();
             bossSoundLoop.IsLooped = true;
@@ -696,6 +725,7 @@ namespace GameName1
                 {
                     bossSoundLoop.Stop();
                 }
+                gameOverSound.Play(100f, 0f, 0f);
                 screenManager.AddScreen(new GameOverMenuScreen(), null);
             }
 
@@ -943,8 +973,8 @@ namespace GameName1
 				// calculates mouse aim angle and rotation 
                 MouseState mouse = Mouse.GetState();
                 Vector2 playerMouseDistance; // distance between player and mouse
-				playerMouseDistance.X = player.camera.getWorldPositionX(mouse.X) - player.x;
-				playerMouseDistance.Y = player.camera.getWorldPositionY(mouse.Y) - player.y;
+				playerMouseDistance.X = player.camera.getWorldPositionX(mouse.X) - player.x - player.viewportBounds.X;
+				playerMouseDistance.Y = player.camera.getWorldPositionY(mouse.Y) - player.y - player.viewportBounds.Y;
 				player.rotateToAngle((float)Math.Atan2(playerMouseDistance.Y, playerMouseDistance.X)); // angle to point at	
 
                 if (mouse.LeftButton == ButtonState.Pressed)

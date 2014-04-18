@@ -39,6 +39,7 @@ namespace GameName1.Skills
 
         protected override void UseSkill()
         {
+            game.regrowthSound.Play();
             int distance = 0;
             int sW = 300;
             int sH = 300;

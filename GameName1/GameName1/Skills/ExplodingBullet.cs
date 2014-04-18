@@ -23,7 +23,7 @@ namespace GameName1.Skills
 
         public override void collide(GameEntity entity)
         {
-
+            
             if (damageType == Static.TARGET_TYPE_GOOD && entity.getTargetType() == Static.TARGET_TYPE_GOOD)
             {
 
@@ -35,8 +35,11 @@ namespace GameName1.Skills
                 Rectangle slashBounds = new Rectangle((int)(entity.getCenterX() - explosionWidth / 2), (int)(entity.getCenterY() - explosionWidth / 2), explosionWidth, explosionHeight);
                 game.Spawn(EntityFactory.getAOECone(game, sprite, this.origin, slashBounds, amount, this.damageType, 10, 1f), slashBounds.Left, slashBounds.Top);
                 setRemove(true);
+                if (origin is Fireball)
+                {
+                    game.fireballHitSound.Play();//playsound
+                }
             }
-
         }
 
         public override void collideWithWall()
@@ -46,6 +49,10 @@ namespace GameName1.Skills
             Rectangle slashBounds = new Rectangle((int)(getCenterX() - explosionWidth / 2), (int)(getCenterY() - explosionWidth / 2), explosionWidth, explosionHeight);
             game.Spawn(EntityFactory.getAOECone(game, sprite, this.origin, slashBounds, amount, this.damageType, 10, 1f), slashBounds.Left, slashBounds.Top);
             setRemove(true);
+            if (origin is Fireball)
+            {
+                game.fireballHitSound.Play();//playsound
+            }
         }
 
 

@@ -67,7 +67,7 @@ namespace GameName1
 		public int skillbarIndex2 = 0; 
 		public Rectangle highlightRect; 
 		bool selectingSkill, selectingSkill2; 
-		Rectangle viewportBounds;
+		public Rectangle viewportBounds;
 
         public bool drawWeapon = true;
 
@@ -320,7 +320,6 @@ namespace GameName1
             base.scale = Static.PLAYER_SPRITE_SCALE;
 
             this.rotateToAngle(0f); //sets correct animation
-
            //incArmor(); //incArmor();
    }
 

@@ -37,9 +37,9 @@ namespace GameName1.Skills
             if (game.ShouldDamage(this.damageType, affected.getTargetType())) affected.addStatusEffect(new Taunt(game, user, this, Static.PIXEL_THIN, affected, this.damageType, 3*60));
         }
 
-
         protected override void UseSkill()
         {
+            game.battleCrySound.Play();
             int distance = 0;
             int sW = 250;
             int sH = 250;
