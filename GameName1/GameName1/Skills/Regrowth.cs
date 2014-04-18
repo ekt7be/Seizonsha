@@ -36,7 +36,6 @@ namespace GameName1.Skills
             if (game.ShouldHeal(this.damageType, affected.getTargetType())) affected.addStatusEffect(new GameName1.Effects.HealOverTime(game, user, this, Static.PIXEL_THIN, affected, 3, this.damageType, 4*60));
         }
 
-
         protected override void UseSkill()
         {
             game.regrowthSound.Play();
@@ -50,7 +49,6 @@ namespace GameName1.Skills
             attack.setTint(Color.White * .5f);
             game.Spawn(attack, slashBounds.Left, slashBounds.Top);
         }
-
 
         public void OnUnlock(Player player)
         {

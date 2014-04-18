@@ -74,7 +74,7 @@ namespace GameName1.SkillTree
             nodes.Add(WeaponPlusNode3);
 
            // SkillTreeNode AOETauntNode = new SkillTreeNode(this, nodeTextures[Static.BATTLECRY_NAME], new BattleCry(game, player, 0, 250), 2000);
-            SkillTreeNode AOETauntNode = new SkillTreeNode(this, nodeTextures[Static.BATTLECRY_NAME], new BattleCry(game, player, 0, 250), 1500);
+            SkillTreeNode AOETauntNode = new SkillTreeNode(this, nodeTextures[Static.BATTLECRY_NAME], new BattleCry(game, player, 0, 75), 1500);
             nodes.Add(AOETauntNode);
 
             //SkillTreeNode EnchantTauntNode = new SkillTreeNode(this, nodeTextures[Static.TAUNTINGENCHANT_NAME], new TauntingEnchant(game, player, 250), 2000);
@@ -135,7 +135,7 @@ namespace GameName1.SkillTree
 
 			SkillTreeNode FirelanceNode = new SkillTreeNode(this, nodeTextures[Static.FIRELANCE_NAME], new FireLance(game,player,Static.FIRELANCE_DAMAGE, 30), 1200); //1500
             nodes.Add(FirelanceNode);
-            SkillTreeNode LifeDrainNode = new SkillTreeNode(this, nodeTextures[Static.LIFE_DRAIN_NAME], new LifeDrain(game, player, 5, 6, 4), 1200);
+            SkillTreeNode LifeDrainNode = new SkillTreeNode(this, nodeTextures[Static.LIFE_DRAIN_NAME], new LifeDrain(game, player, 25, 6, 4), 1200);
             nodes.Add(LifeDrainNode);
             SkillTreeNode FireballNode = new SkillTreeNode(this, nodeTextures[Static.FIREBALL_NAME], new Fireball(game, player, 40, 40, 10f), 600);
             nodes.Add(FireballNode);

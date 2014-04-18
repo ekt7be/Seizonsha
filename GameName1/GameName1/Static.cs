@@ -380,9 +380,6 @@ namespace GameName1
 		public static SpriteFont SPRITEFONT_Calibri14 = null;
 
 
-
-
-
         //static pixel for drawing rectangles
         public static Texture2D PIXEL_THIN = null;
         public static Texture2D PIXEL_THICK = null;

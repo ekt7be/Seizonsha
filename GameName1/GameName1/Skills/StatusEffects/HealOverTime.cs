@@ -37,7 +37,5 @@ namespace GameName1.Effects
             }
             base.Update();
         }
-
-
     }
 }

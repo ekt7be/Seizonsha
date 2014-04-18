@@ -18,10 +18,6 @@ namespace GameName1.NPCs
         //float elapsed;
 		double closestDistance;
 
-
-
-
-
 		//private int currentFrame = 0;
 		private Sword sword;
 

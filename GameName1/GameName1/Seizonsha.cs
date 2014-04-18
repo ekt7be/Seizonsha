@@ -1703,7 +1703,8 @@ namespace GameName1
                 player.waveClear();
             }
             //difficulty++;
-            difficulty = (int)Math.Pow((double)difficulty, 1 + Static.NUM_PLAYERS * .2);
+            difficulty = (int)Math.Pow((double)difficulty, 1 + Static.NUM_PLAYERS * .05);
+            difficulty++;
 
         }
 

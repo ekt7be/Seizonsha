@@ -16,7 +16,7 @@ namespace GameName1.Skills
         private int damage;
 
         public BattleCry(Seizonsha game, GameEntity user, int damage, int recharge_time)
-            : base(game, user, 0, recharge_time, recharge_time / 2, 0)
+            : base(game, user, 0, recharge_time, 10, 0)
         {
             this.damage = damage;
 
