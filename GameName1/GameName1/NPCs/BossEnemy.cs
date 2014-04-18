@@ -143,9 +143,7 @@ namespace GameName1.NPCs
             {
                 game.Spawn(new Food(game, "Tasty Steak", Seizonsha.spriteMappings[Static.SPRITE_MEAT_DROP], 100), x - 30, y - 30);
             }
-
-			game.decreaseNumberEnemies();
-		}
+        }
 
 		public override void rotateToAngle(float angle) //animation is based on rotation which is used by both movement and aiming
 		{

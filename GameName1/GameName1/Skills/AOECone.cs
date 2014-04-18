@@ -14,7 +14,6 @@ namespace GameName1.Skills
         private int amount;
         private Skill origin;
 
-
         public AOECone(Seizonsha game, Texture2D sprite, Skill origin, Rectangle bounds, int amount, int damageType, int duration, float depth)
             : base(game, sprite, bounds.Width, bounds.Height, duration)
         {
