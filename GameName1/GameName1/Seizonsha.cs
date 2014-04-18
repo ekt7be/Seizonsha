@@ -206,7 +206,7 @@ namespace GameName1
 
             gameSoundLoop = gameSound.CreateInstance();
             gameSoundLoop.IsLooped = true;
-            gameSoundLoop.Volume = .5f;
+            gameSoundLoop.Volume = .75f;
             bossSound = Content.Load<SoundEffect>("sound/armageddon");
             bossSoundLoop = bossSound.CreateInstance();
             bossSoundLoop.IsLooped = true;
