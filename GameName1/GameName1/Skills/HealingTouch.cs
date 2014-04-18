@@ -55,9 +55,9 @@ namespace GameName1.Skills
             int damageType = Static.DAMAGE_TYPE_NO_DAMAGE;
 
             damageType = Static.DAMAGE_TYPE_ALL;
-            int width = 200;
-            int height = 200;
-            Rectangle healBounds = new Rectangle((int)(user.getCenterX() + user.vectorDirection.X * user.width / 2 - width / 2), (int)(user.getCenterY() + user.vectorDirection.Y * user.height / 2 - height / 4), Static.PLAYER_WIDTH / 2, Static.PLAYER_HEIGHT / 2);
+            int boundsWidth = 200;
+            int boundsHeight = 200;
+            Rectangle healBounds = new Rectangle((int)(user.getCenterX() + user.vectorDirection.X * user.width / 2 - boundsWidth / 2), (int)(user.getCenterY() + user.vectorDirection.Y * user.height / 2 - boundsHeight / 2), boundsWidth, boundsHeight);
 
             game.Spawn(new HealAnimation(game, Seizonsha.spriteMappings[Static.SPRITE_HEAL], this, healBounds, healing, damageType, 30), healBounds.Left, healBounds.Top);
         }
