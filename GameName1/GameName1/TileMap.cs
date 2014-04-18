@@ -29,8 +29,10 @@ namespace GameName1
 			wallTiles = new List<int>(new int[] {1033, 1157});	// look at map.txt and set the wall tile numbers
 			wallTiles2 = new HashSet<Tile>();
 			groundTiles2 = new HashSet<Tile>();
+
+			string mapname = "test"; 
 		
-			map = Map.Load(Path.Combine(game.Content.RootDirectory, "maps/final.tmx"), game.Content);
+			map = Map.Load(Path.Combine(game.Content.RootDirectory, "maps/"+mapname+".tmx"), game.Content);
 
 			tiles = new Tile[map.Width, map.Height];
 
@@ -41,7 +43,7 @@ namespace GameName1
 			Static.TILE_WIDTH = map.TileWidth; 				
 
 			string line;
-			System.IO.StreamReader file = new System.IO.StreamReader(Path.Combine(game.Content.RootDirectory, "maps/final.txt"));
+			System.IO.StreamReader file = new System.IO.StreamReader(Path.Combine(game.Content.RootDirectory, "maps/"+mapname+".txt"));
 
 			//Console.WriteLine(Static.TILE_WIDTH); 
 
@@ -65,7 +67,7 @@ namespace GameName1
 							int tileNum = 0; 
 
 							//Console.Write(nums[i] + " "); 
-							Console.WriteLine(i); 
+							//Console.WriteLine(i); 
 							if (int.TryParse(nums[i], out m))
 								tileNum = Convert.ToInt32(nums[i]);	// number that represents tile in .txt
 					
