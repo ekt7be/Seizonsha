@@ -10,8 +10,6 @@ namespace GameName1.Skills
 	abstract class Gun : Weapon
 	{
 
-
-		private int damage;
 		private float bulletSpeed;
         public int ammo;
         public int clipSize;
@@ -20,10 +18,8 @@ namespace GameName1.Skills
         private Boolean unlimitedAmmo;
 
 
-		public Gun(Seizonsha game, GameEntity user, int damage, int recharge_time, int freezeTime, float bulletSpeed, int level, string name, int clipSize, Color tint) : base(game, user,recharge_time, freezeTime, level, name, tint)
+		public Gun(Seizonsha game, GameEntity user, int damage, int recharge_time, int freezeTime, float bulletSpeed, int level, string name, int clipSize, Color tint) : base(game, user,recharge_time, freezeTime, level, damage, name, tint)
 		{
-
-			this.damage = damage;
 			this.bulletSpeed = bulletSpeed;
             this.clipSize = clipSize;
             this.ammo = clipSize;
@@ -60,12 +56,6 @@ namespace GameName1.Skills
             }
 
 		}
-
-        public override void affect(GameEntity affected)
-        {
-            game.damageEntity(user, affected, damage, damageType);
-        }
-
 
 		public override string getDescription()
 		{

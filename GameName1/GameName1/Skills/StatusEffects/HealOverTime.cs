@@ -9,12 +9,13 @@ using System.Text;
 
 namespace GameName1.Effects
 {
-    class Burning :  GameName1.Interfaces.StatusEffect
+    class HealOverTime : GameName1.Interfaces.StatusEffect
     {
         protected int amount;
         protected int damageType;
 
-        public Burning(Seizonsha game, GameEntity user, Skill origin, Texture2D sprite, GameEntity afflicted, int amount, int damageType, int duration) : base(game, user, origin, sprite, afflicted, duration)
+        public HealOverTime(Seizonsha game, GameEntity user, Skill origin, Texture2D sprite, GameEntity afflicted, int amount, int damageType, int duration)
+            : base(game, user, origin, sprite, afflicted, duration)
         {
             this.amount = amount;
             this.damageType = damageType;
@@ -30,10 +31,11 @@ namespace GameName1.Effects
         }
         public override void Update()
         {
-            if(time % 30 == 0){
-             game.damageEntity(user, afflicted, amount, this.damageType);
+            if (time % 30 == 0)
+            {
+                game.healEntity(user, afflicted, amount, this.damageType);
             }
- 	        base.Update();
+            base.Update();
         }
 
 

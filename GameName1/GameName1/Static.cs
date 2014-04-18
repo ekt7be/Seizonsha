@@ -223,8 +223,17 @@ namespace GameName1
         //Bash
         public static readonly string BASH_NAME = "Bash";
 
+        //Regrowth
+        public static readonly string REGROWTH_NAME = "Regrowth";
+
+        //Lighting Enchant
+        public static readonly string LIGHTNINGENCHANT_NAME = "Lighnting Enchant";
+
         //Healing Touch
         public static readonly string HEALING_TOUCH_NAME = "Healing Touch";
+
+        //Healing Rain
+        public static readonly string HEALING_RAIN_NAME = "Healing Rain";
 
         //skilltree sprites
 		public static readonly string SKILL_TREE_NODE_ANY = "Blank";

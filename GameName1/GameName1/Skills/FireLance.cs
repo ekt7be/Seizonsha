@@ -36,7 +36,7 @@ namespace GameName1.Skills
         {
             game.damageEntity(user, affected, this.damage, this.damageType);
             
-            affected.addStatusEffect(new Burning(game, user, this, null, affected, 1, this.damageType, 40));
+            affected.addStatusEffect(new Burning(game, user, this, null, affected, 1, this.damageType, 5*60));
         }
 
 

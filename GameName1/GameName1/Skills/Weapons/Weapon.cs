@@ -14,9 +14,12 @@ namespace GameName1.Skills
         String name;
         protected Color tint;
 
-        public Weapon(Seizonsha game, GameEntity user, int recharge_time, int freezeTime, int level, String name, Color tint)
+        protected int damage;
+
+        public Weapon(Seizonsha game, GameEntity user, int recharge_time, int freezeTime, int level, int damage, String name, Color tint)
             : base(game, user, 0, recharge_time, 0, freezeTime)
         {
+            this.damage = damage;
             this.level = level;
             this.name = name;
             this.tint = tint;
@@ -39,6 +42,17 @@ namespace GameName1.Skills
         public override string getName()
         {
             return name;
+        }
+
+        public override void affect(GameEntity affected)
+        {
+            game.damageEntity(user, affected, this.damage, this.damageType);
+            if (user is Player)
+            {
+                foreach(Skill onHitEffect in ((Player)user).onHitEffects){
+                    onHitEffect.affect(affected);
+                }
+            }
         }
 
         public void setTint(Color tint)

@@ -30,6 +30,7 @@ namespace GameName1
         public float manaRegen;
         private float mana;
         public float maxMana;
+        public List<Skill> onHitEffects;
 
         private int armorLevel;
         private Color armorColor;
@@ -227,6 +228,7 @@ namespace GameName1
             this.playerIndex = playerIndex;
             this.armorLevel = 1;
             this.armorColor = Static.PLAYER_ARMOR_COLOR_0;
+            this.onHitEffects = new List<Skill>();
 
             this.weaponLevel = 1;
 
@@ -269,6 +271,18 @@ namespace GameName1
             Fireball fireball = new Fireball(game, this, 40, 30, 10);
             addEquipable(fireball);
             Equip(fireball, Static.PLAYER_R2_SKILL_INDEX);
+
+            Regrowth regrowth = new Regrowth(game, this, 30, 120);
+            addEquipable(regrowth);
+            Equip(regrowth, Static.PLAYER_R2_SKILL_INDEX);
+
+            HealingRain healingrain = new HealingRain(game, this, 15, 60, 5*60);
+            addEquipable(healingrain);
+            Equip(healingrain, Static.PLAYER_R1_SKILL_INDEX);
+
+            LightningEnchant lightningenchant = new LightningEnchant(game, this, 5, 0);
+            addEquipable(lightningenchant);
+            Equip(lightningenchant, Static.PLAYER_R1_SKILL_INDEX);
 
             HealingTouch healingtouch = new HealingTouch(game, this, 50, 60);
             addEquipable(healingtouch);

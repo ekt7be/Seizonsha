@@ -25,7 +25,7 @@ namespace GameName1.Skills
         {
             game.damageEntity(user, affected, this.damage, this.damageType);
            if (game.ShouldDamage(this.damageType,affected.getTargetType())){
-                affected.addStatusEffect(new GameName1.Effects.Burning(game, user, this, null, affected, 1, damageType, 40));
+                affected.addStatusEffect(new GameName1.Effects.Burning(game, user, this, null, affected, 5, damageType, 2*60));
            }
         }
 

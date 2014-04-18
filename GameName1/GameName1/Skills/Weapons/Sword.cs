@@ -12,7 +12,7 @@ namespace GameName1.Skills
     public class Sword : Weapon, Unlockable
     {
 
-        private int damage;
+        
 
         protected Rectangle? swordSource;
 
@@ -20,9 +20,8 @@ namespace GameName1.Skills
 
         protected Texture2D sprite;
 
-        public Sword(Seizonsha game, GameEntity user,int damage, int recharge_time, int level, string name, Color tint) : base(game, user, recharge_time, recharge_time/2, level, name, tint)
+        public Sword(Seizonsha game, GameEntity user,int damage, int recharge_time, int level, string name, Color tint) : base(game, user, recharge_time, recharge_time/2, level, damage, name, tint)
         {
-            this.damage = damage;
             slashAnimation = new SlashAnimation(this, user, recharge_time);
             this.sprite = Seizonsha.spriteMappings[Static.SPRITE_SWORD];
 
@@ -64,12 +63,6 @@ namespace GameName1.Skills
         public override string getDescription()
         {
             return "A SWORD";
-        }
-
-
-        public override void affect(GameEntity affected)
-        {
-            game.damageEntity(user, affected, this.damage, this.damageType);
         }
 
 

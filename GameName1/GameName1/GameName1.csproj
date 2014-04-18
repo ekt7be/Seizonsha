@@ -75,9 +75,13 @@
     <Compile Include="Skills\AOEStatus.cs" />
     <Compile Include="Skills\Bash.cs" />
     <Compile Include="Skills\Blizzard.cs" />
+    <Compile Include="Skills\HealingRain.cs" />
     <Compile Include="Skills\Kick.cs" />
+    <Compile Include="Skills\LightningEnchant.cs" />
+    <Compile Include="Skills\Regrowth.cs" />
     <Compile Include="Skills\StatusEffects\Burning.cs" />
     <Compile Include="Effects\Effect.cs" />
+    <Compile Include="Skills\StatusEffects\HealOverTime.cs" />
     <Compile Include="Skills\StatusEffects\StatusEffect.cs" />
     <Compile Include="Effects\TextEffect.cs" />
     <Compile Include="Interfaces\AI.cs" />
