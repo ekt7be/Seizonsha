@@ -227,7 +227,9 @@ namespace GameName1
         //Firelance
         public static readonly int FIRELANCE_COST = 15;
         public static readonly int FIRELANCE_RECHARGE = 5;
-        public static readonly int FIRELANCE_DAMAGE = 25;
+        public static readonly int FIRELANCE_DAMAGE = 5;
+        public static readonly int FIRELANCE_DOT_TICK = 5;
+        public static readonly int FIRELANCE_DOT_DUR = 4 * 60;
         public static readonly string FIRELANCE_NAME = "Fire Lance";
 
         //Fireball

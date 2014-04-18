@@ -62,8 +62,12 @@ namespace GameName1.Skills
             float dist = 100;
             Rectangle slashBounds = new Rectangle((int)(user.getCenterX() + this.bufferedVectorDirection.X * dist - 50), (int)(user.getCenterY() +this.bufferedVectorDirection.Y * dist - 50), 100, 100);
             //game.Spawn(new SwordSlash(game, user, Static.PIXEL_THIN, slashBounds, damage, damageType, 10, user.vectorDirection), slashBounds.Left, slashBounds.Top);
+<<<<<<< Updated upstream
             AOEStatus blizzard = new AOEStatus(game, user, Static.PIXEL_THIN, this, slashBounds,this.duration, 1f);
             blizzard.tint = Color.White * .4f;
+=======
+            AOEStatus blizzard = new AOEStatus(game, user, Static.PIXEL_THIN, this, slashBounds,this.duration, 1);
+>>>>>>> Stashed changes
             game.Spawn(blizzard, slashBounds.Left, slashBounds.Top);
         }
 

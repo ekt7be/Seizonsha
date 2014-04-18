@@ -13,14 +13,12 @@ namespace GameName1.Skills
 
         private int damage;
         private int duration;
-        private int time;
 
 
         public HealingRain(Seizonsha game, GameEntity user, int damage, int recharge_time, int duration)
             : base(game, user, 15, recharge_time, 5, 10)
         {
             this.damage = damage;
-            this.time = 0;
             this.duration = duration;
         }
 
@@ -36,16 +34,11 @@ namespace GameName1.Skills
 
         public override void affect(GameEntity affected)
         {
-            if (this.time % 30 == 0)
-            {
-                if (game.ShouldHeal(this.damageType, affected.getTargetType())) game.healEntity(user, affected, this.damage, this.damageType);
-            }
-
+            if (game.ShouldHeal(this.damageType, affected.getTargetType())) game.healEntity(user, affected, this.damage, this.damageType);
         }
 
         public override void Update()
         {
-            time++;
             base.Update();
         }
 
@@ -57,8 +50,12 @@ namespace GameName1.Skills
             int sH = 100;
             Rectangle slashBounds = new Rectangle((int)(user.getCenterX() + this.bufferedVectorDirection.X * dist - sW / 2), (int)(user.getCenterY() + this.bufferedVectorDirection.Y * dist - sH / 2), sW, sH);
             //game.Spawn(new SwordSlash(game, user, Static.PIXEL_THIN, slashBounds, damage, damageType, 10, user.vectorDirection), slashBounds.Left, slashBounds.Top);
+<<<<<<< Updated upstream
             AOEStatus rain = new AOEStatus(game, user, Static.PIXEL_THIN, this, slashBounds, this.duration, 1f);
             rain.setTint(Color.White * .5f);
+=======
+            AOEStatus rain = new AOEStatus(game, user, Static.PIXEL_THIN, this, slashBounds, this.duration, 30);
+>>>>>>> Stashed changes
             game.Spawn(rain, slashBounds.Left, slashBounds.Top);
         }
 

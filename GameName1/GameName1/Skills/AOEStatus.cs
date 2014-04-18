@@ -12,14 +12,24 @@ namespace GameName1.Skills
     {
         private GameEntity user;
         private Skill origin;
+        private int time;
+        private int frequency;
 
 
+<<<<<<< Updated upstream
         public AOEStatus(Seizonsha game, GameEntity user, Texture2D sprite, Skill origin, Rectangle bounds, int duration, float depth)
+=======
+        public AOEStatus(Seizonsha game, GameEntity user, Texture2D sprite, Skill origin, Rectangle bounds, int duration, int frequency)
+>>>>>>> Stashed changes
             : base(game, sprite, bounds.Width, bounds.Height, duration)
         {
             this.user = user;
             this.origin = origin;
+<<<<<<< Updated upstream
             this.depth = depth;
+=======
+            this.frequency = frequency;
+>>>>>>> Stashed changes
         }
 
         protected override void OnDie()
@@ -43,7 +53,10 @@ namespace GameName1.Skills
 
         public override void Update(GameTime gameTime)
         {
-            game.affectArea(origin, this.hitbox);
+            if(time % frequency == 0){
+                game.affectArea(origin, this.hitbox);
+            }
+            time++;
 
             base.Update(gameTime);
         }

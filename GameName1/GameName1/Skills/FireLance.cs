@@ -34,9 +34,11 @@ namespace GameName1.Skills
 
         public override void affect(GameEntity affected)
         {
-            game.damageEntity(user, affected, this.damage, this.damageType);
+            if(game.ShouldDamage(this.damageType, affected.getTargetType())){
+                game.damageEntity(user, affected, this.damage, this.damageType);
             
-            affected.addStatusEffect(new Burning(game, user, this, null, affected, 1, this.damageType, 5*60));
+             affected.addStatusEffect(new Burning(game, user, this, null, affected, Static.FIRELANCE_DOT_TICK, this.damageType, Static.FIRELANCE_DOT_DUR));
+            }
         }
 
 

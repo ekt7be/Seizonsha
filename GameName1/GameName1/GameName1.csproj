@@ -127,6 +127,7 @@
     <Compile Include="Skills\Weapons\Revolver.cs" />
     <Compile Include="Skills\Weapons\RustyShank.cs" />
     <Compile Include="Skills\Weapons\RustySword.cs" />
+    <Compile Include="Skills\Weapons\SimpleBow.cs" />
     <Compile Include="Skills\Weapons\Sword.cs" />
     <Compile Include="Skills\Teleport.cs" />
     <Compile Include="Skills\Weapons\Weapon.cs" />
