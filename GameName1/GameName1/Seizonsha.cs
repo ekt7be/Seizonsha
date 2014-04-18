@@ -58,6 +58,7 @@ namespace GameName1
         public SoundEffect lightningEnchantSound;
         public SoundEffect fireballSound;
         public SoundEffect fireballHitSound;
+        public SoundEffect gameOverSound;
 
 		public float sinceLastWaveCleared;
 
@@ -193,6 +194,7 @@ namespace GameName1
             lightningEnchantSound = Content.Load<SoundEffect>("sound/lightning enchant sound");
             fireballSound = Content.Load<SoundEffect>("sound/fireball sound");
             fireballHitSound = Content.Load<SoundEffect>("sound/fireball hit sound");
+            gameOverSound = Content.Load<SoundEffect>("sound/game over sound1");
 
             gameSoundLoop = gameSound.CreateInstance();
             gameSoundLoop.IsLooped = true;
@@ -711,6 +713,7 @@ namespace GameName1
                 {
                     bossSoundLoop.Stop();
                 }
+                gameOverSound.Play(100f, 0f, 0f);
                 screenManager.AddScreen(new GameOverMenuScreen(), null);
             }
 
