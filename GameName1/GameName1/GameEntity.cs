@@ -532,6 +532,16 @@ namespace GameName1
 
        public abstract String getName();
 
+       public void setWidth(int width)
+       {
+           this.width = width;
+           this.hitbox = new Rectangle(x, y, width, height);
+       }
+       public void setHeight(int height)
+       {
+           this.height = height;
+           this.hitbox = new Rectangle(x, y, width, height);
+       }
 
 
        public int CompareTo(GameEntity y)

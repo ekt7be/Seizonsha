@@ -28,7 +28,7 @@ namespace GameName1
         private List<Equipable> unEquippedSkills;
 		public SkillTree.SkillTree skilltree;
         public float manaRegen;
-        private float mana;
+        public float mana;
         public float maxMana;
         public List<Skill> onHitEffects;
 

@@ -18,6 +18,7 @@ namespace GameName1.SkillTree
         public void OnUnlock(Player player)
         {
             player.maxMana += amount;
+            player.mana = player.maxMana;
         }
 
         public string getDescription()

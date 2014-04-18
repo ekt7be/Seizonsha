@@ -92,7 +92,7 @@
     <Compile Include="Skills\StatusEffects\Burning.cs" />
     <Compile Include="Effects\Effect.cs" />
     <Compile Include="Skills\StatusEffects\HealOverTime.cs" />
-    <Compile Include="Skills\StatusEffects\MagicMissile.cs" />
+    <Compile Include="Skills\MagicMissile.cs" />
     <Compile Include="Skills\StatusEffects\StatusEffect.cs" />
     <Compile Include="Effects\TextEffect.cs" />
     <Compile Include="Interfaces\AI.cs" />
@@ -141,6 +141,7 @@
     <Compile Include="PickUps\WeaponDrop.cs" />
     <Compile Include="SkillTree\ArmorPlusUnlockable.cs" />
     <Compile Include="SkillTree\BlankNode.cs" />
+    <Compile Include="SkillTree\GetBigNode.cs" />
     <Compile Include="SkillTree\HealthPlusUnlockable.cs" />
     <Compile Include="Skills\TargetedAbility.cs" />
     <Compile Include="SkillTree\ManaPlusUnlockable.cs" />
