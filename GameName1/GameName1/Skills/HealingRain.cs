@@ -1,6 +1,7 @@
 ﻿using GameName1.Effects;
 using GameName1.Interfaces;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,14 @@ namespace GameName1.Skills
 
         private int damage;
         private int duration;
+
+        Rectangle? healingSource;
+
+        private float elapsed;
+        private float delay = 100f;
+        private int currentFrame = 0;
+        private static readonly int healingFrames = 6;
+        private int recharge_time;
 
 
         public HealingRain(Seizonsha game, GameEntity user, int damage, int recharge_time, int duration)
@@ -35,6 +44,35 @@ namespace GameName1.Skills
         public override void affect(GameEntity affected)
         {
             if (game.ShouldHeal(this.damageType, affected.getTargetType())) game.healEntity(user, affected, this.damage, this.damageType);
+        }
+
+        public void UpdateAnimation(GameTime gameTime)
+        {
+
+            elapsed += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+
+            if (elapsed > delay)
+            {
+                if (currentFrame >= healingFrames - 1)
+                {
+                    currentFrame = 0;
+                }
+
+                else
+                {
+                    currentFrame++;
+                }
+
+                elapsed = 0;
+            }
+
+
+            healingSource = new Rectangle(256 * currentFrame, 0 * 128, 256, 128);
+        }
+
+        public void Draw(SpriteBatch spriteBatch, Rectangle hitbox)
+        {
+            spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_HEALING_RAIN], hitbox, healingSource, Color.White);
         }
 
         public override void Update()

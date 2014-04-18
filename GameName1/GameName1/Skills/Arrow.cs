@@ -73,7 +73,15 @@ namespace GameName1.Skills
         {
             this.rotateToAngle(pDirection);
             Static.Debug("" + pDirection);
-            base.Draw(spriteBatch);
+            if (origin is LightningArrow)
+            {
+                ((LightningArrow)origin).Draw(spriteBatch, this.hitbox, pDirection);
+            }
+            else
+            {
+                base.Draw(spriteBatch);
+            }
+
         }
 
         public override void UpdateAnimation(GameTime gameTime)
@@ -81,6 +89,9 @@ namespace GameName1.Skills
             this.rotateToAngle(direction);
             base.UpdateAnimation(gameTime);
             this.rotateToAngle(direction);
+            if(origin is LightningArrow){
+                ((LightningArrow)origin).UpdateAnimation(gameTime, this.sprite);
+            }
         }
 
         public override void Update(GameTime gameTime)
