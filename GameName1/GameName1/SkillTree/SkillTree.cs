@@ -74,7 +74,7 @@ namespace GameName1.SkillTree
             nodes.Add(WeaponPlusNode3);
 
            // SkillTreeNode AOETauntNode = new SkillTreeNode(this, nodeTextures[Static.BATTLECRY_NAME], new BattleCry(game, player, 0, 250), 2000);
-            SkillTreeNode AOETauntNode = new SkillTreeNode(this, nodeTextures[Static.SKILL_TREE_NODE_ANY], new BattleCry(game, player, 0, 250), 2000);
+            SkillTreeNode AOETauntNode = new SkillTreeNode(this, nodeTextures[Static.BATTLECRY_NAME], new BattleCry(game, player, 0, 250), 2000);
             nodes.Add(AOETauntNode);
 
             //SkillTreeNode EnchantTauntNode = new SkillTreeNode(this, nodeTextures[Static.TAUNTINGENCHANT_NAME], new TauntingEnchant(game, player, 250), 2000);

@@ -85,7 +85,7 @@ namespace GameName1.Skills
         {
             this.hit = new List<GameEntity>();
             int width = 50;
-            int length = 200;
+            int length = 125;
             Rectangle slashBounds = new Rectangle((int)(user.getCenterX()), (int)(user.getCenterY() - 5), length, width);
             List<PolygonIntersection.Vector> points = new List<PolygonIntersection.Vector>();
             float theta = bufferedDirection;
