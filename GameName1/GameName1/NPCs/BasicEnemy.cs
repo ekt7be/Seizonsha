@@ -182,7 +182,9 @@ namespace GameName1.NPCs
 
 		protected override void OnDie()
 		{
+            game.skeletonDeathSound.Play();
             base.OnDie();
+
             double rand = random.NextDouble();
 
 

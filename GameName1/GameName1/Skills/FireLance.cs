@@ -44,6 +44,7 @@ namespace GameName1.Skills
 
         protected override void UseSkill()
         {
+            game.fireballSound.Play();
             int width = 10;
             int length = 200;
             Rectangle slashBounds = new Rectangle((int)(user.getCenterX()), (int)(user.getCenterY() -5), length, width);

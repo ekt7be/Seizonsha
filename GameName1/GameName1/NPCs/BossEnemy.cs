@@ -126,6 +126,8 @@ namespace GameName1.NPCs
 
 		protected override void OnDie()
 		{
+            game.bossDeathSound.Play();
+
             base.OnDie();
             double rand = random.NextDouble();
             if (rand < .1)

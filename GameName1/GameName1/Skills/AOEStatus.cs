@@ -15,8 +15,6 @@ namespace GameName1.Skills
         private int time;
         private int frequency;
 
-
-
         public AOEStatus(Seizonsha game, GameEntity user, Texture2D sprite, Skill origin, Rectangle bounds, int duration, float depth, int frequency)
             : base(game, sprite, bounds.Width, bounds.Height, duration)
         {
