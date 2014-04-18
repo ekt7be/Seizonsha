@@ -748,7 +748,7 @@ namespace GameName1
                 {
                     highlightRect = new Rectangle(viewportBounds.Width / 2 + (skillbarIndex * (iconSize + 3)) - 2 * iconSize - 6, viewportBounds.Height - iconSize, iconSize, iconSize);
 
-                    spriteBatch.Draw(Static.PIXEL_THIN, highlightRect, new Color(Color.DarkOrchid, 0.5f));
+                    spriteBatch.Draw(Static.PIXEL_THIN, highlightRect, new Color(Color.DarkOrchid, 0.3f));
                     if (!selectingSkill2)
                     {
                         Static.DrawBorderedText(spriteBatch, game.getSpriteFont(), "^", highlightRect.X, highlightRect.Y, Color.Black, this.tint);
@@ -783,7 +783,7 @@ namespace GameName1
                                 j++;
                         }
                         Rectangle unlockedSkillRect2 = new Rectangle(viewportBounds.Width / 2 + (skillbarIndex * (iconSize + 3) + (skillbarIndex2 * (iconSize / 2)) + (skillbarIndex2 * 3)) - 2 * iconSize - 6, viewportBounds.Height - iconSize - (iconSize / 2 + 3), iconSize / 2, iconSize / 2);
-                        spriteBatch.Draw(Static.PIXEL_THIN, unlockedSkillRect2, new Color(Color.DarkOrchid, 0.5f));
+                        spriteBatch.Draw(Static.PIXEL_THIN, unlockedSkillRect2, new Color(Color.DarkOrchid, 0.3f));
 
                         if (unEquippedSkills[skillbarIndex2] == null)
                         {
@@ -1360,6 +1360,10 @@ namespace GameName1
         public void waveClear()
         {
            // revive();
+            if (!dead)
+            {
+                health = maxHealth;
+            }
             selectingSkill = true;
             skillbarIndex = 0;
             playerReady = false;
