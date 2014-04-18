@@ -30,7 +30,7 @@ namespace GameName1
 			wallTiles2 = new HashSet<Tile>();
 			groundTiles2 = new HashSet<Tile>();
 
-			string mapname = "test"; 
+			string mapname = "final"; 
 		
 			map = Map.Load(Path.Combine(game.Content.RootDirectory, "maps/"+mapname+".tmx"), game.Content);
 
