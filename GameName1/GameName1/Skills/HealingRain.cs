@@ -50,12 +50,8 @@ namespace GameName1.Skills
             int sH = 100;
             Rectangle slashBounds = new Rectangle((int)(user.getCenterX() + this.bufferedVectorDirection.X * dist - sW / 2), (int)(user.getCenterY() + this.bufferedVectorDirection.Y * dist - sH / 2), sW, sH);
             //game.Spawn(new SwordSlash(game, user, Static.PIXEL_THIN, slashBounds, damage, damageType, 10, user.vectorDirection), slashBounds.Left, slashBounds.Top);
-<<<<<<< Updated upstream
-            AOEStatus rain = new AOEStatus(game, user, Static.PIXEL_THIN, this, slashBounds, this.duration, 1f);
+            AOEStatus rain = new AOEStatus(game, user, Static.PIXEL_THIN, this, slashBounds, this.duration, 1f, 30);
             rain.setTint(Color.White * .5f);
-=======
-            AOEStatus rain = new AOEStatus(game, user, Static.PIXEL_THIN, this, slashBounds, this.duration, 30);
->>>>>>> Stashed changes
             game.Spawn(rain, slashBounds.Left, slashBounds.Top);
         }
 

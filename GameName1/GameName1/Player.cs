@@ -295,11 +295,8 @@ namespace GameName1
 
             /*LightningEnchant lightningenchant = new LightningEnchant(game, this, 5, 0);
             addEquipable(lightningenchant);
-<<<<<<< Updated upstream
             Equip(lightningenchant, Static.PLAYER_R2_SKILL_INDEX);
-=======
-            Equip(lightningenchant, Static.PLAYER_R1_SKILL_INDEX);*/
->>>>>>> Stashed changes
+            */
 
             /*
             HealingTouch healingtouch = new HealingTouch(game, this, 50, 60);

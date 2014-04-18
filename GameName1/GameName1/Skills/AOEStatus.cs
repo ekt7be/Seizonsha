@@ -16,20 +16,14 @@ namespace GameName1.Skills
         private int frequency;
 
 
-<<<<<<< Updated upstream
-        public AOEStatus(Seizonsha game, GameEntity user, Texture2D sprite, Skill origin, Rectangle bounds, int duration, float depth)
-=======
-        public AOEStatus(Seizonsha game, GameEntity user, Texture2D sprite, Skill origin, Rectangle bounds, int duration, int frequency)
->>>>>>> Stashed changes
+
+        public AOEStatus(Seizonsha game, GameEntity user, Texture2D sprite, Skill origin, Rectangle bounds, int duration, float depth, int frequency)
             : base(game, sprite, bounds.Width, bounds.Height, duration)
         {
             this.user = user;
             this.origin = origin;
-<<<<<<< Updated upstream
             this.depth = depth;
-=======
             this.frequency = frequency;
->>>>>>> Stashed changes
         }
 
         protected override void OnDie()
