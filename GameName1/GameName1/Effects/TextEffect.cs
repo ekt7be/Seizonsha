@@ -36,7 +36,9 @@ namespace GameName1.Effects
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.DrawString(game.getSpriteFont(), text, new Vector2(x, y), this.tint);
+            Static.DrawBorderedText(spriteBatch, game.getSpriteFont(), text, x, y, Color.Black, this.tint);
+
+            //spriteBatch.DrawString(game.getSpriteFont(), text, new Vector2(x, y), this.tint);
         }
 
 

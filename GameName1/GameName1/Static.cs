@@ -248,8 +248,23 @@ namespace GameName1
         //Regrowth
         public static readonly string REGROWTH_NAME = "Regrowth";
 
+        //Taunting Enchant
+        public static readonly string TAUNTINGENCHANT_NAME = "Taunting Enchant";
+
+        //Magic Missle
+        public static readonly string MAGIC_MISSILE_NAME = "Magic Missile";
+
+        //Drain Enchant
+        public static readonly string DRAINENCHANT_NAME = "Drain Enchant";
+
+        //Battle Cry
+        public static readonly string BATTLECRY_NAME = "Battle Cry";
+
         //Lighting Enchant
         public static readonly string LIGHTNINGENCHANT_NAME = "Lighnting Enchant";
+
+        //Burning Enchant
+        public static readonly string BURNINGENCHANT_NAME = "Burning Enchant";
 
         //Healing Touch
         public static readonly string HEALING_TOUCH_NAME = "Healing Touch";
@@ -260,6 +275,7 @@ namespace GameName1
         //Lightning Arrow
         public static readonly string LIGHTNING_ARROW_NAME = "Lightning Arrow";
         public static readonly int LIGHTNING_ARROW_COST = 30;
+        public static readonly int LIGHTNING_ARROW_RECHARGE = 100;
 
         //skilltree sprites
 		public static readonly string SKILL_TREE_NODE_ANY = "Blank";

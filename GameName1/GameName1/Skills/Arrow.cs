@@ -16,10 +16,11 @@ namespace GameName1.Skills
         private Skill origin;
         private PolygonIntersection.Polygon polygon;
         private float pDirection;
+        private bool shouldPierce;
 
 
 
-        public Arrow(Seizonsha game, GameEntity user, Texture2D sprite, Skill origin, Rectangle bounds, PolygonIntersection.Polygon polygon, int amount, int damageType, int duration, Vector2 velocity, float direction)
+        public Arrow(Seizonsha game, GameEntity user, Texture2D sprite, Skill origin, Rectangle bounds, PolygonIntersection.Polygon polygon, int amount, int damageType, int duration, Vector2 velocity, float direction, bool shouldPierce)
             : base(game, sprite, bounds.Width, bounds.Height, duration)
         {
             this.amount = amount;
@@ -30,6 +31,7 @@ namespace GameName1.Skills
             this.pDirection = direction;
             this.velocityX = velocity.X;
             this.velocityY = velocity.Y;
+            this.shouldPierce = shouldPierce;
         }
 
         protected override void OnDie()
@@ -87,6 +89,7 @@ namespace GameName1.Skills
             foreach (GameEntity entity in game.getEntitiesInBounds(this.polygon))
             {
                 this.origin.affect(entity);
+                if (game.ShouldDamage(this.damageType, entity.getTargetType()) && !this.shouldPierce) this.setRemove(true);
             }
             base.Update(gameTime);
         }

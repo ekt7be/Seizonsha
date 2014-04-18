@@ -746,13 +746,9 @@ namespace GameName1
             if (player.keyboard)
             {
                 
-                if (Keyboard.GetState().IsKeyDown(Keys.Space))
+                if (player.oldKeyboardState.IsKeyUp(Keys.Space) && Keyboard.GetState().IsKeyDown(Keys.Space))
                 {
-
-                    //remove unnecessary methods and flags from player
-                    player.SkillTreeButtonDown();
-                } else if (Keyboard.GetState().IsKeyUp(Keys.Space)){
-                    player.SkillTreeButtonRelease();
+                    player.SkillTreeButton();
                 }
 
                 if (player.oldKeyboardState.IsKeyUp(Keys.Enter) && Keyboard.GetState().IsKeyDown(Keys.Enter))
@@ -851,15 +847,11 @@ namespace GameName1
             }
             else
             {           
-                if (GamePad.GetState(player.playerIndex).Buttons.Back == ButtonState.Pressed)
+                if (player.oldGamepadState.Buttons.Back == ButtonState.Released && GamePad.GetState(player.playerIndex).Buttons.Back == ButtonState.Pressed)
                 {
-                    player.SkillTreeButtonDown();
+                    player.SkillTreeButton();
                 }
-                else if (GamePad.GetState(player.playerIndex).Buttons.Back == ButtonState.Released)
-                {
-                    player.SkillTreeButtonRelease();
 
-                }
 
                 if (player.oldGamepadState.Buttons.A == ButtonState.Released && GamePad.GetState(player.playerIndex).Buttons.A == ButtonState.Pressed)
                 {
@@ -981,7 +973,7 @@ namespace GameName1
             if (ShouldHeal(damageType, target.getTargetType())){
                 incEntityHealth(target,amount);
 
-                TextEffect text = EntityFactory.getTextEffect(this, amount + "", 10, new Vector2(0, -2), Color.Green); //new TextEffect(this, amount + "", 10, new Vector2(0, -2), Color.Green);
+                TextEffect text = EntityFactory.getTextEffect(this, amount + "", 10, new Vector2(0, -1), Color.Green); //new TextEffect(this, amount + "", 10, new Vector2(0, -2), Color.Green);
                 Spawn(text,target.getCenterX(), target.getCenterY() - 60);
             }
         }

@@ -31,12 +31,12 @@ namespace GameName1.SkillTree
         private bool unlocked;
 
 
-        public SkillTreeNode(SkillTree skilltree, int x,int  y, Texture2D sprite, Unlockable unlockable, int cost)
+        public SkillTreeNode(SkillTree skilltree, Texture2D sprite, Unlockable unlockable, int cost)
         {
             this.unlockable = unlockable;
             this.unlocked = false;
-            this.x = x;
-            this.y = y;
+            this.x = 0;
+            this.y = 0;
             this.sprite = sprite;
             this.skilltree =skilltree;
             this.cost = cost;
@@ -140,10 +140,12 @@ namespace GameName1.SkillTree
 
         }
 
-        public void attachLeft(SkillTreeNode node, int weight)
+        public void attachLeft(SkillTreeNode node, int weight, int distance)
         {
             this.leftNode = node;
             node.rightNode = this;
+            node.x = this.x - distance;
+            node.y = this.y;
             setLeftWeight(weight);
         }
         public void setLeftWeight(int weight)
@@ -156,10 +158,12 @@ namespace GameName1.SkillTree
             this.leftWeight = weight;
         }
 
-        public void attachRight(SkillTreeNode node, int weight)
+        public void attachRight(SkillTreeNode node, int weight, int distance)
         {
             this.rightNode = node;
             node.leftNode = this;
+            node.x = this.x + distance;
+            node.y = this.y;
             setRightWeight(weight);
         }
         public void setRightWeight(int weight)
@@ -172,9 +176,11 @@ namespace GameName1.SkillTree
             this.rightWeight = weight;
         }
 
-        public void attachTop(SkillTreeNode node, int weight)
+        public void attachTop(SkillTreeNode node, int weight, int distance)
         {
             this.topNode = node;
+            node.x = this.x;
+            node.y = this.y - distance;
             node.bottomNode = this;
             setTopWeight(weight);
         }
@@ -188,10 +194,12 @@ namespace GameName1.SkillTree
             this.topWeight = weight;
         }
 
-        public void attachBottom(SkillTreeNode node, int weight)
+        public void attachBottom(SkillTreeNode node, int weight, int distance)
         {
             this.bottomNode = node;
             node.topNode = this;
+            node.x = this.x;
+            node.y = this.y + distance;
             setBottomWeight(weight);
         }
         public void setBottomWeight(int weight)
