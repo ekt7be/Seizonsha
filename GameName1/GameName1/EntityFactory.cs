@@ -16,7 +16,7 @@ namespace GameName1
         public static Dictionary<String, List<GameEntity>> active = new Dictionary<String, List<GameEntity>>();
         public static Dictionary<String, List<GameEntity>> dead = new Dictionary<String, List<GameEntity>>();
 
-        private static Random rand = new Random(1337);
+        private static Random rand = new Random(DateTime.Now.Millisecond);
 
         public static void createLists(String type)
         {
@@ -112,31 +112,32 @@ namespace GameName1
                     Static.Debug("NUM: " + num);
                 }
 
-                collection.Add(RandomEnemy(game, num));
-                addRandomEnemy(game, difficulty - num, collection);
+                Tuple<int,Enemy> tup = RandomEnemy(game, num);
+                collection.Add(tup.Item2);
+                addRandomEnemy(game, difficulty - tup.Item1, collection);
             }
         }
 
-        private static Enemy RandomEnemy(Seizonsha game, int difficulty)
+        private static Tuple<int,Enemy> RandomEnemy(Seizonsha game, int difficulty)
         {
 
 
             if (difficulty > Static.EXPLODE_ENEMY_DIFFICULTY_2)
             {
-                return new ExplodeEnemy(game, 2);
+                return new Tuple<int, Enemy>(Static.EXPLODE_ENEMY_DIFFICULTY_2, new ExplodeEnemy(game, 2));
             }
             else if (difficulty > Static.BASIC_ENEMY_DIFFICULTY_2)
             {
-                return new BasicEnemy(game, 2);
+                return new Tuple<int, Enemy>(Static.BASIC_ENEMY_DIFFICULTY_2,new BasicEnemy(game, 2));
             }
             else if (difficulty > Static.EXPLODE_ENEMY_DIFFICULTY_1)
             {
-                return new ExplodeEnemy(game, 1);
+                return new Tuple<int, Enemy>(Static.EXPLODE_ENEMY_DIFFICULTY_1, new ExplodeEnemy(game, 1));
 
            }
             else
             {
-                return new ExplodeEnemy(game, 1);
+                return new Tuple<int, Enemy>(Static.BASIC_ENEMY_DIFFICULTY_1, new BasicEnemy(game, 1));
             }
         }
 

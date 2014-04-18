@@ -52,7 +52,7 @@ namespace GameName1.SkillTree
         {
 
 
-            player.xp = 100000;
+            //player.xp = 100000;
             BlankNode startNode = new BlankNode(this, nodeTextures[Static.SKILL_TREE_NODE_ANY]);
             nodes.Add(startNode);
             currNode = startNode;
@@ -304,11 +304,15 @@ namespace GameName1.SkillTree
             spriteBatch.DrawString(Static.SPRITEFONT_Calibri12, "XP Available: "+ player.xp, new Vector2(10, 10), Color.White);
 
 
-            if (currNode.getEquipable() != null)
-            {
-                spriteBatch.DrawString(Static.SPRITEFONT_Calibri12, currNode.getEquipable().getDescription(), new Vector2(30, bounds.Height - 150), Color.White);
-            }
+            spriteBatch.Draw(Static.PIXEL_THIN, new Rectangle(0, bounds.Height - 200, 450,200), Color.Black *.8f);
 
+            if (currNode.unlockable!= null)
+            {
+                //spriteBatch.DrawString(Static.SPRITEFONT_Calibri12, currNode.getEquipable().getDescription(), new Vector2(30, bounds.Height - 150), Color.White);
+                spriteBatch.DrawString(Static.SPRITEFONT_Calibri12, currNode.unlockable.getDescription(), new Vector2(30, bounds.Height - 150), Color.White);
+
+            }
+            
             if (!currNode.isUnlocked() && currNode.Available(player))
             {
                 spriteBatch.DrawString(Static.SPRITEFONT_Calibri12, "Press A(Enter) to Unlock", new Vector2(30, bounds.Height - 100), Color.White);

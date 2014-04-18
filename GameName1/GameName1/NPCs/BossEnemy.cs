@@ -20,7 +20,8 @@ namespace GameName1.NPCs
 
 
 		private Sword sword;
-		private Gun gun; 
+		//private Gun gun; 
+        private Fireball fireball;
 
 
 		public BossEnemy(Seizonsha game)
@@ -32,12 +33,16 @@ namespace GameName1.NPCs
 			sword = new RustySword(game, this);
 			sword.OnEquip();
 
+            fireball = new Fireball(game, this, 30, 10, 10f);
 			//gun = new Gun(game, this, 30, 10, 10f);
+            /*
             gun = new OKGun(game, this);
             gun.setUnlimitedAmmo(true);
             gun.setTint(Color.Black);
 
 			gun.OnEquip();
+             * */
+            fireball.OnEquip();
 		
 			this.tint = Color.Black;
 			this.defaultTint = Color.Black;  
@@ -84,7 +89,8 @@ namespace GameName1.NPCs
 			if (closestDistance < this.width*1.7)
 				sword.Use();
 			else {
-				gun.Use();
+				//gun.Use();
+                fireball.Use();
 			}
 
             base.AI(gameTime);
@@ -107,7 +113,7 @@ namespace GameName1.NPCs
 
             base.Draw(spriteBatch);
             sword.Draw(spriteBatch);
-            gun.Draw(spriteBatch);
+            //gun.Draw(spriteBatch);
         }
 
 
@@ -115,7 +121,8 @@ namespace GameName1.NPCs
 		{
 			base.Update(gameTime);
 			sword.Update();
-			gun.Update();
+			//gun.Update();
+            fireball.Update();
 
 		}
 
@@ -125,16 +132,16 @@ namespace GameName1.NPCs
             double rand = random.NextDouble();
             if (rand < .1)
             {
-                game.Spawn(new WeaponDrop(game, Static.PIXEL_THIN, 30, 30, new Revolver(game, this)), x + 40, y - 20);
+                game.Spawn(new WeaponDrop(game, Seizonsha.spriteMappings[Static.SPRITE_BOW_DROP], 30, 30, new Revolver(game, this)), x + 40, y - 20);
 
             }
             else if (rand < .25)
             {
-                game.Spawn(new WeaponDrop(game, Static.PIXEL_THIN, 30, 30, new DankSword(game, this)), x + 10, y);
+                game.Spawn(new WeaponDrop(game, Seizonsha.spriteMappings[Static.SPRITE_SWORD_DROP], 30, 30, new DankSword(game, this)), x + 10, y);
             }
             else
             {
-                game.Spawn(new Food(game, "Entire Turkey", Static.PIXEL_THIN, 100), x - 30, y - 30);
+                game.Spawn(new Food(game, "Tasty Steak", Seizonsha.spriteMappings[Static.SPRITE_MEAT_DROP], 100), x - 30, y - 30);
             }
 
 			game.decreaseNumberEnemies();

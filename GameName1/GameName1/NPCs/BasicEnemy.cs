@@ -54,7 +54,7 @@ namespace GameName1.NPCs
                 this.health = maxHealth;
 
             }
-            else
+            else if (level == 2)
             {
 
                 sword = new Sword(game, this, Static.BASIC_ENEMY_DAMAGE_2, Static.BASIC_ENEMY_EXTRA_ATTACK_RECHARGE_2, 1, "Skeleton sword 2", Color.White);
@@ -63,6 +63,16 @@ namespace GameName1.NPCs
                // this.defaultTint = Color.Green;
                // setDefaultTint();
                 this.maxHealth = Static.BASIC_ENEMY_HEALTH_2;
+                this.health = maxHealth;
+            }
+            else if (level == 3)
+            {
+                sword = new Sword(game, this, Static.BASIC_ENEMY_DAMAGE_3, Static.BASIC_ENEMY_EXTRA_ATTACK_RECHARGE_3, 1, "Skeleton sword 3", Color.White);
+                sword.OnEquip();
+                this.speed = Static.BASIC_ENEMY_SPEED_3;
+                // this.defaultTint = Color.Green;
+                // setDefaultTint();
+                this.maxHealth = Static.BASIC_ENEMY_HEALTH_3;
                 this.health = maxHealth;
             }
         }
@@ -122,16 +132,24 @@ namespace GameName1.NPCs
 			base.Draw(spriteBatch);
             sword.Draw(spriteBatch);
 
+            Color equipColor = Color.White;
+
             if (this.level == 2)
             {
-                Color equipColor = Color.White;
-                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_REG_ARMOR_FEET], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
-                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_REG_ARMOR_PANTS], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
-                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_REG_ARMOR_GLOVES], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
-                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_REG_ARMOR_ARMS_SHOULDER], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
-                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_REG_ARMOR_TORSO], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
-                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_REG_ARMOR_HEAD], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, 1);
-            }
+                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_REG_ARMOR_FEET], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, this.depth);
+                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_REG_ARMOR_PANTS], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, this.depth);
+                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_REG_ARMOR_GLOVES], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, this.depth);
+                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_REG_ARMOR_ARMS_SHOULDER], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, this.depth);
+                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_REG_ARMOR_TORSO], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, this.depth);
+                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_REG_ARMOR_HEAD], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, this.depth);
+            } else if (this.level == 3){
+                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_GOLD_ARMOR_FEET], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, this.depth);
+                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_GOLD_ARMOR_PANTS], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, this.depth);
+                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_GOLD_ARMOR_GLOVES], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, this.depth);
+                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_GOLD_ARMOR_ARMS_SHOULDER], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, this.depth);
+                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_GOLD_ARMOR_TORSO], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, this.depth);
+                //spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_REG_ARMOR_HEAD], this.spriteBox, base.spriteSource, equipColor, 0.0f, new Vector2(0, 0), SpriteEffects.None, this.depth);
+             }
 		}
 
 		public override void Update(GameTime gameTime)
@@ -165,19 +183,53 @@ namespace GameName1.NPCs
 		{
 			game.decreaseNumberEnemies();
             double rand = random.NextDouble();
+            if (level == 1)
+            {
+                if (rand < .3)
+                {
+                    game.Spawn(new WeaponDrop(game, Seizonsha.spriteMappings[Static.SPRITE_SWORD_DROP], 20, 20, new RustyShank(game, this)), x, y);
 
-            if (rand < .95)
+                }
+                else if (rand < .2)
+                {
+                    game.Spawn(new Food(game, "Apple", Seizonsha.spriteMappings[Static.SPRITE_APPLE_DROP], 20), x, y);
+                }
+                else if (rand < .02) 
+                {
+                    game.Spawn(new WeaponDrop(game, Seizonsha.spriteMappings[Static.SPRITE_BOW_DROP], 20, 20, new OKGun(game, this)), x, y);
+                }
+            }
+            else if (level == 2)
             {
-                game.Spawn(new WeaponDrop(game, Static.PIXEL_THIN, 20, 20, new RustyShank(game, this)), x, y);
+                if (rand < .2)
+                {
+                    game.Spawn(new WeaponDrop(game, Seizonsha.spriteMappings[Static.SPRITE_SWORD_DROP], 20, 20, new RustyShank(game, this)), x, y);
 
+                }
+                else if (rand < .1)
+                {
+                    game.Spawn(new Food(game, "Pineapple", Seizonsha.spriteMappings[Static.SPRITE_PINEAPPLE_DROP], 50), x, y);
+                }
+                else if (rand < .02) 
+                {
+                    game.Spawn(new WeaponDrop(game, Seizonsha.spriteMappings[Static.SPRITE_BOW_DROP], 20, 20, new OKGun(game, this)), x, y);
+                }
             }
-            else if (rand < .99)
+            else if (level == 3)
             {
-                game.Spawn(new Food(game, "Chicken Nuggets", Static.PIXEL_THIN, 20), x, y);
-            }
-            else
-            {
-                game.Spawn( new WeaponDrop(game, Static.PIXEL_THIN, 20, 20, new OKGun(game, this)), x, y);
+                if (rand < .2)
+                {
+                    game.Spawn(new WeaponDrop(game, Seizonsha.spriteMappings[Static.SPRITE_SWORD_DROP], 20, 20, new RustyShank(game, this)), x, y);
+
+                }
+                else if (rand < .1)
+                {
+                    game.Spawn(new Food(game, "Steak", Seizonsha.spriteMappings[Static.SPRITE_MEAT_DROP], 100), x, y);
+                }
+                else if (rand < .02)
+                {
+                    game.Spawn(new WeaponDrop(game, Seizonsha.spriteMappings[Static.SPRITE_BOW_DROP], 20, 20, new OKGun(game, this)), x, y);
+                }
             }
 		}
 
@@ -194,9 +246,14 @@ namespace GameName1.NPCs
             {
                 base.reset(Static.BASIC_ENEMY_XP_1, Static.BASIC_ENEMY_SPEED_1);
             }
-            else
+            else if (level == 2)
             {
                 base.reset(Static.BASIC_ENEMY_XP_2, Static.BASIC_ENEMY_SPEED_2);
+
+            }
+            else if (level == 3)
+            {
+                base.reset(Static.BASIC_ENEMY_XP_3, Static.BASIC_ENEMY_SPEED_3);
 
             }
             sword.OnUnequip();
