@@ -22,7 +22,12 @@ namespace GameName1.Effects
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            //
+            if (time % 30 < 3 || time % 30 > 28)
+            {
+                int w = 35;
+                int h = 35;
+                spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_BURN], new Rectangle(afflicted.getCenterX() - 3 * w / 4, afflicted.getCenterY() - h / 2, w, h), Color.White);
+            }
         }
         public override void onEnd()
         {

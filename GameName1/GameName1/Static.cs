@@ -213,7 +213,9 @@ namespace GameName1
 
         public static readonly int SPRITE_FIREBALL = 8;
         public static readonly int SPRITE_BLIZZARD = 27; 
-        public static readonly int SPRITE_SHOCK = 28; // MOST RECENT
+        public static readonly int SPRITE_SHOCK = 28;
+        public static readonly int SPRITE_BURN = 29; 
+        public static readonly int SPRITE_MAGIC_MISSILE = 30; // MOST RECENT
         public static readonly int SPRITE_BULLET = 9;
         public static readonly int SPRITE_HEAL = 10;
         public static readonly int SPRITE_SWORD = 11;

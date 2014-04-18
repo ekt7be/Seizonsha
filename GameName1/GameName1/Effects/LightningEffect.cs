@@ -16,7 +16,7 @@ namespace GameName1.Effects
         Rectangle? lightningSource;
 
         private float elapsed;
-        private float delay = 20f;
+        private float delay = 40f;
         private int currentFrame = 0;
         private static readonly int shockFrames = 4;
         private int recharge_time;
@@ -36,7 +36,7 @@ namespace GameName1.Effects
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            this.hitbox = new Rectangle((int)(g1.getCenterX()), (int)(g1.getCenterY()), (int)Math.Sqrt(Math.Pow(g1.getCenterX() - g2.getCenterX(), 2) + Math.Pow(g1.getCenterY() - g2.getCenterY(), 2)), 20);
+            this.hitbox = new Rectangle((int)(g1.getCenterX()), (int)(g1.getCenterY()), (int)Math.Sqrt(Math.Pow(g1.getCenterX() - g2.getCenterX(), 2) + Math.Pow(g1.getCenterY() - g2.getCenterY(), 2)), 50);
             spriteBatch.Draw(Seizonsha.spriteMappings[Static.SPRITE_SHOCK], hitbox, lightningSource,
                 tint, (float)Math.Atan2(g2.getCenterY() - g1.getCenterY(), g2.getCenterX() - g1.getCenterX()), new Vector2(0f, 0f), SpriteEffects.None, 1f);
             // base.Draw(spriteBatch);
