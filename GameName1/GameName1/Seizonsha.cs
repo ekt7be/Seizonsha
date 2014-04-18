@@ -58,7 +58,6 @@ namespace GameName1
 
 		public float sinceLastWaveCleared;
 
-	
         // By preloading any assets used by UI rendering, we avoid framerate glitches
         // when they suddenly need to be loaded in the middle of a menu transition.
         static readonly string[] preloadAssets =

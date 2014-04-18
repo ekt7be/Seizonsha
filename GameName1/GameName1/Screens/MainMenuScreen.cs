@@ -68,7 +68,7 @@ namespace GameName1
             if (Content == null)
                 Content = new ContentManager(ScreenManager.Game.Services, "Content");
 
-            menuSound = Content.Load<SoundEffect>("sound/old_legend");
+            menuSound = Content.Load<SoundEffect>("sound/menu sound");
             menuSoundLoop = menuSound.CreateInstance();
             menuSoundLoop.IsLooped = true;
             menuSoundLoop.Play();
