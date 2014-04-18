@@ -58,6 +58,7 @@
     <Compile Include="AnimationTesting\SlashAnimation.cs" />
     <Compile Include="AnimationTesting\StabAnimation.cs" />
     <Compile Include="Collision.cs" />
+    <Compile Include="Effects\LightningEffect.cs" />
     <Compile Include="EntityFactory.cs" />
     <Compile Include="PickUps\DeadPlayer.cs" />
     <Compile Include="PickUps\Food.cs" />
@@ -74,10 +75,12 @@
     <Compile Include="Screens\PlayerMenuScreen.cs" />
     <Compile Include="Skills\AOEPolygon.cs" />
     <Compile Include="Skills\AOEStatus.cs" />
+    <Compile Include="Skills\Arrow.cs" />
     <Compile Include="Skills\Bash.cs" />
     <Compile Include="Skills\Blizzard.cs" />
     <Compile Include="Skills\HealingRain.cs" />
     <Compile Include="Skills\Kick.cs" />
+    <Compile Include="Skills\LightningArrow.cs" />
     <Compile Include="Skills\LightningEnchant.cs" />
     <Compile Include="Skills\Regrowth.cs" />
     <Compile Include="Skills\StatusEffects\Burning.cs" />

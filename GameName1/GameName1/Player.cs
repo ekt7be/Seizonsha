@@ -276,6 +276,10 @@ namespace GameName1
             addEquipable(regrowth);
             Equip(regrowth, Static.PLAYER_R2_SKILL_INDEX);
 
+            LightningArrow la = new LightningArrow(game, this, 20, 120);
+            addEquipable(la);
+            Equip(la, Static.PLAYER_R2_SKILL_INDEX);
+
             HealingRain healingrain = new HealingRain(game, this, 15, 60, 5*60);
             addEquipable(healingrain);
             Equip(healingrain, Static.PLAYER_R1_SKILL_INDEX);

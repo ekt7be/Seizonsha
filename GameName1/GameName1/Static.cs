@@ -10,10 +10,8 @@ namespace GameName1
     class Static
     {
 
-
         //Animations
         public static readonly int ANIMATION_DAMAGE_DURATION = 20;
-
 
         //entity type names
 
@@ -30,6 +28,7 @@ namespace GameName1
         public static readonly string TYPE_PLAYER = "Player";
         public static readonly string TYPE_AOE_STATUS = "AOE Status";
         public static readonly string TYPE_AOE_POLYGON = "AOE Polygon";
+        public static readonly string TYPE_ARROW = "Arrow";
 
 
 		public static int NUM_PLAYERS = 1;
@@ -234,6 +233,10 @@ namespace GameName1
 
         //Healing Rain
         public static readonly string HEALING_RAIN_NAME = "Healing Rain";
+
+        //Lightning Arrow
+        public static readonly string LIGHTNING_ARROW_NAME = "Lightning Arrow";
+        public static readonly int LIGHTNING_ARROW_COST = 30;
 
         //skilltree sprites
 		public static readonly string SKILL_TREE_NODE_ANY = "Blank";

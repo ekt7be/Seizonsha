@@ -37,10 +37,13 @@ namespace GameName1.Skills
             game.damageEntity(user, affected, this.damage, this.damageType);
             GameEntity nextTarget = null;
             foreach(GameEntity e in game.getEntitiesInBounds(new Rectangle(affected.getCenterX() - 100, affected.getCenterY() - 100, 200, 200))){
-                if(e.getTargetType() == Static.TARGET_TYPE_BAD) nextTarget = e;
+                if(e.getTargetType() == Static.TARGET_TYPE_BAD && e != affected) nextTarget = e;
             }
-            if(nextTarget == null) return;
-            else affect(game.getEntitiesInBounds(new Rectangle(affected.getCenterX() - 100, affected.getCenterY() - 100, 200, 200))[0], count + 1);
+            if (nextTarget == null) return;
+            else
+            {
+                affect(nextTarget, count + 1);
+            }
         }
 
         public void affect(GameEntity affected, int count)
@@ -49,23 +52,21 @@ namespace GameName1.Skills
             GameEntity nextTarget = null;
             game.damageEntity(user, affected, this.damage, this.damageType);
             foreach(GameEntity e in game.getEntitiesInBounds(new Rectangle(affected.getCenterX() - 100, affected.getCenterY() - 100, 200, 200))){
-                if(e.getTargetType() == Static.TARGET_TYPE_BAD) nextTarget = e;
+                if(e.getTargetType() == Static.TARGET_TYPE_BAD && e != affected) nextTarget = e;
             }
-            if(nextTarget == null) return;
-            else affect(game.getEntitiesInBounds(new Rectangle(affected.getCenterX() - 100, affected.getCenterY() - 100, 200, 200))[0], count + 1);
+            if (nextTarget == null) return;
+            else
+            {
+                Effects.LightningEffect le = new Effects.LightningEffect(game, Static.PIXEL_THIN, 20, affected, nextTarget);
+                game.Spawn(le, affected.getCenterX(), affected.getCenterY());
+                affect(nextTarget, count + 1);
+            }
         }
 
 
         protected override void UseSkill()
         {
-            int distance = 0;
-            int sW = 100;
-            int sH = 100;
-            Rectangle slashBounds = new Rectangle((int)(user.getCenterX() + user.vectorDirection.X * distance - sW / 2), (int)(user.getCenterY() + user.vectorDirection.Y * distance - sH / 2), sW, sH);
-            //game.Spawn(new SwordSlash(game, user, Static.PIXEL_THIN, slashBounds, damage, damageType, 10, user.vectorDirection), slashBounds.Left, slashBounds.Top);
-            AOECone attack = EntityFactory.getAOECone(game, Static.PIXEL_THIN, this, slashBounds, damage, damageType, 10);
-            attack.setTint(Color.White * .5f);
-            game.Spawn(attack, slashBounds.Left, slashBounds.Top);
+            return;
         }
 
 

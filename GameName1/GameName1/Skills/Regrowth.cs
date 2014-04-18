@@ -44,7 +44,7 @@ namespace GameName1.Skills
             int sH = 300;
             Rectangle slashBounds = new Rectangle((int)(user.getCenterX() + user.vectorDirection.X * distance - sW / 2), (int)(user.getCenterY() + user.vectorDirection.Y * distance - sH / 2), sW, sH);
             //game.Spawn(new SwordSlash(game, user, Static.PIXEL_THIN, slashBounds, damage, damageType, 10, user.vectorDirection), slashBounds.Left, slashBounds.Top);
-            AOECone attack = EntityFactory.getAOECone(game, Static.PIXEL_THIN, this, slashBounds, damage, damageType, 10);
+            AOECone attack = EntityFactory.getAOECone(game, null, this, slashBounds, damage, damageType, 0);
             attack.setTint(Color.White * .5f);
             game.Spawn(attack, slashBounds.Left, slashBounds.Top);
         }

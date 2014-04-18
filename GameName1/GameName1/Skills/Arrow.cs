@@ -8,7 +8,7 @@ using System.Text;
 
 namespace GameName1.Skills
 {
-    class AOEPolygon : GameName1.Effects.Effect
+    class Arrow : GameName1.Effects.Effect
     {
         private int damageType;
         private int amount;
@@ -16,10 +16,10 @@ namespace GameName1.Skills
         private Skill origin;
         private PolygonIntersection.Polygon polygon;
         private float pDirection;
- 
 
 
-        public AOEPolygon(Seizonsha game, GameEntity user, Texture2D sprite, Skill origin, Rectangle bounds, PolygonIntersection.Polygon polygon, int amount, int damageType, int duration, float direction)
+
+        public Arrow(Seizonsha game, GameEntity user, Texture2D sprite, Skill origin, Rectangle bounds, PolygonIntersection.Polygon polygon, int amount, int damageType, int duration, Vector2 velocity, float direction)
             : base(game, sprite, bounds.Width, bounds.Height, duration)
         {
             this.amount = amount;
@@ -28,6 +28,8 @@ namespace GameName1.Skills
             this.origin = origin;
             this.polygon = polygon;
             this.pDirection = direction;
+            this.velocityX = velocity.X;
+            this.velocityY = velocity.Y;
         }
 
         protected override void OnDie()
@@ -37,17 +39,17 @@ namespace GameName1.Skills
 
         public override void OnSpawn()
         {
-                
-           foreach (GameEntity entity in game.getEntitiesInBounds(this.polygon))
-           {
-               this.origin.affect(entity);
-           }
+
+                foreach (GameEntity entity in game.getEntitiesInBounds(this.polygon))
+                {
+                    this.origin.affect(entity);
+                }
         }
 
 
         public override string getName()
         {
-            return Static.TYPE_AOE_POLYGON;
+            return Static.TYPE_ARROW;
         }
 
 
@@ -79,6 +81,15 @@ namespace GameName1.Skills
             this.rotateToAngle(direction);
         }
 
+        public override void Update(GameTime gameTime)
+        {
+            polygon.Offset(new PolygonIntersection.Vector(this.velocityX, this.velocityY));
+            foreach (GameEntity entity in game.getEntitiesInBounds(this.polygon))
+            {
+                this.origin.affect(entity);
+            }
+            base.Update(gameTime);
+        }
 
 
 
